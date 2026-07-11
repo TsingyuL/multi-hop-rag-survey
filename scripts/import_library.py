@@ -24,7 +24,7 @@ DEFAULT_INPUT = ROOT / "survey" / "MH_QA_Library.xlsx"
 DEFAULT_OUTPUT = ROOT / "taxonomy" / "library_papers.csv"
 FIELDS = [
     "library_id", "title", "authors", "year", "venue", "arxiv_id", "source_url",
-    "library_categories", "source_origin", "priority", "notes", "review_state",
+    "library_categories", "research_tracks", "source_origin", "priority", "notes", "review_state",
 ]
 
 
@@ -48,6 +48,28 @@ def find_header(rows: list[tuple[object, ...]]) -> tuple[int, dict[str, int]] | 
 def first(record: dict[str, str], field: str, value: str) -> None:
     if not record[field] and value:
         record[field] = value
+
+
+def research_track(category: str) -> str:
+    """Normalize source-workbook folders without discarding the original label."""
+    value = category.lower()
+    if "decomposition" in value:
+        return "Decomposition"
+    if "cot" in value:
+        return "Reasoning / CoT"
+    if "verify" in value:
+        return "Verification"
+    if "retrieve" in value:
+        return "Retrieval"
+    if "agentic" in value or "agent" in value:
+        return "Agentic systems"
+    if "benchmark" in value:
+        return "Benchmarks"
+    if "survey" in value:
+        return "Surveys"
+    if "kg" in value:
+        return "Knowledge graphs"
+    return "Other"
 
 
 def main() -> None:
@@ -96,6 +118,7 @@ def main() -> None:
                     "arxiv_id": arxiv_id,
                     "source_url": source_url,
                     "library_categories": "",
+                    "research_tracks": "",
                     "source_origin": "",
                     "priority": get("优先级"),
                     "notes": get("备注"),
@@ -115,12 +138,13 @@ def main() -> None:
 
     for key, record in records.items():
         record["library_categories"] = ";".join(sorted(categories[key]))
+        record["research_tracks"] = ";".join(sorted({research_track(category) for category in categories[key]}))
         record["source_origin"] = ";".join(sorted(sources[key]))
         record["review_state"] = "needs_triage" if triage[key] else "imported"
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(sorted(records.values(), key=lambda row: (row["year"] or "0000", row["title"].casefold()), reverse=True))
     print(f"Imported {len(records)} unique records from {args.input.relative_to(ROOT)} into {args.output.relative_to(ROOT)}.")

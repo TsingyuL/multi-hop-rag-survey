@@ -80,7 +80,7 @@ def main() -> int:
     library = read_csv(
         "library_papers.csv",
         {"library_id", "title", "authors", "year", "venue", "arxiv_id", "source_url",
-         "library_categories", "source_origin", "priority", "notes", "review_state"},
+         "library_categories", "research_tracks", "source_origin", "priority", "notes", "review_state"},
     )
     all_rows = [("methods.csv", row) for row in methods] + [("benchmarks.csv", row) for row in benchmarks]
     keys = [row["citation_key"] for _, row in all_rows]
@@ -128,8 +128,8 @@ def main() -> int:
     for number, row in enumerate(library, start=2):
         if not re.fullmatch(r"lib_[a-f0-9]{12}", row["library_id"]):
             raise ValueError(f"library_papers.csv: row {number} has invalid library_id")
-        if not row["title"].strip() or not row["library_categories"].strip():
-            raise ValueError(f"library_papers.csv: row {number} has blank title or library_categories")
+        if not row["title"].strip() or not row["library_categories"].strip() or not row["research_tracks"].strip():
+            raise ValueError(f"library_papers.csv: row {number} has blank title, library_categories, or research_tracks")
         if row["year"] and not re.fullmatch(r"\d{4}", row["year"]):
             raise ValueError(f"library_papers.csv: row {number} has invalid year: {row['year']}")
         require_choice("library_papers.csv", number, "review_state", row["review_state"], ALLOWED_LIBRARY_STATES)

@@ -33,6 +33,18 @@
       .metric strong { display: block; color: var(--accent); font-size: 1.75rem; line-height: 1; }
       .metric span { color: var(--muted); font-size: .88rem; }
       .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 22px; }
+      .hub-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-bottom: 18px; }
+      .route-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+      .route { border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--ink); cursor: pointer; padding: 12px; text-align: left; transition: border-color .15s, transform .15s; }
+      .route:hover { border-color: var(--accent); transform: translateY(-1px); }
+      .route strong { display: block; font-size: .91rem; }
+      .route span { color: var(--muted); display: block; font-size: .78rem; line-height: 1.35; margin-top: 3px; }
+      .route em { color: var(--accent); display: block; font-size: .74rem; font-style: normal; font-weight: 750; margin-top: 7px; }
+      .benchmark-list { display: grid; gap: 8px; }
+      .benchmark { border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+      .benchmark:last-child { border: 0; padding-bottom: 0; }
+      .benchmark a { font-weight: 720; text-decoration: none; }
+      .benchmark p { color: var(--muted); font-size: .79rem; margin: 2px 0 0; }
       h2 { margin: 0 0 4px; font-size: 1.35rem; letter-spacing: -.02em; }
       .subtle { margin: 0 0 18px; color: var(--muted); font-size: .94rem; }
       .filters { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 12px; }
@@ -53,7 +65,7 @@
       .empty { padding: 30px; color: var(--muted); text-align: center; }
       .notice { margin-top: 22px; border-left: 4px solid var(--teal); padding: 8px 12px; color: #44516a; font-size: .9rem; }
       footer { padding: 0 24px 40px; color: var(--muted); font-size: .85rem; }
-      @media (max-width: 720px) { .hero { padding-top: 40px; } .metrics, .filters { grid-template-columns: 1fr; } .panel { padding: 16px; } }
+      @media (max-width: 720px) { .hero { padding-top: 40px; } .metrics, .filters, .hub-grid, .route-grid { grid-template-columns: 1fr; } .panel { padding: 16px; } }
     </style>
   </head>
   <body>
@@ -77,6 +89,10 @@
         <div class="metric"><strong id="benchmark-count">—</strong><span>benchmarks & datasets</span></div>
         <div class="metric"><strong id="library-count">—</strong><span>imported library papers</span></div>
         <div class="metric"><strong id="code-count">—</strong><span>verified code links</span></div>
+      </section>
+      <section class="hub-grid" aria-label="Research map">
+        <article class="panel"><h2>Research routes</h2><p class="subtle">Start from the evidence-chain bottleneck you want to study. Each route filters the reviewed catalog.</p><div id="routes" class="route-grid"></div></article>
+        <article class="panel"><h2>Benchmark map</h2><p class="subtle">Evaluation targets in the reviewed catalog, with their intended diagnostic scope.</p><div id="benchmarks" class="benchmark-list"></div></article>
       </section>
       <section class="panel">
         <h2>Find papers by the decision they change</h2>
@@ -112,6 +128,19 @@
           document.querySelector("#code-count").textContent = methods.filter(row => row.code_url).length;
           const options = { estimand: [...new Set(methods.map(row => row.primary_estimand))].sort(), family: [...new Set(methods.map(row => row.architectural_family))].sort(), year: [...new Set(methods.map(row => row.year))].sort((a, b) => b - a) };
           fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));
+          const routeMeta = {
+            observability: "Find every required support unit.",
+            utility: "Keep useful evidence under a budget.",
+            exposure: "Make selected evidence usable in context.",
+            fusion: "Compose evidence across units correctly.",
+            faithfulness: "Test whether evidence causally matters.",
+            joint: "Coordinate multiple bottlenecks together.",
+          };
+          document.querySelector("#routes").innerHTML = options.estimand.map(estimand => {
+            const count = methods.filter(row => row.primary_estimand === estimand).length;
+            return `<button class="route" type="button" data-estimand="${escapeHTML(estimand)}"><strong>${escapeHTML(labels[estimand] || estimand)}</strong><span>${escapeHTML(routeMeta[estimand] || "")}</span><em>${count} curated methods →</em></button>`;
+          }).join("");
+          document.querySelector("#benchmarks").innerHTML = catalog.benchmarks.sort((a, b) => Number(b.year) - Number(a.year)).map(benchmark => `<div class="benchmark"><a href="${escapeHTML(benchmark.source_url)}" target="_blank" rel="noopener">${escapeHTML(benchmark.name)}</a><p>${escapeHTML(benchmark.task_type)} · ${escapeHTML(benchmark.hops)} hop(s) · ${escapeHTML(benchmark.diagnostics)}</p></div>`).join("");
           const render = () => {
             const query = document.querySelector("#search").value.toLowerCase().trim();
             const selected = Object.fromEntries(fields.map(id => [id, document.querySelector(`#${id}`).value]));
@@ -131,6 +160,11 @@
           };
           document.querySelector("#search").addEventListener("input", render);
           fields.forEach(id => document.querySelector(`#${id}`).addEventListener("change", render));
+          document.querySelectorAll(".route").forEach(button => button.addEventListener("click", () => {
+            document.querySelector("#estimand").value = button.dataset.estimand;
+            render();
+            document.querySelector("#search").scrollIntoView({ behavior: "smooth", block: "center" });
+          }));
           render();
         })
         .catch(() => { document.querySelector("#rows").innerHTML = '<tr><td colspan="5" class="empty">The catalog data could not be loaded. Build the site data with <code>python3 scripts/build_catalog_site.py</code>.</td></tr>'; });
