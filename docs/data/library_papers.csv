@@ -1,0 +1,230 @@
+library_id,title,authors,year,venue,arxiv_id,source_url,library_categories,source_origin,priority,notes,review_state
+lib_af875a94e1d4,Retrieval-Reasoning Processes for Multi-hop QA (Four-Axis),Ji et al.,2026,arXiv,2601.00536,https://arxiv.org/abs/2601.00536,MH survey,原有;总表 All Papers,-,,imported
+lib_24797468c2ef,BRIDGE: Multi-hop in Long Multimodal Docs,Wu et al.,2026,arXiv,2603.07931,https://arxiv.org/abs/2603.07931,MH Benchmark,总表 All Papers;新补,中,,imported
+lib_3c3f329511d7,ZeroSearch: Incentivize Search without Searching,Sun et al.,2025,arXiv,2505.04588,https://arxiv.org/abs/2505.04588,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_51496bf997cb,WikiMixQA: Multimodal Benchmark,Foroutan et al.,2025,arXiv,,,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_5ad0b2267a5a,VisDoM: Multi-Document QA with Visually Rich Elements,Suri et al.,2025,arXiv,,,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_fb224005e805,Towards Concise and Adaptive Thinking in LRMs,Zhu & Li,2025,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_12e2330cfbff,Towards Agentic RAG with Deep Reasoning,Li et al.,2025,arXiv,2507.09477,https://arxiv.org/abs/2507.09477,MH survey,原有;总表 All Papers,-,,imported
+lib_eaec06547d38,T-GRAG: Dynamic GraphRAG for Temporal Conflicts,Jiang et al.,2025,arXiv,2508.01680,https://arxiv.org/abs/2508.01680,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_c4e5b1ec9e47,Search-R1: Training LLMs to Reason + Search via RL,Jin et al.,2025,arXiv,2503.09516,https://arxiv.org/abs/2503.09516,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_c37824babdc5,Search-o1: Agentic Search-Enhanced LRM,Li et al.,2025,arXiv,2501.05366,https://arxiv.org/abs/2501.05366,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_02e2c4e52397,ReSearch: Learning to Reason with Search via RL,Chen et al.,2025,arXiv,2503.19470,https://arxiv.org/abs/2503.19470,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_3cca42b5025e,Reasoning RAG via System 1 or System 2,Liang et al.,2025,arXiv,2506.10408,https://arxiv.org/abs/2506.10408,MH survey,原有;总表 All Papers,-,,imported
+lib_c6a3bfab4fd1,ReARTeR: Retrieval-Augmented Reasoning with Trustworthy PRM,Sun et al.,2025,arXiv,2501.07861,https://arxiv.org/abs/2501.07861,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_30b948f2bb44,ReAgent: Reversible Multi-Agent Reasoning for MHQA,Wang et al.,2025,arXiv,2503.06951,https://arxiv.org/abs/2503.06951,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_211cd27304b5,RankCoT: Refining Knowledge for RAG via Ranking CoT,Wu et al.,2025,arXiv,2502.17888,https://arxiv.org/abs/2502.17888,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_b019be52faf6,RAG-Gym: Process Supervision for Search Agents,Xiong et al.,2025,arXiv,2502.13957,https://arxiv.org/abs/2502.13957,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_4ca56ae4eba8,R1-Searcher: Incentivizing Search via RL,Song et al.,2025,arXiv,2503.05592,https://arxiv.org/abs/2503.05592,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_466907284e9f,PAR-RAG: Credible Plan-Driven RAG for Multi-Hop QA,Zhang et al.,2025,arXiv,2504.16787,https://arxiv.org/abs/2504.16787,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_e6365b9f174b,Open Deep Search: Democratizing Search,Alzubi et al.,2025,arXiv,2503.20201,https://arxiv.org/abs/2503.20201,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_1284a56f0ddb,NovelHopQA: Diagnosing Multi-Hop in Long Narratives,Gupta et al.,2025,arXiv,,,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_f33a2f6ee28a,MA-RAG: Multi-Agent RAG via Collaborative CoT,Nguyen et al.,2025,arXiv,2505.20096,https://arxiv.org/abs/2505.20096,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_fa7fa8604699,KiRAG: Knowledge-Driven Iterative Retriever,Fang et al.,2025,arXiv,2502.18397,https://arxiv.org/abs/2502.18397,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_4611c8c75e18,HopRAG: Multi-Hop Reasoning for Logic-Aware RAG,Liu et al.,2025,arXiv,2502.12442,https://arxiv.org/abs/2502.12442,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_92591aa8c409,HLE: Humanity's Last Exam,Phan et al.,2025,arXiv,2501.14249,https://arxiv.org/abs/2501.14249,MH Benchmark,总表 All Papers;新补,高,2025 新 baseline,imported
+lib_1e8589cfff32,From RAG to Memory: HippoRAG 2,Gutierrez et al.,2025,arXiv,2502.14802,https://arxiv.org/abs/2502.14802,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_85f43ba76500,DualRAG: Dual-Process Approach for Multi-Hop QA,Cheng et al.,2025,arXiv,2504.18243,https://arxiv.org/abs/2504.18243,MH: Retrieve-based,总表 All Papers;新补,高,2025 multi-hop RAG 新 SOTA,imported
+lib_eaff4b74ecca,DocHop-QA: Multimodal Multi-Hop Reasoning,Park et al.,2025,arXiv,2508.15851,https://arxiv.org/abs/2508.15851,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_86fbf077b72b,DeepSeek-R1: Incentivizing Reasoning Capability via RL,DeepSeek AI,2025,arXiv,2501.12948,https://arxiv.org/abs/2501.12948,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_0d4fa24f1c17,DeepResearcher: Scaling Deep Research via RL,Zheng et al.,2025,arXiv,2504.03160,https://arxiv.org/abs/2504.03160,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_30e42644d948,DeepRAG: Thinking to Retrieval Step by Step,Guan et al.,2025,arXiv,2502.01142,https://arxiv.org/abs/2502.01142,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_bf57d9e73f65,CoT-RAG: Integrating Chain of Thought and RAG,Shi et al.,2025,arXiv,2504.13534,https://arxiv.org/abs/2504.13534,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_d841ace08afa,Beyond Correctness: Rewarding Faithful Reasoning in RAG (VERITAS),Xu et al.,2025,arXiv,2510.13272,https://arxiv.org/abs/2510.13272,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_a8b148c1a5ec,Agentic Retrieval-Augmented Generation: A Survey,Singh et al.,2025,arXiv,2501.09136,https://arxiv.org/abs/2501.09136,MH survey,总表 All Papers;新补,高,agentic RAG 专题,imported
+lib_eae77157c34b,Agentic Reasoning: Reasoning LLMs with Tools,Wu et al.,2025,ACL 2025,2502.04644,https://arxiv.org/abs/2502.04644,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_a387480fe229,A Survey of Task-Oriented KG Reasoning,Niu et al.,2025,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_705326ab806c,A Survey of Slow Thinking-based Reasoning LLMs using RL,Pan et al.,2025,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_4962bc7764b4,Tree of Reviews: Tree-based Dynamic Iterative Retrieval,Li et al.,2024,arXiv,2404.14464,https://arxiv.org/abs/2404.14464,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_030c1f7a4604,Training LLMs to Reason in a Continuous Latent Space (COCONUT),Hao et al.,2024,arXiv,2412.06769,https://arxiv.org/abs/2412.06769,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_cbf207b82c49,TRACE: Knowledge-Grounded Reasoning Chains for RAG,Fang et al.,2024,EMNLP 2024,2406.11460,https://arxiv.org/abs/2406.11460,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_615901f5a64d,Towards Multi-Document QA in Scientific Literature,Huang et al.,2024,arXiv,,,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_c6a9d3c352bb,Think-on-Graph 2.0: Deep and Faithful LLM Reasoning with KG,Ma et al.,2024,ICLR 2025,2407.10805,https://arxiv.org/abs/2407.10805,MH: LLM+KG,原有;总表 All Papers,-,ToG 2.0,imported
+lib_71beed976130,Think-on-Graph 2.0 (方法，误归类),Ma et al.,2024,ICLR 2025,2407.10805,https://arxiv.org/abs/2407.10805,MH Benchmark,建议清理,-,应归 LLM+KG,needs_triage
+lib_81eb95196c2c,The Landscape of Emerging AI Agent Architectures,Masterman et al.,2024,arXiv,2404.11584,https://arxiv.org/abs/2404.11584,MH survey,原有;总表 All Papers,-,,imported
+lib_7244f143709b,"Tell me, what are you most afraid of?",Stock et al.,2024,arXiv,,,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_72431ae5478d,Suppressing epidemic spreading in multiplex networks,Chen et al.,2024,Physics,,,MH: KG-based,建议清理,-,物理学论文，误收藏，建议移出,needs_triage
+lib_6d8e46d40ae1,SubgraphRAG: Simple is Effective,Li et al.,2024,ICLR 2025,2410.20724,https://arxiv.org/abs/2410.20724,MH: LLM+KG,总表 All Papers;新补,高,ICLR 2025 强 baseline,imported
+lib_7ef06a4986e2,StructRAG: Hybrid Information Structurization,Li et al.,2024,ICLR 2025,2410.08815,https://arxiv.org/abs/2410.08815,MH: LLM+KG,总表 All Papers;新补,高,ICLR 2025,imported
+lib_112c38579e2b,STOC-TOT: Stochastic Tree-of-Thought for Multi-Hop QA,Bi et al.,2024,arXiv,2407.03687,https://arxiv.org/abs/2407.03687,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_792806b2aa84,StepChain GraphRAG: Reasoning Over KGs for Multi-Hop QA,Ni et al.,2024,arXiv,,,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_65d99f56b607,RuleRAG: Rule-Guided Retrieval-Augmented Generation,Chen et al.,2024,arXiv,2410.22353,https://arxiv.org/abs/2410.22353,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_d0926f5de407,"Retrieving, Rethinking and Revising: CoV for RAG",Sun et al.,2024,EMNLP 2024,2410.05801,https://arxiv.org/abs/2410.05801,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_f999f336327d,RAT: Retrieval Augmented Thoughts,Wang et al.,2024,arXiv,2403.05313,https://arxiv.org/abs/2403.05313,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_ce29f5c833e4,RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval,Sarthi et al.,2024,ICLR 2024,2401.18059,https://arxiv.org/abs/2401.18059,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_c2eb420ad4d0,RAG for AI-Generated Content: A Survey,Zhao et al.,2024,arXiv,2402.19473,https://arxiv.org/abs/2402.19473,MH survey,总表 All Papers;新补,中,,imported
+lib_5de74e21d4b6,Quiet-STaR: LMs Can Teach Themselves to Think Before Speaking,Zelikman et al.,2024,arXiv,2403.09629,https://arxiv.org/abs/2403.09629,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_e391fdfc0ae7,MultiHop-RAG: Benchmarking RAG for Multi-Hop Queries,Tang & Yang,2024,arXiv,2401.15391,https://arxiv.org/abs/2401.15391,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_be7cec2d383a,"Multi-Step Reasoning with LLMs, a Survey",Plaat et al.,2024,arXiv,2407.11511,https://arxiv.org/abs/2407.11511,MH survey,原有;总表 All Papers,-,,imported
+lib_b27f3d3a4fad,MoreHopQA: More Than Multi-hop Reasoning,Schnitzler et al.,2024,arXiv,2406.13397,https://arxiv.org/abs/2406.13397,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_da8d3bc8740b,MINTQA: Multi-Hop QA Benchmark,He et al.,2024,arXiv,2412.17032,https://arxiv.org/abs/2412.17032,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_0fc7b17baf6d,MindSearch: Mimicking Human Minds for Deep Search,Chen et al.,2024,arXiv,2407.20183,https://arxiv.org/abs/2407.20183,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_36bca049cce9,LongRAG: Enhancing RAG with Long-context LLMs,Jiang et al.,2024,arXiv,2406.15319,https://arxiv.org/abs/2406.15319,MH: Retrieve-based,总表 All Papers;新补,高,long-context × RAG,imported
+lib_abebd0da35b5,LightRAG: Simple and Fast RAG,Guo et al.,2024,arXiv,2410.05779,https://arxiv.org/abs/2410.05779,MH: LLM+KG,总表 All Papers;新补,高,必补，GraphRAG 轻量版,imported
+lib_55e130758e0f,LightPROF: Lightweight Reasoning Framework for LLMs,Ao et al.,2024,arXiv,,,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_4df4fef30ec4,Leaked-Web: ML-Based Web Analysis,Wang,2024,arXiv,,,MH: KG-based,建议清理,-,非 MHQA 方向，建议移出,needs_triage
+lib_889db75bd630,KG-Hopper: Empowering Compact Open LLMs with KG,Wang & Yu,2024,arXiv,,,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_77472fa464f9,KAG: Knowledge Augmented Generation,Liang et al.,2024,WWW 2025,2409.13731,https://arxiv.org/abs/2409.13731,MH: LLM+KG,总表 All Papers;新补,高,WWW 2025,imported
+lib_5952bfcd9c7e,Human Cognition Inspired RAG with KG for Complex QA,Cheng et al.,2024,arXiv,,,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_32c8613d1493,HippoRAG: Neurobiologically Inspired Long-Term Memory,Gutierrez et al.,2024,NeurIPS 2024,2405.14831,https://arxiv.org/abs/2405.14831,MH: LLM+KG,总表 All Papers;新补,高,必补，2024 高引,imported
+lib_afbbd928d95f,Grounding LLM Reasoning with Knowledge Graphs,Amayuelas et al.,2024,arXiv,,,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_1faea20b4240,GraphRAG: From Local to Global (Microsoft),Edge et al.,2024,arXiv,2404.16130,https://arxiv.org/abs/2404.16130,MH: LLM+KG,总表 All Papers;新补,高,必补，工业界高影响,imported
+lib_3af06097463e,Graph-CoT: Augmenting LLMs by Reasoning on Graphs,Jin et al.,2024,ACL 2024,2404.07103,https://arxiv.org/abs/2404.07103,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_fb895369ca1a,Graph Retrieval-Augmented Generation: A Survey,Peng et al.,2024,arXiv,2408.08921,https://arxiv.org/abs/2408.08921,MH survey,原有;总表 All Papers,-,,imported
+lib_2e42f0c14006,GNN-RAG: Graph Neural Retrieval for LLM Reasoning,Mavromatis & Karypis,2024,arXiv,2405.20139,https://arxiv.org/abs/2405.20139,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_1f531748715d,GenDec: A robust generative Question-decomposition method,Wu et al.,2024,arXiv,2402.11166,https://arxiv.org/abs/2402.11166,MH: Decomposition,原有;总表 All Papers,-,,imported
+lib_12fa7943c111,G-Retriever: RAG for Textual Graph Understanding,He et al.,2024,NeurIPS 2024,2402.07630,https://arxiv.org/abs/2402.07630,MH: LLM+KG,总表 All Papers;新补,高,NeurIPS 2024,imported
+lib_7e23d0bdeda7,"FRAMES: Fact, Retrieve, and Reason (Google)",Krishna et al.,2024,arXiv,2409.12941,https://arxiv.org/abs/2409.12941,MH Benchmark,总表 All Papers;新补,高,2024 新基准,imported
+lib_a5cc0ec1f1e3,FanOutQA: Multi-Hop Multi-Document Benchmark,Zhu et al.,2024,ACL 2024,2402.14116,https://arxiv.org/abs/2402.14116,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_07b15d5cb698,EfficientRAG: Efficient Retriever for Multi-Hop QA,Zhuang et al.,2024,EMNLP 2024,2408.04259,https://arxiv.org/abs/2408.04259,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_f8fa357059fb,Dual Reasoning: A GNN-LLM Collaborative Framework,Liu et al.,2024,arXiv,,,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_82310b88a23a,DRAGIN: Dynamic RAG based on Information Needs,Su et al.,2024,ACL 2024,2403.10081,https://arxiv.org/abs/2403.10081,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_6e133e30d3f4,Direct Evaluation of CoT in Multi-hop Reasoning with KGs,Nguyen et al.,2024,arXiv,2402.11199,https://arxiv.org/abs/2402.11199,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_5c928af79ed5,DALK: Dynamic Co-Augmentation of LLMs and KG,Li et al.,2024,Findings EMNLP 2024,2405.04819,https://arxiv.org/abs/2405.04819,MH: LLM+KG,总表 All Papers;新补,中,医疗场景,imported
+lib_cc142637818f,CofCA: Step-wise Counterfactual Multi-hop QA,Wu et al.,2024,arXiv,2402.11924,https://arxiv.org/abs/2402.11924,MH Benchmark,总表 All Papers;新补,中,,imported
+lib_f15fd5f5ded7,Chain of Agents: Collaborating on Long-Context Tasks,Zhang et al.,2024,NeurIPS 2024,2406.02818,https://arxiv.org/abs/2406.02818,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_8b2df94e6d96,BeamAggR: Beam Aggregation Reasoning for MHQA,Chu et al.,2024,ACL 2024,2404.12316,https://arxiv.org/abs/2404.12316,MH: Retrieve-based,总表 All Papers;新补,中,,imported
+lib_e6dcce337876,Adaptive-RAG: Learning to Adapt Based on Question Complexity,Jeong et al.,2024,NAACL 2024,2403.14403,https://arxiv.org/abs/2403.14403,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_57fd05e25580,A Survey on RAG meeting LLMs,Fan et al.,2024,arXiv,2405.06211,https://arxiv.org/abs/2405.06211,MH survey,总表 All Papers;新补,中,,imported
+lib_7b404b7ed3c5,A Survey on RAG for Text Generation for LLMs,Huang & Huang,2024,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_43402d545b13,A Survey on LLM Inference-Time Self-Improvement,Dong et al.,2024,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_6371937b7ca8,A Comprehensive Survey on Multi-hop MRC Datasets,Mohammadi et al.,2024,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_000098e897fa,A Comprehensive Survey on Multi-hop MRC Approaches,Mohammadi et al.,2024,arXiv,,,MH survey,原有;总表 All Papers,-,,imported
+lib_4030afdd87e2,Voyager: Open-Ended Embodied Agent with LLMs,Wang et al.,2023,arXiv,2305.16291,https://arxiv.org/abs/2305.16291,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_aa537d29563d,Verify-and-Edit: Knowledge-Enhanced CoT Framework,Zhao et al.,2023,ACL 2023,2305.03268,https://arxiv.org/abs/2305.03268,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_4091e15e54bb,Tree of Thoughts: Deliberate Problem Solving,Yao et al.,2023,NeurIPS 2023,2305.10601,https://arxiv.org/abs/2305.10601,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_2b674ed01843,Toolformer: LMs Can Teach Themselves to Use Tools,Schick et al.,2023,NeurIPS 2023,2302.04761,https://arxiv.org/abs/2302.04761,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_f9a610946f68,Think-on-Graph: Deep and Responsible Reasoning (ToG),Sun et al.,2023,ICLR 2024,2307.07697,https://arxiv.org/abs/2307.07697,MH: LLM+KG,原有;总表 All Papers,-,必读,imported
+lib_bbdad8e906bd,Think-on-Graph (方法，误归类),Sun et al.,2023,ICLR 2024,2307.07697,https://arxiv.org/abs/2307.07697,MH Benchmark,建议清理,-,应归 LLM+KG,needs_triage
+lib_5e743af1eb18,Take a Step Back: Evoking Reasoning via Abstraction in LLMs,Zheng et al.,2023,ICLR 2024,2310.06117,https://arxiv.org/abs/2310.06117,MH: Decomposition,原有;总表 All Papers,-,,imported
+lib_127ac87c4ba0,StructGPT: General Framework for LLM on Structured Data,Jiang et al.,2023,EMNLP 2023,2305.09645,https://arxiv.org/abs/2305.09645,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_3dbec57e5d2b,Skeleton-of-Thought: Prompting LLMs for Efficient Parallel Generation,Ning et al.,2023,ICLR 2024,2307.15337,https://arxiv.org/abs/2307.15337,MH: Decomposition,原有;总表 All Papers,-,,imported
+lib_3e43427f8dfc,SelfCheckGPT: Zero-Resource Hallucination Detection,Manakul et al.,2023,EMNLP 2023,2303.08896,https://arxiv.org/abs/2303.08896,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_4199218b304e,Self-Refine: Iterative Refinement with Self-Feedback,Madaan et al.,2023,NeurIPS 2023,2303.17651,https://arxiv.org/abs/2303.17651,MH Agentic;MH Verify;MH: Agentic;MH: Verify,MH Agentic;MH Verify;总表 All Papers,,,imported
+lib_3126b4be1003,"Self-RAG: Retrieve, Generate, Critique through Self-Reflection",Asai et al.,2023,ICLR 2024,2310.11511,https://arxiv.org/abs/2310.11511,MH: Retrieve-based,原有;总表 All Papers,-,也算 Agentic,imported
+lib_3ae57d894d98,Self-prompted CoT for Open-domain Multi-hop Reasoning (SP-CoT),Wang et al.,2023,Findings EMNLP 2023,2310.13552,https://arxiv.org/abs/2310.13552,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_ef8b41000363,Self-Contradictory Hallucinations of LLMs,Mündler et al.,2023,ICLR 2024,2305.15852,https://arxiv.org/abs/2305.15852,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_b4bc18104813,Retrieve-Rewrite-Answer: KG-to-Text Framework,Wu et al.,2023,arXiv,2309.11206,https://arxiv.org/abs/2309.11206,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_0d6c09df5b7a,REPLUG: Retrieval-Augmented Black-Box LMs,Shi et al.,2023,NAACL 2024,2301.12652,https://arxiv.org/abs/2301.12652,MH: Retrieve-based,总表 All Papers;新补,中,,imported
+lib_61cb013e344e,Reflexion: Language Agents with Verbal RL,Shinn et al.,2023,NeurIPS 2023,2303.11366,https://arxiv.org/abs/2303.11366,MH Agentic;MH Verify;MH: Agentic;MH: Verify,MH Agentic;MH Verify;总表 All Papers,,,imported
+lib_76d42c663b98,RECOMP: Compressing Retrieved Documents,Xu et al.,2023,ICLR 2024,2310.04408,https://arxiv.org/abs/2310.04408,MH: Retrieve-based,总表 All Papers;新补,中,,imported
+lib_57dc058f11ee,Reasoning with LM is Planning with World Model (RAP),Hao et al.,2023,EMNLP 2023,2305.14992,https://arxiv.org/abs/2305.14992,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_228c1d6be78c,Reasoning on Graphs: Faithful and Interpretable LLM Reasoning (RoG),Luo et al.,2023,ICLR 2024,2310.01061,https://arxiv.org/abs/2310.01061,MH: LLM+KG,原有;总表 All Papers,-,必读,imported
+lib_a4d5a00d8777,Reasoning on Graphs (方法，误归类),Luo et al.,2023,ICLR 2024,2310.01061,https://arxiv.org/abs/2310.01061,MH Benchmark,建议清理,-,应归 LLM+KG,needs_triage
+lib_2f63bb9e4a2b,RAG for LLMs: A Survey,Gao et al.,2023,arXiv,2312.10997,https://arxiv.org/abs/2312.10997,MH survey,原有;总表 All Papers,-,经典综述,imported
+lib_119285187ab1,Plan-and-Solve Prompting,Wang et al.,2023,ACL 2023,2305.04091,https://arxiv.org/abs/2305.04091,MH: Decomposition,原有;总表 All Papers,-,,imported
+lib_6ab4bce27703,OpenAgents: Open Platform for Language Agents,Xie et al.,2023,arXiv,2310.10634,https://arxiv.org/abs/2310.10634,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_9d0e6928f776,MindMap: KG Prompting Sparks Graph of Thoughts,Wen et al.,2023,ACL 2024,2308.09729,https://arxiv.org/abs/2308.09729,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_9300604d221b,Making RALMs Robust to Irrelevant Context,Yoran et al.,2023,ICLR 2024,2310.01558,https://arxiv.org/abs/2310.01558,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_b6c1a897bb7f,Let's Verify Step by Step,Lightman et al.,2023,ICLR 2024,2305.20050,https://arxiv.org/abs/2305.20050,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_0fc3ce2ec0d3,Language Agent Tree Search (LATS),Zhou et al.,2023,ICML 2024,2310.04406,https://arxiv.org/abs/2310.04406,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_03b024ec7b3a,KnowledgeNavigator: Enhanced Reasoning over KG,Katz et al.,2023,arXiv,2312.15880,https://arxiv.org/abs/2312.15880,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_efe1ff1ccdf8,Knowledge-Driven CoT (KD-CoT),Wang et al.,2023,arXiv,2308.13259,https://arxiv.org/abs/2308.13259,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_36895cf65790,Knowledge Solver: Teaching LLMs to Search for Domain Knowledge,Feng et al.,2023,arXiv,2309.03118,https://arxiv.org/abs/2309.03118,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_802b8716ef07,KG-GPT: General Framework for Reasoning on KGs,Kim et al.,2023,Findings EMNLP 2023,2310.11220,https://arxiv.org/abs/2310.11220,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_effc8b773b76,KG Prompting for Multi-Document QA,Wang et al.,2023,AAAI 2024,2308.11730,https://arxiv.org/abs/2308.11730,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_d7c62626a44a,Iter-RetGen: Iterative Retrieval-Generation,Shao et al.,2023,Findings EMNLP 2023,2305.15294,https://arxiv.org/abs/2305.15294,MH: Retrieve-based,总表 All Papers;新补,高,iterative RAG 代表,imported
+lib_fd569608d43f,In-Context RALM,Ram et al.,2023,TACL 2023,2302.00083,https://arxiv.org/abs/2302.00083,MH: Retrieve-based,总表 All Papers;新补,中,,imported
+lib_27dbf5f6bd9e,In-context Ability Transfer for Question Decomposition,Venktesh et al.,2023,arXiv,2310.18371,https://arxiv.org/abs/2310.18371,MH: Decomposition,总表 All Papers;新补,中,,imported
+lib_66899f1859fd,HyKGE: Hypothesis KG Enhanced Medical LLMs,Jiang et al.,2023,arXiv,2312.15883,https://arxiv.org/abs/2312.15883,MH: LLM+KG,总表 All Papers;新补,中,,imported
+lib_323354db0a4a,Graph of Thoughts: Solving Elaborate Problems,Besta et al.,2023,AAAI 2024,2308.09687,https://arxiv.org/abs/2308.09687,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_10de001ba079,Graph Attention with Hierarchies for Multi-hop QA,He et al.,2023,arXiv,2301.11792,https://arxiv.org/abs/2301.11792,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_9e0fa48f78db,GPQA: Graduate-Level QA Benchmark,Rein et al.,2023,COLM 2024,2311.12022,https://arxiv.org/abs/2311.12022,MH Benchmark,总表 All Papers;新补,中,,imported
+lib_2d66659454f5,Gorilla: LLM Connected with Massive APIs,Patil et al.,2023,NeurIPS 2024,2305.15334,https://arxiv.org/abs/2305.15334,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_41aee2c70c6f,FLARE: Active Retrieval Augmented Generation,Jiang et al.,2023,EMNLP 2023,2305.06983,https://arxiv.org/abs/2305.06983,MH: Retrieve-based,原有;总表 All Papers,-,iterative RAG 代表,imported
+lib_34d6720b4aff,Faithful Chain-of-Thought Reasoning,Lyu et al.,2023,IJCNLP-AACL 2023,2301.13379,https://arxiv.org/abs/2301.13379,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_b244ec9baeb5,FActScore: Fine-grained Atomic Evaluation,Min et al.,2023,EMNLP 2023,2305.14251,https://arxiv.org/abs/2305.14251,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_0fbeaac2b2e8,EX-FEVER: Multi-hop Explainable Fact Verification,Ma et al.,2023,arXiv,2310.09754,https://arxiv.org/abs/2310.09754,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_fd8d6194d733,Ever: Mitigating Hallucination through Real-Time Verification,Kang et al.,2023,arXiv,2311.09114,https://arxiv.org/abs/2311.09114,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_c23d76d5e8d6,End-to-End Beam Retrieval for Multi-Hop QA,Zhang et al.,2023,NAACL 2024,2308.08973,https://arxiv.org/abs/2308.08973,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_eb65fd167a07,D&Q: Constrained Multi-Stage Question Decomposition with LLMs,Li et al.,2023,arXiv,2311.07491,https://arxiv.org/abs/2311.07491,MH: Decomposition,总表 All Papers;新补,高,D&Q 框架,imported
+lib_318e1a1f4a27,CRITIC: LLMs Can Self-Correct with Tool-Interactive,Gou et al.,2023,ICLR 2024,2305.11738,https://arxiv.org/abs/2305.11738,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_ce457d1e72f6,Chain-of-Verification Reduces Hallucination (CoVe),Dhuliawala et al.,2023,Findings ACL 2024,2309.11495,https://arxiv.org/abs/2309.11495,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_1698b08b1abf,Chain-of-Note: Enhancing Robustness in Retrieval-Augmented LMs,Yu et al.,2023,arXiv,2311.09210,https://arxiv.org/abs/2311.09210,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_89fd6ca38f3b,AutoGen: Multi-Agent Conversation Framework,Wu et al.,2023,arXiv,2308.08155,https://arxiv.org/abs/2308.08155,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_3680619c998d,Answering Questions by Meta-Reasoning over Multiple CoT (MCR),Yoran et al.,2023,arXiv,2304.13007,https://arxiv.org/abs/2304.13007,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_4b88c4ec73a4,A Survey on Hallucination in LLMs,Huang et al.,2023,arXiv,2311.05232,https://arxiv.org/abs/2311.05232,MH survey,原有;总表 All Papers,-,,imported
+lib_4be3dd5b88a9,"A Real-World WebAgent with Planning, Long Context",Gur et al.,2023,ICLR 2024,2307.12856,https://arxiv.org/abs/2307.12856,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_a85b71f0a1b9,UniKGQA: Unified Retrieval and Reasoning for Multi-hop KBQA,Jiang et al.,2022,ICLR 2023,2212.00959,https://arxiv.org/abs/2212.00959,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_1ef4a186cef3,UniKGQA (方法，误归类),Jiang et al.,2022,ICLR 2023,2212.00959,https://arxiv.org/abs/2212.00959,MH Benchmark,建议清理,-,应归 KG-based,needs_triage
+lib_8270a7b1450b,Subgraph Retrieval Enhanced Model for Multi-hop KBQA,Zhang et al.,2022,ACL 2022,2202.13296,https://arxiv.org/abs/2202.13296,MH: KG-based,总表 All Papers;新补,高,必引 baseline,imported
+lib_69c548eda7b3,STaR: Bootstrapping Reasoning With Reasoning,Zelikman et al.,2022,NeurIPS 2022,2203.14465,https://arxiv.org/abs/2203.14465,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_4c3e2c18bdd7,Self-Consistency Improves CoT Reasoning,Wang et al.,2022,ICLR 2023,2203.11171,https://arxiv.org/abs/2203.11171,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_1227a89c9026,ReAct: Synergizing Reasoning and Acting,Yao et al.,2022,ICLR 2023,2210.03629,https://arxiv.org/abs/2210.03629,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_fef3079daf43,RARR: Researching and Revising What LMs Say,Gao et al.,2022,ACL 2023,2210.08726,https://arxiv.org/abs/2210.08726,MH Verify;MH: Verify,MH Verify;总表 All Papers,,,imported
+lib_a092e4f85200,QDAMR: Interpretable AMR-Based Question Decomposition,Deng et al.,2022,arXiv,2206.08486,https://arxiv.org/abs/2206.08486,MH: Decomposition,总表 All Papers;新补,高,AMR-based QD,imported
+lib_a16aa24c70db,Program of Thoughts Prompting,Chen et al.,2022,TMLR 2023,2211.12588,https://arxiv.org/abs/2211.12588,MH: Decomposition,原有;总表 All Papers,-,也可归 CoT,imported
+lib_a38fca610b44,Multi-hop Question Answering,Mavi & Jangra,2022,arXiv,2204.09140,https://arxiv.org/abs/2204.09140,MH survey,原有;总表 All Papers,-,,imported
+lib_0530ff61497d,Measuring Compositionality Gap (方法，误归类),Press et al.,2022,Findings EMNLP 2023,2210.03350,https://arxiv.org/abs/2210.03350,MH Benchmark,建议清理,-,应归 Decomposition,needs_triage
+lib_30b7dbf60e3d,Measuring and Narrowing the Compositionality Gap (Self-Ask),Press et al.,2022,Findings EMNLP 2023,2210.03350,https://arxiv.org/abs/2210.03350,MH: Decomposition,原有;总表 All Papers,-,附带 Bamboogle 数据集,imported
+lib_3ae20d85637d,Locate Then Ask: Interpretable Stepwise Reasoning for Multi-hop QA,Wang et al.,2022,COLING 2022,2208.10297,https://arxiv.org/abs/2208.10297,MH: Decomposition,原有;总表 All Papers,-,也在 Retrieve-based,imported
+lib_d19fb5fecc99,Locate Then Ask: Interpretable Stepwise Reasoning,Wang et al.,2022,COLING 2022,2208.10297,https://arxiv.org/abs/2208.10297,MH: Retrieve-based,原有;总表 All Papers,-,也在 Decomposition,imported
+lib_7fa8dc02f84d,LLMs are Zero-Shot Reasoners,Kojima et al.,2022,NeurIPS 2022,2205.11916,https://arxiv.org/abs/2205.11916,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_495f3380b4b1,Least-to-Most Prompting Enables Complex Reasoning,Zhou et al.,2022,ICLR 2023,2205.10625,https://arxiv.org/abs/2205.10625,MH: Decomposition,原有;总表 All Papers,-,奠基工作,imported
+lib_6f524cd73ef2,IRCoT: Interleaving Retrieval with CoT,Trivedi et al.,2022,ACL 2023,2212.10509,https://arxiv.org/abs/2212.10509,MH: Retrieve-based,原有;总表 All Papers,-,CoT × Retrieve 必读,imported
+lib_749094d7ca0b,GreaseLM: Graph REASoning Enhanced LMs,Zhang et al.,2022,ICLR 2022,2201.08860,https://arxiv.org/abs/2201.08860,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_70ed155da3c2,GreaseLM (方法，误归类),Zhang et al.,2022,ICLR 2022,2201.08860,https://arxiv.org/abs/2201.08860,MH Benchmark,建议清理,-,应归 KG-based,needs_triage
+lib_7542ac146c37,Graph-free Multi-hop RC: Select-to-Guide Strategy,Wu et al.,2022,arXiv,2205.00621,https://arxiv.org/abs/2205.00621,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_2ea127bcd8ee,Decomposed Prompting: A Modular Approach,Khot et al.,2022,ICLR 2023,2210.02406,https://arxiv.org/abs/2210.02406,MH: Decomposition,原有;总表 All Papers,-,奠基工作,imported
+lib_e8bc0e8d0dfd,Chain-of-Thought Prompting Elicits Reasoning,Wei et al.,2022,NeurIPS 2022,2201.11903,https://arxiv.org/abs/2201.11903,MH CoT;MH: CoT,MH CoT;总表 All Papers,,,imported
+lib_89ac831908cd,Atlas: Few-shot Learning with RAG,Izacard et al.,2022,JMLR 2023,2208.03299,https://arxiv.org/abs/2208.03299,MH: Retrieve-based,总表 All Papers;新补,中,,imported
+lib_d4bd22aa6fc8,Ask to Understand: Question Generation for Multi-hop QA,Li et al.,2022,arXiv,2203.09073,https://arxiv.org/abs/2203.09073,MH: Decomposition,总表 All Papers;新补,中,,imported
+lib_7cef80c67619,WebGPT: Browser-assisted QA with Human Feedback,Nakano et al.,2021,arXiv,2112.09332,https://arxiv.org/abs/2112.09332,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_edc6993541b3,StrategyQA (Did Aristotle Use a Laptop?),Geva et al.,2021,TACL 2021,2101.02235,https://arxiv.org/abs/2101.02235,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_a424215e41f8,SPLADE: Sparse Lexical and Expansion Model,Formal et al.,2021,SIGIR 2021,2107.05720,https://arxiv.org/abs/2107.05720,MH: Retrieve-based,总表 All Papers;新补,高,稀疏检索必引,imported
+lib_75e38df509d6,QA-GNN: Reasoning with LMs and KGs,Yasunaga et al.,2021,NAACL 2021,2104.06378,https://arxiv.org/abs/2104.06378,MH: KG-based,原有;总表 All Papers,-,GNN+LM 奠基,imported
+lib_5af50eb33651,QA-GNN (方法，误归类),Yasunaga et al.,2021,NAACL 2021,2104.06378,https://arxiv.org/abs/2104.06378,MH Benchmark,建议清理,-,应归 KG-based,needs_triage
+lib_b031266138b5,MuSiQue: Multihop Questions via Single-hop Composition,Trivedi et al.,2021,TACL 2022,2108.00573,https://arxiv.org/abs/2108.00573,MH Benchmark,原有;总表 All Papers,-,经典基准,imported
+lib_d3d10209f8f3,"MultiModalQA: Complex QA over Text, Tables and Images",Talmor et al.,2021,ICLR 2021,2104.06039,https://arxiv.org/abs/2104.06039,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_7bf9905a279c,KG-FiD: Infusing KG in Fusion-in-Decoder,Yu et al.,2021,ACL 2022,2110.04330,https://arxiv.org/abs/2110.04330,MH: KG-based,总表 All Papers;新补,高,,imported
+lib_77881e692e0d,Improving Multi-hop KBQA by Learning Intermediate Supervision,He et al.,2021,ACL 2021,2101.03737,https://arxiv.org/abs/2101.03737,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_54e35c3b16a8,Explaining Answers with Entailment Trees (EntailmentBank),Dalvi et al.,2021,EMNLP 2021,2104.08661,https://arxiv.org/abs/2104.08661,MH Benchmark,原有;总表 All Papers,-,私有,imported
+lib_a421f64ae434,Dynamic Semantic Graph Construction for Multi-hop,Xu et al.,2021,ACL 2021,2101.04994,https://arxiv.org/abs/2101.04994,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_e5e81aca3540,Complex KBQA: A Survey,Lan et al.,2021,TKDE 2022,2105.11644,https://arxiv.org/abs/2105.11644,MH survey,原有;总表 All Papers,-,,imported
+lib_3a36fd77743f,ColBERTv2: Effective and Efficient Retrieval,Santhanam et al.,2021,NAACL 2022,2112.01488,https://arxiv.org/abs/2112.01488,MH: Retrieve-based,总表 All Papers;新补,高,late-interaction 检索,imported
+lib_67eb357ce8a6,Baleen: Robust Multi-Hop Reasoning at Scale,Khattab et al.,2021,NeurIPS 2021,2101.00436,https://arxiv.org/abs/2101.00436,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_bd863bb32a3b,Unsupervised Question Decomposition for QA,Perez et al.,2020,EMNLP 2020,2002.09758,https://arxiv.org/abs/2002.09758,MH: Decomposition,总表 All Papers;新补,中,早期无监督 QD,imported
+lib_bf0c395c8df2,SRLGRN: Semantic Role Labeling Graph Reasoning,Zheng & Kordjamshidi,2020,EMNLP 2020,,,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_a1000c2451fc,Scalable Multi-Hop Relational Reasoning (方法，误归类),Feng et al.,2020,EMNLP 2020,2005.00646,https://arxiv.org/abs/2005.00646,MH Benchmark,建议清理,-,应归 KG-based / LLM+KG,needs_triage
+lib_50f9adc97bc5,Scalable Multi-Hop Relational Reasoning (MHGRN),Feng et al.,2020,EMNLP 2020,2005.00646,https://arxiv.org/abs/2005.00646,MH: KG-based;MH: LLM+KG,原有;总表 All Papers,-,HotpotQA 时代经典,imported
+lib_f27316385dd9,Relational GCN for Multihop Reasoning,Staliunaite et al.,2020,arXiv,,,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_01470ab0ea1d,Regex Queries over Incomplete Knowledge Bases,Adlakha et al.,2020,AKBC 2020,,,MH: KG-based,原有;总表 All Papers,-,与 MHQA 关联弱,imported
+lib_9e78af4c2660,RAG: Retrieval-Augmented Generation for Knowledge-Intensive NLP,Lewis et al.,2020,NeurIPS 2020,2005.11401,https://arxiv.org/abs/2005.11401,MH: Retrieve-based,原有;总表 All Papers,-,RAG 奠基,imported
+lib_4c242ed3156a,Open QA over Tables and Text,Chen et al.,2020,ICLR 2021,2010.10439,https://arxiv.org/abs/2010.10439,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_0b315ffb6cf4,Multi-hop RC across Documents with Path-based Graph,Tang et al.,2020,arXiv,,,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_a40db4b8148a,MDR: Multi-Hop Dense Retrieval for Complex QA,Xiong et al.,2020,ICLR 2021,2009.12756,https://arxiv.org/abs/2009.12756,MH: Retrieve-based,原有;总表 All Papers,-,多跳稠密检索奠基,imported
+lib_f142a93b3ba3,IIRC: Dataset of Incomplete Information RC,Ferguson et al.,2020,EMNLP 2020,2011.07127,https://arxiv.org/abs/2011.07127,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_de79e6a1a1a8,HybridQA: Multi-Hop QA over Tabular and Textual Data,Chen et al.,2020,Findings EMNLP 2020,2004.07347,https://arxiv.org/abs/2004.07347,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_00ab7e2e80ab,HoVer: Many-Hop Fact Extraction and Claim Verification,Jiang et al.,2020,Findings EMNLP 2020,2011.03088,https://arxiv.org/abs/2011.03088,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_99cd434b6e27,HGN: Hierarchical Graph Network for Multi-hop QA,Fang et al.,2020,EMNLP 2020,1911.03631,https://arxiv.org/abs/1911.03631,MH: KG-based,总表 All Papers;新补,中,HotpotQA 时代 GNN,imported
+lib_80e37e2fd81c,FiD: Leveraging Passage Retrieval with Generative Models,Izacard & Grave,2020,EACL 2021,2007.01282,https://arxiv.org/abs/2007.01282,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_857541df38d6,Few-Shot Learning for Opinion Summarization,Brazinskas et al.,2020,EMNLP 2020,2004.14884,https://arxiv.org/abs/2004.14884,MH: Decomposition,原有;总表 All Papers,-,与 MHQA 关联弱，建议检查,imported
+lib_6891b10434f3,DPR: Dense Passage Retrieval for Open-Domain QA,Karpukhin et al.,2020,EMNLP 2020,2004.04906,https://arxiv.org/abs/2004.04906,MH: Retrieve-based,原有;总表 All Papers,-,检索奠基,imported
+lib_0ccd3aaee15d,Break It Down: A Question Understanding Benchmark,Wolfson et al.,2020,TACL 2020,2001.11770,https://arxiv.org/abs/2001.11770,MH: Decomposition,原有;总表 All Papers,-,,imported
+lib_de572b6cf00f,Answering Open-Domain Questions of Varying Reasoning Steps,Qi et al.,2020,EMNLP 2021,2010.12527,https://arxiv.org/abs/2010.12527,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_4eb2af5bf1b5,A Survey on Machine Reading Comprehension Systems,Baradaran et al.,2020,arXiv,2001.01582,https://arxiv.org/abs/2001.01582,MH survey,原有;总表 All Papers,-,,imported
+lib_85159b6c3474,A Survey on Explainability in MRC,Thayaparan et al.,2020,arXiv,2010.00389,https://arxiv.org/abs/2010.00389,MH survey,原有;总表 All Papers,-,,imported
+lib_1a322985fc61,2WikiMultiHopQA: Constructing A Multi-hop QA Dataset,Ho et al.,2020,COLING 2020,2011.01060,https://arxiv.org/abs/2011.01060,MH Benchmark,原有;总表 All Papers,-,经典基准,imported
+lib_54099ba5400f,"SAE: Select, Answer and Explain",Tu et al.,2019,AAAI 2020,1911.00484,https://arxiv.org/abs/1911.00484,MH: KG-based,总表 All Papers;新补,中,,imported
+lib_11179d8f920a,PullNet: Open Domain QA with Iterative KB Retrieval,Sun et al.,2019,ACL 2019,1904.09537,https://arxiv.org/abs/1904.09537,MH: KG-based,原有;总表 All Papers,-,早期代表,imported
+lib_aa814ddb275a,PullNet (方法，误归类),Sun et al.,2019,ACL 2019,1904.09537,https://arxiv.org/abs/1904.09537,MH Benchmark,建议清理,-,方法论文，应归 KG-based,needs_triage
+lib_5d71703cd11d,Multi-hop RC through Question Decomposition and Rescoring,Min et al.,2019,ACL 2019,1906.02916,https://arxiv.org/abs/1906.02916,MH: Decomposition,原有;总表 All Papers,-,早期经典,imported
+lib_beaa144b0c32,Learning to Retrieve Reasoning Paths over Wikipedia Graph,Asai et al.,2019,ICLR 2020,1911.10470,https://arxiv.org/abs/1911.10470,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_d3349d73b5aa,KagNet: Knowledge-Aware Graph Networks for Commonsense,Lin et al.,2019,EMNLP 2019,1909.02151,https://arxiv.org/abs/1909.02151,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_65dde19c9a58,GoldEn: Answering Complex Open-domain Questions via Iterative Query,Qi et al.,2019,EMNLP 2019,1910.07000,https://arxiv.org/abs/1910.07000,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_dd16998d84e3,Emergent Tool Use From Multi-Agent Autocurricula,Baker et al.,2019,ICLR 2020,1909.07528,https://arxiv.org/abs/1909.07528,MH Agentic;MH: Agentic,MH Agentic;总表 All Papers,,,imported
+lib_4f71145fd6a4,DROP: RC Benchmark Requiring Discrete Reasoning,Dua et al.,2019,NAACL 2019,1903.00161,https://arxiv.org/abs/1903.00161,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_920ec8e47bfa,DFGN: Dynamically Fused Graph Network,Xiao et al.,2019,ACL 2019,1905.06933,https://arxiv.org/abs/1905.06933,MH: KG-based,总表 All Papers;新补,中,HotpotQA 时代 GNN,imported
+lib_cb04b5e395dc,Cognitive Graph for Multi-Hop Reading Comprehension,Ding et al.,2019,ACL 2019,1905.05460,https://arxiv.org/abs/1905.05460,MH: KG-based,总表 All Papers;新补,中,,imported
+lib_9191174b15d2,BAG: Bi-directional Attention Entity Graph CNN,Cao et al.,2019,NAACL 2019,1904.04969,https://arxiv.org/abs/1904.04969,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_f16a431c1ade,"HotpotQA: Diverse, Explainable Multi-hop QA",Yang et al.,2018,EMNLP 2018,1809.09600,https://arxiv.org/abs/1809.09600,MH Benchmark,原有;总表 All Papers,-,经典基准必引,imported
+lib_6905ba1b40b7,GraftNet: Open Domain QA over KB and Text,Sun et al.,2018,EMNLP 2018,1809.00782,https://arxiv.org/abs/1809.00782,MH: KG-based,总表 All Papers;新补,高,KBQA 历史坐标,imported
+lib_5570bc30cae3,FEVER: Large-scale Fact Extraction and Verification,Thorne et al.,2018,NAACL 2018,1803.05355,https://arxiv.org/abs/1803.05355,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_b69e291d2b80,Exploring Graph-structured Passage Representation,Song et al.,2018,arXiv,,,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_ae0b05c7c76a,CWQ: Complex Web Questions,Talmor & Berant,2018,NAACL 2018,1803.06643,https://arxiv.org/abs/1803.06643,MH Benchmark,总表 All Papers;新补,高,经典多跳 KBQA,imported
+lib_985b05b55515,Commonsense for Generative Multi-Hop QA,Bauer et al.,2018,EMNLP 2018,1809.06309,https://arxiv.org/abs/1809.06309,MH: LLM+KG,原有;总表 All Papers,-,,imported
+lib_ff3714667e8a,WikiHop: Constructing Datasets for MH RC Across Documents,Welbl et al.,2017,TACL 2018,1710.06481,https://arxiv.org/abs/1710.06481,MH Benchmark,原有;总表 All Papers,-,,imported
+lib_6e9b0bf2fe56,Multi-hop RC via Deep RL based Document Traversal,Long et al.,2017,arXiv,1707.07057,https://arxiv.org/abs/1707.07057,MH: Retrieve-based,原有;总表 All Papers,-,,imported
+lib_9ac8978fa1a5,Go for a Walk and Arrive at the Answer,Das et al.,2017,arXiv,1711.05851,https://arxiv.org/abs/1711.05851,MH: KG-based,原有;总表 All Papers,-,,imported
+lib_bf58c18bd28f,Go for a Walk (方法，误归类),Das et al.,2017,arXiv,1711.05851,https://arxiv.org/abs/1711.05851,MH Benchmark,建议清理,-,应归 KG-based,needs_triage
+lib_95e7fcc89a5c,DrQA: Reading Wikipedia to Answer Open-Domain Questions,Chen et al.,2017,ACL 2017,1704.00051,https://arxiv.org/abs/1704.00051,MH: Retrieve-based,原有;总表 All Papers,-,开放域 QA 奠基,imported

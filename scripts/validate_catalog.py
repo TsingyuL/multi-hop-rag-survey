@@ -20,6 +20,7 @@ ALLOWED_FAMILIES = {
 ALLOWED_SOURCES = {"text", "knowledge_graph", "table", "multimodal", "hybrid"}
 ALLOWED_STAGES = {"retrieve", "select", "order", "read_fuse", "verify", "end_to_end"}
 ALLOWED_STATUS = {"seeded", "reviewed", "needs_review"}
+ALLOWED_LIBRARY_STATES = {"imported", "needs_triage"}
 
 
 def values(value: str) -> set[str]:
@@ -76,6 +77,11 @@ def main() -> int:
         {"citation_key", "pipeline_stage", "primary_estimand", "intervention",
          "observable_diagnostic", "common_confounder", "status"},
     )
+    library = read_csv(
+        "library_papers.csv",
+        {"library_id", "title", "authors", "year", "venue", "arxiv_id", "source_url",
+         "library_categories", "source_origin", "priority", "notes", "review_state"},
+    )
     all_rows = [("methods.csv", row) for row in methods] + [("benchmarks.csv", row) for row in benchmarks]
     keys = [row["citation_key"] for _, row in all_rows]
     if len(keys) != len(set(keys)):
@@ -116,6 +122,19 @@ def main() -> int:
                 raise ValueError(f"benchmarks.csv: row {number} has blank {field}")
         require_url("benchmarks.csv", number, "data_url", row["data_url"])
 
+    library_ids = [row["library_id"] for row in library]
+    if len(library_ids) != len(set(library_ids)):
+        raise ValueError("library_papers.csv has duplicate library_id values")
+    for number, row in enumerate(library, start=2):
+        if not re.fullmatch(r"lib_[a-f0-9]{12}", row["library_id"]):
+            raise ValueError(f"library_papers.csv: row {number} has invalid library_id")
+        if not row["title"].strip() or not row["library_categories"].strip():
+            raise ValueError(f"library_papers.csv: row {number} has blank title or library_categories")
+        if row["year"] and not re.fullmatch(r"\d{4}", row["year"]):
+            raise ValueError(f"library_papers.csv: row {number} has invalid year: {row['year']}")
+        require_choice("library_papers.csv", number, "review_state", row["review_state"], ALLOWED_LIBRARY_STATES)
+        require_url("library_papers.csv", number, "source_url", row["source_url"], optional=True)
+
     bib_keys = set(re.findall(r"@\w+\s*\{\s*([^,\s]+)", (TAXONOMY / "reading_list.bib").read_text(encoding="utf-8")))
     missing_bib = set(keys) - bib_keys
     if missing_bib:
@@ -128,7 +147,7 @@ def main() -> int:
     if unmapped_methods:
         raise ValueError(f"pipeline_mapping.csv is missing method keys: {sorted(unmapped_methods)}")
 
-    print(f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, {len(mappings)} mappings.")
+    print(f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, {len(mappings)} mappings, {len(library)} imported library records.")
     return 0
 
 

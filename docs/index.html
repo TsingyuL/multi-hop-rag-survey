@@ -28,7 +28,7 @@
       .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
       .links a { border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #fff; padding: 7px 14px; text-decoration: none; font-size: .9rem; }
       main { padding: 30px 24px 60px; }
-      .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: -25px 0 28px; }
+      .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: -25px 0 28px; }
       .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; box-shadow: var(--shadow); padding: 18px; }
       .metric strong { display: block; color: var(--accent); font-size: 1.75rem; line-height: 1; }
       .metric span { color: var(--muted); font-size: .88rem; }
@@ -67,6 +67,7 @@
           <a href="taxonomy.md">Taxonomy guide</a>
           <a href="coverage_protocol.md">Coverage protocol</a>
           <a href="literature_navigator.md">Reading paths</a>
+          <a href="library.html">Full library</a>
         </nav>
       </div>
     </header>
@@ -74,6 +75,7 @@
       <section class="metrics" aria-label="Catalog statistics">
         <div class="metric"><strong id="method-count">—</strong><span>curated methods</span></div>
         <div class="metric"><strong id="benchmark-count">—</strong><span>benchmarks & datasets</span></div>
+        <div class="metric"><strong id="library-count">—</strong><span>imported library papers</span></div>
         <div class="metric"><strong id="code-count">—</strong><span>verified code links</span></div>
       </section>
       <section class="panel">
@@ -93,7 +95,7 @@
         <p class="notice">This is a curated research map, not a claim of exhaustive systematic coverage. Read the <a href="coverage_protocol.md">coverage protocol</a> before treating absence as evidence.</p>
       </section>
     </main>
-    <footer class="wrap">Catalog data: <a href="data/methods.csv">methods.csv</a> · <a href="data/benchmarks.csv">benchmarks.csv</a> · Maintained with the repository’s validation workflow.</footer>
+    <footer class="wrap">Catalog data: <a href="data/methods.csv">methods.csv</a> · <a href="data/benchmarks.csv">benchmarks.csv</a> · <a href="data/library_papers.csv">full imported library</a> · Maintained with the repository’s validation workflow.</footer>
     <script>
       const fields = ["estimand", "family", "year"];
       const labels = { observability: "observability", utility: "utility", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
@@ -106,6 +108,7 @@
           const methods = catalog.methods.sort((a, b) => Number(b.year) - Number(a.year) || a.title.localeCompare(b.title));
           document.querySelector("#method-count").textContent = methods.length;
           document.querySelector("#benchmark-count").textContent = catalog.benchmarks.length;
+          document.querySelector("#library-count").textContent = (catalog.library || []).length;
           document.querySelector("#code-count").textContent = methods.filter(row => row.code_url).length;
           const options = { estimand: [...new Set(methods.map(row => row.primary_estimand))].sort(), family: [...new Set(methods.map(row => row.architectural_family))].sort(), year: [...new Set(methods.map(row => row.year))].sort((a, b) => b - a) };
           fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));

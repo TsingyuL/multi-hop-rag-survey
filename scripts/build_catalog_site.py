@@ -24,10 +24,11 @@ def main() -> None:
         "methods": read_csv("methods.csv"),
         "benchmarks": read_csv("benchmarks.csv"),
         "mappings": read_csv("pipeline_mapping.csv"),
+        "library": read_csv("library_papers.csv"),
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    for name in ("methods.csv", "benchmarks.csv", "pipeline_mapping.csv", "discovery_queries.csv"):
+    for name in ("methods.csv", "benchmarks.csv", "pipeline_mapping.csv", "library_papers.csv", "discovery_queries.csv"):
         shutil.copyfile(TAXONOMY / name, OUTPUT.parent / name)
     print(f"Built {OUTPUT.relative_to(ROOT)}")
 

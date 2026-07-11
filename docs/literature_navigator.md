@@ -1,6 +1,6 @@
 # Literature navigator
 
-This page offers conceptual reading paths through the catalog. For a filterable view with venue, task, dataset, and verified-code metadata, open the [research catalog site](index.html). This guide is curated rather than exhaustive; see the [coverage protocol](coverage_protocol.md) for what that means.
+This page offers conceptual reading paths through the catalog. For a filterable view with venue, task, dataset, and verified-code metadata, open the [research catalog site](index.html). To browse all 229 imported records—including broad adjacent work that has not yet been taxonomy-verified—use the [full literature library](library.html). This guide is curated rather than exhaustive; see the [coverage protocol](coverage_protocol.md) for what that means.
 
 ## Start with your question
 

@@ -44,7 +44,7 @@ The paper frames end-to-end success as five coupled bottlenecks:
 └── LICENSE                        # license for repository-authored materials
 ```
 
-The catalog deliberately separates methods, benchmarks, and method-to-pipeline mappings. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current reviewed seed includes **23 methods**, **6 benchmarks**, and **27 intervention mappings**; it is a transparent starting point rather than an unqualified completeness claim.
+The hub deliberately separates the **reviewed catalog** from the **imported full library**. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current reviewed seed includes **23 methods**, **6 benchmarks**, and **27 intervention mappings**; the imported library contains **229 deduplicated papers** awaiting per-record verification. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
 
 | File | Contents |
 | --- | --- |
@@ -54,6 +54,7 @@ The catalog deliberately separates methods, benchmarks, and method-to-pipeline m
 | [`taxonomy/reading_list.bib`](taxonomy/reading_list.bib) | BibTeX entries for catalogued work |
 | [`docs/index.html`](docs/index.html) | Filterable catalog interface, automatically built from the CSV catalog |
 | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | Scope, discovery, verification, and correction rules |
+| [`taxonomy/library_papers.csv`](taxonomy/library_papers.csv) | Full 229-paper import from the working literature library, with original folders and review state |
 | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Reproducible query families for maintaining a separate unreviewed candidate queue |
 
 ## Literature navigator

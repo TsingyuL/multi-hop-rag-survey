@@ -52,6 +52,22 @@ Every method entry must contain:
 
 `reviewed` does not certify experimental reproducibility, correctness of every result, or superiority over other work.
 
+## Imported full library
+
+[`library_papers.csv`](data/library_papers.csv) is a deduplicated public import of the project's working literature library. It preserves the workbook's original folders in `library_categories`, including broad adjacent areas such as CoT, agentic systems, and surveys. It must not be read as a list of papers that all meet the narrow multi-hop RAG scope. The private source workbook is not committed; a maintainer who has an updated workbook can rebuild the public import with:
+
+```bash
+python3 -m pip install -r scripts/requirements.txt
+python3 scripts/import_library.py --input /path/to/MH_QA_Library.xlsx
+python3 scripts/validate_catalog.py
+python3 scripts/build_catalog_site.py
+```
+
+- `imported` means metadata was carried over from the working library and still needs per-record verification before being promoted to the reviewed catalog.
+- `needs_triage` marks records that were flagged as misclassified or suggested for cleanup in the source library.
+
+The two layers make the hub useful for broad discovery without weakening the validity of comparative claims in the reviewed taxonomy.
+
 ## Taxonomy adjudication
 
 The catalog labels the **earliest primary bottleneck deliberately targeted by the central mechanism**, not every metric that improves in an experiment. When a label is genuinely ambiguous, retain the primary label only if the rationale is defensible and use `secondary_estimands` for material downstream effects. Discuss new categories or contested labels in an issue before merging.
