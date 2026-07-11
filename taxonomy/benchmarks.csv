@@ -1,0 +1,5 @@
+citation_key,name,year,evidence_source,primary_estimand,diagnostics,source_url,status,caveat
+yang2018hotpotqa,HotpotQA,2018,text,joint,answer;supporting_facts;multi-hop reasoning,https://aclanthology.org/D18-1259/,seeded,Supporting-fact annotations are a proxy rather than a complete latent chain.
+ho2020twowiki,2WikiMultiHopQA,2020,hybrid,joint,answer;evidence;reasoning types,https://aclanthology.org/2020.coling-main.580/,seeded,Construction and evidence provenance should be considered in cross-dataset comparisons.
+trivedi2022musique,MuSiQue: Multihop Questions via Single-hop Question Composition,2022,text,joint,answer;supporting paragraphs;compositionality,https://aclanthology.org/2022.tacl-1.31/,seeded,Reported metrics depend on the retrieval setting and distractor construction.
+petroni2021kilt,KILT: a Benchmark for Knowledge Intensive Language Tasks,2021,text,observability,provenance;answer;retrieval,https://aclanthology.org/2021.naacl-main.200/,seeded,Not exclusively a multi-hop benchmark.

@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""Validate the public survey catalog without third-party dependencies."""
+
+from __future__ import annotations
+
+import csv
+import re
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+TAXONOMY = ROOT / "taxonomy"
+ALLOWED_ESTIMANDS = {"observability", "utility", "exposure", "fusion", "faithfulness", "joint"}
+ALLOWED_FAMILIES = {
+    "retrieval", "graph_kg", "decomposition", "fusion_reader", "llm_reasoning",
+    "agentic", "hybrid", "benchmark", "analysis",
+}
+ALLOWED_SOURCES = {"text", "knowledge_graph", "table", "multimodal", "hybrid"}
+ALLOWED_STAGES = {"retrieve", "select", "order", "read_fuse", "verify", "end_to_end"}
+ALLOWED_STATUS = {"seeded", "reviewed", "needs_review"}
+
+
+def values(value: str) -> set[str]:
+    return {item.strip() for item in value.split(";") if item.strip()}
+
+
+def read_csv(name: str, required: set[str]) -> list[dict[str, str]]:
+    path = TAXONOMY / name
+    with path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        actual = set(reader.fieldnames or [])
+        missing = required - actual
+        if missing:
+            raise ValueError(f"{name}: missing headers {sorted(missing)}")
+        rows = list(reader)
+    if not rows:
+        raise ValueError(f"{name}: must contain at least one row")
+    return rows
+
+
+def require_subset(filename: str, row_number: int, field: str, value: str, allowed: set[str]) -> None:
+    invalid = values(value) - allowed
+    if invalid:
+        raise ValueError(f"{filename}: row {row_number} has invalid {field}: {sorted(invalid)}")
+
+
+def require_choice(filename: str, row_number: int, field: str, value: str, allowed: set[str]) -> None:
+    if value not in allowed:
+        raise ValueError(f"{filename}: row {row_number} has invalid {field}: {value}")
+
+
+def main() -> int:
+    methods = read_csv(
+        "methods.csv",
+        {"citation_key", "title", "year", "architectural_family", "primary_estimand",
+         "secondary_estimands", "evidence_source", "pipeline_stage", "source_url", "status", "notes"},
+    )
+    benchmarks = read_csv(
+        "benchmarks.csv",
+        {"citation_key", "name", "year", "evidence_source", "primary_estimand", "diagnostics",
+         "source_url", "status", "caveat"},
+    )
+    mappings = read_csv(
+        "pipeline_mapping.csv",
+        {"citation_key", "pipeline_stage", "primary_estimand", "intervention",
+         "observable_diagnostic", "common_confounder", "status"},
+    )
+    all_rows = [("methods.csv", row) for row in methods] + [("benchmarks.csv", row) for row in benchmarks]
+    keys = [row["citation_key"] for _, row in all_rows]
+    if len(keys) != len(set(keys)):
+        raise ValueError("citation_key values must be unique across methods.csv and benchmarks.csv")
+
+    for filename, rows in (("methods.csv", methods), ("benchmarks.csv", benchmarks), ("pipeline_mapping.csv", mappings)):
+        for number, row in enumerate(rows, start=2):
+            require_choice(filename, number, "primary_estimand", row["primary_estimand"], ALLOWED_ESTIMANDS)
+            if row["status"] not in ALLOWED_STATUS:
+                raise ValueError(f"{filename}: row {number} has invalid status: {row['status']}")
+            if not row["citation_key"] or not re.fullmatch(r"[a-z0-9]+", row["citation_key"]):
+                raise ValueError(f"{filename}: row {number} has invalid citation_key")
+
+    for filename, rows in (("methods.csv", methods), ("pipeline_mapping.csv", mappings)):
+        for number, row in enumerate(rows, start=2):
+            require_choice(filename, number, "pipeline_stage", row["pipeline_stage"], ALLOWED_STAGES)
+
+    for number, row in enumerate(methods, start=2):
+        require_subset("methods.csv", number, "secondary_estimands", row["secondary_estimands"], ALLOWED_ESTIMANDS)
+        if row["architectural_family"] not in ALLOWED_FAMILIES:
+            raise ValueError(f"methods.csv: row {number} has invalid architectural_family")
+        if row["evidence_source"] not in ALLOWED_SOURCES:
+            raise ValueError(f"methods.csv: row {number} has invalid evidence_source")
+
+    for number, row in enumerate(benchmarks, start=2):
+        if row["evidence_source"] not in ALLOWED_SOURCES:
+            raise ValueError(f"benchmarks.csv: row {number} has invalid evidence_source")
+
+    bib_keys = set(re.findall(r"@\w+\s*\{\s*([^,\s]+)", (TAXONOMY / "reading_list.bib").read_text(encoding="utf-8")))
+    missing_bib = set(keys) - bib_keys
+    if missing_bib:
+        raise ValueError(f"reading_list.bib is missing citation keys: {sorted(missing_bib)}")
+    missing_catalog = {row["citation_key"] for row in mappings} - set(keys)
+    if missing_catalog:
+        raise ValueError(f"pipeline_mapping.csv has unknown citation keys: {sorted(missing_catalog)}")
+
+    print(f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, {len(mappings)} mappings.")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (OSError, ValueError) as error:
+        print(f"Catalog validation failed: {error}", file=sys.stderr)
+        raise SystemExit(1)

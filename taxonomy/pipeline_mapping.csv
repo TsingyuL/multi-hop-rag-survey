@@ -1,0 +1,9 @@
+citation_key,pipeline_stage,primary_estimand,intervention,observable_diagnostic,common_confounder,status
+sun2018graftnet,retrieve,observability,Question-specific graph retrieval,chain or evidence recall,Incomplete graph coverage,seeded
+sun2018graftnet,read_fuse,fusion,Graph message passing,answer with supporting evidence,Retriever and reader errors are coupled,seeded
+sun2019pullnet,retrieve,observability,Iterative graph expansion,evidence recall at each iteration,Extra iterations change compute budget,seeded
+izacard2021fid,read_fuse,fusion,Fusion-in-decoder attention,conditional answer accuracy,Retrieved passages may already encode ranking gains,seeded
+asai2021mdr,retrieve,observability,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,seeded
+trivedi2023ircot,end_to_end,observability,Reasoning-conditioned retrieval,retrieval recall by hop,Generated thoughts can leak answer priors,seeded
+asai2023selfrag,verify,faithfulness,Self-reflective critique,citation or support verification,Self-critique is not a causal test,seeded
+sarthi2024raptor,order,exposure,Hierarchical context organization,position-sensitive conditional accuracy,Granularity also changes retrieval recall,seeded
