@@ -51,6 +51,22 @@ The three catalog files deliberately separate methods, benchmarks, and method-to
 | [`taxonomy/pipeline_mapping.csv`](taxonomy/pipeline_mapping.csv) | Which pipeline stage and estimand a method affects |
 | [`taxonomy/reading_list.bib`](taxonomy/reading_list.bib) | BibTeX entries for catalogued work |
 
+## Literature navigator
+
+The catalog is designed to be read as a map, not as an unstructured paper list. Start from either the bottleneck you want to solve or the system design you want to study:
+
+| Navigate by research question | Navigate by design route |
+| --- | --- |
+| [Can the needed chain be found? — Observability](docs/literature_navigator.md#1-observability-find-the-support-chain) | [Dense / iterative retrieval](docs/literature_navigator.md#2-retrieval) |
+| [Which evidence survives the budget? — Utility](docs/literature_navigator.md#2-utility-keep-useful-evidence-under-a-budget) | [Graph and knowledge-grounded methods](docs/literature_navigator.md#3-graph--knowledge-grounded-methods) |
+| [Is evidence usable in context? — Exposure](docs/literature_navigator.md#3-exposure-make-evidence-available-to-the-reader) | [Reader and fusion architectures](docs/literature_navigator.md#4-reader--fusion-architectures) |
+| [Can the model compose evidence? — Fusion](docs/literature_navigator.md#4-fusion-compose-evidence-correctly) | [Reasoning-interleaved and agentic RAG](docs/literature_navigator.md#5-reasoning-interleaved--agentic-rag) |
+| [Did the answer rely on its evidence? — Faithfulness](docs/literature_navigator.md#5-faithfulness-test-causal-evidence-use) | [Context organization and hierarchical retrieval](docs/literature_navigator.md#6-context-organization) |
+
+- **New to multi-hop RAG?** Follow the [foundation-to-agentic reading path](docs/literature_navigator.md#suggested-reading-paths).
+- **Looking for a specific paper?** Use the [chronological index](docs/literature_navigator.md#chronological-index) or open the machine-readable [methods catalog](taxonomy/methods.csv).
+- **Adding a paper?** Follow the [annotation rules](docs/taxonomy.md) and [contribution guide](CONTRIBUTING.md).
+
 ## Start here
 
 1. Read [the taxonomy guide](docs/taxonomy.md) for the dual-axis annotation rules.
@@ -77,7 +93,7 @@ Until a DOI and final venue record exist, cite this work as an unpublished manus
   author  = {Yuqing Luo},
   title   = {Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective},
   year    = {2026},
-  note    = {Manuscript draft. Repository companion: https://github.com/<YOUR-ORG-OR-USER>/multi-hop-rag-survey}
+  note    = {Manuscript draft. Repository companion: https://github.com/TsingyuL/multi-hop-rag-survey}
 }
 ```
 
