@@ -11,6 +11,11 @@ The survey uses two complementary labels. The **estimand axis** captures the lat
 | `architectural_family` | `retrieval`, `graph_kg`, `decomposition`, `fusion_reader`, `llm_reasoning`, `agentic`, `hybrid`, `benchmark`, `analysis` | The work's primary surface design |
 | `evidence_source` | `text`, `knowledge_graph`, `table`, `multimodal`, `hybrid` | Evidence substrate |
 | `pipeline_stage` | `retrieve`, `select`, `order`, `read_fuse`, `verify`, `end_to_end` | Primary intervention point |
+| `venue` | Free text | Venue or preprint status; do not guess a final venue from an arXiv record. |
+| `tasks` / `task_type` | Semicolon-separated free text | Evaluation task(s), written at a useful comparison granularity. |
+| `datasets` | Semicolon-separated catalog names | Method evaluation datasets. |
+| `hops` | Free text | Benchmark hop range or `varied` when no single range applies. |
+| `code_url` / `data_url` | HTTPS URL or blank `code_url` | Verified official implementation or dataset homepage; leave `code_url` blank when none is verified. |
 
 ## Estimand definitions
 
@@ -37,6 +42,8 @@ For example, iterative retrieval that expands a pool after resolving a bridge en
 - `citation_key` must be unique and match an entry in `reading_list.bib`.
 - `year` is a four-digit publication/preprint year.
 - `source_url` should be a durable landing page (DOI, ACL Anthology, arXiv abstract, or publisher page).
+- `code_url` is optional, but must point to an official or author-maintained implementation when present. Do not substitute an unrelated reimplementation.
+- Every method must have at least one entry in `pipeline_mapping.csv`; this forces an intervention and diagnostic to be stated explicitly.
 - `status` is one of `seeded`, `reviewed`, or `needs_review`.
 
 The seeded rows are examples and starting points—not a claim that the catalog is complete. New additions should follow the same annotation process.

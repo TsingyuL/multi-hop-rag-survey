@@ -1,102 +1,84 @@
 # Literature navigator
 
-This page is a curated entry point to the survey catalog. It is intentionally a **seeded guide**, rather than a claim of complete coverage. Each title links to its canonical paper landing page; the complete, machine-readable metadata lives in [`taxonomy/methods.csv`](../taxonomy/methods.csv).
+This page offers conceptual reading paths through the catalog. For a filterable view with venue, task, dataset, and verified-code metadata, open the [research catalog site](index.html). This guide is curated rather than exhaustive; see the [coverage protocol](coverage_protocol.md) for what that means.
 
-## How to use this map
+## Start with your question
 
-Choose a row below when you have a research question in mind; choose a design route when you are comparing systems. A paper can affect more than one bottleneck, but it appears under the primary estimand used in this survey's controlled taxonomy. See the [taxonomy guide](taxonomy.md) for the annotation rationale.
+| If you are asking… | Begin with | Then compare |
+| --- | --- | --- |
+| Can a system recover every supporting document? | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH) → [MDR](https://aclanthology.org/2021.naacl-main.424/) | [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx) and [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/) for more structured search. |
+| Should a complex question be decomposed before retrieval? | [DecompRC](https://aclanthology.org/P19-1613/) → [ONUS](https://aclanthology.org/2020.emnlp-main.713/) | [RERC](https://aclanthology.org/2021.findings-emnlp.17/) and [EfficientRAG](https://aclanthology.org/2024.emnlp-main.199/) for staged decomposition. |
+| How should a model combine scattered evidence? | [DFGN](https://aclanthology.org/P19-1617/) → [HGN](https://aclanthology.org/2020.emnlp-main.710/) | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282) for passage-level generative fusion. |
+| When should retrieval be iterative or adaptive? | [IRCoT](https://aclanthology.org/2023.acl-long.557/) → [ReAct](https://arxiv.org/abs/2210.03629) | [FLARE](https://arxiv.org/abs/2305.06983), [Self-RAG](https://arxiv.org/abs/2310.11511), and [Adaptive-RAG](https://arxiv.org/abs/2403.14403). |
+| How does context organization alter downstream use? | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282) | [RAPTOR](https://arxiv.org/abs/2401.18059) and [CRAG](https://arxiv.org/abs/2401.15884). |
 
-## By research question
+## By latent-chain bottleneck
 
-### 1. Observability: find the support chain
+### Observability: find the support chain
 
-Work in this group aims to increase the chance that all required evidence reaches the retrieved pool.
+- [GRAFT-Net (2018)](https://aclanthology.org/D18-1455/) and [PullNet (2019)](https://aclanthology.org/D19-1242/) — early graph-based retrieval over text and knowledge bases.
+- [PathRetriever (2020)](https://openreview.net/forum?id=SJgVHkrYDH) and [MDR (2021)](https://aclanthology.org/2021.naacl-main.424/) — sequential and dense retrieval for open-domain multi-hop QA.
+- [Baleen (2021)](https://openreview.net/forum?id=Ghk0AJ8XtVx) and [Beam Retrieval (2024)](https://aclanthology.org/2024.naacl-long.96/) — address uncertainty and combinatorial growth in multi-hop search.
+- [HippoRAG (2024)](https://arxiv.org/abs/2405.14831) — retrieves through a graph-memory index using personalized PageRank.
+- [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/) and [FLARE (2023)](https://arxiv.org/abs/2305.06983) — make reasoning or generation state inform the next retrieval action.
 
-- [GRAFT-Net (2018)](https://aclanthology.org/D18-1455/) — graph retrieval and evidence composition across text and knowledge bases.
-- [PullNet (2019)](https://aclanthology.org/D19-1242/) — iteratively expands a question-specific graph over text and knowledge bases.
-- [MDR (2021)](https://aclanthology.org/2021.naacl-main.424/) — dense retrieval trained for multi-hop evidence acquisition.
-- [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/) — alternates generated reasoning steps with retrieval.
-- [FLARE (2023)](https://arxiv.org/abs/2305.06983) — triggers retrieval during generation when uncertainty is high.
+### Utility: keep useful evidence under a budget
 
-### 2. Utility: keep useful evidence under a budget
+- [PullNet (2019)](https://aclanthology.org/D19-1242/) and [PathRetriever (2020)](https://openreview.net/forum?id=SJgVHkrYDH) — use previous hops to focus subsequent retrieval.
+- [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/), [CRAG (2024)](https://arxiv.org/abs/2401.15884), and [Adaptive-RAG (2024)](https://arxiv.org/abs/2403.14403) — adapt retrieval decisions to intermediate reasoning, context quality, or query complexity.
 
-These papers target the selection or ranking of evidence when retrieval, context length, or computation is limited.
+### Exposure: make evidence usable in context
 
-- [PullNet (2019)](https://aclanthology.org/D19-1242/) — evidence expansion guided by the evolving graph.
-- [MDR (2021)](https://aclanthology.org/2021.naacl-main.424/) — multi-hop dense retrieval objective.
-- [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/) — intermediate reasoning conditions the next retrieval step.
-- [FLARE (2023)](https://arxiv.org/abs/2305.06983) — retrieval is adaptively invoked during generation.
+- [Baleen (2021)](https://openreview.net/forum?id=Ghk0AJ8XtVx) — condenses retrieved context between hops.
+- [RAPTOR (2024)](https://arxiv.org/abs/2401.18059) — organizes evidence as a hierarchy of retrieved and summarized units.
+- [GraphRAG (2024)](https://arxiv.org/abs/2404.16130) — exposes corpus-level evidence through graph communities and their summaries.
 
-### 3. Exposure: make evidence available to the reader
+### Fusion: compose evidence correctly
 
-Exposure concerns how selected evidence is organized and presented at the point of use.
+- [DFGN (2019)](https://aclanthology.org/P19-1617/) and [HGN (2020)](https://aclanthology.org/2020.emnlp-main.710/) — graph propagation over heterogeneous text structures.
+- [Fusion-in-Decoder (2021)](https://arxiv.org/abs/2007.01282) — reader-side generative fusion across independently encoded passages.
 
-- [RAPTOR (2024)](https://arxiv.org/abs/2401.18059) — hierarchical summaries and tree-organized retrieval change the granularity and ordering of available context.
+### Faithfulness and joint control
 
-### 4. Fusion: compose evidence correctly
-
-These systems focus on combining information across passages or graph nodes after it has been retrieved.
-
-- [GRAFT-Net (2018)](https://aclanthology.org/D18-1455/) — graph-based composition over heterogeneous evidence.
-- [Fusion-in-Decoder (2021)](https://arxiv.org/abs/2007.01282) — decoder-side fusion of independently encoded retrieved passages.
-
-### 5. Faithfulness: test causal evidence use
-
-Faithfulness asks whether the final answer actually depends on the cited or retrieved support, not merely whether it is plausible.
-
-- [Self-RAG (2023)](https://arxiv.org/abs/2310.11511) — jointly learns retrieval, generation, and self-critique; its catalog entry is intentionally labeled `joint` because it targets several bottlenecks.
+- [ReAct (2023)](https://arxiv.org/abs/2210.03629) exposes reasoning-and-action trajectories, but trajectories alone are not causal evidence of grounding.
+- [Self-RAG (2024)](https://arxiv.org/abs/2310.11511) jointly learns retrieval, generation, and critique; it is labeled `joint` because it deliberately spans several bottlenecks.
 
 ## By design route
 
-### 1. Retrieval
-
-- [MDR (2021)](https://aclanthology.org/2021.naacl-main.424/)
-- [RAPTOR (2024)](https://arxiv.org/abs/2401.18059)
-
-### 2. Graph & knowledge-grounded methods
-
-- [GRAFT-Net (2018)](https://aclanthology.org/D18-1455/)
-- [PullNet (2019)](https://aclanthology.org/D19-1242/)
-
-### 3. Reader & fusion architectures
-
-- [Fusion-in-Decoder (2021)](https://arxiv.org/abs/2007.01282)
-
-### 4. Reasoning-interleaved & agentic RAG
-
-- [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/)
-- [FLARE (2023)](https://arxiv.org/abs/2305.06983)
-- [Self-RAG (2023)](https://arxiv.org/abs/2310.11511)
-
-### 5. Context organization
-
-- [RAPTOR (2024)](https://arxiv.org/abs/2401.18059)
-
-## Suggested reading paths
-
-| Goal | Suggested sequence | Why this sequence |
+| Route | Representative papers | Useful contrast |
 | --- | --- | --- |
-| Learn the foundations | GRAFT-Net → PullNet → MDR → Fusion-in-Decoder | Moves from heterogeneous graph retrieval to dense retrieval and neural evidence fusion. |
-| Build an iterative RAG system | MDR → IRCoT → FLARE → Self-RAG | Adds retrieval-reasoning interleaving, adaptive retrieval, and self-reflection in stages. |
-| Study long-context design | Fusion-in-Decoder → RAPTOR → Self-RAG | Compares passage fusion, hierarchical context organization, and reflective control. |
+| Graph / KG | GRAFT-Net, PullNet, DFGN, HGN | Explicit graph construction versus neural graph fusion. |
+| Retrieval | PathRetriever, MDR, Baleen, RAPTOR, HippoRAG, Beam Retrieval | Sequential paths, dense retrieval, condensation, hierarchy, graph memory, and beam search. |
+| Decomposition | DecompRC, ONUS, RERC, EfficientRAG | Supervised, unsupervised, staged, and retrieval-pruning decompositions. |
+| Reader / fusion | Fusion-in-Decoder | Evidence is fixed first, then composed by the reader. |
+| Reasoning-interleaved | IRCoT, ReAct | Generated reasoning guides external actions. |
+| Agentic / corrective | FLARE, Self-RAG, CRAG, Adaptive-RAG | The policy decides whether, when, or how to retrieve and correct evidence. |
+
+## Suggested benchmark paths
+
+| Evaluation need | Start with | Important caution |
+| --- | --- | --- |
+| Two-hop QA with supporting facts | [HotpotQA](https://aclanthology.org/D18-1259/) | Supporting-fact labels remain an imperfect proxy for the complete latent chain. |
+| Diverse evidence and reasoning forms | [2WikiMultiHopQA](https://aclanthology.org/2020.coling-main.580/) and [MuSiQue](https://aclanthology.org/2022.tacl-1.31/) | Compare retrieval setting and distractor construction before comparing scores. |
+| More than two hops / claim verification | [HoVer](https://aclanthology.org/2020.findings-emnlp.309/) | It is fact verification, so it is not directly interchangeable with answer extraction. |
+| Two-fact scientific composition | [QASC](https://ojs.aaai.org/index.php/AAAI/article/view/6319) | The composed fact may introduce a bridge concept absent from the question. |
 
 ## Chronological index
 
 | Year | Paper | Route | Primary bottleneck |
 | --- | --- | --- | --- |
 | 2018 | [GRAFT-Net](https://aclanthology.org/D18-1455/) | Graph / KG | Observability |
-| 2019 | [PullNet](https://aclanthology.org/D19-1242/) | Graph / KG | Observability |
-| 2021 | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282) | Reader / fusion | Fusion |
-| 2021 | [MDR](https://aclanthology.org/2021.naacl-main.424/) | Retrieval | Observability |
-| 2023 | [IRCoT](https://aclanthology.org/2023.acl-long.557/) | Reasoning-interleaved | Observability |
-| 2023 | [FLARE](https://arxiv.org/abs/2305.06983) | Agentic | Observability |
-| 2023 | [Self-RAG](https://arxiv.org/abs/2310.11511) | Agentic | Joint |
-| 2024 | [RAPTOR](https://arxiv.org/abs/2401.18059) | Retrieval | Exposure |
+| 2019 | [DecompRC](https://aclanthology.org/P19-1613/), [DFGN](https://aclanthology.org/P19-1617/), [PullNet](https://aclanthology.org/D19-1242/) | Decomposition / Graph | Utility / Fusion / Observability |
+| 2020 | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH), [ONUS](https://aclanthology.org/2020.emnlp-main.713/), [HGN](https://aclanthology.org/2020.emnlp-main.710/), [MHGRN](https://aclanthology.org/2020.emnlp-main.99/) | Retrieval / Decomposition / Graph | Observability / Utility / Fusion |
+| 2021 | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282), [MDR](https://aclanthology.org/2021.naacl-main.424/), [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx), [RERC](https://aclanthology.org/2021.findings-emnlp.17/) | Reader / Retrieval / Decomposition | Fusion / Observability |
+| 2023 | [ReAct](https://arxiv.org/abs/2210.03629), [IRCoT](https://aclanthology.org/2023.acl-long.557/), [FLARE](https://arxiv.org/abs/2305.06983) | Agentic / Reasoning | Joint / Observability |
+| 2024 | [Self-RAG](https://arxiv.org/abs/2310.11511), [RAPTOR](https://arxiv.org/abs/2401.18059), [CRAG](https://arxiv.org/abs/2401.15884), [Adaptive-RAG](https://arxiv.org/abs/2403.14403), [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/), [GraphRAG](https://arxiv.org/abs/2404.16130), [HippoRAG](https://arxiv.org/abs/2405.14831), [EfficientRAG](https://aclanthology.org/2024.emnlp-main.199/) | Agentic / Retrieval / Graph / Decomposition | Joint / Exposure / Utility / Observability |
 
 ## Keep this page current
 
-The navigation page summarizes the entries in the catalog. When adding or changing a paper, update the relevant catalog row and BibTeX entry first, then update this page if it changes a recommended path or category overview. Run:
+Update the structured catalog first, then revise this page only if a new work changes a recommended conceptual comparison. Run:
 
 ```bash
 python3 scripts/validate_catalog.py
+python3 scripts/build_catalog_site.py
 ```

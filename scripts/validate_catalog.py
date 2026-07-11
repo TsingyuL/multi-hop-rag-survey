@@ -7,6 +7,7 @@ import csv
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,16 +51,25 @@ def require_choice(filename: str, row_number: int, field: str, value: str, allow
         raise ValueError(f"{filename}: row {row_number} has invalid {field}: {value}")
 
 
+def require_url(filename: str, row_number: int, field: str, value: str, optional: bool = False) -> None:
+    if optional and not value:
+        return
+    parsed = urlparse(value)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError(f"{filename}: row {row_number} has invalid {field}: {value}")
+
+
 def main() -> int:
     methods = read_csv(
         "methods.csv",
         {"citation_key", "title", "year", "architectural_family", "primary_estimand",
-         "secondary_estimands", "evidence_source", "pipeline_stage", "source_url", "status", "notes"},
+         "secondary_estimands", "evidence_source", "pipeline_stage", "source_url", "status", "notes",
+         "venue", "tasks", "datasets", "code_url"},
     )
     benchmarks = read_csv(
         "benchmarks.csv",
         {"citation_key", "name", "year", "evidence_source", "primary_estimand", "diagnostics",
-         "source_url", "status", "caveat"},
+         "source_url", "status", "caveat", "venue", "task_type", "hops", "data_url"},
     )
     mappings = read_csv(
         "pipeline_mapping.csv",
@@ -78,6 +88,10 @@ def main() -> int:
                 raise ValueError(f"{filename}: row {number} has invalid status: {row['status']}")
             if not row["citation_key"] or not re.fullmatch(r"[a-z0-9]+", row["citation_key"]):
                 raise ValueError(f"{filename}: row {number} has invalid citation_key")
+            if filename != "pipeline_mapping.csv":
+                if not re.fullmatch(r"\d{4}", row["year"]):
+                    raise ValueError(f"{filename}: row {number} has invalid year: {row['year']}")
+                require_url(filename, number, "source_url", row["source_url"])
 
     for filename, rows in (("methods.csv", methods), ("pipeline_mapping.csv", mappings)):
         for number, row in enumerate(rows, start=2):
@@ -89,10 +103,18 @@ def main() -> int:
             raise ValueError(f"methods.csv: row {number} has invalid architectural_family")
         if row["evidence_source"] not in ALLOWED_SOURCES:
             raise ValueError(f"methods.csv: row {number} has invalid evidence_source")
+        for field in ("venue", "tasks", "datasets"):
+            if not row[field].strip():
+                raise ValueError(f"methods.csv: row {number} has blank {field}")
+        require_url("methods.csv", number, "code_url", row["code_url"], optional=True)
 
     for number, row in enumerate(benchmarks, start=2):
         if row["evidence_source"] not in ALLOWED_SOURCES:
             raise ValueError(f"benchmarks.csv: row {number} has invalid evidence_source")
+        for field in ("venue", "task_type", "hops", "data_url"):
+            if not row[field].strip():
+                raise ValueError(f"benchmarks.csv: row {number} has blank {field}")
+        require_url("benchmarks.csv", number, "data_url", row["data_url"])
 
     bib_keys = set(re.findall(r"@\w+\s*\{\s*([^,\s]+)", (TAXONOMY / "reading_list.bib").read_text(encoding="utf-8")))
     missing_bib = set(keys) - bib_keys
@@ -101,6 +123,10 @@ def main() -> int:
     missing_catalog = {row["citation_key"] for row in mappings} - set(keys)
     if missing_catalog:
         raise ValueError(f"pipeline_mapping.csv has unknown citation keys: {sorted(missing_catalog)}")
+
+    unmapped_methods = {row["citation_key"] for row in methods} - {row["citation_key"] for row in mappings}
+    if unmapped_methods:
+        raise ValueError(f"pipeline_mapping.csv is missing method keys: {sorted(unmapped_methods)}")
 
     print(f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, {len(mappings)} mappings.")
     return 0

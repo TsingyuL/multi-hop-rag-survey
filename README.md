@@ -8,6 +8,8 @@
 
 This repository is the living companion to the survey **“Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective.”** It organizes multi-hop retrieval-augmented reasoning around the latent evidence chain that a system must recover and use, rather than around architecture alone.
 
+> **Research hub:** the repository ships a filterable static catalog in [`docs/index.html`](docs/index.html). The included GitHub Pages workflow deploys it whenever GitHub Pages is enabled for this repository.
+
 The paper frames end-to-end success as five coupled bottlenecks:
 
 | Estimand | Question it asks |
@@ -42,7 +44,7 @@ The paper frames end-to-end success as five coupled bottlenecks:
 └── LICENSE                        # license for repository-authored materials
 ```
 
-The three catalog files deliberately separate methods, benchmarks, and method-to-pipeline mappings. Their stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF.
+The catalog deliberately separates methods, benchmarks, and method-to-pipeline mappings. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current reviewed seed includes **23 methods**, **6 benchmarks**, and **27 intervention mappings**; it is a transparent starting point rather than an unqualified completeness claim.
 
 | File | Contents |
 | --- | --- |
@@ -50,6 +52,9 @@ The three catalog files deliberately separate methods, benchmarks, and method-to
 | [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv) | Benchmarks, observed diagnostics, and evaluation cautions |
 | [`taxonomy/pipeline_mapping.csv`](taxonomy/pipeline_mapping.csv) | Which pipeline stage and estimand a method affects |
 | [`taxonomy/reading_list.bib`](taxonomy/reading_list.bib) | BibTeX entries for catalogued work |
+| [`docs/index.html`](docs/index.html) | Filterable catalog interface, automatically built from the CSV catalog |
+| [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | Scope, discovery, verification, and correction rules |
+| [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Reproducible query families for maintaining a separate unreviewed candidate queue |
 
 ## Literature navigator
 

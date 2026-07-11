@@ -1,0 +1,6 @@
+query_id,source,query,enabled,scope_note
+mhqa_retrieval,semantic_scholar,multi hop question answering retrieval,yes,Core retrieval-grounded multi-hop QA.
+multihop_rag,semantic_scholar,multi hop retrieval augmented generation,yes,Explicit multi-hop RAG systems.
+iterative_retrieval,semantic_scholar,iterative retrieval reasoning question answering,yes,Reasoning-conditioned and iterative retrieval.
+multihop_kgqa,semantic_scholar,multi hop knowledge graph question answering,yes,Knowledge-graph and hybrid evidence systems.
+evidence_chain,semantic_scholar,multi hop evidence chain retrieval,yes,Evidence-chain discovery and verification.

@@ -4,12 +4,16 @@ on:
   pull_request:
     paths:
       - "taxonomy/**"
+      - "docs/data/**"
+      - "scripts/build_catalog_site.py"
       - "scripts/validate_catalog.py"
       - ".github/workflows/catalog-validation.yml"
   push:
     branches: [main]
     paths:
       - "taxonomy/**"
+      - "docs/data/**"
+      - "scripts/build_catalog_site.py"
       - "scripts/validate_catalog.py"
 
 jobs:
@@ -21,3 +25,5 @@ jobs:
         with:
           python-version: "3.11"
       - run: python scripts/validate_catalog.py
+      - run: python scripts/build_catalog_site.py
+      - run: git diff --exit-code -- docs/data
