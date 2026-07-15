@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 TAXONOMY = ROOT / "taxonomy"
-ALLOWED_ESTIMANDS = {"observability", "utility", "exposure", "fusion", "faithfulness", "joint"}
+ALLOWED_ESTIMANDS = {"observability", "selection", "exposure", "fusion", "faithfulness", "joint"}
 ALLOWED_FAMILIES = {
     "retrieval", "graph_kg", "decomposition", "fusion_reader", "llm_reasoning",
     "agentic", "hybrid", "benchmark", "analysis",

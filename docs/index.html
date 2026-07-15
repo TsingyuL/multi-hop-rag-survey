@@ -114,7 +114,7 @@
     <footer class="wrap">Catalog data: <a href="data/methods.csv">methods.csv</a> · <a href="data/benchmarks.csv">benchmarks.csv</a> · <a href="data/library_papers.csv">full imported library</a> · Maintained with the repository’s validation workflow.</footer>
     <script>
       const fields = ["estimand", "family", "year"];
-      const labels = { observability: "observability", utility: "utility", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
+      const labels = { observability: "observability", selection: "selection", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
       const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[char]);
       const split = value => value.split(";").map(item => item.trim()).filter(Boolean);
       const tag = (text, color = "") => `<span class="tag ${color}">${escapeHTML(text)}</span>`;
@@ -130,7 +130,7 @@
           fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));
           const routeMeta = {
             observability: "Find every required support unit.",
-            utility: "Keep useful evidence under a budget.",
+            selection: "Preserve useful evidence under a budget.",
             exposure: "Make selected evidence usable in context.",
             fusion: "Compose evidence across units correctly.",
             faithfulness: "Test whether evidence causally matters.",

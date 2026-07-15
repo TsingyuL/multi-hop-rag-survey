@@ -1,20 +1,20 @@
-# Multi-Hop RAG Survey Figure Package
+# Multi-Hop RAG Survey Figures
 
-This package contains 10 vector figures for the survey *Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective*.
+This package contains the figure PDFs used by the current manuscript
+*Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference:
+A Survey*.
 
 ## Folders
 
-- `pdf/`: vector PDFs for LaTeX `\includegraphics`.
-- `pdf/`: committed vector PDFs used by the manuscript.
-- `svg/`: editable vector versions, generated locally when needed.
-- `png/`: high-resolution previews, generated locally when needed.
-- `source/make_figures.py`: Python source used to regenerate individual figures.
-- `rendered_pdf_contact_sheet.png`: render-verified preview of the merged PDF.
+- `pdf/`: committed vector PDFs used by the manuscript (`fig1.pdf`,
+  `fig2.pdf`, `fig3.pdf`, `fig4.pdf`, and `fig9.pdf`).
+- `rendered_pdf_contact_sheet.png`: render-verified preview of the current
+  committed figures.
 
 ## Visual grammar
 
 - Observability: blue
-- Conditional utility / selection: green
+- Selection: green
 - Exposure / ordering: orange
 - Fusion: purple
 - Faithfulness: red
@@ -23,15 +23,11 @@ This package contains 10 vector figures for the survey *Multi-Hop Retrieval-Augm
 
 ## Rebuild
 
-From the repository root, install the figure dependencies and regenerate the individual figure files:
-
-```bash
-python3 -m pip install -r mh_figures/requirements.txt
-python3 mh_figures/source/make_figures.py
-```
-
-The generator writes to this directory, not to a machine-specific temporary path.
+The canonical figure sources live in the manuscript project. Copy the current
+`fig*.pdf` outputs into `mh_figures/pdf/`, then regenerate
+`rendered_pdf_contact_sheet.png` from those PDFs.
 
 ## Recommended LaTeX usage
 
-Copy `pdf/` into your project as `figures/`, then update the paths in `latex/figures.tex` from `pdf/...` to `figures/...` if needed.
+Copy `pdf/` into your project as `figures/`, then include the relevant files
+with LaTeX `\includegraphics`.

@@ -6,7 +6,7 @@ Use this checklist alongside aggregate answer metrics. It translates the survey'
 | --- | --- |
 | Task, corpus, retriever, reader, and context-budget details | Defines the observation process |
 | Chain/passage recall before selection | Diagnoses observability |
-| Selection recall or utility at the reported budget | Diagnoses budget-induced loss |
+| Selection preservation at the reported budget | Diagnoses budget-induced loss |
 | Context ordering and placement policy | Makes exposure claims testable |
 | Multi-hop composition metric or error analysis | Separates fusion from retrieval failure |
 | Ablations that remove, swap, or corrupt evidence | Tests causal evidence use |

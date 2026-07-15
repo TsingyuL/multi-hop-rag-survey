@@ -28,7 +28,7 @@ Suggested query families:
 - `("evidence chain" OR "supporting facts") AND (retrieval OR reasoning)`
 - benchmark names such as `HotpotQA`, `2WikiMultiHopQA`, `MuSiQue`, `HoVer`, and `QASC` combined with retrieval terms.
 
-The tracked [`discovery_queries.csv`](data/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a separate `discovery_queue.csv`; it is intentionally not merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
+The tracked [`discovery_queries.csv`](../taxonomy/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a separate `discovery_queue.csv`; it is intentionally not merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
 
 Searches should be recorded in the pull request or issue that motivates a substantial coverage update. The current seed collection was last curated on **2026-07-11**.
 
@@ -54,7 +54,7 @@ Every method entry must contain:
 
 ## Imported full library
 
-[`library_papers.csv`](data/library_papers.csv) is a deduplicated public import of the project's working literature library. It preserves the workbook's original folders in `library_categories`, including broad adjacent areas such as CoT, agentic systems, and surveys. It must not be read as a list of papers that all meet the narrow multi-hop RAG scope. The private source workbook is not committed; a maintainer who has an updated workbook can rebuild the public import with:
+[`library_papers.csv`](../taxonomy/library_papers.csv) is a deduplicated public import of the project's working literature library. It preserves the workbook's original folders in `library_categories`, including broad adjacent areas such as CoT, agentic systems, and surveys. It must not be read as a list of papers that all meet the narrow multi-hop RAG scope. The private source workbook is not committed; a maintainer who has an updated workbook can rebuild the public import with:
 
 ```bash
 python3 -m pip install -r scripts/requirements.txt
