@@ -6,7 +6,7 @@ The survey uses two complementary labels. The **estimand axis** captures the lat
 
 | Field | Allowed values | Meaning |
 | --- | --- | --- |
-| `primary_estimand` | `observability`, `utility`, `exposure`, `fusion`, `faithfulness`, `joint` | The main latent-chain bottleneck targeted by the work |
+| `primary_estimand` | `observability`, `selection`, `exposure`, `fusion`, `faithfulness`, `joint` | The main latent-chain bottleneck targeted by the work |
 | `secondary_estimands` | Semicolon-separated values above | Meaningful secondary effects |
 | `architectural_family` | `retrieval`, `graph_kg`, `decomposition`, `fusion_reader`, `llm_reasoning`, `agentic`, `hybrid`, `benchmark`, `analysis` | The work's primary surface design |
 | `evidence_source` | `text`, `knowledge_graph`, `table`, `multimodal`, `hybrid` | Evidence substrate |
@@ -20,7 +20,7 @@ The survey uses two complementary labels. The **estimand axis** captures the lat
 ## Estimand definitions
 
 - **Observability**: increases the chance that every required support unit appears in the retrieved pool.
-- **Utility**: improves selection of useful evidence under a context, cost, or ranking budget.
+- **Selection**: preserves useful evidence under a context, cost, or ranking budget.
 - **Exposure**: makes selected support available at the reader's point of use; it includes ordering, placement, and context organization.
 - **Fusion**: improves correct composition across evidence units conditional on their availability.
 - **Faithfulness**: establishes or improves the causal use of supporting evidence, rather than merely producing a plausible rationale or citation.
@@ -34,7 +34,7 @@ The survey uses two complementary labels. The **estimand axis** captures the lat
 4. Add secondary estimands only where the paper supplies an explicit mechanism or evaluation.
 5. Record the benchmark, persistent source URL, and any caveat that limits comparison.
 
-For example, iterative retrieval that expands a pool after resolving a bridge entity is primarily `observability`, even if it also reranks results. A reader that changes attention across already-selected passages is primarily `fusion`; it should not be tagged `observability` merely because better answers may correlate with recall.
+Conditional evidence utility is recorded as a mechanism-level selection score, not as a separate estimand. For example, iterative retrieval that expands a pool after resolving a bridge entity is primarily `observability`, even if it also reranks results. A reader that changes attention across already-selected passages is primarily `fusion`; it should not be tagged `observability` merely because better answers may correlate with recall.
 
 ## Data conventions
 

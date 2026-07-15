@@ -1,13 +1,13 @@
 # Artifact readiness
 
-This is a survey companion, not a benchmark submission or a claim of independently reproduced experimental results. It nevertheless follows the artifact-oriented practices relevant to an ACM-style public companion: clear scope, permanent-source metadata, executable figure generation, versioned catalog schemas, and automated catalog checks.
+This is a survey companion, not a benchmark submission or a claim of independently reproduced experimental results. It nevertheless follows the artifact-oriented practices relevant to an ACM-style public companion: clear scope, permanent-source metadata, committed manuscript figures, versioned catalog schemas, and automated catalog checks.
 
 ## Included artifacts
 
 | Artifact | Location | Verification |
 | --- | --- | --- |
 | Manuscript draft | [`MH_survey.pdf`](MH_survey.pdf) | Open the PDF and compare its title and figure references |
-| Figure source | [`mh_figures/source/make_figures.py`](mh_figures/source/make_figures.py) | Run the rebuild commands in [`mh_figures/README.md`](mh_figures/README.md) |
+| Manuscript figures | [`mh_figures/pdf/`](mh_figures/pdf/) | Compare against the figure files used by the manuscript source |
 | Survey catalog | [`taxonomy/`](taxonomy) | Run `python3 scripts/validate_catalog.py` |
 
 ## Reproducibility boundary

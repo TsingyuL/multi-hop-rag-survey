@@ -1,16 +1,20 @@
 cff-version: 1.2.0
 message: "If you use this survey or its catalog, please cite it as below."
-title: "Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective"
+title: "Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference: A Survey"
 type: article
 authors:
   - family-names: Luo
     given-names: Yuqing
     affiliation: University of Science and Technology of China
+  - family-names: Zhang
+    given-names: Kai
+    affiliation: University of Science and Technology of China
 year: 2026
 abstract: >-
-  A survey of multi-hop retrieval-augmented reasoning organized around latent
-  evidence-chain observability, conditional evidence utility, reader exposure,
-  fusion reliability, and causal faithfulness.
+  A survey of multi-hop retrieval-augmented generation organized around latent
+  evidence-chain observability, selection preservation, reader exposure, fusion
+  reliability, and causal faithfulness. Conditional evidence utility is treated
+  as a mechanism-level selection signal rather than a separate estimand.
 keywords:
   - multi-hop reasoning
   - retrieval-augmented generation

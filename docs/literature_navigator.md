@@ -22,7 +22,7 @@ This page offers conceptual reading paths through the catalog. For a filterable 
 - [HippoRAG (2024)](https://arxiv.org/abs/2405.14831) — retrieves through a graph-memory index using personalized PageRank.
 - [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/) and [FLARE (2023)](https://arxiv.org/abs/2305.06983) — make reasoning or generation state inform the next retrieval action.
 
-### Utility: keep useful evidence under a budget
+### Selection: preserve evidence under a budget
 
 - [PullNet (2019)](https://aclanthology.org/D19-1242/) and [PathRetriever (2020)](https://openreview.net/forum?id=SJgVHkrYDH) — use previous hops to focus subsequent retrieval.
 - [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/), [CRAG (2024)](https://arxiv.org/abs/2401.15884), and [Adaptive-RAG (2024)](https://arxiv.org/abs/2403.14403) — adapt retrieval decisions to intermediate reasoning, context quality, or query complexity.
@@ -68,11 +68,11 @@ This page offers conceptual reading paths through the catalog. For a filterable 
 | Year | Paper | Route | Primary bottleneck |
 | --- | --- | --- | --- |
 | 2018 | [GRAFT-Net](https://aclanthology.org/D18-1455/) | Graph / KG | Observability |
-| 2019 | [DecompRC](https://aclanthology.org/P19-1613/), [DFGN](https://aclanthology.org/P19-1617/), [PullNet](https://aclanthology.org/D19-1242/) | Decomposition / Graph | Utility / Fusion / Observability |
-| 2020 | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH), [ONUS](https://aclanthology.org/2020.emnlp-main.713/), [HGN](https://aclanthology.org/2020.emnlp-main.710/), [MHGRN](https://aclanthology.org/2020.emnlp-main.99/) | Retrieval / Decomposition / Graph | Observability / Utility / Fusion |
+| 2019 | [DecompRC](https://aclanthology.org/P19-1613/), [DFGN](https://aclanthology.org/P19-1617/), [PullNet](https://aclanthology.org/D19-1242/) | Decomposition / Graph | Selection / Fusion / Observability |
+| 2020 | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH), [ONUS](https://aclanthology.org/2020.emnlp-main.713/), [HGN](https://aclanthology.org/2020.emnlp-main.710/), [MHGRN](https://aclanthology.org/2020.emnlp-main.99/) | Retrieval / Decomposition / Graph | Observability / Selection / Fusion |
 | 2021 | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282), [MDR](https://aclanthology.org/2021.naacl-main.424/), [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx), [RERC](https://aclanthology.org/2021.findings-emnlp.17/) | Reader / Retrieval / Decomposition | Fusion / Observability |
 | 2023 | [ReAct](https://arxiv.org/abs/2210.03629), [IRCoT](https://aclanthology.org/2023.acl-long.557/), [FLARE](https://arxiv.org/abs/2305.06983) | Agentic / Reasoning | Joint / Observability |
-| 2024 | [Self-RAG](https://arxiv.org/abs/2310.11511), [RAPTOR](https://arxiv.org/abs/2401.18059), [CRAG](https://arxiv.org/abs/2401.15884), [Adaptive-RAG](https://arxiv.org/abs/2403.14403), [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/), [GraphRAG](https://arxiv.org/abs/2404.16130), [HippoRAG](https://arxiv.org/abs/2405.14831), [EfficientRAG](https://aclanthology.org/2024.emnlp-main.199/) | Agentic / Retrieval / Graph / Decomposition | Joint / Exposure / Utility / Observability |
+| 2024 | [Self-RAG](https://arxiv.org/abs/2310.11511), [RAPTOR](https://arxiv.org/abs/2401.18059), [CRAG](https://arxiv.org/abs/2401.15884), [Adaptive-RAG](https://arxiv.org/abs/2403.14403), [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/), [GraphRAG](https://arxiv.org/abs/2404.16130), [HippoRAG](https://arxiv.org/abs/2405.14831), [EfficientRAG](https://aclanthology.org/2024.emnlp-main.199/) | Agentic / Retrieval / Graph / Decomposition | Joint / Exposure / Selection / Observability |
 
 ## Keep this page current
 
