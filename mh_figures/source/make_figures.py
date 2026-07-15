@@ -808,6 +808,222 @@ def fig10():
             fc='#FAFBFD',ec='#E0E6EF',lw=0.8,r=0.12,text_kw={'fontsize':7.0,'color':COL['dark']})
     save(fig,'F10_running_example_chain')
 
+# --- submission redraws: figures 1, 3, 4, and manuscript figure 5 (F9) ---
+# These definitions intentionally replace the earlier exploratory layouts.
+
+def fig1():
+    fig, ax = setup((7.5, 4.45))
+
+    # Hidden target lane.
+    rounded(ax, (0.35, 6.55), 15.3, 2.65, '', fc='#F2F5F9', ec='#C9D3E0',
+            lw=1.0, r=0.18, ls='dashed', z=0)
+    ax.text(0.65, 8.82, 'UNOBSERVED TARGET', fontsize=7.6, color=COL['mid'],
+            fontweight='bold')
+    chain = [
+        ('cast fact', 1.35), ('bridge entity', 4.15),
+        ('biography evidence', 7.25), ('answer evidence', 10.65),
+    ]
+    for i, (label, x) in enumerate(chain):
+        rounded(ax, (x, 7.22), 2.05, 0.86, label, fc='white', ec='#9BA9B9',
+                lw=1.0, r=0.16, ls='dashed', text_kw={'fontsize': 7.2})
+        if i:
+            arrow(ax, (chain[i-1][1] + 2.08, 7.65), (x - 0.05, 7.65),
+                  color='#9BA9B9', lw=1.25, ls='dashed')
+    ax.text(13.15, 7.65, '$C^\\star$', fontsize=11, color=COL['dark'], va='center')
+
+    # Observable audit lane: five cumulative events rather than a generic pipeline.
+    ax.text(0.65, 5.95, 'OBSERVABLE AUDIT TRACE', fontsize=7.6, color=COL['mid'],
+            fontweight='bold')
+    stages = [
+        ('obs', '$L_N$', 'chain retrieved', '$\\mathcal{P}$'),
+        ('sel', '$E_K$', 'chain retained', '$\\mathcal{S}=\\mathcal{P}\\cap S_K$'),
+        ('exp', '$\\pi(E_K)$', 'chain exposed', '$\\mathcal{O}=\\mathcal{S}\\cap O_r$'),
+        ('fus', '$G(q,E_K)$', 'valid composition', '$\\mathcal{U}=\\mathcal{O}\\cap U_G$'),
+        ('faith', '$\\hat a$', 'causally used', '$\\mathcal{T}=\\mathcal{U}\\cap T_C$'),
+    ]
+    xs = [0.55, 3.55, 6.55, 9.55, 12.55]
+    light_stage = {'obs':'#EDF3FF','sel':'#EAF6EF','exp':'#FFF2E5',
+                   'fus':'#F0EDFF','faith':'#FFF0F0'}
+    for i, ((key, obj, desc, event), x) in enumerate(zip(stages, xs)):
+        rounded(ax, (x, 3.35), 2.45, 1.72, '', fc=light_stage[key],
+                ec=mcolors.to_rgba(COL[key], 0.65), lw=1.05, r=0.17)
+        ax.text(x + 0.18, 4.72, obj, fontsize=9.2, color=COL[key],
+                fontweight='bold', ha='left')
+        ax.text(x + 0.18, 4.18, desc, fontsize=7.1, color=COL['dark'], ha='left')
+        ax.text(x + 1.22, 3.70, event, fontsize=6.8, color=COL['mid'], ha='center')
+        if i:
+            arrow(ax, (xs[i-1] + 2.48, 4.20), (x - 0.04, 4.20),
+                  color=COL[key], lw=1.5)
+        arrow(ax, (chain[min(i, 3)][1] + 1.02, 7.18), (x + 1.22, 5.10),
+              color=COL[key], lw=0.95, ls='dotted', alpha=0.8)
+
+    # Explicit split between grounded and ordinary answer success.
+    rounded(ax, (0.55, 0.55), 9.7, 1.65, '', fc='#FAFBFD', ec='#DDE5EF',
+            lw=0.9, r=0.16)
+    ax.text(0.85, 1.72, 'Grounded success', fontsize=7.8, color=COL['dark'],
+            fontweight='bold')
+    ax.text(3.25, 1.42,
+            '$P(Y_g)=\\theta_{obs}\\theta_{sel}\\theta_{exp}\\theta_{fus}\\theta_{faith}$',
+            fontsize=9.2, color=COL['dark'], ha='center')
+    ax.text(0.85, 0.90, 'Every factor refers to a nested event in the audited chain.',
+            fontsize=6.8, color=COL['mid'])
+    rounded(ax, (10.65, 0.55), 4.95, 1.65, '', fc='#FFF7F3', ec='#F0B7A7',
+            lw=0.9, r=0.16)
+    ax.text(10.95, 1.72, 'Ordinary answer success', fontsize=7.8, color=COL['dark'],
+            fontweight='bold')
+    ax.text(13.10, 1.30, '$P(Y)=P(Y_g)+P(Y\\cap\\neg\\mathcal{T})$',
+            fontsize=8.5, color=COL['dark'], ha='center')
+    ax.text(13.10, 0.86, 'shortcut / parametric leakage', fontsize=6.8,
+            color=COL['faith'], ha='center')
+    save(fig, 'F1_latent_chain_pipeline')
+
+
+def fig3():
+    fig, ax = setup((7.5, 4.45))
+    panels = [
+        (0.45, 'A  CONSTRUCT / EXPAND', 'obs',
+         ['GRAFT-Net', 'PullNet', 'DFGN / HGN'], 'recover missing\nevidence nodes'),
+        (5.55, 'B  PROPAGATE / FUSE', 'fus',
+         ['QA-GNN', 'GreaseLM', 'UniKGQA'], 'compose evidence along\nconstrained paths'),
+        (10.65, 'C  BUILD / TRAVERSE', 'faith',
+         ['ToG', 'RoG', 'GraphRAG / HippoRAG'], 'make graph operations\nauditable'),
+    ]
+    for px, heading, key, methods, takeaway in panels:
+        rounded(ax, (px, 1.15), 4.65, 7.75, '', fc='#FBFCFE', ec='#DCE3EC',
+                lw=0.9, r=0.18)
+        ax.text(px + 0.25, 8.52, heading, fontsize=7.5, color=COL[key],
+                fontweight='bold')
+        # Each panel uses a distinct mechanism sketch.
+        if key == 'obs':
+            nodes = [(px+0.75, 6.65), (px+2.05, 7.25), (px+2.10, 5.55), (px+3.55, 6.35)]
+            for j, (x, y) in enumerate(nodes):
+                fc = '#FFFFFF' if j != 2 else mcolors.to_rgba(COL[key], 0.12)
+                ec = COL[key] if j != 2 else COL['faith']
+                ax.add_patch(Circle((x, y), 0.25, facecolor=fc, edgecolor=ec, linewidth=1.0))
+            for a, b in [(0,1), (0,2), (1,3), (2,3)]:
+                arrow(ax, nodes[a], nodes[b], color=COL[key], lw=1.15)
+            ax.text(px+2.1, 5.06, 'expand to recover\na missing bridge', fontsize=6.8,
+                    color=COL['mid'], ha='center')
+        elif key == 'fus':
+            for row, y in enumerate([7.25, 6.25, 5.25]):
+                ax.add_patch(Circle((px+0.85, y), 0.20, facecolor='white',
+                                    edgecolor=COL[key], linewidth=1.0))
+                ax.add_patch(Circle((px+2.15, y), 0.20, facecolor='white',
+                                    edgecolor=COL[key], linewidth=1.0))
+                arrow(ax, (px+1.08, y), (px+1.92, y), color=COL[key], lw=1.05)
+                arrow(ax, (px+2.38, y), (px+3.55, 6.25), color=COL[key], lw=1.05)
+            rounded(ax, (px+3.35, 5.82), 0.75, 0.86, '$h$', fc='#F0ECFF',
+                    ec=COL[key], r=0.14, text_kw={'fontsize': 10, 'color': COL[key]})
+            ax.text(px+2.2, 4.72, 'message passing aggregates\npath-conditioned evidence',
+                    fontsize=6.8, color=COL['mid'], ha='center')
+        else:
+            graph = [(px+0.75,6.65), (px+2.0,7.25), (px+2.0,5.75), (px+3.45,6.65)]
+            for x, y in graph:
+                ax.add_patch(Circle((x,y), 0.22, facecolor='white',
+                                    edgecolor=COL['obs'], linewidth=1.0))
+            for a,b in [(0,1),(0,2),(1,3),(2,3)]:
+                arrow(ax, graph[a], graph[b], color='#B6C0CC', lw=0.9, style='-')
+            arrow(ax, graph[0], graph[2], color=COL['faith'], lw=2.0)
+            arrow(ax, graph[2], graph[3], color=COL['faith'], lw=2.0)
+            ax.text(px+2.1, 4.98, 'LLM chooses graph operations;\ntraversal path becomes the trace',
+                    fontsize=6.8, color=COL['mid'], ha='center')
+        ax.text(px+0.25, 4.10, 'Representative systems', fontsize=7.0,
+                color=COL['dark'], fontweight='bold')
+        for j, method in enumerate(methods):
+            method_pill(ax, px+0.28, 3.35-j*0.66, 4.05, method, key=key, fs=7.0)
+        rounded(ax, (px+0.25, 1.35), 4.15, 0.58, takeaway, fc='white',
+                ec=mcolors.to_rgba(COL[key],0.35), lw=0.7, r=0.10,
+                text_kw={'fontsize':5.9,'color':COL[key],'fontweight':'bold'})
+    save(fig, 'F3_graph_methods_lineage')
+
+
+def fig4():
+    fig, ax = setup((7.5, 4.45))
+    # Mechanism map: no curve and no implied performance frontier.
+    arrow(ax, (1.25, 1.15), (15.1, 1.15), color='#8794A4', lw=1.1)
+    arrow(ax, (1.25, 1.15), (1.25, 8.75), color='#8794A4', lw=1.1)
+    ax.text(8.1, 0.55, 'adaptivity / policy control   (fixed  →  agentic)', fontsize=7.6,
+            color=COL['mid'], ha='center')
+    ax.text(0.55, 8.65, 'retrieval-state richness', fontsize=7.8,
+            color=COL['mid'], rotation=90, va='top')
+    ax.add_line(Line2D([1.3, 14.9], [4.95, 4.95], color='#E2E7EE', lw=0.8, ls='dashed'))
+    ax.add_line(Line2D([8.1, 8.1], [1.2, 8.6], color='#E2E7EE', lw=0.8, ls='dashed'))
+    ax.text(1.55, 8.45, 'persistent graph / memory', fontsize=6.7, color=COL['mid'])
+    ax.text(1.55, 1.35, 'query-only state', fontsize=6.7, color=COL['mid'])
+
+    points = [
+        ('BM25', 2.1, 2.0, 'obs'), ('DPR / BGE', 3.0, 2.8, 'obs'),
+        ('MDR', 5.0, 4.1, 'obs'), ('IRCoT', 6.2, 4.9, 'sel'),
+        ('FLARE', 7.2, 3.7, 'sel'), ('RAPTOR', 5.8, 7.3, 'exp'),
+        ('GraphRAG', 7.5, 7.8, 'fus'), ('ReAct', 10.4, 4.3, 'fus'),
+        ('DeepRAG', 12.0, 5.6, 'faith'), ('Search-R1', 13.4, 6.8, 'faith'),
+    ]
+    for label, x, y, key in points:
+        ax.add_patch(Circle((x, y), 0.14, facecolor=COL[key], edgecolor='white',
+                            linewidth=0.8, zorder=5))
+        ax.text(x+0.20, y+0.03, label, fontsize=7.0, color=COL['dark'], va='center')
+
+    # Family envelopes show design regions, not ordered steps.
+    regions = [
+        (1.65,1.55,2.35,1.75,'single-shot','#DDE8FF'),
+        (4.45,3.25,3.25,2.15,'iterative / interleaved','#E2F3E8'),
+        (5.25,6.65,3.25,1.65,'hierarchical / graph','#EEE9FF'),
+        (9.75,3.55,4.35,3.75,'agentic / RL','#FFF0EC'),
+    ]
+    for x,y,w,h,label,fc in regions:
+        rounded(ax,(x,y),w,h,'',fc=mcolors.to_rgba(fc,0.25),ec=mcolors.to_rgba('#8794A4',0.45),
+                lw=0.8,r=0.20,ls='dashed',z=0)
+        ax.text(x+0.18,y+h-0.30,label,fontsize=6.8,color=COL['mid'],fontweight='bold')
+    rounded(ax,(3.15,8.82),10.4,0.58,
+            'Position encodes mechanism state and control only - not answer quality, observability, or rank.',
+            fc='#FAFBFD',ec='#DDE5EF',lw=0.8,r=0.12,
+            text_kw={'fontsize':6.9,'color':COL['dark']})
+    save(fig, 'F4_retrieval_adaptivity_frontier')
+
+
+def fig9():
+    fig, ax = setup((7.5, 4.7), xlim=(0,16), ylim=(0,10.5))
+    columns = [('obs','Observability'), ('sel','Selection\npreservation'), ('exp','Exposure'),
+               ('fus','Fusion'), ('faith','Faithfulness')]
+    rows = [
+        ('Supporting-fact QA', 'HotpotQA · 2Wiki · IIRC', [3,2,1,1,1]),
+        ('Shortcut-resistant QA', 'MuSiQue · MoreHopQA', [3,2,1,1,1]),
+        ('Path / process QA', 'EntailmentBank · eQASC', [1,2,1,3,2]),
+        ('Heterogeneous evidence', 'HybridQA · MultiModalQA', [1,2,1,3,1]),
+        ('Long-context multi-hop', 'LongBench · NovelHopQA', [1,1,3,2,1]),
+        ('Fact verification', 'FEVER · HoVer · SciFact', [1,1,1,2,3]),
+        ('Counterfactual / RAG diagnostics', 'CofCA · FRAMES · MultiHop-RAG', [1,2,2,2,3]),
+    ]
+    xcols = [6.95, 8.90, 10.85, 12.80, 14.65]
+    for (key, label), x in zip(columns, xcols):
+        ax.text(x, 9.25, label, fontsize=6.2, color=COL[key], ha='center',
+                fontweight='bold')
+    ys = np.linspace(8.2, 2.1, len(rows))
+    for (group, examples, vals), y in zip(rows, ys):
+        ax.text(0.55, y+0.18, group, fontsize=7.4, color=COL['dark'],
+                fontweight='bold', va='center')
+        ax.text(0.55, y-0.20, examples, fontsize=6.6, color=COL['mid'], va='center')
+        ax.add_line(Line2D([6.55, 15.15], [y-0.48, y-0.48], color='#EEF1F5', lw=0.7))
+        for (key, _), x, val in zip(columns, xcols, vals):
+            radius = {1:0.12, 2:0.20, 3:0.28}[val]
+            alpha = {1:0.22, 2:0.50, 3:0.88}[val]
+            ax.add_patch(Circle((x,y), radius, facecolor=mcolors.to_rgba(COL[key],alpha),
+                                edgecolor=COL[key], linewidth=0.8))
+    rounded(ax,(0.55,0.55),7.35,0.82,'',fc='#FAFBFD',ec='#DDE5EF',lw=0.8,r=0.14)
+    ax.text(0.85,0.96,'coverage strength',fontsize=7.0,color=COL['dark'],fontweight='bold')
+    for i,(lab,val) in enumerate([('low',1),('medium',2),('high',3)]):
+        x=3.80+i*1.15
+        radius={1:0.12,2:0.20,3:0.28}[val]
+        ax.add_patch(Circle((x,0.96),radius,facecolor=mcolors.to_rgba('#60717F',{1:0.22,2:0.50,3:0.88}[val]),
+                            edgecolor='#60717F',linewidth=0.8))
+        ax.text(x+0.30,0.96,lab,fontsize=6.0,color=COL['mid'],va='center')
+    rounded(ax,(8.20,0.55),6.95,0.82,
+            'Use complementary benchmark families;\nno single row identifies all five estimands.',
+            fc='#FAFBFD',ec='#DDE5EF',lw=0.8,r=0.14,
+            text_kw={'fontsize':6.2,'color':COL['dark']})
+    save(fig, 'F9_benchmark_estimand_alignment')
+
+
 if __name__ == '__main__':
     for fn in [fig1,fig2,fig3,fig4,fig5,fig6,fig7,fig8,fig9,fig10]:
         fn()
