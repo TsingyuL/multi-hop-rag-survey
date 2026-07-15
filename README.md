@@ -1,4 +1,4 @@
-# Multi-Hop Retrieval-Augmented Reasoning Survey
+# Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference
 
 > **A latent evidence-chain inference perspective on multi-hop RAG.**
 
@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 [![ACM template](https://img.shields.io/badge/typeset%20with-acmart-00629B.svg)](MH_survey.pdf)
 
-This repository is the living companion to the survey **“Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective.”** It organizes multi-hop retrieval-augmented reasoning around the latent evidence chain that a system must recover and use, rather than around architecture alone.
+This repository is the living companion to the survey **“Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference: A Survey.”** It organizes multi-hop retrieval-augmented generation around the latent evidence chain that a system must recover and use, rather than around architecture alone.
 
 > **Research hub:** the repository ships a filterable static catalog in [`docs/index.html`](docs/index.html). The included GitHub Pages workflow deploys it whenever GitHub Pages is enabled for this repository.
 
@@ -15,7 +15,7 @@ The paper frames end-to-end success as five coupled bottlenecks:
 | Estimand | Question it asks |
 | --- | --- |
 | **Observability** | Does the retrieved pool contain the needed support chain? |
-| **Conditional utility** | Does budgeted selection preserve the useful evidence? |
+| **Selection preservation** | Does budgeted selection preserve the complete support chain? |
 | **Exposure** | Is the evidence accessible to the reader at the point of use? |
 | **Fusion reliability** | Can the reader compose the evidence correctly? |
 | **Causal faithfulness** | Did the generated answer actually depend on the evidence? |
@@ -25,7 +25,7 @@ The paper frames end-to-end success as five coupled bottlenecks:
 ## Paper
 
 - [Read the manuscript (PDF)](MH_survey.pdf)
-- Author: Yuqing Luo, University of Science and Technology of China
+- Authors: Yuqing Luo and Kai Zhang, University of Science and Technology of China
 - Venue status: author manuscript draft, typeset with the ACM `acmart` class.
 
 > The PDF currently contains placeholder publication metadata (including the DOI). It is **not** the ACM Version of Record. Replace this notice, the citation metadata, and any DOI links only after the publisher supplies the final bibliographic record.
@@ -35,6 +35,7 @@ The paper frames end-to-end success as five coupled bottlenecks:
 ```text
 .
 ├── MH_survey.pdf                  # survey manuscript
+├── paper/                         # buildable LaTeX source, bibliography, and figures
 ├── taxonomy/                      # machine-readable, community-maintained catalog
 ├── docs/                          # taxonomy rules, roadmap, and change log
 ├── mh_figures/                    # rendered figures and generation source
@@ -44,7 +45,7 @@ The paper frames end-to-end success as five coupled bottlenecks:
 └── LICENSE                        # license for repository-authored materials
 ```
 
-The hub deliberately separates the **reviewed catalog** from the **imported full library**. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current reviewed seed includes **23 methods**, **6 benchmarks**, and **27 intervention mappings**; the imported library contains **229 deduplicated papers** awaiting per-record verification. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
+The hub deliberately separates the **reviewed catalog** from the **imported full library**. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current reviewed seed includes **23 methods**, **6 benchmarks**, and **24 unique intervention mappings**; the imported library contains **229 deduplicated papers** awaiting per-record verification. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
 
 | File | Contents |
 | --- | --- |
@@ -64,7 +65,7 @@ The catalog is designed to be read as a map, not as an unstructured paper list. 
 | Navigate by research question | Navigate by design route |
 | --- | --- |
 | [Can the needed chain be found? — Observability](docs/literature_navigator.md#1-observability-find-the-support-chain) | [Dense / iterative retrieval](docs/literature_navigator.md#2-retrieval) |
-| [Which evidence survives the budget? — Utility](docs/literature_navigator.md#2-utility-keep-useful-evidence-under-a-budget) | [Graph and knowledge-grounded methods](docs/literature_navigator.md#3-graph--knowledge-grounded-methods) |
+| [Which evidence survives the budget? — Selection](docs/literature_navigator.md#2-selection-preserve-the-chain-under-a-budget) | [Graph and knowledge-grounded methods](docs/literature_navigator.md#3-graph--knowledge-grounded-methods) |
 | [Is evidence usable in context? — Exposure](docs/literature_navigator.md#3-exposure-make-evidence-available-to-the-reader) | [Reader and fusion architectures](docs/literature_navigator.md#4-reader--fusion-architectures) |
 | [Can the model compose evidence? — Fusion](docs/literature_navigator.md#4-fusion-compose-evidence-correctly) | [Reasoning-interleaved and agentic RAG](docs/literature_navigator.md#5-reasoning-interleaved--agentic-rag) |
 | [Did the answer rely on its evidence? — Faithfulness](docs/literature_navigator.md#5-faithfulness-test-causal-evidence-use) | [Context organization and hierarchical retrieval](docs/literature_navigator.md#6-context-organization) |
@@ -96,8 +97,8 @@ Until a DOI and final venue record exist, cite this work as an unpublished manus
 
 ```bibtex
 @article{luo2026multihopragsurvey,
-  author  = {Yuqing Luo},
-  title   = {Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective},
+  author  = {Yuqing Luo and Kai Zhang},
+  title   = {Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference: A Survey},
   year    = {2026},
   note    = {Manuscript draft. Repository companion: https://github.com/TsingyuL/multi-hop-rag-survey}
 }
@@ -107,4 +108,4 @@ Please update both this entry and [`CITATION.cff`](CITATION.cff) from the publis
 
 ## License and attribution
 
-The repository-authored catalog, documentation, and utility code are released under the [MIT License](LICENSE). The manuscript and figures remain © 2026 Yuqing Luo, subject to the rights and publication terms shown in the manuscript. Do not treat the repository license as permission to redistribute a publisher's Version of Record.
+The repository-authored catalog, documentation, and utility code are released under the [MIT License](LICENSE). The manuscript and figures remain © 2026 Yuqing Luo and Kai Zhang, subject to the rights and publication terms shown in the manuscript. Do not treat the repository license as permission to redistribute the manuscript, figures, or a publisher's Version of Record.

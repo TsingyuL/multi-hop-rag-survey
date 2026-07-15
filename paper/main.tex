@@ -1,0 +1,3403 @@
+\pdfminorversion=7
+% =====================================================================
+%  Multi-Hop Retrieval-Augmented Reasoning as Latent Evidence-Chain Inference
+%  Target venue: ACM Computing Surveys (CSUR)
+%  Revised draft: comprehensive + statistical organization
+% =====================================================================
+
+\documentclass[acmsmall,review]{acmart}
+\citestyle{acmnumeric}
+
+% ---------- ACM CSUR metadata ----------------------------------------
+\acmJournal{CSUR}
+% Volume, issue, article number, month, and DOI are assigned by ACM.
+% Suppress publication metadata that ACM has not assigned at review time.
+\acmDOI{}
+\setcopyright{none}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+
+% ---------- Packages -------------------------------------------------
+\let\Bbbk\relax
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+% ---------- Figure helpers ------------------------------------------
+% The manuscript uses fig1.pdf--fig5.pdf under ./figures/.
+% Figure assets must not contain an internal figure number or caption.
+% Use \paperfigure{<width fraction>}{<file>}{<caption>}{<label>}.
+\newcommand{\paperfigure}[4]{%
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=#1\linewidth]{#2}
+  \caption{#3}
+  \Description{#3}
+  \label{#4}
+\end{figure}
+}
+
+% Keep floats close to their discussion without creating large white gaps.
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{1}
+\setcounter{totalnumber}{3}
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.80}
+\emergencystretch=3em
+
+\usepackage{url}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{makecell}
+\usepackage{threeparttable}
+\usepackage{adjustbox}
+\usepackage{rotating}
+\usepackage{placeins}
+
+% ---------- Macros ---------------------------------------------------
+\newcommand{\MHRAG}{\textsc{MH-RAG}\xspace}
+\newcommand{\RAG}{\textsc{RAG}\xspace}
+\newcommand{\LLM}{\textsc{LLM}\xspace}
+\newcommand{\PLM}{\textsc{PLM}\xspace}
+\newcommand{\KG}{\textsc{KG}\xspace}
+\newcommand{\QA}{\textsc{QA}\xspace}
+\newcommand{\MHQA}{\textsc{MH-QA}\xspace}
+\newcommand{\LLMs}{\textsc{LLM}s\xspace}
+\newcommand{\KGs}{\textsc{KG}s\xspace}
+\newcommand{\KGQA}{\textsc{KGQA}\xspace}
+\newcommand{\LM}{\textsc{LM}\xspace}
+\newcommand{\KB}{\textsc{KB}\xspace}
+\newcommand{\GNN}{\textsc{GNN}\xspace}
+\newcommand{\CoT}{\textsc{CoT}\xspace}
+\newcommand{\FiD}{\textsc{FiD}\xspace}
+\newcommand{\PRM}{\textsc{PRM}\xspace}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\newcommand{\eunit}{\ensuremath{e}}
+\newcommand{\echain}{\ensuremath{\mathcal{C}}}
+\newcommand{\kstore}{\ensuremath{\mathcal{K}}}
+\newcommand{\retr}{\ensuremath{\mathcal{R}}}
+\newcommand{\fuse}{\ensuremath{\mathcal{F}}}
+\newcommand{\reason}{\ensuremath{\mathcal{G}}}
+\newcommand{\verify}{\ensuremath{\mathcal{V}}}
+\newcommand{\pool}{\ensuremath{L_N}}
+\newcommand{\budgetset}{\ensuremath{E_K}}
+\newcommand{\orderctx}{\ensuremath{\pi(E_K)}}
+\newcommand{\obs}{\ensuremath{\mathcal{P}}}
+\newcommand{\sel}{\ensuremath{\mathcal{S}}}
+\newcommand{\expo}{\ensuremath{\mathcal{O}}}
+\newcommand{\fus}{\ensuremath{\mathcal{U}}}
+\newcommand{\faith}{\ensuremath{\mathcal{T}}}
+
+\newcommand{\chainset}{\ensuremath{\mathfrak{C}}}
+\newcommand{\support}{\ensuremath{\operatorname{supp}}}
+\newcommand{\doop}{\ensuremath{\operatorname{do}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\cost}{cost}
+\DeclareMathOperator{\len}{len}
+\DeclareMathOperator{\KL}{KL}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+
+% ---------- Title ----------------------------------------------------
+\begin{document}
+
+\title[Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference: A Survey
+%Multi-Hop Retrieval-Augmented Reasoning: A Survey
+]{%
+Multi-Hop Retrieval-Augmented Generation as Latent Evidence-Chain Inference: A Survey
+%Multi-Hop Retrieval-Augmented Reasoning: A Survey from Latent Evidence-Chain Inference Perspective
+%Multi-Hop Retrieval-Augmented Reasoning:\\
+%A Latent Evidence-Chain Inference Perspective
+}
+
+\author{Yuqing Luo}
+\affiliation{%
+  \institution{University of Science and Technology of China}
+  \city{Hefei}
+  \state{Anhui}
+  \country{China}
+}
+\author{Kai Zhang}
+\affiliation{%
+  \institution{University of Science and Technology of China}
+  \city{Hefei}
+  \state{Anhui}
+  \country{China}
+}
+
+% ---------- Abstract -------------------------------------------------
+\begin{abstract}
+Multi-hop retrieval-augmented generation (RAG) must recover an evidence chain whose later units become identifiable only after intermediate states are resolved. A system, however, observes only a noisy retrieval pool, a budgeted context, an evidence ordering, and a generated answer. Existing surveys organize this field primarily by architecture; such taxonomies catalogue systems effectively but do not isolate why they fail. We recast multi-hop RAG as latent evidence-chain inference under missingness, noise, budget, exposure, fusion, and faithfulness constraints. Along a statistical axis, we decompose grounded success into five conditional stage factors: chain observability, selection preservation, exposure probability, fusion reliability, and causal faithfulness. This yields an exact chain-rule factorization and a conditional bottleneck bound, while separating grounded success from shortcut answers and parametric leakage. Conditional evidence utility is treated as a mechanism-level score for improving selection rather than as an additional probability factor. Along a complementary architectural axis, we review retrieval, graph, decomposition, reader, agentic, long-context, multimodal, and mechanistic approaches through 2026. We then reinterpret benchmarks as diagnostic instruments, align empirical claims with conditional subsets and budgets, and propose an auditable reporting standard. A versioned companion artifact separates the broad imported literature library from the reviewed method and benchmark seeds, making the scope and maturity of the released taxonomy explicit.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10010147.10010178.10010179.10010180</concept_id>
+<concept_desc>Computing methodologies~Information extraction</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010178.10010179.10003352</concept_id>
+<concept_desc>Computing methodologies~Natural language generation</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003317.10003347</concept_id>
+<concept_desc>Information systems~Question answering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Natural language generation}
+\ccsdesc[500]{Information systems~Question answering}
+\ccsdesc[500]{Computing methodologies~Information extraction}
+
+\keywords{Multi-hop reasoning, retrieval-augmented generation,
+latent evidence chains, evidence retrieval, evidence fusion,
+faithfulness, causal attribution, large language models, knowledge graphs,
+agentic search, process supervision}
+
+\maketitle
+
+% =======================================
+\section{Introduction}
+\label{sec:introduction}
+% =========
+Modern information retrieval systems are increasingly asked to answer complex questions whose evidence is distributed across many sources. A multi-hop retrieval-augmented generation (RAG) system is therefore rarely asked to retrieve a single fact; it is asked to recover an unobserved support structure. For a question $q$, the correct answer depends on a latent evidence chain $\echain^\star=(e_1^\star,\ldots,e_m^\star)$ whose elements must be discovered, ordered, and composed, while the system observes only a noisy retrieval pool $L_N$, a budgeted context $E_K$ $\subseteq$ $L_N$, an ordering $\pi(E_K)$, and the answer distribution induced by a reader. This mismatch between the latent object required for correctness and the observable objects available to the system is the central statistical difficulty of multi-hop RAG. Figure~\ref{fig:latent_chain_view} summarizes the latent target, observable pipeline, and five stage diagnostics.
+
+\paperfigure{1.0}{fig1.pdf}
+{Latent evidence-chain inference view of multi-hop RAG. The target object is an unobserved support chain $\echain^\star$, while the system observes only a retrieved pool $L_N$, a budgeted context $E_K$, an ordering $\pi(E_K)$, and a generated answer $\hat a$. The five estimands diagnose where the chain becomes absent, dropped, poorly exposed, incorrectly fused, or used only post hoc rather than causally.}
+{fig:latent_chain_view}
+
+
+
+Consider a question whose answer requires resolving an unstated bridge entity before the answer-bearing evidence can even be located. A single-shot retriever sees only the surface form of the original query and may retrieve highly relevant first-hop documents while missing the bridge document needed for the second hop. Increasing retrieval depth can make the full chain observable but inflates distractor mass; selecting a small context reduces noise but may discard a low-marginal-relevance bridge; reordering the selected evidence can make the chain easier for the reader to use but cannot recover evidence that was never selected. Even when the chain is present and visible, a fluent reader may answer from parametric memory or produce a plausible-looking rationale that is not causally responsible for the answer. These are not isolated engineering issues; they are successive statistical bottlenecks in the estimation and use of a latent support chain.
+
+Existing surveys usually organize this field by architectural community: graph-based reading comprehension, iterative retrieval, question decomposition, fusion-in-decoder readers, chain-of-thought prompting, and agentic search~\cite{gao2023ragsurvey,fan2024ragllmsurvey,
+mavi2022mhqasurvey,mohammadi2024mhmrcsurvey,plaat2024multistepsurvey,singh2025agenticragsurvey,liang2025reasoningragsurvey}. This organization helps locate papers but offers little explanation of why systems fail. Two methods with different surface architectures may target the same statistical bottleneck; conversely, two methods in the same family may fail for different statistical reasons. An iterative retriever, a graph expander, and an agentic search policy all attempt to increase the probability that the latent chain is observable. A reranker, a bridge selector, and a compression model all estimate some version of conditional evidence utility. Verification and counterfactual attribution, although discussed under distinct labels, both target the causal faithfulness of the final answer.
+
+This survey therefore asks a different organizing question: \emph{which quantity of the latent evidence-chain inference problem does a method estimate?} The goal is not to discard architectural taxonomies but to place them under a more diagnostic statistical layer. We use five estimands as primary coordinates: chain observability, selection preservation under budget, exposure probability, fusion reliability, and causal faithfulness. Conditional evidence utility is treated as a mechanism-level selector score rather than as a sixth estimand. These quantities convert common multi-hop failure modes into measurable events and make design tradeoffs explicit. To preserve continuity with the existing literature, Section~\ref{sec:architecture_view} provides a parallel architectural review that catalogues methods by their surface design and maps each family to the estimands it primarily affects.
+
+
+\subsection{A Running Example through the Latent-Chain Lens}
+\label{subsec:running_example}
+To make the distinction concrete, we adopt a canonical bridge-type
+question from the HotpotQA benchmark~\cite{yang2018hotpotqa}, whose
+gold supporting facts are annotated and publicly verifiable:
+\begin{quote}
+\emph{``What government position was held by the woman who portrayed
+Corliss Archer in the film Kiss and Tell?''}
+\end{quote}
+A surface retriever conditioned on the literal query is drawn toward
+passages about the 1945 film \emph{Kiss and Tell}, but the latent
+support chain contains at least two dependent units:
+$e_1^\star$, the bridge-entity unit establishing that Shirley~Temple
+portrayed Corliss~Archer in \emph{Kiss and Tell}; and
+$e_2^\star$, the answer-bearing unit stating that Shirley~Temple
+subsequently served as United~States Chief of Protocol. The second
+unit is not directly queryable from the surface form of the question;
+it becomes reachable only after the bridge entity has been resolved.
+We use this canonical two-hop example throughout the survey. When
+discussing longer dependency chains, we use MuSiQue~\cite{trivedi2022musique}
+as a benchmark family rather than introducing an additional untracked
+running item. In
+Section~\ref{sec:problem_setup} the example grounds the formalism
+$(\echain^\star, L_N, E_K, \pi(E_K), \hat a)$; in
+Section~\ref{sec:stat_decomposition} it illustrates each of the five
+estimands; in Sections~\ref{sec:estimand_methods}
+and~\ref{sec:architecture_view} it shows how different method
+families intervene at different points; in
+Section~\ref{sec:benchmarks} it anchors the discussion of which
+benchmarks expose which failure events; and in
+Section~\ref{sec:causal_faithfulness} it supports counterfactual
+faithfulness illustrations.
+
+In the notation used in this survey, the complete support chain
+$\echain^\star$ is not a document list returned by a system; it is
+the unobserved object that would make the answer identifiable. The
+retrieved pool $L_N$ is an imperfect observation of that object, the
+selected context $E_K$ is a budgeted estimator, and the reader-facing
+ordering $\pi(E_K)$ is a presentation of the estimator. This
+separation matters because different failures produce the same final
+symptom. If the answer is wrong, it may be because the Shirley~Temple
+biography passage was absent from $L_N$, because it was dropped when
+$E_K$ was selected under a small context budget, because it was
+placed far from the \emph{Kiss and Tell} cast passage in $\pi(E_K)$,
+because the reader failed to compose the two passages, or because
+the model answered from memorized knowledge without using the chain.
+Final answer accuracy alone cannot distinguish these cases.
+
+This example also clarifies why the statistical view is not merely a renaming of a pipeline. The latent chain induces a dependency structure, whereas the observed documents are sampled, selected, and ordered under system-specific policies. A retrieval module, a graph module, and an agentic search policy can therefore be compared by the same question: how much do they increase the probability that $\echain^\star$ becomes observable and usable under a fixed budget?
+
+
+\subsection{Position Relative to Existing Surveys}
+\label{subsec:survey_position}
+
+Prior surveys have covered general RAG \RAG~\cite{gao2023ragsurvey,fan2024ragllmsurvey,huang2024ragsurvey,zhao2024ragaigcsurvey,li2024ragdecoupledsurvey}, multi-hop QA~\cite{mavi2022mhqasurvey,mohammadi2024mhmrcsurvey}, complex KBQA~\cite{lan2021complexkbqasurvey,gu2022knowledgesurvey}, knowledge-graph reasoning with \LLMs~\cite{niu2025kgreasoningsurvey,pan2024llmkgsurvey},
+chain-of-thought and step-by-step reasoning~\cite{plaat2024multistepsurvey,chu2024cotsurvey,
+qiao2023reasoningsurvey}, hallucination~\cite{huang2023hallucinationsurvey,zhang2023hallucinationsurvey}, faithfulness and attribution~\cite{li2023attributionsurvey,gao2023ragsurvey}, and agentic \RAG~\cite{singh2025agenticragsurvey,liang2025reasoningragsurvey,xi2023agentsurvey}. A particularly close recent work is the four-axis framework for retrieval--reasoning processes in multi-hop \QA~\cite{ji2026retrievalreasoning}, which organizes systems by execution plan, index structure, next-step control, and stopping criterion. These surveys are complementary to ours but answer a different question. Their primary axes are typically retrieval mechanism, system architecture, reasoning style, data source, control flow, or application domain. The unit of analysis is procedural: \emph{what does the system do at each step?} We add an estimand-based axis whose unit of analysis is statistical: \emph{which latent quantity does the step attempt to estimate or improve?}
+
+Two procedures with different executions can target the same estimand, and one procedure can target several at once. An agentic loop may simultaneously increase pool observability, estimate conditional evidence utility, and improve faithfulness through critique; conversely, two iterative retrieval systems may both use repeated search but differ sharply in whether they optimize bridge observability or process faithfulness. The two views thus support different reviewer questions: a procedural view asks whether a method has a clear plan, index, trigger, and stopping rule; a latent-chain view asks whether the method improves $P(\echain^\star\subseteq L_N)$, preserves the chain under budget, exposes it early, composes it reliably, or uses it causally. We argue that a mature multi-hop RAG evaluation should report both, and this survey is structured so that the two views appear side by side.
+The individual ingredients of our framing are not new in isolation: retrieved documents have been treated as latent variables in end-to-end RAG~\cite{lewis2020rag,guu2020realm}; multi-hop QA has long used evidence and reasoning chains~\cite{yang2018hotpotqa,trivedi2022musique,
+ho2020wikimultihopqa}; and recent attribution work connects faithfulness to causal evidence use~\cite{xu2025veritas,wu2024cofca,liu2023evaluating}. Our contribution is to connect these ingredients into a single statistical organization of multi-hop RAG and to use that organization to support a comprehensive literature review whose method descriptions remain familiar to readers used to architectural categories.
+
+Table~\ref{tab:survey_crosswalk} makes this positioning concrete by
+tabulating which analytical axes each recent survey adopts. Existing
+surveys already cover retrieval mechanisms, architectural taxonomies,
+reasoning styles, and process control comprehensively. Two axes,
+however, are largely absent from prior work and are the primary
+contribution of the present survey: a statistical
+\emph{estimand axis} that assigns each method to the latent quantity
+it estimates or improves, and a matching \emph{estimand-aligned reporting
+standard} that ties reported metrics to those quantities. A causal
+reading of faithfulness (as counterfactual chain use rather than as
+citation overlap) also appears only sporadically in prior surveys.
+
+\begin{table}[t]
+\caption{Coverage of analytical axes across recent surveys of
+retrieval-augmented and multi-hop reasoning. A checkmark
+(\checkmark) indicates that the axis is a primary organizational
+axis of the survey; a circle ($\circ$) indicates partial or
+secondary treatment; a blank cell indicates that the axis is not
+addressed. ``Estimand axis'' and ``Reporting standard'' isolate the
+two axes on which the present survey differs from all prior work.}
+\label{tab:survey_crosswalk}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}p{3.2cm}Xccccccccc@{}}
+\toprule
+\textbf{Survey} & \textbf{Scope} &
+\rotatebox{75}{Retrieval mech.} &
+\rotatebox{75}{Architecture} &
+\rotatebox{75}{Reasoning style} &
+\rotatebox{75}{Process control} &
+\rotatebox{75}{Benchmarks} &
+\rotatebox{75}{Faithfulness (causal)} &
+\rotatebox{75}{\textbf{Estimand axis}} &
+\rotatebox{75}{\textbf{Reporting standard}} \\
+\midrule
+Gao et al.~\cite{gao2023ragsurvey}            & General \RAG          & \checkmark & \checkmark &            &            & \checkmark &           &            &            \\
+Fan et al.~\cite{fan2024ragllmsurvey}         & \RAG + \LLMs          & \checkmark & \checkmark & $\circ$    &            & \checkmark &           &            &            \\
+Huang and Huang~\cite{huang2024ragsurvey}     & \RAG architectures    & \checkmark & \checkmark &            & $\circ$    & \checkmark &           &            &            \\
+Zhao et al.~\cite{zhao2024ragaigcsurvey}      & \RAG for AIGC         & \checkmark & \checkmark & $\circ$    &            & $\circ$    &           &            &            \\
+Li et al.~\cite{li2024ragdecoupledsurvey}     & Decoupled \RAG        & \checkmark & \checkmark &            & $\circ$    & $\circ$    &           &            &            \\
+Mavi et al.~\cite{mavi2022mhqasurvey}         & Multi-hop \QA         & $\circ$    & \checkmark & $\circ$    &            & \checkmark &           &            &            \\
+Mohammadi et al.~\cite{mohammadi2024mhmrcsurvey} & Multi-hop MRC      & $\circ$    & \checkmark & $\circ$    &            & \checkmark &           &            &            \\
+Lan et al.~\cite{lan2021complexkbqasurvey}    & Complex KBQA          & $\circ$    & \checkmark & \checkmark &            & \checkmark &           &            &            \\
+Pan et al.~\cite{pan2024llmkgsurvey}          & \LLM $+$ KG           & $\circ$    & \checkmark & \checkmark &            & $\circ$    &           &            &            \\
+Chu et al.~\cite{chu2024cotsurvey}            & Chain-of-thought      &            &            & \checkmark & $\circ$    & $\circ$    &           &            &            \\
+Plaat et al.~\cite{plaat2024multistepsurvey}  & Multi-step reasoning  &            & $\circ$    & \checkmark & $\circ$    & $\circ$    &           &            &            \\
+Qiao et al.~\cite{qiao2023reasoningsurvey}    & \LLM reasoning        &            &            & \checkmark &            & $\circ$    &           &            &            \\
+Huang et al.~\cite{huang2023hallucinationsurvey} & Hallucination      &            &            & $\circ$    &            & $\circ$    & $\circ$   &            &            \\
+Li et al.~\cite{li2023attributionsurvey}      & Attribution           & $\circ$    &            &            &            & $\circ$    & $\circ$   &            & $\circ$    \\
+Singh et al.~\cite{singh2025agenticragsurvey} & Agentic \RAG          & \checkmark & \checkmark & $\circ$    & \checkmark & $\circ$    &           &            &            \\
+Liang et al.~\cite{liang2025reasoningragsurvey} & Reasoning \RAG      & \checkmark & \checkmark & \checkmark & \checkmark & $\circ$    & $\circ$   &            &            \\
+Ji et al.~\cite{ji2026retrievalreasoning}     & Retrieval--reasoning process & \checkmark & $\circ$ & $\circ$ & \checkmark & $\circ$ &           &            &            \\
+\midrule
+\textbf{This survey}                          & \textbf{Multi-hop \RAG (statistical view)} & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Contributions}
+\label{subsec:contributions}
+This survey makes four contributions.
+
+\begin{itemize}[leftmargin=1.3em]
+\item \textbf{A latent evidence-chain formalism.} We recast multi-hop RAG as inference over an unobserved support chain $\echain^\star$, with retrieved pools, selected contexts, evidence orderings, and generated answers treated as noisy observations or budgeted estimators of different aspects of that chain. We give both a latent-variable generative formulation and a Markov decision process view that subsumes recent agentic and adaptive systems.
+
+\item \textbf{An estimand-based decomposition with diagnostic bounds.} We introduce five statistical estimands—chain observability, selection preservation under budget, exposure probability, fusion reliability, and causal faithfulness—and derive an exact chain-rule decomposition of grounded success over their conditional factors. A bottleneck upper bound shows that grounded success cannot exceed the smallest conditional stage-survival factor. Conditional evidence utility remains a mechanism-level scoring quantity for improving selection preservation, not a probability factor in the decomposition. We also state identifiability conditions linking observable diagnostics to latent events.
+
+\item \textbf{A dual-axis review with auditable artifact boundaries.} We review methods, benchmarks, and analyses along two complementary axes: an estimand axis that identifies what statistical quantity each method targets, and an architectural axis (Section~\ref{sec:architecture_view}) that catalogues methods by graph reasoning, retrieval pipelines, question decomposition, fusion readers, LLM reasoning, agentic search, and hybrid LLM--KG approaches. To avoid inflating coverage, Section~\ref{sec:survey_methodology} distinguishes the manuscript bibliography, the broad imported working library, and the smaller reviewed catalog seed; only the last supports released taxonomy-level judgments. Coverage extends through 2024--2026 advances including process-supervised retrieval, RL-based search agents, long-context reading, multimodal multi-hop reasoning, mechanistic interpretation, latent reasoning, and retrieval-side safety.
+
+\item \textbf{Statistical reinterpretation of benchmarks and open problems.} We reinterpret benchmarks as diagnostic instruments that make different latent events observable, propose a reporting standard that aligns metrics with estimands, and recast common open problems as tradeoffs among missingness, noise, budget, exposure, fusion error, and causal grounding.
+\end{itemize}
+
+\paragraph{Scope.}
+%%%% kkzhang %%%%%%%
+% We focus on retrieval-augmented multi-hop reasoning over textual, structured (e.g., knowledge graphs), semi-structured (e.g., tables), and hybrid knowledge sources. Single-hop QA and purely parametric reasoning without retrieval are discussed only when they clarify the latent-chain view. Multimodal and long-context multi-hop reasoning are covered in dedicated subsections (§6.7) because they alter the granularity and substrate of evidence units. Mechanistic interpretation and latent reasoning are treated in §3.8 because they speak directly to whether the chain is even an explicit object in modern LLM-based pipelines.
+
+We focus on retrieval-augmented multi-hop reasoning over textual, structured, semi-structured, and hybrid knowledge sources. Single-hop \QA, purely parametric reasoning without retrieval, general-purpose agents without retrieval-grounded evidence use, and multimodal multi-hop reasoning are discussed when they clarify the latent-chain view. Mechanistic interpretation and latent reasoning are included in dedicated subsections because they speak directly to whether the chain is even an explicit object in modern \LLM-based pipelines.
+
+\paragraph{Organization.}
+The survey is organized into three parts.
+\emph{\textbf{Part I (Foundations)}} contains the introduction
+(Section~\ref{sec:introduction}), survey methodology
+(Section~\ref{sec:survey_methodology}), the latent-chain problem setup
+(Section~\ref{sec:problem_setup}), and the statistical decomposition
+(Section~\ref{sec:stat_decomposition}). 
+\emph{\textbf{Part II (Literature
+Review)}} contains the estimand-axis method review
+(Section~\ref{sec:estimand_methods}), the architectural-axis review
+(Section~\ref{sec:architecture_view}), benchmarks
+(Section~\ref{sec:benchmarks}), and applications
+(Section~\ref{sec:applications}). 
+\emph{\textbf{Part III (Analysis and Outlook)}}
+contains the faithfulness analysis
+(Section~\ref{sec:causal_faithfulness}), open problems and tradeoffs
+(Section~\ref{sec:tradeoffs}), reporting guidelines
+(Section~\ref{sec:reporting_guidelines}), and conclusion
+(Section~\ref{sec:conclusion}). Appendices supply method-level
+catalogues, mathematical notes, screening protocol, and a writing
+checklist.
+
+
+% =====================================================================
+\section{Survey Methodology and Literature Coverage}
+\label{sec:survey_methodology}
+% ==========================================
+
+A survey that proposes a new statistical organization must make its own
+selection procedure explicit. We screened papers along two dimensions:
+(i) whether the work directly addresses multi-step evidence dependency,
+and (ii) which latent-chain bottleneck it primarily targets. The first
+criterion prevents the survey from becoming a generic \RAG or generic
+\LLM-reasoning survey; the second prevents the taxonomy from collapsing
+into a list of architectural names.
+
+\subsection{Search and Inclusion Protocol}
+\label{subsec:search_protocol}
+
+The seed pool was assembled from ACL Anthology, OpenReview, arXiv,
+publisher and venue proceedings pages, and official project repositories,
+with DBLP and Semantic Scholar used as secondary discovery aids. We used
+keyword families covering multi-hop question answering, complex question
+answering, retrieval-augmented generation, iterative retrieval,
+evidence retrieval, graph reasoning, \KGQA, chain-of-thought,
+agentic search, process supervision, hallucination repair, citation
+faithfulness, counterfactual evaluation, long-context reading, and
+mechanistic interpretation of multi-hop reasoning. A paper was included
+when it satisfied at least one of the following conditions: it proposes
+a multi-hop method; it introduces a benchmark that exposes multi-step
+evidence dependency; it analyzes faithfulness or causal support in a
+retrieval-grounded setting; it is a foundational method that later
+multi-hop \RAG systems reuse as a component; or it provides
+interpretability evidence about how multi-hop reasoning is implemented
+inside neural models.
+
+We deliberately exclude papers that are only tangentially related. A
+single-hop retriever is discussed when it forms the upstream pool for a
+multi-hop system, but not as a full survey object. A general agent paper
+is discussed only if tool use is used to improve evidence acquisition,
+reasoning, or verification. A \KG embedding method is discussed only
+when it functions as part of retrieval, graph expansion, or evidence
+fusion for multi-hop answering. This scope keeps the survey centered on
+latent evidence-chain inference rather than on every method that can be
+placed near \RAG.
+
+Candidate papers were assigned a primary architectural family (one of:
+retrieval, graph/\KG, decomposition, fusion reader, \LLM reasoning,
+agentic, hybrid, benchmark, or analysis) and a primary estimand (one of:
+observability, selection, exposure, fusion, faithfulness, or joint).
+Conditional evidence utility is recorded as a mechanism-level selection
+signal rather than as a separate estimand. When a paper targeted multiple
+estimands, the earliest bottleneck deliberately targeted by its central
+mechanism was marked as primary and material downstream effects were
+recorded as secondary. Records are promoted from the imported library to
+the reviewed seed only after their canonical metadata, source URL, scope,
+primary label, and at least one pipeline intervention have been checked
+against the paper or an official project page. The survey is not a
+PRISMA-style systematic review; it is a curated evidence map, and absence
+from the catalog must not be interpreted as evidence of irrelevance or
+low quality.
+
+\paragraph{Artifact accounting.}
+To avoid conflating citation breadth, discovery coverage, and taxonomy
+verification, we report three non-interchangeable quantities:
+\begin{description}[leftmargin=1.5em,style=nextline]
+\item[$N_{\mathrm{bib}}$.] The number of entries rendered in the
+manuscript bibliography, including surveyed methods, benchmark papers,
+foundational components, and auxiliary background works.
+\item[$N_{\mathrm{lib}}$.] The number of deduplicated records in the
+imported working library. These records retain broad adjacent coverage
+and await per-record scope and metadata verification.
+\item[$N_{\mathrm{seed}}$.] The number of method records in the released
+reviewed catalog seed. Benchmark records and pipeline-intervention
+mappings are reported separately because they are different artifact
+types rather than additional methods.
+\end{description}
+The values are pinned to the artifact revision cited in
+Appendix~\ref{app:coverage_counts}. The three sets overlap but are not
+a monotone screening funnel: a citation need not appear in the imported
+working library, and an imported record is not an endorsed taxonomy
+placement.
+
+\paragraph{Curation flow.}
+New candidates enter a discovery queue, are deduplicated into the
+working library, and are promoted to the reviewed seed only after the
+record-level checks above. Discovery results are never merged into the
+reviewed catalog automatically. The query families, status definitions,
+and correction policy are maintained in the companion repository.
+
+\subsection{Coverage Balance}
+\label{subsec:coverage_balance}
+
+The final taxonomy is intentionally balanced across historical and
+\LLM-era work. Early systems such as \textsc{DrQA}~\cite{chen2017drqa},
+\textsc{GRAFT-Net}~\cite{sun2018graftnet}, \textsc{PullNet}~\cite{sun2019pullnet},
+\textsc{MDR}~\cite{xiong2021mdr}, \textsc{Baleen}~\cite{khattab2021baleen},
+\textsc{FiD}~\cite{izacard2021fid}, \textsc{REALM}~\cite{guu2020realm},
+\textsc{DPR}~\cite{karpukhin2020dpr}, and \textsc{ColBERT}~\cite{khattab2020colbert,
+santhanam2022colbertv2} establish the retrieval, graph, and fusion
+primitives. Middle-period systems such as \textsc{IRCoT}~\cite{trivedi2023ircot},
+\textsc{Self-RAG}~\cite{asai2024selfrag}, \textsc{FLARE}~\cite{jiang2023flare},
+\textsc{Adaptive-RAG}~\cite{jeong2024adaptiverag}, and
+\textsc{RAPTOR}~\cite{sarthi2024raptor} make retrieval control and
+context organization explicit. Recent work from 2025--2026---including
+\textsc{Search-R1}~\cite{jin2025searchr1}, \textsc{DeepRAG}~\cite{guan2025deeprag},
+\textsc{RAG-Gym}~\cite{xiong2025raggym}, \textsc{PAR-RAG}~\cite{zhang2025parrag},
+\textsc{DualRAG}~\cite{cheng2025dualrag}, \textsc{VERITAS}~\cite{xu2025veritas},
+\textsc{R1-Searcher}~\cite{song2025r1searcher},
+\textsc{MultiCube-RAG}~\cite{shi2026multicuberag}---moves the field
+toward learned search policies, plan-driven retrieval, process
+supervision, and faithfulness-aware reward design. We therefore treat
+\LLM-era methods as new instantiations of the same evidence-chain
+problem, not as a clean break from earlier multi-hop \QA.
+
+In parallel, we deliberately include three threads that recent surveys
+underweight. The first is \emph{long-context reading and
+retrieval}~\cite{liu2024lostmiddle,bai2024longbench,sarthi2024raptor,
+jiang2024longrag,yen2024lcontext}, which changes the granularity of
+evidence units. The second is \emph{multimodal and table-text multi-hop
+reasoning}~\cite{chen2020hybridqa,chen2021opentableqa,
+talmor2021multimodalqa,chang2022webqa,wang2024visdom,
+suri2024dochop}, which broadens the substrate of $\kstore$ beyond
+passages. The third is \emph{mechanistic interpretation and latent
+reasoning}~\cite{geva2023dissecting,yang2024do,biran2024hopping,
+hao2024coconut,goyal2024quietstar,wang2024grokked}, which speaks to
+whether the chain is an explicit object inside the model or an implicit
+trajectory through its hidden states.
+
+\begin{table}[t]
+\caption{Literature coverage organized by the primary object optimized.
+The families overlap; the table describes scope rather than reporting
+mutually exclusive screening counts.}
+\label{tab:coverage_audit}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{3.0cm}p{2.0cm}Y@{}}
+\toprule
+Family & Core period & Representative role in the survey \\
+\midrule
+Decomposition & 2019--2026 & Converts a complex query into lower-variance subqueries or executable steps. \\
+CoT / search reasoning & 2022--2026 & Supplies reasoning topologies and search policies for chain construction. \\
+Verification \& faithfulness & 2023--2026 & Measures or improves step-level support and causal faithfulness. \\
+Retrieval-based \RAG & 2017--2026 & Controls chain observability and evidence utility under budget. \\
+Agentic / RL search & 2022--2026 & Learns when, what, and how to retrieve in an interactive environment. \\
+\KG / graph reasoning & 2018--2026 & Represents chains as paths or subgraphs and constrains fusion. \\
+\LLM+\KG / GraphRAG & 2023--2026 & Uses graph structure as a skeleton for \LLM reasoning and generation. \\
+Long-context / hierarchical & 2023--2026 & Reduces the number of explicit hops by changing retrieval granularity. \\
+Multimodal / tabular & 2020--2026 & Broadens evidence substrates to images, tables, and structured records. \\
+Mechanism / latent reasoning & 2023--2026 & Reveals or implies chain processes inside model internals. \\
+Benchmarks and analyses & 2018--2026 & Defines observable proxies for latent chain events. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Positioning Against Recent Process-Centric Surveys}
+\label{subsec:four_axis_position}
+
+Table~\ref{tab:survey_crosswalk} summarizes axis coverage across
+recent surveys. Two entries in that table warrant a closer comparison
+because they are the nearest neighbours to the present work.
+
+The four-axis framework of Ji et al.~\cite{ji2026retrievalreasoning}
+organizes multi-hop retrieval--reasoning systems by execution plan,
+index structure, next-step control, and stopping criterion. Its unit
+of analysis is procedural: \emph{what the system does at each step.}
+Ours is statistical: \emph{which latent quantity the step attempts to
+estimate or improve.} The two axes are orthogonal rather than
+competing. A process feature such as ``trigger retrieval when
+generation uncertainty exceeds a threshold'' can serve different
+estimands depending on what the triggered retrieval optimizes: deeper
+bridge coverage ($\theta_{\mathrm{obs}}$), selection preservation
+($\theta_{\mathrm{sel}}$), or faithfulness verification
+($\theta_{\mathrm{faith}}$). Conversely, the same estimand can be
+improved by different procedural choices. We therefore adopt the
+estimand view as the primary axis
+(Sections~\ref{sec:stat_decomposition}
+and~\ref{sec:estimand_methods}) while retaining architectural and
+procedural positions wherever they help readers trained in prior
+taxonomies (Section~\ref{sec:architecture_view}).
+
+The reasoning-oriented \RAG survey of
+Liang et al.~\cite{liang2025reasoningragsurvey} is the second closest
+neighbour: it covers agentic control and reasoning styles densely and
+touches on attribution. It still stops short of a decomposition that
+attributes end-to-end success to identifiable latent events, and does
+not propose an estimand-aligned reporting standard. We treat this gap,
+rather than any incompatibility, as the main opening addressed by
+the present survey.
+
+
+% =====================================================================
+\section{Problem Setup: From Retrieved Documents to Latent Evidence Chains}
+\label{sec:problem_setup}
+% =====================================================================
+
+\subsection{What Makes a Question Multi-Hop?}
+\label{subsec:what_is_mh}
+
+A task is \emph{multi-hop} when its solution requires connecting
+multiple evidence units whose discovery or use depends on intermediate
+states. Three properties characterize this dependency. First,
+\emph{semantic non-locality}: at least one required evidence unit is
+not directly retrievable from the original question because its surface
+terms are absent. Second, \emph{ordering sensitivity}: evidence must be
+combined through an ordered computation, such as bridge resolution,
+filtering, projection, comparison, or aggregation. Third, \emph{joint
+sufficiency}: no strict subset of the support chain is enough to answer
+the question.
+
+These properties distinguish multi-hop \RAG from adjacent tasks. A
+long-document task may require high recall but remain single-hop if all
+relevant sentences are directly query-relevant. A multi-step generation
+task is not multi-hop unless different steps require different external
+evidence with cross-step dependency. A hard reasoning task with one
+piece of evidence is single-hop with difficult inference, not multi-hop
+retrieval. Returning to the running example, the question is multi-hop
+because the biography passage stating that Shirley~Temple served as
+U.S. Chief of Protocol is not retrievable from the surface terms of
+the question about the film \emph{Kiss and Tell}: that biography
+becomes queryable only after the bridge entity Shirley~Temple has
+been resolved.
+
+\subsection{Latent Chain and Observable Variables}
+\label{subsec:latent_chain}
+
+Let $q$ be a question and $\kstore=\{e_1,e_2,\ldots\}$ be a knowledge
+store. An evidence unit may be a passage, sentence, span, table cell,
+\KG triple, or path. We denote the unobserved support chain required to
+answer $q$ by
+\begin{equation}
+\echain^\star(q)=(e_1^\star,\ldots,e_m^\star),
+\end{equation}
+where the order encodes dependency among evidence units. The correct
+answer is $a^\star$.
+
+A multi-hop \RAG system does not observe $\echain^\star$ directly. It
+instead produces a sequence of observable objects:
+\begin{align}
+L_N &= \retr_N(q), \\
+E_K &= S_K(q,L_N), \qquad E_K\subseteq L_N, \quad K\ll N, \\
+\pi(E_K) &= \text{an ordering or presentation of } E_K, \\
+\hat{a} &= \reason(q,\pi(E_K)).
+\end{align}
+Here $L_N$ is the retrieved pool, $E_K$ is the selected budgeted
+context, $\pi(E_K)$ is the reader-facing ordering, and $\hat{a}$ is the
+answer. This sequence defines the observable side of the latent-chain
+inference problem. For the running example, $\echain^\star$ has two
+ordered units (film-cast passage identifying Shirley~Temple as the
+actress who portrayed Corliss~Archer $\to$ biography passage stating
+her later role as U.S. Chief of Protocol); $L_N$ might contain the
+film-plot summary, several biography passages of other cast members,
+distractors about unrelated Shirley~Temple films, and possibly the
+answer-bearing biography passage; $E_K$ is the top-$K$ subset that
+the selector keeps; $\pi(E_K)$ determines whether the film-cast
+passage is placed before or after the biography passage.
+
+\subsection{Failure Modes as Latent-Event Failures}
+\label{subsec:failure_modes}
+
+The usual failure modes of multi-hop \RAG can be written as failures of
+latent events:
+
+\begin{description}[leftmargin=1.5em,style=nextline]
+\item[Evidence absence.] $\echain^\star\nsubseteq L_N$. A required unit
+is missing from the retrieved pool, often at the bridge hop.
+
+\item[Budgeted selection failure.] $\echain^\star\subseteq L_N$ but
+$\echain^\star\nsubseteq E_K$. The chain is observable in the pool but
+is not preserved under a small context budget.
+
+\item[Exposure failure.] $\echain^\star\subseteq E_K$ but the chain is
+placed too late or too diffusely in $\pi(E_K)$ for the reader to use
+reliably. This includes lost-in-the-middle~\cite{liu2024lostmiddle} and
+ordering-gap effects.
+
+\item[Fusion or reasoning failure.] The chain is selected and visible,
+but the reader fails to compose the evidence units into the answer.
+
+\item[Faithfulness failure.] The answer is correct or plausible but is
+not causally supported by the retrieved chain. This includes incorrect
+citations and parametric leakage.
+\end{description}
+
+This event view is stricter than a natural-language taxonomy: it asks
+where, in the observable sequence
+$L_N\rightarrow E_K\rightarrow \pi(E_K)\rightarrow \hat{a}$, the latent
+support chain becomes unavailable, unusable, or non-causal. In the
+running example, ``evidence absence'' might be a missing
+Shirley~Temple biography passage; ``budgeted selection failure''
+might be the biography passage being ranked below high-surface but
+unrelated film-plot documents; ``exposure failure'' might be the
+answer-bearing biography placed in position eight of an eight-passage
+prompt; ``fusion failure'' might be that the reader connects
+Shirley~Temple to the wrong later career role; and ``faithfulness
+failure'' might be that the reader answers ``U.S. Chief of Protocol''
+correctly because that fact is memorized from pretraining, while the
+cited chain does not actually entail the answer.
+
+\subsection{Adjacent Problems}
+\label{subsec:adjacent}
+
+The latent-chain view also clarifies what is \emph{not} multi-hop
+\RAG. Several adjacent research problems share surface machinery with
+multi-hop \RAG—retrieval over a corpus, multi-step generation,
+compositional reasoning, or grounded question answering—but differ in
+whether the target object is a dependency-linked chain of evidence
+units. We summarize these distinctions in
+Table~\ref{tab:adjacent}. Two axes matter: whether the task's
+correctness object is a chain rather than a single fact or a free-form
+summary, and whether intermediate steps must be grounded in
+retrievable evidence rather than only in model-internal computation.
+Adjacent problems typically share one of these axes but not both;
+methods designed for them can supply useful components (retrievers,
+verifiers, planners) but do not, on their own, address the joint
+latent-chain estimation problem that this survey studies.
+
+\begin{table}[t]
+\caption{Multi-hop \RAG and adjacent research problems under the
+latent-chain view.}
+\label{tab:adjacent}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.8cm}p{3.2cm}Y@{}}
+\toprule
+Adjacent problem & Shared aspect & Distinguishing aspect of multi-hop \RAG \\
+\midrule
+Single-hop open-domain \QA & Retrieval over an external corpus &
+The latent object is a chain, not one directly retrievable fact. \\
+Chain-of-thought reasoning & Multi-step intermediate text &
+Intermediate steps must be grounded in retrievable evidence, not only
+model-internal computation. \\
+Compositional generalization & Combining components &
+Composition occurs over distributed evidence units, not only over
+latent functions. \\
+\KG path reasoning & Sequential relation traversal &
+A \KG path is one possible chain substrate; text, tables, and hybrid
+stores also instantiate $\kstore$. \\
+General hallucination detection & Detecting unsupported claims &
+Faithfulness must hold at every chain step, not only at the final
+claim. \\
+Agentic \LLM systems & Tool use and planning &
+Actions are evaluated by whether they improve latent-chain inference. \\
+Long-context reading & Conditioning on long input &
+Granularity of evidence units shifts, but the chain may still be
+non-local and bridge-dependent. \\
+Multi-document summarization & Combining many documents &
+Output is open-ended summary rather than a chain-identifiable answer. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Reasoning Types as Chain Structures}
+\label{subsec:reasoning_types_stat}
+
+The latent-chain view gives a compact way to describe common multi-hop
+reasoning types. \emph{Bridge reasoning} corresponds to a chain in
+which an early evidence unit resolves an unmentioned entity needed to
+retrieve a later unit. \emph{Comparison reasoning} corresponds to two
+or more parallel subchains whose terminal attributes must be compared.
+\emph{Compositional reasoning} corresponds to a sequence of operators
+such as filter, project, aggregate, and compare applied over distributed
+evidence~\cite{trivedi2022musique,talmor2018complexwebquestions}.
+\emph{Verification-oriented reasoning} corresponds to a chain whose
+terminal object is not an answer string but a support or refutation
+label~\cite{thorne2018fever,jiang2020hover,ma2024exfever}.
+\emph{Counterfactual probing} replaces one node or relation in
+$\echain^\star$ and tests whether the induced answer distribution
+changes~\cite{wu2024cofca}.
+
+These reasoning types differ in the shape of $\echain^\star$. A bridge
+question is often close to a path; a comparison question is closer to
+a small tree; a fact-verification problem may require a set of jointly
+supporting facts; and a table-text question may alternate between
+cells, linked passages, and entity mentions~\cite{chen2020hybridqa,
+chen2021opentableqa}. The statistical bottlenecks remain the same. The
+system must make the relevant structure observable, select it under
+budget, expose it to the reader, compose it correctly, and use it
+causally. This is why the same estimand-based vocabulary can cover
+graph paths, text passages, tables, and agent trajectories.
+
+\subsection{A More Explicit Generative View}
+\label{subsec:generative_view}
+
+The preceding notation can be written as a latent-variable model. Let
+$\chainset(q)$ denote the set of admissible evidence chains for $q$.
+A dataset or world distribution first samples a valid chain
+$\echain\in\chainset(q)$, then an answer is generated from the chain:
+\begin{align}
+\echain &\sim p(\echain\mid q,\kstore),\\
+a^\star &\sim p(a\mid q,\echain).
+\end{align}
+A retrieval-augmented system observes only a corrupted view of this
+chain through retrieval and context construction:
+\begin{align}
+L_N &\sim p_R(L\mid q,\kstore),\\
+E_K &\sim p_S(E\mid q,L_N,K),\\
+\pi &\sim p_O(\pi\mid q,E_K),\\
+\hat a &\sim p_G(a\mid q,\pi(E_K)).
+\end{align}
+Thus the ideal Bayesian objective is
+\begin{equation}
+\hat a_{\mathrm{Bayes}}
+=\argmax_a \sum_{\echain\in\chainset(q)}p(a\mid q,\echain)
+ p(\echain\mid q,\obs_{\mathrm{sys}}),
+\end{equation}
+where $\obs_{\mathrm{sys}}=(L_N,E_K,\pi(E_K))$ are the observations
+made available by the system. Real systems approximate this posterior
+through retrieval scores, rerankers, graph traversals, prompts, tool
+calls, and verifiers. The statistical question is how each
+approximation changes the posterior mass assigned to complete and
+causally sufficient chains.
+
+\begin{definition}[Minimal support chain]\label{def:generative_chain}
+For a question $q$ and answer $a^\star$, a chain
+$\echain=(e_1,\ldots,e_m)$ is \emph{sufficient} if
+$p(a^\star\mid q,\echain)$ exceeds a task-specific correctness
+threshold. It is \emph{minimal} if no proper subsequence of $\echain$
+is sufficient. The set of all minimal chains is denoted by
+$\chainset^\star(q)$.
+\end{definition}
+
+This definition is deliberately set-valued. Many questions admit
+multiple valid chains. A Wikipedia biography, a table row, and a \KG
+path may all support the same answer. Treating $\echain^\star$ as a
+single sequence is therefore a notational convenience; the more
+faithful object is a set or distribution over minimal chains. When the
+survey writes $\echain^\star\subseteq L_N$, the statement should be
+read as ``there exists at least one valid minimal chain fully contained
+in the pool.''
+
+\begin{definition}[Multi-hop dependency graph]
+Given a minimal chain $\echain=(e_1,\ldots,e_m)$, define a directed
+graph $D_\echain=(V,A)$ whose vertices are evidence units and whose
+edge $e_i\rightarrow e_j$ indicates that $e_j$ becomes identifiable,
+retrievable, or interpretable only after information in $e_i$ is
+known. The hop count is the length of the longest directed path in
+$D_\echain$.
+\end{definition}
+
+This graph definition clarifies why hop count is not identical to the
+number of retrieved passages. A comparison question may have two
+parallel single-hop branches but still be multi-hop because the final
+comparison operator depends on both branches. A bridge question may
+have a path-like structure. A table-text question may alternate
+between table cells and linked passages. The chain formalism abstracts
+over these substrates.
+
+\begin{assumption}[Budgeted observability]
+\label{ass:budgeted_observability}
+For a fixed final context budget $K$, a multi-hop system can answer
+only if at least one minimal chain has cardinality at most $K$ after
+the chosen evidence-unit granularity is fixed.
+\end{assumption}
+
+Assumption~\ref{ass:budgeted_observability} is not a statement about
+the world; it is a statement about an evaluation protocol. If the
+minimal chain requires six passages but the reader receives only five,
+then no selector can preserve a passage-level chain. The only possible
+remedies are to change the granularity, compress evidence, use a
+larger budget, or perform iterative generation with additional
+retrieval calls.
+
+\subsection{State-Space and MDP Formulations}
+\label{subsec:state_space_mdp}
+
+Many recent agentic and adaptive \RAG methods can be written as a
+controlled stochastic process~\cite{asai2024selfrag,jeong2024adaptiverag,
+jin2025searchr1,guan2025deeprag,xiong2025raggym}. Let
+$s_t=(q,h_t,L_t,M_t)$ be the state at step $t$, where $h_t$ is the
+reasoning history, $L_t$ is the accumulated retrieval pool, and $M_t$
+is a memory or scratchpad. An action $u_t$ may be a query rewrite,
+retrieval call, graph expansion, compression step, verification call,
+or final-answer action. The transition is
+\begin{equation}
+s_{t+1}\sim P(s_{t+1}\mid s_t,u_t,\kstore),
+\end{equation}
+and the terminal reward can combine correctness, faithfulness, and
+cost:
+\begin{equation}
+R_T = \mathbb{I}\{\hat a=a^\star\}
+      -\lambda_c\sum_{t=0}^{T-1}\cost(u_t)
+      -\lambda_f\mathbb{I}\{\hat a\not\leftarrow \echain^\star\}.
+\end{equation}
+This casts agentic \RAG as policy learning:
+\begin{equation}
+\pi^\star=\argmax_\pi
+\mathbb{E}_{\pi,P}\left[ R_T \right].
+\end{equation}
+\textsc{DeepRAG}~\cite{guan2025deeprag},
+\textsc{Search-R1}~\cite{jin2025searchr1},
+\textsc{R1-Searcher}~\cite{song2025r1searcher},
+\textsc{ReSearch}~\cite{chen2025research}, and
+\textsc{RAG-Gym}~\cite{xiong2025raggym} differ mainly in what state
+variables are observable, how actions are parameterized, whether
+rewards are outcome-only or process-supervised, and how retrieved
+tokens are handled during optimization.
+
+The MDP view is useful but incomplete. The true support chain is still
+latent; the policy receives sparse and biased observations. Therefore,
+agentic search does not remove the latent-chain problem. It merely
+moves the approximation from a fixed retriever to a learned control
+policy over retrieval and reasoning actions.
+
+\subsection{Where Does the Chain Live? Latent Reasoning and Mechanistic
+Interpretation}
+\label{subsec:latent_mechanism}
+
+A separate but related thread asks whether the chain is even an
+explicit object inside modern \LLM-based systems. \emph{Latent
+reasoning} methods compress some or all reasoning steps into hidden
+states rather than tokens. \textsc{Quiet-STaR}~\cite{goyal2024quietstar}
+trains models to silently generate internal rationales before each
+token. \textsc{Coconut}~\cite{hao2024coconut} performs continuous
+chain-of-thought in a latent space, decoupling reasoning from natural
+language. Pause tokens and ``think before speak'' variants insert
+non-emitted computation~\cite{goyal2024pause}. From the latent-chain
+view, these methods do not eliminate $\echain^\star$; they make it
+unobservable through tokens, which complicates both diagnostic
+evaluation and faithfulness attribution.
+
+\emph{Mechanistic interpretation} of multi-hop reasoning takes the
+opposite stance: it locates traces of $\echain^\star$ inside model
+internals. Probing work has shown that \LLMs sometimes recall bridge
+entities in intermediate
+layers~\cite{geva2023dissecting,yang2024do,biran2024hopping}, that the
+recall of a second-hop fact can be circuit-localized~\cite{wang2024grokked},
+and that some questions are answered through ``shortcut'' rather than
+genuine bridge recall~\cite{yang2024do}. These findings matter for
+this survey for two reasons. First, they suggest that even when no
+chain is written into the prompt, an implicit chain can sometimes be
+recovered from internal activations. Second, they motivate diagnostics
+that combine retrieved-evidence sensitivity with internal-state
+sensitivity: a model whose answer changes when an internal bridge
+representation is patched is more plausibly using the chain causally
+than one whose answer is invariant under such interventions.
+
+We return to this dimension in Section~\ref{sec:causal_faithfulness}
+when discussing faithfulness diagnostics, and in
+Section~\ref{sec:tradeoffs} when discussing open problems for latent
+reasoning under retrieval augmentation.
+
+
+% =====================================================================
+\section{A Statistical Decomposition of Multi-Hop RAG}
+\label{sec:stat_decomposition}
+% =====================================================================
+
+This section introduces the five statistical quantities used to
+organize the rest of the survey. Each quantity corresponds to one
+stage at which a latent support chain can be lost or misused.
+
+\subsection{Chain Observability}
+\label{subsec:chain_observability}
+
+The first question is whether the complete support chain appears in
+the retrieved pool:
+\begin{equation}
+\theta_{\mathrm{obs}}(q,N)=P(\echain^\star\subseteq L_N\mid q).
+\end{equation}
+This quantity captures retrieval-side missingness. If
+$\theta_{\mathrm{obs}}$ is low, no selector, reader, or verifier can
+recover a reliable chain from the pool. When a chain has $m$ hops and
+each required unit has marginal retrieval probability $p_i$, then
+under an independence approximation,
+\begin{equation}
+P(\echain^\star\subseteq L_N)\approx \prod_{i=1}^{m}p_i.
+\end{equation}
+This explains a basic scaling law of multi-hop difficulty: even modest
+per-hop miss rates compound rapidly as the chain length grows.
+Empirically, on \textsc{MuSiQue}~\cite{trivedi2022musique} 4-hop subsets,
+many single-shot retrievers achieve high recall on the first hop but
+nearly zero pool-level chain recall, exactly as the product form
+predicts.
+
+For the running example, $\theta_{\mathrm{obs}}$ depends on whether
+both the \emph{Kiss and Tell} cast passage and the Shirley~Temple
+biography passage appear in $L_N$. A single-shot dense retriever
+conditioned only on the surface form of the question is drawn toward
+film-plot passages and is unlikely to surface the biography of the
+bridge entity; the conditional probability of retrieving the
+answer-bearing biography rises only after Shirley~Temple has been
+resolved as the bridge.
+
+\subsection{Conditional Evidence Utility and Selection Preservation}
+\label{subsec:conditional_utility}
+
+Once the chain is observable in $L_N$, two distinct quantities govern
+what happens next: (i) a \emph{mechanism} quantity that a selector
+uses to rank candidate units against a partial chain, and (ii) an
+\emph{event} quantity that records whether the full chain survives
+budgeted selection. Conflating the two is a common source of
+confusion in the multi-hop literature; we therefore separate them.
+
+\paragraph{Conditional evidence utility (mechanism quantity).}
+Standard retrievers estimate marginal relevance $s_{\mathrm{rel}}(q,e)$,
+but multi-hop selection requires
+\begin{equation}
+\theta_{\mathrm{util}}(e\mid q,C)
+= P(a^\star\mid q,C\cup\{e\})-P(a^\star\mid q,C),
+\end{equation}
+which takes values in $[-1,1]$ and measures how much adding $e$ to a
+partial context $C$ changes the answer probability. This quantity is
+a signed \emph{marginal contribution}; it is not itself a probability.
+Bridge documents often look weak under query-only relevance but have
+strongly positive conditional utility once a partial chain is known,
+and distractors can have negative utility. Reranking, bridge selection,
+evidence compression, and core-conditioned selection all approximate
+$\theta_{\mathrm{util}}$ or aggregates of it~\cite{khattab2021baleen,
+xu2023recomp,yu2023chainofnote,zhang2025parrag}.
+
+\paragraph{Selection preservation (event quantity).}
+Whether the selector, guided by any such mechanism, actually keeps the
+support chain under a small budget $K$ is a separate probabilistic
+event. Given that the chain is present in the pool
+($\echain^\star\subseteq L_N$), let
+\begin{equation}
+\theta_{\mathrm{sel}}
+= P\!\left(\echain^\star\subseteq E_K \,\big|\,
+\echain^\star\subseteq L_N\right)
+\;\in\;[0,1].
+\end{equation}
+This is the quantity that appears as a factor in the success
+decomposition of Section~\ref{subsec:success_factor} and in
+Proposition~\ref{prop:bottleneck}. It is a genuine conditional
+probability, distinct from the mechanism quantity above. In practice,
+$\theta_{\mathrm{sel}}$ is what a Bridge-Recall or Chain-Preservation
+metric measures on a held-out set, whereas $\theta_{\mathrm{util}}$ is
+what a per-candidate rerank score approximates.
+
+\subsection{Exposure Probability}
+\label{subsec:exposure_probability}
+
+Selection is not enough. A reader with limited attention or positional
+bias may fail to use a complete chain if the relevant units are late,
+scattered, or separated by distractors. We define exposure probability
+as
+\begin{equation}
+\theta_{\mathrm{exp}}(q,K,r)
+= P\!\left(\operatorname{rank}_{\pi}(\echain^\star)\le r
+\mid \echain^\star\subseteq E_K\right),
+\end{equation}
+where $\operatorname{rank}_{\pi}(\echain^\star)$ denotes the latest or
+most difficult-to-access position of the required chain under ordering
+$\pi$, and $r$ is a reader-dependent ``effective access depth'' beyond
+which positional bias starts to dominate~\cite{liu2024lostmiddle}.
+Ordering, reader-aware reranking, context packing, and compression
+methods target this quantity.
+
+\subsection{Fusion Reliability}
+\label{subsec:fusion_reliability}
+
+When the chain is present and exposed, the reader must compose it. We
+define fusion reliability as
+\begin{equation}
+\theta_{\mathrm{fus}}(q)
+= P(\hat{a}=a^\star\mid
+\echain^\star\subseteq E_K,
+\operatorname{rank}_{\pi}(\echain^\star)\le r).
+\end{equation}
+This quantity separates retrieval success from reasoning success. It
+explains why high evidence recall does not imply high answer accuracy:
+the reader may fail to compare, aggregate, bridge, or verify the
+selected evidence.
+
+\subsection{Causal Faithfulness}
+\label{subsec:causal_estimand}
+
+Finally, correctness does not imply faithful evidence use. We treat
+causal faithfulness as the latent event that the generated answer
+actually depends on a valid support chain, rather than merely
+co-occurring with plausible evidence or being reconstructed from
+parametric memory. Conceptually, let
+$\hat a\leftarrow\echain^\star$ denote this causal-grounding event and
+define
+\begin{equation}
+\theta_{\mathrm{faith}}(q)
+= P\!\left(\hat a\leftarrow\echain^\star \,\big|\, \hat a=a^\star\right).
+\end{equation}
+This event is not directly identifiable from answer and citation
+outputs alone. We therefore use interventional diagnostics as
+observable proxies rather than definitions of faithfulness itself.
+
+One such proxy is chain-deletion sensitivity. Let
+$\reason(q,\pi(E_K))$ denote the reader's induced answer distribution.
+For any candidate support chain $C\subseteq E_K$, define
+\begin{equation}
+\label{eq:faith_intervention}
+D_{\mathrm{del}}(C)
+=
+\Pr\!\left[\reason(q,\pi(E_K))=a^\star\right]
+-
+\Pr\!\left[\reason(q,\pi(E_K)\setminus C)=a^\star\right].
+\end{equation}
+For a fixed threshold $\tau>0$, the indicator
+$\mathbf{1}\{D_{\mathrm{del}}(C)\ge\tau\}$ is an operational proxy for
+whether $C$ is load-bearing for the observed answer. It is neither
+necessary nor sufficient for causal faithfulness: deletion can create
+out-of-distribution inputs, redundant or alternative valid chains can
+make a faithful answer deletion-insensitive, and a shortcut can remain
+sensitive to superficial context changes. Accordingly, a credible
+faithfulness audit should combine deletion with counterfactual bridge
+substitution, citation entailment, and closed-book or conflict controls.
+
+The conceptual faithfulness gap is
+\begin{equation}
+\Delta_{\mathrm{faith}}
+= P\!\left(\hat a=a^\star,\; \hat a\not\leftarrow\echain^\star\right),
+\end{equation}
+but no single deletion statistic is assumed to upper-bound this mass.
+Verification, citation checking, counterfactual evaluation, and
+process-supervised reward models provide complementary evidence about
+this gap~\cite{wu2024cofca,xu2025veritas,lightman2024process,
+sun2025rearter,gao2023rarr,gou2024critic,zhao2023verifyedit,
+yan2024crag}.
+
+\subsection{Success-Factor Decomposition}
+\label{subsec:success_factor}
+
+We define five cumulative latent events along the observable pipeline
+$L_N\to E_K\to \pi(E_K)\to \hat a$:
+\begin{align}
+\obs   &= \{\echain^\star\subseteq L_N\},                                                    \\
+\sel   &= \obs\cap\{\echain^\star\subseteq E_K\},                                           \\
+\expo  &= \sel\cap\{\operatorname{rank}_{\pi}(\echain^\star)\le r\},                        \\
+\fus   &= \expo\cap\{\reason \text{ correctly composes } \echain^\star\},                   \\
+\faith &= \fus\cap\{\hat{a}=a^\star \text{ and is causally supported by } \echain^\star\}.
+\end{align}
+The intersections make the nesting explicit:
+$\faith\subseteq\fus\subseteq\expo\subseteq\sel\subseteq\obs$.
+We define the
+\emph{grounded-success} event as their intersection,
+\begin{equation}
+\label{eq:grounded_success}
+Y_g \;=\; \obs\cap\sel\cap\expo\cap\fus\cap\faith,
+\end{equation}
+and write ordinary answer success as
+$Y=\{\hat a=a^\star\}$, so that
+\begin{equation}
+\label{eq:success_split}
+P(Y) \;=\; P(Y_g) \;+\; P\!\left(Y\cap \neg Y_g\right),
+\end{equation}
+where the second term captures shortcuts, parametric leakage, and
+lucky guesses in which the answer is correct without a full grounded
+chain. Under the nested structure above, the chain rule yields the
+\emph{exact} factorization
+\begin{equation}
+\label{eq:success_decomp}
+P(Y_g)
+\;=\;
+P(\obs)\,P(\sel\mid\obs)\,P(\expo\mid\sel)\,P(\fus\mid\expo)\,P(\faith\mid\fus).
+\end{equation}
+We denote the five conditional factors by
+$\theta_{\mathrm{obs}}=P(\obs)$, $\theta_{\mathrm{sel}}=P(\sel\mid\obs)$,
+$\theta_{\mathrm{exp}}=P(\expo\mid\sel)$,
+$\theta_{\mathrm{fus}}=P(\fus\mid\expo)$, and
+$\theta_{\mathrm{faith}}=P(\faith\mid\fus)$; these are the estimands
+whose empirical estimators we survey in Section~\ref{sec:estimand_methods}.
+Figure~\ref{fig:bottleneck_estimands} visualizes the conditional
+factorization, its active bottleneck, and ordinary answer accuracy.
+
+\paperfigure{0.98}{fig2.pdf}
+{Bottleneck visualization of the five estimands. Grounded end-to-end
+success $P(Y_g)$ is upper-bounded by the smallest conditional stage factor
+across observability, selection preservation, exposure, fusion, and
+faithfulness. Answer accuracy $P(Y)$ additionally receives a
+non-grounded contribution from shortcut and parametric-leakage events
+(equation~\ref{eq:success_split}).}
+{fig:bottleneck_estimands}
+
+\begin{remark}[On the meaning of equation~\ref{eq:success_decomp}]
+Equation~\ref{eq:success_decomp} is an exact chain-rule decomposition
+of the grounded-success event $Y_g$ and does not assume conditional
+independence. It is a \emph{diagnostic} factorization in the sense
+that each conditional factor is empirically estimable on the subset
+of instances that reach the preceding event: $\theta_{\mathrm{sel}}$
+on instances with $\obs$, $\theta_{\mathrm{exp}}$ on instances with
+$\sel$, and so on. Because real systems admit shortcut and
+parametric-leakage events, $P(Y)$ can exceed $P(Y_g)$; the gap
+$P(Y)-P(Y_g)$ is itself a diagnostic quantity and is what
+faithfulness-oriented evaluation (Section~\ref{sec:causal_faithfulness})
+seeks to expose.
+\end{remark}
+
+\begin{proposition}[Conditional bottleneck bound]
+\label{prop:bottleneck}
+Let $\theta_i$ denote the five conditional stage factors in
+equation~\ref{eq:success_decomp}. Then
+\begin{equation}
+\label{eq:min_event_bound}
+P(Y_g)=\prod_i\theta_i \;\le\; \min_i \theta_i.
+\end{equation}
+If the minimum factor is positive, equality requires every other factor
+to equal one; if any factor is zero, both sides are zero. Thus grounded
+success cannot exceed the weakest conditional stage-survival rate.
+\end{proposition}
+
+\begin{proof}
+Every $\theta_i$ lies in $[0,1]$. For any index $k$,
+$\prod_i\theta_i=\theta_k\prod_{j\ne k}\theta_j\le\theta_k$;
+taking the minimum over $k$ proves the bound. The equality conditions
+follow directly from the product of the remaining factors.
+\end{proof}
+
+\paragraph{A coordinate view of local sensitivity.}
+The product of the five conditional factors is exactly $P(Y_g)$ by
+equation~\eqref{eq:success_decomp}. What is heuristic is treating
+those factors as independently perturbable coordinates. Define
+\begin{equation}
+\label{eq:surrogate_product}
+\Phi(\boldsymbol\theta)
+\;\coloneqq\;
+\theta_{\mathrm{obs}}\,\theta_{\mathrm{sel}}\,\theta_{\mathrm{exp}}\,
+\theta_{\mathrm{fus}}\,\theta_{\mathrm{faith}}
+\;=\;P(Y_g).
+\end{equation}
+The coordinate derivative
+\begin{equation}
+\label{eq:surrogate_sensitivity}
+\frac{\partial\Phi}{\partial\theta_i}
+\;=\;\prod_{j\ne i}\theta_j
+\end{equation}
+describes the local change in the product if one factor could be varied
+while the others were held fixed. The product identity is exact for
+the conditional factors; only the interpretation of an isolated
+partial derivative as an achievable system intervention is heuristic,
+because in real systems changing a retriever, selector, or reader
+generally changes several conditional distributions at once. We
+therefore use equation~\eqref{eq:surrogate_sensitivity} only to
+summarize coordinate sensitivity, not to bound the true marginal gain
+of a system update.
+
+Proposition~\ref{prop:bottleneck} summarizes a direct implication of
+the conditional factorization: a strong retriever does not improve
+grounded accuracy when the reader cannot fuse evidence; a strong
+reader does not help when the chain is absent from the pool; a
+faithfulness verifier may reject unfaithful answers but cannot
+recover missing evidence. It also implies that the most credible
+empirical papers are those that show \emph{where in the product} the
+gain occurs, and that headline gains in $P(Y)$ without a matching
+gain in the corresponding component event are candidates for
+shortcut-driven improvement rather than grounded improvement.
+
+\begin{table}[t]
+\caption{Estimand-based taxonomy of multi-hop \RAG. Methods are
+grouped by the statistical quantity they primarily estimate or
+improve.}
+\label{tab:estimand_taxonomy}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}p{3.4cm}p{2.6cm}Y@{}}
+\toprule
+Estimand & Mathematical form & Diagnosed bottleneck & Representative mechanisms \\
+\midrule
+Chain observability & $P(\echain^\star\subseteq L_N)$ & Evidence missingness & Iterative retrieval, graph expansion, agentic search \\
+Selection preservation & $P(\echain^\star\subseteq E_K\mid \echain^\star\subseteq L_N)$ & Budgeted selection bias & Reranking, bridge selection, compression, core-conditioned selection \\
+Exposure probability & $P(\operatorname{rank}_{\pi}(\echain^\star)\le r)$ & Ordering and lost-in-the-middle & Reader-aware ordering, passage packing, context compression \\
+Fusion reliability & $P(\hat{a}=a^\star\mid \echain^\star\subseteq E_K)$ & Cross-evidence reasoning failure & \FiD, graph fusion, decomposition, programmatic reasoning \\
+Causal faithfulness & $P(\hat{a}\leftarrow\echain^\star\mid \hat{a}=a^\star)$ & Correct but unsupported answers & Verification, citation checking, counterfactual attribution, \PRM \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Risk under Missingness, Noise, and Budget}
+\label{subsec:risk_view}
+
+The estimand view also yields a compact risk perspective. Let
+$\rho_N$ and $\rho_K$ denote, respectively, the noise ratios of the
+retrieved pool and the selected context,
+\begin{equation}
+\rho_N = \frac{|L_N\setminus \echain^\star|}{|L_N|},
+\qquad
+\rho_K = \frac{|E_K\setminus \echain^\star|}{|E_K|},
+\end{equation}
+so that $\rho_N$ measures pool-level distractor mass and $\rho_K$
+measures how much of the budgeted context is spent on non-chain
+units. A stylized system risk can be written as
+\begin{equation}
+\mathcal{R}(N,K)
+= \alpha\, P(\echain^\star\nsubseteq L_N)
++ \beta\, \mathbb{E}[\rho_K]
++ \gamma\, \operatorname{Cost}(N,K)
++ \delta\, \Delta_{\mathrm{faith}},
+\end{equation}
+where the expectation in the second term is over questions and
+retrieval outcomes.
+This expression makes explicit why multi-hop \RAG is not solved by
+``retrieve more'' or ``use a larger reader.'' Deeper retrieval reduces
+missingness but increases noise and cost; smaller contexts reduce noise
+but increase selection bias; stronger readers may improve fusion while
+leaving faithfulness unresolved.
+
+\subsection{Identifiability and Surrogate Supervision}
+\label{subsec:identifiability}
+
+The five estimands are conceptually clean but not always directly
+observable. In most datasets, $\echain^\star$ is partially annotated,
+non-unique, or absent. Supporting-fact labels are only a surrogate for
+chain membership; they may omit alternative valid chains, include
+facts that are sufficient but not necessary, or differ from the path
+actually used by the model. This creates an identifiability problem:
+answer accuracy can be observed, but the latent event that failed is
+often not identified without additional instrumentation.
+
+\begin{proposition}[Conditional identifiability]
+\label{prop:identifiability}
+Suppose $\chainset^\star(q)$ is the full set of valid support chains
+for question $q$, and that for each example we observe a subset
+$\Sigma(q)\subseteq\chainset^\star(q)$ of annotated valid chains and
+the full observable sequence $(L_N,E_K,\pi(E_K),\hat a)$. Define the
+annotated versions of the observability, selection, and exposure
+events by
+\begin{align}
+\obs^{\Sigma}   &= \{\exists C\in\Sigma(q):\, C\subseteq L_N\},                          \\
+\sel^{\Sigma}   &= \{\exists C\in\Sigma(q):\, C\subseteq E_K\},                          \\
+\expo^{\Sigma}  &= \{\exists C\in\Sigma(q):\, C\subseteq E_K\text{ and }
+                    \operatorname{rank}_{\pi}(C)\le r\}.
+\end{align}
+Then $\obs^{\Sigma}$, $\sel^{\Sigma}$, and $\expo^{\Sigma}$ are
+directly identifiable from $(\Sigma(q),L_N,E_K,\pi(E_K))$ and satisfy
+$\obs^{\Sigma}\subseteq\obs$, $\sel^{\Sigma}\subseteq\sel$,
+$\expo^{\Sigma}\subseteq\expo$; an observed positive on the
+annotated event implies the underlying latent event, while an
+observed negative on the annotated event is informative for the
+latent event only up to the chain-set gap
+$\chainset^\star(q)\setminus\Sigma(q)$. The events $\fus$ and
+$\faith$ are not identifiable from
+$(\Sigma(q),L_N,E_K,\pi(E_K),\hat a)$ alone; they require
+interventional probes such as evidence deletion, bridge
+counterfactual, or oracle-evidence comparison
+(Section~\ref{sec:causal_faithfulness}).
+\end{proposition}
+
+We distinguish three supervision regimes. In \emph{fully annotated}
+regimes, path or step labels~\cite{yang2018hotpotqa,ho2020wikimultihopqa,
+trivedi2022musique,dalvi2021entailmentbank} allow approximate
+measurement of observability and selection. In \emph{weakly annotated}
+regimes, supporting facts or citations provide noisy labels for
+membership and faithfulness. In \emph{unannotated} regimes, the system
+must rely on proxies such as retrieval overlap, counterfactual
+perturbation, leave-one-out deletion~\cite{liu2023evaluating}, or
+verifier scores~\cite{xu2025veritas}.
+
+These regimes should not be mixed without qualification. A method that
+improves answer F1 under unannotated evaluation may have improved
+observability, fusion, or parametric guessing; without estimand-level
+diagnostics the mechanism is underdetermined. This perspective
+suggests a reporting standard for future work
+(Section~\ref{sec:reporting_guidelines}): for any multi-hop system,
+authors should report at least one metric for each of three stages:
+pool-level chain coverage, context-level chain preservation, and
+answer-level faithfulness.
+
+\subsection{A Diagnostic Protocol}
+\label{subsec:diagnostic_protocol}
+
+The statistical decomposition induces a simple diagnostic protocol.
+First, evaluate the retrieved pool $L_N$ against available support
+labels to estimate chain observability. If the chain is absent,
+downstream reader errors should not be attributed to reasoning.
+Second, condition on chain-present examples and measure whether the
+selected budgeted context $E_K$ preserves the chain. This isolates
+selection bias under budget. Third, hold membership fixed and vary the
+ordering $\pi(E_K)$ to measure exposure effects. Fourth, evaluate the
+reader under oracle or near-oracle evidence to estimate fusion
+reliability. Fifth, perturb or remove cited evidence to test causal
+faithfulness.
+
+The important point is that these diagnostics are conditional. A
+faithfulness test on examples where the evidence is absent conflates
+retrieval and attribution. A fusion test on examples where the chain
+is not selected conflates selection and reasoning. A ranking test that
+changes both membership and order cannot isolate exposure. Conditional
+evaluation is therefore not a minor experimental detail; it is
+required by the latent-chain factorization itself.
+
+\begin{table}[t]
+\caption{Estimand-level diagnostics for multi-hop \RAG. Each metric is
+best interpreted conditionally on the preceding event.}
+\label{tab:diagnostic_protocol}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.5cm}p{3.1cm}p{3.1cm}Y@{}}
+\toprule
+Stage & Event & Possible diagnostic & Common confounder \\
+\midrule
+Pool construction & $\obs=\{\echain^\star\subseteq L_N\}$ & pool support recall, path recall, bridge recall & shortcut labels or incomplete gold chains \\
+Budgeted selection & $\sel=\{\echain^\star\subseteq E_K\}$ & selected support recall, chain preservation rate & relevance-biased gold annotations \\
+Presentation & $\expo=\{\operatorname{rank}_{\pi}(\echain^\star)\le r\}$ & early support exposure, support adjacency, lost-in-middle sensitivity & simultaneous membership changes \\
+Fusion & $\fus$ & oracle-evidence EM/F1, step accuracy, path validity & parametric answer leakage \\
+Faithfulness & $\faith$ & citation precision, deletion tests, counterfactual sensitivity & post-hoc rationalization \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Monotonicity, Interaction, and Submodularity}
+\label{subsec:submodularity}
+
+A common implicit assumption in retrieval pipelines is that evidence
+utility is approximately additive: if each document is relevant on its
+own, the set should be useful. Multi-hop reasoning violates this
+assumption. Let $F_q(E)$ denote the probability that a fixed reader
+answers correctly given evidence set $E$:
+\begin{equation}
+F_q(E)=P(\hat a=a^\star\mid q,E).
+\end{equation}
+The marginal utility of an evidence unit $e$ under current context $C$
+is
+\begin{equation}
+\Delta_q(e\mid C)=F_q(C\cup\{e\})-F_q(C).
+\end{equation}
+A single-hop task is often close to monotone submodular selection:
+adding a relevant document helps and marginal gains diminish.
+Multi-hop tasks are frequently non-submodular because a bridge
+document may have near-zero utility alone but large utility after its
+companion evidence is present.
+
+\begin{definition}[Complementarity gap]
+For evidence units $e_i,e_j$ and context $C$, define
+\begin{equation}
+\Gamma_q(e_i,e_j\mid C)
+= \Delta_q(e_j\mid C\cup\{e_i\})-\Delta_q(e_j\mid C).
+\end{equation}
+Positive $\Gamma_q$ indicates complementarity: the value of $e_j$
+increases after $e_i$ is known.
+\end{definition}
+
+\begin{proposition}[Why query-only relevance misses bridges]
+\label{prop:bridge_miss}
+Suppose a bridge evidence unit $e_b$ has low marginal relevance
+$s_{\mathrm{rel}}(q,e_b)$ but positive complementarity
+$\Gamma_q(e_c,e_b\mid C)>0$ with a core unit $e_c$. Any selector that
+is monotone in $s_{\mathrm{rel}}(q,e)$ alone can rank $e_b$ below
+unrelated high-surface-match distractors even when
+$\Delta_q(e_b\mid C\cup\{e_c\})$ is high.
+\end{proposition}
+
+\begin{proof}[Proof]
+A query-only selector is a function of $s_{\mathrm{rel}}(q,e)$ and does
+not condition on $C\cup\{e_c\}$. If there exists a distractor $d$ such
+that $s_{\mathrm{rel}}(q,d)>s_{\mathrm{rel}}(q,e_b)$, the selector will
+prefer $d$ regardless of the conditional gain of $e_b$. The inequality
+can hold even when $F_q(C\cup\{e_c,e_b\})>F_q(C\cup\{e_c,d\})$, because
+that comparison depends on conditional utility rather than marginal
+surface relevance. The argument requires only that the selector's
+score function depends on $(q,e)$ and not on $C$, and that the
+strict-inequality regime is non-empty---a condition that is empirically
+verified on bridge-heavy benchmarks such as
+\textsc{MuSiQue}~\cite{trivedi2022musique} and
+\textsc{2WikiMultiHopQA}~\cite{ho2020wikimultihopqa}.
+\end{proof}
+
+This proposition is the formal reason why multi-hop reranking should
+not be evaluated only as relevance reranking. A selector may reduce
+average query-document relevance while improving chain preservation.
+Conversely, a strong cross-encoder reranker may improve top-$K$
+relevance while still dropping low-surface bridge evidence.
+
+\subsection{A Budgeted Chain-Preservation Objective}
+\label{subsec:budgeted_objective}
+
+Given a pool $L_N$, context budget $K$, and cost function $c(e)$, an
+ideal selector solves
+\begin{equation}
+E_K^\star
+=\argmax_{E\subseteq L_N}
+\mathbb{E}_{\echain\sim p(\echain\mid q,L_N)}
+\left[\mathbb{I}\{\echain\subseteq E\}\right]
+\quad\text{s.t.}\quad |E|\le K.
+\end{equation}
+If evidence units have variable length, the cardinality budget becomes
+a token budget:
+\begin{equation}
+\sum_{e\in E} c(e)\le B.
+\end{equation}
+Compression methods can be interpreted as changing $c(e)$ and sometimes
+changing the evidence unit itself. A compressed note may preserve the
+answer-bearing fact but lose the bridge relation or the provenance
+needed for faithfulness. Therefore compression should be evaluated not
+only by answer accuracy but by chain preservation and citation
+validity~\cite{xu2023recomp,yu2023chainofnote}.
+
+\begin{lemma}[Upper bound under chain absence]
+\label{lem:absence_upper_bound}
+Let $A$ be the event that no valid minimal chain is contained in the
+retrieved pool $L_N$. If the reader is required to answer only from
+the retrieved evidence and has no parametric leakage, then
+\begin{equation}
+P(\hat a=a^\star\mid A)\le \epsilon,
+\end{equation}
+where $\epsilon$ is the probability of guessing correctly from task
+priors or annotation artifacts.
+\end{lemma}
+
+\begin{proof}
+Under the no-leakage condition, the answer is identifiable only from
+a sufficient evidence chain. When no valid minimal chain is present,
+the reader lacks the information required to distinguish $a^\star$
+from alternatives except through prior bias. The remaining success
+probability is therefore bounded by shortcut or guessing probability
+$\epsilon$. Formally, let $\Pi(a\mid A)$ be the conditional answer
+distribution when no chain is present. Then for any reader output
+$\hat a$, $P(\hat a=a^\star\mid A)=\Pi(a^\star\mid A)\le\max_{a}
+\Pi(a\mid A)\le\epsilon$ by the assumption on prior coverage.
+\end{proof}
+
+The lemma motivates conditional evaluation. If a method fails on
+examples where $L_N$ lacks the chain, the failure should be attributed
+to observability, not to the reader. If a method succeeds in that
+regime, the success may indicate parametric memory or shortcut
+exploitation rather than retrieval-grounded reasoning.
+
+\subsection{Exposure as a Positional Treatment}
+\label{subsec:exposure_treatment}
+
+Exposure can be treated as a causal treatment over a fixed evidence
+set. Let $Y(\pi)$ denote the answer-correctness outcome under
+ordering $\pi$. The average exposure effect between two ordering
+policies $\pi_1$ and $\pi_0$ is
+\begin{equation}
+\tau_{\mathrm{exp}}
+=\mathbb{E}\left[Y(\pi_1)-Y(\pi_0)\mid \echain^\star\subseteq E_K\right].
+\end{equation}
+This estimand is identifiable only if membership is held fixed. If
+the reranker changes both $E_K$ and $\pi(E_K)$, gains conflate
+selection and presentation. This is why fixed-membership ordering
+experiments are not secondary ablations; they are required to isolate
+the exposure channel, especially on long contexts where positional
+bias is documented to be substantial~\cite{liu2024lostmiddle,
+yen2024lcontext,bai2024longbench}.
+
+\subsection{Reader Fusion as Noisy Program Execution}
+\label{subsec:fusion_program}
+
+A multi-hop reader can be idealized as executing a latent program over
+evidence units:
+\begin{equation}
+z_0=q,\qquad z_t = T_t(z_{t-1},e_t),\qquad \hat a=H(z_m),
+\end{equation}
+where $T_t$ may resolve an entity, project an attribute, compare
+values, or aggregate partial results. If each transition has error
+probability $\epsilon_t$, then under a simple independent-error
+approximation,
+\begin{equation}
+P(\text{all transitions correct})\approx \prod_{t=1}^m(1-\epsilon_t).
+\end{equation}
+This explains why longer chains are difficult even when every document
+is retrieved. It also explains why process
+supervision~\cite{lightman2024process,sun2025rearter,xiong2025raggym},
+program execution~\cite{chen2023pot,lyu2023faithfulcot,gao2023pal},
+external tools~\cite{yao2023react,schick2023toolformer}, and
+step-level verification can improve multi-hop \RAG without changing
+retrieval recall.
+
+
+% =====================================================================
+% \part{Literature Review}
+% =====================================================================
+
+% =====================================================================
+\section{Methods as Estimators of Evidence-Chain Quantities}
+\label{sec:estimand_methods}
+% =====================================================================
+
+This section reorganizes the method landscape by statistical estimand.
+Architectural families reappear, but as implementation choices rather
+than primary organizing categories. The subsections below deliberately
+cut across architecture. For example, graph expansion, iterative dense
+retrieval, and agentic search all appear under chain observability
+because they expand or adapt the set of candidate evidence units.
+Decomposition appears under fusion reliability when it reduces the
+complexity of composition, but it also appears under observability when
+sub-questions become retrieval queries. This overlap is not a flaw; it
+is the point of an estimand-based taxonomy. A method can be an
+estimator of more than one quantity, and a strong system often combines
+several estimators. Readers who prefer an architecture-first
+presentation should read this section together with
+Section~\ref{sec:architecture_view}, which catalogues the same methods
+under their conventional family labels.
+
+\subsection{Estimating Chain Observability}
+\label{subsec:methods_observability}
+
+Methods in this group aim to increase $P(\echain^\star\subseteq L_N)$.
+We organize them along increasing degrees of adaptivity: single-shot
+retrieval, iterative retrieval, graph expansion, and agentic search.
+
+\subsubsection{Single-shot Sparse and Dense Retrieval}
+Sparse retrievers such as BM25~\cite{robertson2009bm25} and tuned BM25
+variants remain strong baselines for multi-hop \QA when at least one
+hop is lexically anchored. Dense retrievers including
+\textsc{DPR}~\cite{karpukhin2020dpr}, \textsc{REALM}~\cite{guu2020realm},
+\textsc{ANCE}~\cite{xiong2020ance},
+\textsc{Contriever}~\cite{izacard2022contriever},
+\textsc{GTR}~\cite{ni2022gtr}, \textsc{E5}~\cite{wang2022e5},
+\textsc{BGE}~\cite{xiao2024bge}, and
+\textsc{RetroMAE}~\cite{xiao2022retromae} provide scalable proposal
+pools by encoding question and passage into a shared dense space.
+Multi-vector and late-interaction retrievers such as
+\textsc{ColBERT}~\cite{khattab2020colbert} and
+\textsc{ColBERTv2}~\cite{santhanam2022colbertv2} preserve per-token
+matching signals that are useful when bridge entities appear only in
+narrow spans. Learned sparse retrievers such as
+\textsc{SPLADE}~\cite{formal2021splade} combine inverted-index
+efficiency with neural expansion. The shared limitation of single-shot
+retrievers in the multi-hop setting is structural: if the second-hop
+bridge is not expressed in the original query, query-only retrieval may
+miss it, regardless of whether scoring is sparse, dense, or multi-vector.
+
+\subsubsection{Iterative and Reasoning-Interleaved Retrieval}
+Iterative retrieval directly addresses second-hop missingness.
+\textsc{GoldEn Retriever}~\cite{min2019golden} generates intermediate
+queries from previously retrieved passages.
+\textsc{MDR}~\cite{xiong2021mdr} performs multi-step dense retrieval
+conditioned on accumulated evidence representations.
+\textsc{Baleen}~\cite{khattab2021baleen} maintains a condensed evidence
+state across hops to avoid query drift.
+\textsc{MUPPET}~\cite{feldman2019muppet} pre-encodes potential bridge
+links and reuses them between hops.
+\textsc{IRCoT}~\cite{trivedi2023ircot} interleaves chain-of-thought
+reasoning with retrieval, treating each reasoning step as a new query.
+\textsc{FLARE}~\cite{jiang2023flare} triggers retrieval mid-generation
+whenever predicted-token probability falls below a threshold.
+\textsc{ITER-RETGEN}~\cite{shao2023iterretgen} alternates between
+generation-as-context-expansion and retrieval-as-evidence-refresh.
+\textsc{Adaptive-RAG}~\cite{jeong2024adaptiverag} classifies query
+complexity to select between no-retrieval, single-step, and multi-step
+retrieval paths. \textsc{DRAGIN}~\cite{su2024dragin} decides retrieval
+timing based on generator entropy and uncertainty signals.
+\textsc{Self-RAG}~\cite{asai2024selfrag} uses learned reflection tokens
+to decide both when to retrieve and which passages to keep.
+\textsc{ITER-DRAGON}~\cite{wu2024iterdragon} composes iterative
+retrieval with stage-wise verifier feedback.
+
+\subsubsection{Graph Expansion as Observability Estimator}
+Graph-expansion methods can also be read as observability estimators.
+\textsc{GRAFT-Net}~\cite{sun2018graftnet} and
+\textsc{PullNet}~\cite{sun2019pullnet} construct question-specific
+subgraphs by iteratively pulling neighboring entities and linked text.
+\textsc{HGN}~\cite{fang2020hgn} and
+\textsc{DFGN}~\cite{qiu2019dfgn} build hierarchical entity-and-paragraph
+graphs to surface bridge nodes that single-shot retrieval misses.
+\textsc{ToG}~\cite{sun2024tog}, \textsc{ToG 2.0}~\cite{ma2024tog2}, and
+\textsc{RoG}~\cite{luo2024rog} traverse \KG paths under \LLM control,
+expanding the local search space until candidate paths become visible.
+\textsc{KG-FiD}~\cite{yu2022kgfid} uses \KG signals to prune and
+re-score retrieved passages. \textsc{GNN-RAG}~\cite{mavromatis2024gnnrag}
+runs a \GNN over a retrieved subgraph and feeds the resulting node
+representations to an \LLM reasoner.
+\textsc{GraphRAG}~\cite{edge2024graphrag} constructs an \LLM-built
+graph index over a corpus and uses community summaries for
+query-focused expansion. \textsc{LightRAG}~\cite{guo2024lightrag} and
+\textsc{HippoRAG}~\cite{gutierrez2024hipporag} provide alternative
+graph indexing strategies optimized for cost and memory-style
+retrieval.
+
+\subsubsection{Long-context and Hierarchical Retrieval}
+A different way to increase chain observability is to change the
+granularity of evidence units. Long-context readers can sometimes
+absorb the entire candidate pool, but lost-in-the-middle
+effects~\cite{liu2024lostmiddle} prevent naive scaling.
+\textsc{RAPTOR}~\cite{sarthi2024raptor} builds recursive abstractive
+summaries of corpus clusters so that high-level bridge information
+becomes retrievable.
+\textsc{LongRAG}~\cite{jiang2024longrag} pairs long-context readers
+with coarser retrieval units to reduce per-hop selection load.
+\textsc{HiQA}~\cite{chen2024hiqa} introduces hierarchical context
+augmentation. \textsc{HyDE}~\cite{gao2023hyde} synthesizes
+hypothetical documents to anchor dense retrieval in semantic rather
+than lexical space, and is especially useful for queries whose
+surface form does not match relevant evidence.
+
+\subsubsection{Agentic and RL-trained Search Policies}
+Recent work moves observability estimation into a learned policy.
+\textsc{ReAct}~\cite{yao2023react} interleaves reasoning and acting
+through tool calls including search.
+\textsc{Toolformer}~\cite{schick2023toolformer} learns when to invoke
+external tools through self-supervision.
+\textsc{Search-R1}~\cite{jin2025searchr1} trains a reasoning model to
+generate search queries during step-by-step reasoning with
+reinforcement learning, with retrieval results masked out from policy
+gradients. \textsc{R1-Searcher}~\cite{song2025r1searcher} incentivizes
+the search capability of \LLMs through RL with intermediate retrieval
+rewards. \textsc{DeepRAG}~\cite{guan2025deeprag} formulates
+retrieval-augmented reasoning as an MDP and decides at each step
+whether to retrieve or rely on parametric reasoning.
+\textsc{RAG-Gym}~\cite{xiong2025raggym} adds process supervision for
+search agents, making intermediate search actions trainable.
+\textsc{PAR-RAG}~\cite{zhang2025parrag} uses a plan-act-review structure
+to reduce reasoning-path drift.
+\textsc{DualRAG}~\cite{cheng2025dualrag} couples reasoning-augmented
+querying with progressive knowledge aggregation.
+\textsc{MultiCube-RAG}~\cite{shi2026multicuberag} uses an
+ontology-guided cube structure to organize multi-hop retrieval
+without relying solely on noisy graph expansion.
+\textsc{ReSearch}~\cite{chen2025research} learns to reason with search
+via reinforcement learning under sparse outcome rewards.
+\textsc{O1-Searcher}~\cite{wang2025o1searcher} and similar systems
+explore deliberate search in a long-thought regime. Their advantage is
+adaptive depth; their risk is query drift, redundant calls, and weak
+attribution of which action improved observability.
+
+\subsection{Estimating Selection Preservation}
+\label{subsec:methods_utility}
+
+A chain can be present in $L_N$ but absent from $E_K$ because the
+selection model optimizes marginal relevance rather than conditional
+utility. Rerankers, bridge selectors, compression methods, and
+plan-guided selectors all aim to preserve the support chain under a
+small budget; their common internal mechanism is to approximate the
+conditional utility score $\theta_{\mathrm{util}}(e\mid q,C)$, which
+serves as a per-candidate signal in service of the event-level
+estimand $\theta_{\mathrm{sel}}$.
+
+\subsubsection{Cross-encoder and \LLM Rerankers}
+Classical rerankers~\cite{nogueira2019passage} and stronger neural
+rerankers including \textsc{monoT5}~\cite{nogueira2020monot5},
+\textsc{RankT5}~\cite{zhuang2023rankt5},
+\textsc{RankLLaMA}~\cite{ma2024rankllama},
+\textsc{RankGPT}~\cite{sun2023rankgpt},
+\textsc{RankZephyr}~\cite{pradeep2023rankzephyr}, and listwise
+\LLM rerankers~\cite{tang2024found} score candidate documents by query
+relevance. In multi-hop settings, these scores are often
+misspecified: bridge documents can have low standalone relevance but
+high value after a partial chain has been observed. Some recent
+listwise \LLM rerankers attempt joint scoring and are therefore closer
+to conditional utility estimation, but the gap from true conditional
+utility is rarely measured.
+
+\subsubsection{Bridge-aware and Core-conditioned Selection}
+Methods that condition selection on partial state begin to estimate
+true conditional utility. \textsc{Baleen}'s condensed
+retrieval~\cite{khattab2021baleen} explicitly tracks accumulated
+evidence and reranks under that condition. \textsc{HopRetriever}
+\cite{li2020hopretriever} and \textsc{PathRetriever}~\cite{asai2020learning}
+score candidate next-hop documents conditioned on entity or sentence
+state. \textsc{BeamDR}~\cite{zhao2021beamdr} performs beam-search over
+chain hypotheses. \textsc{MuGER2}~\cite{yang2022muger} explicitly
+detects bridge entities. \textsc{Bridge-R}~\cite{xu2024bridger} adds a
+bridge-prediction objective to dense retrieval.
+
+\subsubsection{Compression and Note-based Methods}
+Compression can be interpreted as utility estimation under a token
+budget. \textsc{LongLLMLingua}~\cite{jiang2023llmlingua}, and
+\textsc{LongLLMLingua-2}~\cite{pan2024longllmlingua2} compress prompts
+by predicting token importance. \textsc{RECOMP}~\cite{xu2023recomp}
+compresses retrieved passages into extractive or abstractive notes.
+\textsc{Chain-of-Note}~\cite{yu2023chainofnote} writes intermediate
+notes that survive into the reader prompt. \textsc{xRAG}~\cite{cheng2024xrag}
+compresses retrieved context into single tokens for efficient
+augmentation. The key statistical question for compression is whether
+chain-relevant complementary content survives, not whether the
+compressor preserves average relevance.
+
+\subsubsection{Plan-driven and Sub-question Selection}
+Sub-question and plan-based methods select evidence aligned with
+explicit reasoning steps. \textsc{DecompRC}~\cite{min2019decomprc},
+\textsc{Self-Ask}~\cite{press2022selfask},
+\textsc{Least-to-Most}~\cite{zhou2023leasttomost},
+\textsc{BREAK}~\cite{wolfson2020break},
+\textsc{Plan-and-Solve}~\cite{wang2023planandsolve},
+\textsc{HiPRAG}~\cite{vu2025hiprag},
+\textsc{ProgramFC}~\cite{pan2023programfc}, and \textsc{PAR-RAG}'s
+plan stage all transform a complex question into sub-tasks whose
+matched evidence is more nearly single-hop. The estimand interpretation
+is that decomposition reduces the variance of utility estimation: a
+sub-question constrains conditional context $C$ explicitly, so each
+candidate document can be scored under a clearer conditional.
+
+\subsubsection{Training Signals for Utility}
+Conditional utility can be supervised in several ways: gold supporting
+facts~\cite{yang2018hotpotqa,trivedi2022musique}; oracle ablations
+producing leave-one-out labels; reader-derived utility scores;
+verifier scores~\cite{xu2025veritas,sun2025rearter}; and counterfactual
+deletion~\cite{liu2023evaluating}. Each signal has bias. Gold supports
+may not be unique. Reader-derived utility can inherit reader-specific
+preferences. Verifier scores may reward plausibility rather than
+causal support. A robust selector should ideally combine multiple
+signals while reporting which utility surrogate is used.
+
+From this view, the central statistical issue is selection bias under
+budget. A top-$K$ context is not a neutral sample of the retrieved
+pool; it is a biased estimator of the latent support chain. Future
+selection models should therefore report not only relevance metrics
+but also conditional chain preservation: whether the missing supports
+of $\echain^\star$ survive the transition from $L_N$ to $E_K$.
+
+\subsection{Estimating Exposure Probability}
+\label{subsec:methods_exposure}
+
+Exposure methods assume the relevant evidence is selected but not
+necessarily usable. Long contexts and multi-document prompts create
+position-dependent access problems~\cite{liu2024lostmiddle,
+yen2024lcontext}.
+
+\subsubsection{Reader-aware Ordering and Packing}
+Reader-aware ordering places bridge and answer-bearing evidence
+earlier or closer together. \textsc{LongChat-aware} packing strategies,
+``lost-in-the-middle'' mitigations~\cite{liu2024lostmiddle},
+\textsc{LongContextBench}-driven layout heuristics~\cite{bai2024longbench},
+and explicit instruction templates that announce chain structure are
+examples of low-cost ordering techniques. Some methods learn the
+ordering: \textsc{PRCA}~\cite{yang2023prca} trains a context-aware
+adapter that re-orders evidence based on reader gradients.
+\textsc{Position-Robust Context}~\cite{he2024positionrobust} fine-tunes
+\LLMs to be position-invariant.
+
+\subsubsection{Fusion Architecture as Exposure}
+Architectures that decouple encoding from fusion reduce
+encoder-side interference. \textsc{FiD}~\cite{izacard2021fid}
+separately encodes passages and fuses them in the decoder, making each
+passage's contribution position-independent in the encoder.
+\textsc{FiD-Light}~\cite{hofstatter2023fidlight} and
+\textsc{KG-FiD}~\cite{yu2022kgfid} extend the same idea with
+efficiency or structural priors. \textsc{Atlas}~\cite{izacard2022atlas}
+co-trains retriever and \FiD reader. Encoder-decoder separation is
+itself an exposure intervention because the reader no longer faces a
+single concatenated long prompt.
+
+\subsubsection{Compression-aware Exposure}
+Compression reduces exposure competition by shortening distractors.
+\textsc{LLMLingua}~\cite{jiang2023llmlingua},
+\textsc{RECOMP}~\cite{xu2023recomp}, and
+\textsc{Selective-Context}~\cite{li2023selective} all shrink the input
+and indirectly improve the reader's effective access depth. In fixed
+membership experiments, compression can isolate the exposure channel
+because it changes neither $\sel$ nor the underlying retrieval.
+
+\subsubsection{Fixed-Membership Ordering as a Causal Probe}
+A method can preserve evidence membership while still improving answer
+quality by changing presentation. Fixed-membership ordering ablations
+where only the order of $E_K$ varies, holding $|E_K|$ and contents
+constant, isolate $\theta_{\mathrm{exp}}$. Section~\ref{sec:reporting_guidelines}
+recommends this experiment as a standard supplement.
+
+\subsection{Estimating Fusion Reliability}
+\label{subsec:methods_fusion}
+
+Fusion reliability asks whether the reader can compose the chain once
+it is selected and exposed.
+
+\subsubsection{Retrieve-then-Read Readers}
+Retrieve-then-read systems such as \textsc{DrQA}~\cite{chen2017drqa},
+\textsc{ORQA}~\cite{lee2019orqa}, \textsc{RAG}~\cite{lewis2020rag},
+\textsc{REALM}~\cite{guu2020realm}, \textsc{Atlas}~\cite{izacard2022atlas},
+and \textsc{FiD}~\cite{izacard2021fid} are direct fusion estimators.
+They differ in whether retrieval is fixed, jointly trained, or
+distilled, and in whether passages are concatenated or independently
+encoded. Their shared role is to estimate $P(\hat a\mid q,E)$.
+
+\subsubsection{Graph-aware Fusion}
+Graph-aware fusion methods such as
+\textsc{QA-GNN}~\cite{yasunaga2021qagnn},
+\textsc{GreaseLM}~\cite{zhang2022greaselm},
+\textsc{UniKGQA}~\cite{jiang2023unikgqa},
+\textsc{ReaRev}~\cite{mavromatis2022rearev},
+\textsc{SR}~\cite{zhang2022subgraph},
+\textsc{HamQA}~\cite{dong2023hierarchical},
+and \textsc{NSM}~\cite{he2021nsm} provide structured inductive bias
+for cross-evidence composition. The graph constrains how evidence
+units can be combined and therefore reduces the hypothesis space the
+reader must search over.
+
+\subsubsection{Decomposition and Programmatic Reasoning}
+Decomposition-based methods factorize a difficult multi-hop query into
+easier subproblems. \textsc{DecompRC}~\cite{min2019decomprc},
+\textsc{Self-Ask}~\cite{press2022selfask},
+\textsc{Least-to-Most}~\cite{zhou2023leasttomost},
+\textsc{BREAK}~\cite{wolfson2020break},
+\textsc{Plan-and-Solve}~\cite{wang2023planandsolve},
+\textsc{Decomposed Prompting}~\cite{khot2023decomposed},
+\textsc{Successive Prompting}~\cite{dua2022successive}, and
+\textsc{ReasonPath}~\cite{li2023reasonpath} all reduce fusion
+complexity by making intermediate operations explicit. Programmatic
+methods such as \textsc{PoT}~\cite{chen2023pot},
+\textsc{PAL}~\cite{gao2023pal},
+\textsc{Faithful CoT}~\cite{lyu2023faithfulcot}, and
+\textsc{Code-as-Reasoning}~\cite{wang2024executable} make intermediate
+operations executable or symbolically checkable. The main fusion-side
+failure is error propagation: a wrong early sub-answer corrupts later
+retrieval and reasoning, an effect amplified by the
+$\prod(1-\epsilon_t)$ form of equation in \S\ref{subsec:fusion_program}.
+
+\subsubsection{Self-Consistency and Diverse Reasoning}
+Sampling-based methods improve fusion through diversity.
+\textsc{Self-Consistency}~\cite{wang2023selfconsistency} marginalizes
+over multiple reasoning traces. \textsc{Tree-of-Thought}~\cite{yao2023tot}
+and \textsc{Graph-of-Thought}~\cite{besta2024got} expand the reasoning
+topology beyond linear chains.
+\textsc{Algorithm-of-Thought}~\cite{sel2024algorithm} introduces
+algorithmic templates. \textsc{Auto-CoT}~\cite{zhang2023autocot}
+automatically constructs in-context exemplars. These methods do not
+change retrieval but increase the probability that at least one
+trajectory composes the chain correctly.
+
+\subsubsection{Latent and Compressed Reasoning Inside Readers}
+A separate fusion thread compresses reasoning into hidden states.
+\textsc{Quiet-STaR}~\cite{goyal2024quietstar},
+\textsc{Coconut}~\cite{hao2024coconut},
+pause-token methods~\cite{goyal2024pause}, and ``think before speak''
+variants generate internal computation that is not emitted as tokens.
+In the latent-chain view, these methods do not eliminate fusion error;
+they relocate it to model internals where it is harder to attribute.
+Empirically they can improve multi-hop accuracy on chain-explicit
+tasks~\cite{wang2024grokked} while making external diagnostics less
+informative.
+
+\subsection{Estimating Causal Faithfulness}
+\label{subsec:methods_faithfulness}
+
+Faithfulness methods estimate whether the answer is causally grounded
+in evidence rather than merely correct.
+
+\subsubsection{Self-verification}
+Self-verification methods use model-internal consistency or critique.
+\textsc{Self-Refine}~\cite{madaan2023selfrefine},
+\textsc{Reflexion}~\cite{shinn2023reflexion},
+\textsc{CoVe}~\cite{dhuliawala2024cove},
+\textsc{SelfCheckGPT}~\cite{manakul2023selfcheckgpt}, and
+\textsc{Self-Verification}~\cite{weng2023selfverification} score
+intermediate or final outputs by re-asking the model. They are cheap
+but bounded by the model's own knowledge and biases.
+
+\subsubsection{Externally-grounded Verification}
+Externally-grounded methods retrieve or check additional evidence
+before revising outputs. \textsc{CRITIC}~\cite{gou2024critic},
+\textsc{RARR}~\cite{gao2023rarr},
+\textsc{Verify-and-Edit}~\cite{zhao2023verifyedit},
+\textsc{CRAG}~\cite{yan2024crag},
+\textsc{Self-Checker}~\cite{li2024selfchecker}, and
+\textsc{Attributable-Trace}~\cite{li2023attribution} ground critique
+in retrieved content. \textsc{Self-RAG}~\cite{asai2024selfrag} combines
+retrieval and critique tokens in a single decoding loop.
+
+\subsubsection{Process Reward Models}
+Process-supervised reward models shift faithfulness from post-hoc
+evaluation to a training signal.
+\textsc{Lightman PRM}~\cite{lightman2024process}, \textsc{Math-Shepherd}
+\cite{wang2023mathshepherd}, \textsc{ReARTeR}~\cite{sun2025rearter},
+\textsc{RAG-Gym}~\cite{xiong2025raggym}, and
+\textsc{VERITAS}~\cite{xu2025veritas} reward intermediate reasoning
+steps or evidence-grounded actions rather than only final correctness.
+\textsc{ReST-MCTS}~\cite{zhang2024restmcts} and similar systems combine
+search and process supervision.
+
+\subsubsection{Counterfactual and Deletion Tests}
+Counterfactual benchmarks such as \textsc{CofCA}~\cite{wu2024cofca}
+test whether changing a bridge variable changes the answer. Deletion
+tests~\cite{liu2023evaluating,xu2024docnli} remove a candidate
+supporting passage and measure whether the answer changes. Both provide
+interventional proxies for causal faithfulness, but neither identifies
+$\theta_{\mathrm{faith}}$ without additional assumptions.
+
+\subsubsection{Citation and Attribution Models}
+Citation-aware generators
+\textsc{WebGPT}~\cite{nakano2021webgpt},
+\textsc{GopherCite}~\cite{menick2022gophercite}, and
+\textsc{ALCE}~\cite{gao2023alce} produce per-claim citations that can
+be validated for entailment. Citation precision is necessary but not
+sufficient for faithfulness, as a citation can be textually relevant
+without being causally used.
+
+Under the estimand view, all of these methods target
+$\Delta_{\mathrm{faith}}$. They differ in whether they intervene
+pre-hoc, in-decoding, or post-hoc, and in whether the supervision
+signal is internal, external, or interventional. We return to causal
+faithfulness in detail in Section~\ref{sec:causal_faithfulness}.
+
+\subsection{Joint Estimation in Agentic and Hybrid Systems}
+\label{subsec:methods_joint}
+
+Hybrid and agentic systems estimate several quantities simultaneously.
+\textsc{Self-RAG}~\cite{asai2024selfrag} decides when to retrieve,
+critiques evidence, and generates. \textsc{Search-R1}~\cite{jin2025searchr1}
+and \textsc{DeepRAG}~\cite{guan2025deeprag} learn retrieval and
+reasoning policies with RL. \textsc{LM--KG hybrids} such as
+\textsc{ToG 2.0}~\cite{ma2024tog2}, \textsc{RoG}~\cite{luo2024rog},
+\textsc{KAG}~\cite{liang2025kag},
+\textsc{HippoRAG}~\cite{gutierrez2024hipporag},
+\textsc{LightRAG}~\cite{guo2024lightrag},
+\textsc{SubgraphRAG}~\cite{li2024subgraphrag}, and
+\textsc{GraphRAG}~\cite{edge2024graphrag} combine structured chain
+priors with flexible language reasoning. Multi-agent systems such as
+\textsc{MA-RAG}~\cite{nguyen2025marag},
+\textsc{ReAgent}~\cite{wang2025reagent}, and
+\textsc{Chain-of-Agents}~\cite{zhang2024chainofagents} distribute
+decomposition, retrieval, reasoning, and verification across roles.
+
+The advantage of joint estimation is end-to-end adaptability. The cost
+is attribution: when answer accuracy improves, it is hard to tell
+whether the gain came from observability, selection, exposure, fusion,
+or faithfulness. We therefore recommend that future agentic and hybrid
+systems report component-level diagnostics aligned with the five
+estimands rather than only final answer scores.
+
+\begin{table}[t]
+\caption{Recent 2025--2026 multi-hop \RAG methods interpreted by primary
+estimand.}
+\label{tab:recent_methods_estimand}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.1cm}p{2.7cm}p{2.7cm}Y@{}}
+\toprule
+Method & Mechanism & Primary estimand & Statistical interpretation \\
+\midrule
+Search-R1~\cite{jin2025searchr1} & RL-trained search-query generation & Observability / control & Learns a policy over retrieval actions that increases probability of useful external evidence. \\
+DeepRAG~\cite{guan2025deeprag} & MDP over retrieve-or-reason decisions & Cost-aware observability & Trades retrieval calls against expected information gain at each reasoning step. \\
+R1-Searcher~\cite{song2025r1searcher} & RL-incentivized search via reward shaping & Observability & Improves bridge discovery through intermediate retrieval reward. \\
+ReSearch~\cite{chen2025research} & RL search under outcome-only reward & Observability / control & Demonstrates that pure RL can yield effective search agents. \\
+RAG-Gym~\cite{xiong2025raggym} & Process supervision for search agents & Observability and selection & Provides intermediate rewards for search actions rather than only final-answer reward. \\
+PAR-RAG~\cite{zhang2025parrag} & Plan-act-review with verification & Fusion and faithfulness & Controls reasoning drift by reviewing intermediate results. \\
+DualRAG~\cite{cheng2025dualrag} & Reasoning-augmented querying plus knowledge aggregation & Selection / fusion & Couples query generation with progressive evidence integration. \\
+VERITAS~\cite{xu2025veritas} & Faithfulness-aware process rewards & Causal faithfulness & Optimizes reasoning traces for entailment and support, not just correctness. \\
+ReARTeR~\cite{sun2025rearter} & Trustworthy PRM for retrieval-augmented reasoning & Faithfulness / fusion & Process-level reward model trained for retrieval-grounded steps. \\
+MultiCube-RAG~\cite{shi2026multicuberag} & Ontology-guided cube retrieval & Structural observability & Restricts retrieval to semantically organized dimensions to reduce graph noise. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{When Method Families Collide}
+\label{subsec:method_family_collision}
+
+Recent systems increasingly combine several families: a method may use
+a planner, a dense retriever, a graph index, a long-context reader,
+and a verifier. Architectural labels become less informative in such
+hybrids. The estimand view avoids this problem by decomposing a hybrid
+into the quantities it targets. For example, a graph-augmented agent
+may use graph neighbors to improve observability, an \LLM planner to
+improve conditional utility, a context packer to improve exposure, and
+a verifier to improve faithfulness. The method should then be evaluated
+at each link rather than described only as ``GraphRAG'' or
+``agentic RAG.''
+
+By Proposition~\ref{prop:bottleneck}, a strong retriever may not
+improve grounded accuracy when the reader cannot fuse evidence. A
+strong reader may not help when the chain is absent from the pool. A
+faithfulness verifier may reject unfaithful answers but not recover
+missing evidence. Therefore the most credible empirical papers are
+those that show where in the product the gain occurs.
+
+\subsection{Mechanism-Level Analyses as an Internal Estimator}
+\label{subsec:methods_mechanism}
+
+The estimands $\theta_{\mathrm{obs}}$, $\theta_{\mathrm{sel}}$,
+$\theta_{\mathrm{exp}}$, $\theta_{\mathrm{fus}}$, and
+$\theta_{\mathrm{faith}}$ are defined over externally observable
+quantities: retrieved pools, selected contexts, exposed positions,
+generated answers. A growing line of mechanistic-interpretability work
+asks a complementary question: does the chain object exist
+\emph{inside} the model, and can we measure it there?
+\textsc{Dissecting Multi-Hop}~\cite{geva2023dissecting} traces how
+intermediate facts are recalled and combined in transformer layers.
+\textsc{Do LLMs Latently Perform Multi-Hop Reasoning?}~\cite{yang2024do}
+shows that some models recall bridge entities in middle layers but use
+them inconsistently downstream.
+\textsc{Hopping}~\cite{biran2024hopping} characterizes step-by-step
+recall across layers.
+\textsc{Grokked Transformers}~\cite{wang2024grokked} demonstrate that
+generalization on multi-hop tasks emerges with extended training and
+specific circuit formation.
+
+In the latent-chain view, these analyses provide a third source of
+information about $\echain^\star$, in addition to retrieved evidence
+and external annotations. They can be read as \emph{internal
+estimators} of two quantities: (i) whether $\echain^\star$ or a
+proxy of it is representable inside the reader (a necessary condition
+for high $\theta_{\mathrm{fus}}$ under any external evidence), and
+(ii) whether the answer is produced by combining the intermediate
+representations of the chain or by parametric shortcut (an internal
+lower bound on $\theta_{\mathrm{faith}}$). Mechanistic analyses are
+not yet routinely integrated with retrieval-augmented systems, but
+they suggest a future diagnostic layer that combines external
+chain-preservation metrics with internal circuit-level evidence use.
+
+
+% =====================================================================
+\section{Architectural Families: A Complementary Review}
+\label{sec:architecture_view}
+% =====================================================================
+
+The estimand-based taxonomy in Section~\ref{sec:estimand_methods}
+does not replace architectural taxonomies; it explains why they are
+incomplete. To preserve continuity with prior surveys, this section
+provides a compact architectural crosswalk. Rather than re-listing
+methods already discussed in Section~\ref{sec:estimand_methods}, we
+give each family one short paragraph that (i) names its defining
+architectural commitment, (ii) points to where its representative
+methods are already reviewed by estimand, and (iii) flags substrates
+or lineages that fall outside the estimand-first exposition.
+Table~\ref{tab:architecture_estimand} summarizes the mapping, while
+Figure~\ref{fig:graph_methods_lineage} isolates the main graph-method
+lineages and the chain properties they target.
+
+\paperfigure{0.98}{fig3.pdf}
+{Graph-based methods as chain-structure estimators. Graph methods improve chain observability by expanding local neighborhoods, constrain fusion through structured paths, and improve faithfulness when paths or subgraphs can be audited.}
+{fig:graph_methods_lineage}
+
+\begin{table}[t]
+\caption{Architectural families mapped to latent-chain estimands.
+A checkmark indicates a primary contribution; $(\circ)$ indicates a
+secondary contribution. Methods are reviewed by estimand in
+Section~\ref{sec:estimand_methods}; this section provides the
+architectural cross-reference only.}
+\label{tab:architecture_estimand}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}CCCCC@{}}
+\toprule
+Family & Observability & Selection & Exposure & Fusion & Faithfulness \\
+\midrule
+Retrieval-based & \checkmark & $(\circ)$ &  &  &  \\
+Graph-based & \checkmark & $(\circ)$ &  & \checkmark & \checkmark \\
+Decomposition-based & $(\circ)$ & $(\circ)$ &  & \checkmark & $(\circ)$ \\
+Fusion-based readers &  &  & $(\circ)$ & \checkmark &  \\
+\LLM-based reasoning & $(\circ)$ & $(\circ)$ & $(\circ)$ & \checkmark & $(\circ)$ \\
+Verification-based &  &  &  & $(\circ)$ & \checkmark \\
+Long-context / hierarchical & $(\circ)$ & $(\circ)$ & \checkmark & $(\circ)$ &  \\
+Hybrid / agentic & \checkmark & \checkmark & $(\circ)$ & \checkmark & \checkmark \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Retrieval-based Methods}
+\label{subsec:arch_retrieval}
+
+\paperfigure{0.98}{fig4.pdf}
+{Retrieval-based methods mapped by adaptivity (horizontal) and retrieval-state richness (vertical). Neither axis encodes answer quality or chain observability; the boxes locate mechanism families and list representative systems.}
+{fig:retrieval_methods}
+
+Figure~\ref{fig:retrieval_methods} organizes retrieval control by the
+degree of adaptivity granted to the evidence-acquisition policy.
+Retrieval-based systems commit to enlarging or reshaping $L_N$ as the
+primary lever. Single-shot sparse and dense retrievers, iterative and
+reasoning-interleaved retrievers, adaptive controllers, hierarchical
+and long-context retrievers, and corrective-retrieval variants are
+all reviewed as observability estimators in
+Section~\ref{subsec:methods_observability}. The architectural
+commitment of this family is that better proposal-pool construction is
+worth the added cost and drift; its estimand contribution is
+$\theta_{\mathrm{obs}}$, with $\theta_{\mathrm{sel}}$ additionally
+engaged when the retriever also reranks conditioned on partial state
+(where conditional utility is used as the internal mechanism score
+driving selection preservation).
+
+\subsection{Graph-based Methods}
+\label{subsec:arch_graph}
+
+Graph-based methods commit to structured fusion: paths are
+first-class and can be audited hop by hop. Question-specific entity
+or document graphs (\textsc{GRAFT-Net},
+\textsc{PullNet}, \textsc{DFGN}, \textsc{HGN}), \LM--\GNN couplings
+(\textsc{QA-GNN}, \textsc{GreaseLM}, \textsc{UniKGQA},
+\textsc{ReaRev}, \textsc{NSM}, \textsc{KG-FiD}), and \LLM-built or
+\LLM-traversed graphs (\textsc{ToG}, \textsc{ToG 2.0},
+\textsc{RoG}, \textsc{GraphRAG}, \textsc{LightRAG},
+\textsc{HippoRAG}, \textsc{SubgraphRAG}, \textsc{KAG}) are reviewed
+as observability, fusion, or faithfulness estimators in
+Sections~\ref{subsec:methods_observability},
+\ref{subsec:methods_fusion}, and~\ref{subsec:methods_faithfulness}.
+Additional works that mostly matter for the graph-construction step
+rather than for downstream reasoning include
+\textsc{SAE}~\cite{tu2020sae},
+\textsc{HDE}~\cite{tu2019hde},
+\textsc{EmbedKGQA}~\cite{saxena2020embedkgqa},
+\textsc{TransferNet}~\cite{shi2021transfernet}, and
+\textsc{KGP}~\cite{wang2024kgp}. The family's shared limitation is
+that construction quality (missing nodes, noisy entity linking,
+incomplete edges) reduces observability before reasoning is invoked;
+\LLM-built graphs shift the bottleneck to extraction reliability.
+
+\subsection{Decomposition-, Fusion-, LLM-Reasoning-, and Verification-based Families}
+\label{subsec:arch_others}
+
+Four architectural families overlap heavily with Section~\ref{sec:estimand_methods}
+and therefore need only a short pointer here.
+\emph{Decomposition-based} methods (sub-question, programmatic, and
+plan-driven variants) are reviewed as utility and fusion estimators in
+Sections~\ref{subsec:methods_utility} and \ref{subsec:methods_fusion};
+their bottleneck is cascading error and granularity tuning.
+\emph{Fusion-based readers} (retrieve-then-read backbones,
+compression-aware fusion, long-context and memory-augmented readers)
+are downstream estimators of $\theta_{\mathrm{fus}}$ under
+$\theta_{\mathrm{exp}}$; they cannot repair missing evidence and are
+reviewed in Section~\ref{subsec:methods_fusion}.
+\emph{\LLM-based reasoning} spans linear chain-of-thought, non-linear
+topologies (\textsc{ToT}, \textsc{GoT}, \textsc{AoT},
+\textsc{SoT}~\cite{ning2024sot},
+\textsc{Cumulative Reasoning}~\cite{zhang2024cumulative}), programmatic
+reasoning, latent reasoning, tool-use and agentic reasoning
+(\textsc{ToolLLM}~\cite{qin2023toolllm},
+\textsc{Gorilla}~\cite{patil2023gorilla},
+\textsc{Voyager}~\cite{wang2023voyager},
+\textsc{Generative Agents}~\cite{park2023agents}), and search-based
+reasoning (\textsc{LATS}~\cite{zhou2024lats},
+\textsc{Reasoning-via-Planning}~\cite{hao2023reasoning}); each variant
+is placed under its primary estimand in Sections~\ref{subsec:methods_observability}
+through~\ref{subsec:methods_faithfulness}. \emph{Verification-based}
+methods are structurally identical to the causal-faithfulness
+estimators of Section~\ref{subsec:methods_faithfulness}
+(self-verification, externally grounded verification, process reward
+models, counterfactual and deletion tests); the architectural label
+adds no independent estimand contribution.
+
+\subsection{Long-context, Multimodal, and Semi-structured Substrates}
+\label{subsec:arch_longmultimodal}
+
+Two substrate directions deserve their own architectural note because
+their evidence spaces differ from standard text corpora. \emph{Long-context
+reasoning} is stressed by \textsc{LongBench}~\cite{bai2024longbench},
+\textsc{$\infty$Bench}~\cite{zhang2024infinitybench}, and
+\textsc{NovelHopQA}~\cite{novelhopqa2025}, motivated by
+lost-in-the-middle effects~\cite{liu2024lostmiddle} and enabled by
+\textsc{LongLLaMA}~\cite{tworkowski2023longllama} and
+\textsc{Mamba}~\cite{gu2024mamba}; retrieval-side adaptations include
+\textsc{LongRAG}~\cite{jiang2024longrag} and
+\textsc{RAPTOR}~\cite{sarthi2024raptor}. \emph{Multimodal and tabular
+multi-hop} requires alignment across text, tables, and images:
+\textsc{MultiModalQA}~\cite{talmor2021multimodalqa},
+\textsc{WebQA}~\cite{chang2022webqa},
+\textsc{ManyModalQA}~\cite{hannan2020manymodalqa},
+\textsc{MMRA}~\cite{lee2024mmra},
+\textsc{VisDoM}~\cite{wang2024visdom},
+\textsc{DocHop-QA}~\cite{suri2024dochop},
+\textsc{WikiMixQA}~\cite{he2024wikimixqa},
+\textsc{Img2LLM}~\cite{guo2023img2llm},
+\textsc{LLaVA-RAG}~\cite{lin2024llavarag},
+\textsc{HybridQA}~\cite{chen2020hybridqa},
+\textsc{OTT-QA}~\cite{chen2021opentableqa},
+\textsc{TabFact}~\cite{chen2020tabfact},
+\textsc{FeTaQA}~\cite{nan2022fetaqa}, and
+\textsc{TAT-QA}~\cite{zhu2021tatqa}. These substrates change what
+counts as an evidence unit $e$ but leave the five estimands intact;
+their main statistical challenge is that both
+$\theta_{\mathrm{obs}}$ and $\theta_{\mathrm{sel}}$ become
+modality-conditional and typically decrease under cross-modal
+composition.
+
+\subsection{Hybrid and Agentic \RAG}
+\label{subsec:arch_hybrid}
+
+Hybrid and agentic systems combine several families into a single
+policy: \textsc{Self-RAG}, \textsc{Search-R1},
+\textsc{R1-Searcher}, \textsc{ReSearch}, \textsc{DeepRAG},
+\textsc{MA-RAG}, \textsc{ReAgent},
+\textsc{Chain-of-Agents}, and the \KG-integrated variants
+(\textsc{KAG}, \textsc{HippoRAG}, \textsc{GraphRAG},
+\textsc{LightRAG}, \textsc{SubgraphRAG}) are reviewed as joint
+estimators in Section~\ref{subsec:methods_joint}. Their architectural
+distinctness lies not in a new estimand but in \emph{attribution
+difficulty}: end-to-end gains are entangled across all five events.
+By Proposition~\ref{prop:bottleneck}, any headline improvement in
+grounded end-to-end success must be traceable to an improvement in
+at least one of the five component events. Without per-factor
+diagnostics, such a gain cannot be distinguished from a
+shortcut-driven improvement in the non-grounded term of
+equation~\ref{eq:success_split}; this section therefore treats
+hybrid/agentic \RAG as a family that most urgently needs the
+estimand-level reporting recommended in
+Section~\ref{sec:reporting_guidelines}.
+
+
+
+% =====================================================================
+\section{Benchmarks as Diagnostic Instruments}
+\label{sec:benchmarks}
+
+\paperfigure{0.98}{fig5.pdf}
+{Benchmark--estimand alignment. Benchmark families expose different latent-chain estimands, including observability, selection preservation, exposure, fusion, and faithfulness.}
+{fig:benchmark_estimand_alignment}
+
+% =====================================================================
+
+Figure~\ref{fig:benchmark_estimand_alignment} gives the benchmark-level
+crosswalk used throughout this section. Benchmarks differ less by domain than by which latent event they make
+observable. We organize benchmarks by diagnostic function rather than
+by dataset family. A useful benchmark, under the latent-chain view,
+exposes at least one of the five estimands while controlling for the
+others.
+
+\subsection{Coverage and Chain-Observability Diagnostics}
+\label{subsec:coverage_diagnostics}
+
+\textsc{HotpotQA}~\cite{yang2018hotpotqa},
+\textsc{2WikiMultiHopQA}~\cite{ho2020wikimultihopqa},
+\textsc{IIRC}~\cite{ferguson2020iirc},
+\textsc{ComplexWebQuestions}~\cite{talmor2018complexwebquestions},
+\textsc{QAngaroo}~\cite{welbl2018qangaroo}, and open-domain variants of
+multi-hop \QA primarily test whether systems can retrieve enough
+evidence to make the latent chain observable. Supporting-fact labels
+provide partial observability of $\obs$ and $\sel$, although they do
+not always identify the chain actually used by the model. The classic
+weakness of \textsc{HotpotQA} is that many examples can be answered
+correctly from a single paragraph due to lexical artifacts; the
+``distractor setting'' provides better selection diagnostics than the
+``full-wiki setting,'' but neither fully isolates membership from
+ordering effects.
+
+\subsection{Shortcut-Resistance Diagnostics}
+\label{subsec:shortcut_diagnostics}
+
+\textsc{MuSiQue}~\cite{trivedi2022musique} was designed by composing
+single-hop questions and filtering shortcuts, making it a stronger
+test of true chain observability than datasets where one paragraph may
+suffice. \textsc{MoreHopQA}~\cite{schnitzler2024morehopqa} stresses
+longer chains, where observability compounds multiplicatively.
+\textsc{NovelHopQA}~\cite{novelhopqa2025} uses long-form narrative
+sources where chain reasoning interacts with long-context layout.
+\textsc{HotpotQA-NoShortcut}~\cite{trivedi2020nohotpot} provides a
+filtered subset that requires real multi-hop. These benchmarks are
+valuable because they reduce the chance that high answer accuracy
+comes from shallow cues rather than successful chain inference.
+
+\subsection{Path and Process Diagnostics}
+\label{subsec:path_diagnostics}
+
+\textsc{2WikiMultiHopQA} supplies explicit reasoning paths.
+\textsc{EntailmentBank}~\cite{dalvi2021entailmentbank} provides
+entailment trees over scientific facts.
+\textsc{eQASC}~\cite{jhamtani2020eqasc} provides explanation chains
+over commonsense reasoning.
+\textsc{ProofWriter}~\cite{tafjord2021proofwriter} provides synthetic
+proofs.
+\textsc{HoVer}~\cite{jiang2020hover},
+\textsc{EX-FEVER}~\cite{ma2024exfever}, and
+\textsc{FoolMeTwice}~\cite{eisenschlos2021foolmetwice} annotate
+multi-step evidence for verification. These benchmarks help diagnose
+$\fus$, because they make some intermediate structure visible rather
+than evaluating only final answers.
+
+\subsection{Heterogeneous-Evidence Diagnostics}
+\label{subsec:hetero_diagnostics}
+
+\textsc{CWQ}~\cite{talmor2018complexwebquestions},
+\textsc{HybridQA}~\cite{chen2020hybridqa},
+\textsc{OTT-QA}~\cite{chen2021opentableqa},
+\textsc{MultiModalQA}~\cite{talmor2021multimodalqa},
+\textsc{WebQA}~\cite{chang2022webqa},
+\textsc{ManyModalQA}~\cite{hannan2020manymodalqa},
+\textsc{TabFact}~\cite{chen2020tabfact},
+\textsc{TAT-QA}~\cite{zhu2021tatqa},
+\textsc{FeTaQA}~\cite{nan2022fetaqa},
+\textsc{VisDoM}~\cite{wang2024visdom},
+\textsc{DocHop-QA}~\cite{suri2024dochop}, and
+\textsc{WikiMixQA}~\cite{he2024wikimixqa} stress fusion across
+structured and unstructured sources. Their diagnostic value lies less
+in raw answer accuracy than in whether a method can maintain the chain
+across different evidence types.
+
+\subsection{Counterfactual and Faithfulness Diagnostics}
+\label{subsec:faithfulness_diagnostics}
+
+\textsc{CofCA}~\cite{wu2024cofca}, citation-faithfulness benchmarks
+\textsc{ALCE}~\cite{gao2023alce}, \textsc{HaluEval}~\cite{li2023halueval},
+\textsc{ExpertQA}~\cite{malaviya2024expertqa}, and fact-verification
+datasets such as \textsc{FEVER}~\cite{thorne2018fever},
+\textsc{HoVer}~\cite{jiang2020hover},
+\textsc{EX-FEVER}~\cite{ma2024exfever},
+\textsc{SciFact}~\cite{wadden2020scifact}, and
+\textsc{AVeriTeC}~\cite{schlichtkrull2024averitec} probe whether the
+answer changes when bridge variables or supporting facts are
+perturbed. These benchmarks are closest to measuring
+$\theta_{\mathrm{faith}}$, because they ask whether evidence is
+causally load-bearing rather than merely cited.
+
+\subsection{Long-context Multi-hop Diagnostics}
+\label{subsec:longcontext_diagnostics}
+
+\textsc{LongBench}~\cite{bai2024longbench},
+\textsc{$\infty$Bench}~\cite{zhang2024infinitybench},
+\textsc{HELMET}~\cite{yen2024helmet},
+\textsc{NovelHopQA}~\cite{novelhopqa2025},
+\textsc{NarrativeQA}~\cite{kovcisky2018narrativeqa},
+\textsc{Loong}~\cite{wang2024loong}, and
+\textsc{ZeroSCROLLS}~\cite{shaham2023zeroscrolls} stress chain
+construction under long context, where exposure failures dominate over
+selection failures.
+
+\subsection{RAG-specific and Agentic Diagnostics}
+\label{subsec:rag_specific_diagnostics}
+
+\textsc{MultiHop-RAG}~\cite{tang2024multihoprag},
+\textsc{FRAMES}~\cite{krishna2024frames},
+\textsc{CRAG}~\cite{yang2024crag},
+\textsc{FanOutQA}~\cite{zhu2024fanoutqa}, and
+\textsc{RAGTruth}~\cite{niu2024ragtruth} evaluate end-to-end \RAG
+behavior under multi-step queries.
+\textsc{ToolBench}~\cite{qin2023toolbench} and
+\textsc{AgentBench}~\cite{liu2024agentbench} test agentic search
+behavior.
+\textsc{WebArena}~\cite{zhou2024webarena} introduces realistic
+agent-environment interaction.
+
+\begin{table}[t]
+\caption{Representative benchmark families and the latent event they
+most directly expose.}
+\label{tab:benchmark_families_extended}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}p{3.0cm}p{2.5cm}Y@{}}
+\toprule
+Benchmark family & Examples & Primary estimand & Main caution \\
+\midrule
+Supporting-fact QA & HotpotQA, 2WikiMultiHopQA, IIRC, ComplexWebQuestions & Observability and selection & Shortcut artifacts may inflate answer accuracy. \\
+Composed / shortcut-resistant QA & MuSiQue, MoreHopQA & Bridge observability & Lower scores may reflect pool absence rather than reader weakness. \\
+Path-annotated QA & 2WikiMultiHopQA, EntailmentBank, eQASC, ProofWriter & Path validity / fusion & Gold path may not be unique. \\
+Heterogeneous evidence & HybridQA, MultiModalQA, OTT-QA, WebQA, TAT-QA, FeTaQA, VisDoM & Fusion reliability & Alignment errors can dominate retrieval errors. \\
+Long-context multi-hop & LongBench, $\infty$Bench, HELMET, NovelHopQA & Exposure & Membership and order are not separately controlled by default. \\
+Fact verification & FEVER, HoVer, EX-FEVER, SciFact, AVeriTeC & Faithfulness and support validity & Veracity labels do not always identify generation causality. \\
+RAG-specific diagnostics & MultiHop-RAG, FRAMES, FanOutQA, RAGTruth, CRAG-bench & End-to-end RAG behavior & Requires separating retrieval, selection, citation, and answer quality. \\
+Counterfactual QA & CofCA and related perturbation sets & Causal faithfulness & Expensive annotation and possible unnatural perturbations. \\
+Agentic / tool use & ToolBench, AgentBench, WebArena & Joint observability and control & Difficulty depends on tool affordances. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Metric Alignment}
+\label{subsec:metric_alignment}
+
+A metric should be matched to the estimand it claims to measure.
+Answer EM and F1 are deployment-level metrics, not mechanism-level
+metrics. Supporting-fact F1 approximates evidence membership but does
+not establish causal use. Retrieval recall at Top-$N$ estimates pool
+observability but says little about the final reader context. Citation
+precision estimates attribution correctness but can be high even when
+the answer was produced from parametric memory. Counterfactual
+sensitivity is closer to causal faithfulness but depends on the
+quality of the intervention.
+
+\begin{table}[t]
+\caption{Metric--estimand alignment. A strong paper should avoid using
+a metric from one row as evidence for a claim in another row without
+an explicit caveat.}
+\label{tab:metric_estimand_alignment}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.3cm}p{3.0cm}p{3.2cm}Y@{}}
+\toprule
+Claim & Suitable metric & Conditional subset & Misleading shortcut \\
+\midrule
+Pool contains the chain & support/path recall at Top-$N$ & all examples or by hop count & Answer F1 alone. \\
+Budget preserves the chain & selected support/path recall at $K$ & chain-present in pool & Reranker relevance score. \\
+Ordering helps the reader & early support exposure; fixed-set order ablation & selected-chain-present & Changing membership and order together. \\
+Reader can compose evidence & oracle-evidence EM/F1; step accuracy & oracle or selected-chain-present & Top-$K$ retrieval recall. \\
+Answer is faithful & deletion sensitivity; counterfactual support tests; citation entailment & answer-correct subset & Citation overlap alone. \\
+System is efficient & latency, token cost, retrieval calls, verifier calls & same answer-quality band & Selector-only latency without reader cost. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Dataset Families Reinterpreted}
+\label{subsec:dataset_families_reinterpreted}
+
+Traditional benchmark descriptions emphasize source domain and release
+year. The estimand view emphasizes which latent event a benchmark
+makes measurable. \textsc{HotpotQA} is valuable because sentence-level
+support labels enable pool and context diagnostics, but its shortcut
+artifacts mean that answer accuracy can overstate chain use.
+\textsc{2WikiMultiHopQA} adds explicit path structure, making it useful
+for path-level observability and fusion analysis. \textsc{MuSiQue} is
+valuable because it reduces single-hop shortcuts and stresses genuine
+bridge observability. \textsc{IIRC} makes missing context explicit,
+placing retrieval actions at the center. \textsc{FEVER},
+\textsc{HoVer}, and \textsc{EX-FEVER} foreground support validity
+rather than answer-string matching. \textsc{HybridQA} and
+\textsc{MultiModalQA} stress fusion because a correct chain may cross
+tables, linked passages, and other semi-structured sources.
+
+This reinterpretation changes how benchmark coverage should be reported.
+A paper that evaluates only on shortcut-prone datasets primarily shows
+that the system can exploit available signals; it does not establish
+robust latent-chain inference. A paper that evaluates only on
+verification datasets may test faithfulness without testing open-domain
+chain observability. A strong empirical section should therefore
+include at least one benchmark for observability, one for shortcut
+resistance, and one for faithfulness or counterfactual sensitivity.
+
+% =====================================================================
+\section{Applications}
+\label{sec:applications}
+% =====================================================================
+
+Applications differ by which estimand dominates deployment risk.
+Rather than repeat the estimand vocabulary for each domain, we
+consolidate seven representative deployment settings into a single
+crosswalk (Table~\ref{tab:applications_crosswalk}): each row identifies
+the dominant estimand, the secondary estimand that most often
+determines whether a deployment succeeds once the dominant one is
+addressed, the empirical instruments (benchmarks and representative
+systems) currently used in that setting, and the failure mode that
+practitioners should watch for. The crosswalk is intended as an
+operational quick reference; the vocabulary itself is defined in
+Section~\ref{sec:stat_decomposition} and does not change across
+domains.
+
+\begin{table}[t]
+\caption{Applications organised by which latent estimand dominates
+deployment risk. ``Dominant'' is the estimand that most often bounds
+end-to-end grounded success in the domain; ``Secondary'' is the next
+binding factor once the dominant one is addressed. Benchmarks and
+representative systems are illustrative rather than exhaustive; see
+Section~\ref{sec:benchmarks} for full benchmark diagnostics and
+Section~\ref{sec:estimand_methods} for the underlying method
+families.}
+\label{tab:applications_crosswalk}
+\centering
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}p{1.7cm}p{1.7cm}YY@{}}
+\toprule
+Domain & Dominant estimand & Secondary estimand & Representative benchmarks / systems & Characteristic risk \\
+\midrule
+Open-domain multi-hop QA & $\theta_{\mathrm{obs}}$ & $\theta_{\mathrm{sel}}$ &
+\textsc{HotpotQA}, \textsc{MuSiQue}, \textsc{2WikiMultihopQA};
+\textsc{Self-RAG}~\cite{asai2024selfrag},
+\textsc{Adaptive-RAG}~\cite{jeong2024adaptiverag},
+\textsc{Search-R1}~\cite{jin2025searchr1},
+\textsc{DeepRAG}~\cite{guan2025deeprag} &
+Depth--cost tradeoff: iterative retrieval improves observability but inflates noise and latency. \\
+\addlinespace
+Knowledge-graph QA & $\theta_{\mathrm{obs}}$ & $\theta_{\mathrm{faith}}$ &
+\textsc{KAG}~\cite{liang2025kag},
+\textsc{GraphRAG}~\cite{edge2024graphrag},
+\textsc{HippoRAG}~\cite{gutierrez2024hipporag},
+\textsc{ToG 2.0}~\cite{ma2024tog2},
+\textsc{RoG}~\cite{luo2024rog} &
+Coverage is bounded by graph completeness; path-level auditability is the deployment argument. \\
+\addlinespace
+Fact verification & $\theta_{\mathrm{faith}}$ & $\theta_{\mathrm{fus}}$ &
+\textsc{FEVER}~\cite{thorne2018fever},
+\textsc{HoVer}~\cite{jiang2020hover},
+\textsc{EX-FEVER}~\cite{ma2024exfever},
+\textsc{SciFact}~\cite{wadden2020scifact},
+\textsc{AVeriTeC}~\cite{schlichtkrull2024averitec},
+\textsc{ProgramFC}~\cite{pan2023programfc},
+\textsc{MultiFC}~\cite{augenstein2019multifc} &
+Output is a label but the latent-chain problem is unchanged; unsupported ``correct'' verdicts are the primary hazard. \\
+\addlinespace
+Dialogue \& interactive systems & $\theta_{\mathrm{obs}}$ & Action controllability &
+\textsc{Wizard of Wikipedia}~\cite{dinan2019wizard},
+\textsc{DialDoc}~\cite{feng2020dialdoc},
+\textsc{Chat-RAG}~\cite{xu2023chatrag} &
+Missing link may sit in history, in the corpus, or in the user; the retrieval-vs-ask decision drives quality. \\
+\addlinespace
+Legal, medical, scientific reasoning & $\theta_{\mathrm{faith}}$ & $\theta_{\mathrm{fus}}$ &
+\textsc{LegalBench}~\cite{guha2024legalbench},
+\textsc{MedQA}~\cite{jin2021medqa},
+\textsc{PubMedQA}~\cite{jin2019pubmedqa},
+\textsc{BioASQ}~\cite{tsatsaronis2015bioasq},
+\textsc{MIRAGE}~\cite{xiong2024mirage},
+\textsc{QASPER}~\cite{dasigi2021qasper},
+\textsc{SciQAG}~\cite{wan2024sciqag} &
+Heterogeneous evidence (statutes, records, tables, figures); explicit chains and counterfactual verification are load-bearing. \\
+\addlinespace
+Enterprise \& customer-support RAG & $\theta_{\mathrm{sel}}$ & $\theta_{\mathrm{faith}}$ &
+\textsc{GraphRAG}~\cite{edge2024graphrag},
+\textsc{LightRAG}~\cite{guo2024lightrag}, internal-graph deployments &
+Short policy clauses become decisive only after user constraints are identified; traceability requirement is external (compliance). \\
+\addlinespace
+Scientific literature assistance & $\theta_{\mathrm{fus}}$ & $\theta_{\mathrm{faith}}$ &
+\textsc{PaperQA}~\cite{lala2023paperqa},
+\textsc{ScisummNet}-style multi-hop summarisation~\cite{yasunaga2019scisummnet},
+\textsc{HiQA}~\cite{chen2024hiqa} &
+Cross-paper terminology drift and assumption comparison; correct-sounding synthesis without exact support is the deployment risk. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Two entries in the crosswalk deserve a note that does not fit in a
+row. In \emph{enterprise RAG}, the traceability requirement is
+regulatory rather than statistical: even when
+$\theta_{\mathrm{sel}}$ and $\theta_{\mathrm{faith}}$ are individually
+adequate, deployments still require per-answer citation surfaces that
+survive compliance review, which is why graph-indexed pipelines
+dominate the space~\cite{edge2024graphrag,guo2024lightrag}. In
+\emph{scientific literature assistance}, the fusion challenge is
+non-standard because evidence units differ not only in surface form
+(text, table, figure) but in epistemic status (claim, method,
+result), and a chain that composes a claim from one paper with a
+result from another can be internally coherent yet scientifically
+invalid; citation- and claim-level counterfactual checks are the
+current best proxy for this hazard. Both cases are consistent with
+the estimand vocabulary --- they simply move the binding constraint
+outside the numerical decomposition.
+
+
+% =====================================================================
+% \part{Analysis and Outlook}
+% =====================================================================
+
+% =====================================================================
+\section{Faithfulness as Causal Evidence Use}
+\label{sec:causal_faithfulness}
+
+
+% =====================================================================
+
+We argued in Section~\ref{subsec:causal_estimand} that faithfulness is
+a causal estimand. A high-quality multi-hop \RAG system should produce
+answers that are causally supported by the retrieved chain rather than
+answers that merely co-occur with plausible-looking citations. This
+section develops the causal view in detail, connects it to existing
+faithfulness diagnostics, and explains why several common metrics are
+necessary but not sufficient. We also use the running example
+(Section~\ref{subsec:running_example}) to illustrate each failure mode.
+
+\subsection{A Causal Graph for Multi-Hop \RAG}
+\label{subsec:causal_graph}
+
+Let $W$ denote the world state, $\kstore$ the knowledge store derived
+from $W$, $\echain^\star$ the latent support chain, $L_N$ the retrieved
+pool, $E_K$ the selected context, $\pi(E_K)$ the ordering, and
+$\hat{a}$ the answer. A simple causal graph for a faithful system is
+\begin{equation}
+W\rightarrow \kstore\rightarrow \echain^\star\rightarrow L_N
+\rightarrow E_K\rightarrow \pi(E_K)\rightarrow \hat a,
+\end{equation}
+with the parametric memory of the reader $\Theta$ acting as an
+exogenous influence on $\hat a$:
+\begin{equation}
+\Theta\rightarrow \hat a.
+\end{equation}
+A causally faithful answer is one whose distribution responds to
+interventions on $\echain^\star$ through $\pi(E_K)$, i.e.
+\begin{equation}
+P(\hat a\mid \doop(\pi(E_K)=\pi'))
+\neq P(\hat a\mid \pi(E_K))
+\quad\text{whenever}\quad
+P(a^\star\mid \pi(E_K))\neq P(a^\star\mid \pi').
+\end{equation}
+An unfaithful answer can be partitioned into two cases: \emph{parametric
+leakage}, in which $\hat a$ is generated through $\Theta$ alone and is
+invariant under context interventions; and \emph{shortcut use}, in
+which $\hat a$ depends on a non-evidence feature of $\pi(E_K)$ such as
+template wording, length, or surface lexical overlap.
+
+\subsection{Deletion and Counterfactual Sensitivity}
+\label{subsec:deletion_counterfactual}
+
+Two related interventions probe causal use.
+
+\paragraph{Deletion sensitivity.} For each selected evidence unit
+$e\in E_K$, define
+\begin{equation}
+S_{\mathrm{del}}(e)
+= P(\hat a=a^\star\mid \pi(E_K))-P(\hat a=a^\star\mid \pi(E_K\setminus\{e\})).
+\end{equation}
+A faithful answer should exhibit a positive deletion sensitivity on
+support units of the latent chain. \textsc{Sufficient evidence}
+metrics~\cite{liu2023evaluating} and the \textsc{Attributable-Trace}
+framework~\cite{li2023attribution} implement variants of this idea.
+
+\paragraph{Counterfactual bridge sensitivity.} Let $e_b^\star$ be a
+bridge unit whose factual content can be altered to obtain a
+counterfactual version $e_b'$ encoding a different but consistent
+alternative (e.g., replacing the bridge identity ``Shirley Temple''
+with another cast member and updating the downstream biography evidence
+consistently).
+Counterfactual benchmarks~\cite{wu2024cofca} test whether the answer
+shifts accordingly. A reader that answers correctly regardless of
+$e_b'$ is exploiting parametric memory; a reader whose answer shifts
+to remain consistent with the counterfactual bridge is using the
+chain causally.
+
+\subsection{Correctness, Citation, and Faithfulness Are Distinct}
+\label{subsec:correctness_citation_faithfulness}
+
+A common methodological mistake is to treat citation correctness and
+answer correctness as faithfulness. They are necessary signals but not
+sufficient.
+
+\begin{remark}[Three independent failure modes]
+\label{rem:three_failure_modes}
+For each example, the joint outcome
+$(\hat a\stackrel{?}{=}a^\star,\, \text{citations valid?},\,
+\hat a\stackrel{?}{\leftarrow}\echain^\star)$ takes one of eight
+truth-value combinations. Six of the eight are pathological. Of
+particular interest are: correct answer with valid citation but no
+causal use (parametric leakage); correct answer without valid citation
+(citation suppression); valid citation with wrong answer (citation
+without composition). A single number such as answer F1 or citation
+precision cannot distinguish these cases.
+\end{remark}
+
+A practical recommendation follows: faithfulness audits should report
+all three signals jointly, or at minimum stratify answer correctness
+by citation validity and by deletion sensitivity. Papers that report
+only one of the three numbers should be read with this caveat in mind.
+
+\subsection{Shortcut Exploitation and Parametric Leakage}
+\label{subsec:shortcut_parametric}
+
+Shortcut and leakage failures are not equally easy to detect.
+Shortcut exploitation usually leaves a measurable trace: removing a
+shortcut feature (such as the surface form of an answer entity in the
+question) changes accuracy. \textsc{MuSiQue}~\cite{trivedi2022musique}
+and shortcut-filtered subsets of \textsc{HotpotQA}~\cite{trivedi2020nohotpot}
+were constructed precisely to reduce this bias.
+
+Parametric leakage is harder to detect because the leaked answer is
+plausibly produced by the chain. Closed-book and oracle-evidence
+ablations are useful but incomplete: closed-book accuracy estimates
+parametric availability, but a model can still leak even when oracle
+evidence is provided. Counterfactual benchmarks are the closest
+approximation, because they make leakage observable through the
+divergence between counterfactual chain and observed answer.
+
+\subsection{From Verification to Training Signal}
+\label{subsec:verification_training}
+
+Faithfulness has historically been treated as a post-hoc evaluation.
+Recent work moves it upstream into training. \textsc{Math-Shepherd}
+\cite{wang2023mathshepherd} and the process reward model of
+\textsc{Lightman et al.}~\cite{lightman2024process} reward
+intermediate reasoning steps rather than only final answers.
+\textsc{ReARTeR}~\cite{sun2025rearter} trains a trustworthy process
+reward model tailored to retrieval-augmented reasoning.
+\textsc{VERITAS}~\cite{xu2025veritas} uses faithfulness-aware reward
+signals. \textsc{RAG-Gym}~\cite{xiong2025raggym} adds process
+supervision to search agents. \textsc{PAR-RAG}~\cite{zhang2025parrag}
+inserts a review stage that catches drift before it propagates.
+
+From the latent-chain view, all of these methods convert faithfulness
+from an evaluation property into an objective. They differ in whether
+the reward is supplied by humans, by a verifier, or by self-critique;
+in whether the reward is per-step or per-trajectory; and in whether the
+training data includes interventional examples. Combining process
+supervision with counterfactual evaluation appears to be one of the
+most promising directions for measurable faithfulness gains.
+
+\subsection{Failure Modes Revisited}
+\label{subsec:failure_modes_revisited}
+
+The five failure events in
+Section~\ref{subsec:failure_modes}---evidence absence, budgeted
+selection failure, exposure failure, fusion failure, faithfulness
+failure---can now be paired with specific diagnostics.
+
+\begin{table}[t]
+\caption{Failure events paired with diagnostics and recommended
+interventions.}
+\label{tab:failure_mode_diagnostics}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.8cm}p{3.6cm}Y@{}}
+\toprule
+Failure event & Diagnostic & Recommended intervention \\
+\midrule
+Evidence absence & Pool support recall conditional on hop count & Iterative or graph-expansion retrieval; agentic search; coarser or hierarchical retrieval units. \\
+Budgeted selection failure & Selected support recall under fixed $K$ & Bridge-aware or core-conditioned selection; conditional-utility reranking. \\
+Exposure failure & Order-only ablation on fixed $E_K$ & Reader-aware ordering; compression; decoder-side fusion (\FiD). \\
+Fusion failure & Oracle-evidence reader accuracy & Decomposition; programmatic reasoning; structured graph fusion. \\
+Faithfulness failure & Deletion and counterfactual sensitivity & Process reward; citation-aware decoding; counterfactual training. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+% =====================================================================
+\section{Statistical Tradeoffs and Open Problems}
+\label{sec:tradeoffs}
+% =====================================================================
+
+The latent-chain view reorganizes open problems as tradeoffs among
+estimands. Each tradeoff is a constraint: improving one estimand often
+worsens another. A successful method does not eliminate the tradeoff;
+it moves the system to a better point on the frontier.
+
+\subsection{Eight Open Problems}
+\label{subsec:open_problems}
+
+\paragraph{OP1. Joint optimization of observability and noise.}
+Iterative and agentic retrieval increase $\theta_{\mathrm{obs}}$ but
+inflate $\rho_N$. No widely accepted method jointly minimizes
+expected risk under a budget. Open directions include retrieval
+policies trained against joint chain-coverage and noise-ratio
+objectives, and verifier-in-the-loop pruning that operates on the
+pool rather than on the reader's output.
+
+\paragraph{OP2. Conditional utility estimation under chain dependence.}
+Most rerankers estimate marginal relevance. Conditional utility
+estimation under partial chains is still rare and is hard to
+supervise. Open directions include core-conditioned scoring,
+bridge-classification objectives, and synthetic counterfactual chains
+for utility regression training.
+
+\paragraph{OP3. Reader-aware exposure under long context.}
+Long-context models have not eliminated positional
+bias~\cite{liu2024lostmiddle,yen2024lcontext}. Open directions include
+fixed-membership ordering policies, decoder-side fusion (\FiD
+variants), context compression, and explicit attention scaffolds.
+
+\paragraph{OP4. Auditable latent reasoning.}
+Latent reasoning methods~\cite{goyal2024quietstar,hao2024coconut}
+trade chain visibility for inference efficiency. Faithfulness audits
+based on emitted tokens cease to apply. Open directions include
+mechanistic probes for internal bridge representations and hybrid
+latent--token reasoning where the chain is occasionally externalized.
+
+\paragraph{OP5. Causal evaluation for retrieval-augmented systems.}
+Counterfactual evaluation is expensive. Most benchmarks still use
+factual data only. Open directions include synthetic counterfactual
+chain generation, deletion-based attribution at the chain level
+rather than at the token level, and joint citation--causal-use
+metrics.
+
+\paragraph{OP6. Knowledge update without catastrophic faithfulness loss.}
+Retrieval is a natural mechanism for keeping knowledge current, but
+edits in $\kstore$ can conflict with parametric memory. Open
+directions include retrieval policies that detect knowledge-update
+events, and reader objectives that prefer retrieved evidence over
+parametric memory under conflict~\cite{xie2024adaptive,
+mallen2023whentoretrieve}.
+
+\paragraph{OP7. Cost-aware multi-hop \RAG.}
+Agentic and iterative methods increase latency and token cost. A
+deployable system must trade these against expected chain
+observability. Open directions include cost-sensitive policy learning,
+calibrated retrieval termination, and small-model verifiers paired
+with strong readers.
+
+\paragraph{OP8. Safety and robustness under retrieval-side adversaries.}
+Retrieval-side prompt injection and corpus poisoning can compromise
+otherwise faithful systems~\cite{zou2024poisonedrag,
+xue2024badrag,zhong2023poisoning}. Open directions include trust-aware
+retrieval, multi-source agreement, and adversarial training for
+retrievers.
+
+\subsection{Tradeoffs Between Estimands}
+\label{subsec:tradeoffs_table}
+
+Because the five estimands share upstream design choices—retrieval
+depth $N$, context budget $K$, ordering $\pi$, reasoning depth, and
+verifier strength—improving one component event often changes
+another, sometimes in the opposite direction. Table~\ref{tab:tradeoffs}
+summarizes the six most common tensions we observe in the reviewed
+literature. Each row names the pair of quantities in tension, the
+method families that typically operate on that pair, and what an
+honest evaluation should report so that a headline gain in one
+factor is not silently paid for by regression in another.
+
+\begin{table}[t]
+\caption{Multi-hop \RAG tradeoffs framed as estimand tensions.}
+\label{tab:tradeoffs}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}p{2.4cm}p{3.0cm}Y@{}}
+\toprule
+Tension & Estimands & Typical methods & What an honest evaluation should show \\
+\midrule
+Coverage vs.~noise & $\theta_{\mathrm{obs}}\uparrow$ vs.~$\rho_N\uparrow$ & Iterative / agentic retrieval & Both pool recall and pool noise on the same examples. \\
+Budget vs.~chain preservation & $K\downarrow$ vs.~$\theta_{\mathrm{sel}}\uparrow$ & Reranking, compression, bridge selection & Selected support recall under fixed $K$. \\
+Exposure vs.~budget & $\theta_{\mathrm{exp}}\uparrow$ vs.~$K\uparrow$ & Reordering, packing, \FiD & Fixed-membership ordering ablation. \\
+Fusion power vs.~latency & $\theta_{\mathrm{fus}}\uparrow$ vs.~cost$\uparrow$ & Decomposition, programmatic reasoning, agents & Latency and tokens per question at fixed accuracy. \\
+Plausibility vs.~causal use & accuracy$\uparrow$ vs.~$\Delta_{\mathrm{faith}}\downarrow$ & Verification, counterfactual training, \PRM & Deletion and counterfactual sensitivity. \\
+Controllability vs.~adaptivity & step-level audit$\uparrow$ vs.~policy freedom$\uparrow$ & Multi-agent vs.~end-to-end RL & Per-step diagnostics on the same model. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Estimator Suggestions for Future Work}
+\label{subsec:future_estimators}
+
+The estimands defined in Section~\ref{sec:stat_decomposition} are not
+yet paired with widely adopted, comparable estimators. Current
+practice substitutes convenient surrogates—pool support recall for
+$\theta_{\mathrm{obs}}$, marginal relevance for $\theta_{\mathrm{sel}}$,
+average support position for $\theta_{\mathrm{exp}}$, oracle-evidence
+EM/F1 for $\theta_{\mathrm{fus}}$, and citation precision for
+$\theta_{\mathrm{faith}}$—each of which conflates the target estimand
+with unrelated confounds. Table~\ref{tab:future_estimators} lists,
+for each estimand, the closest surrogate in the current literature
+and a concrete direction in which a more faithful estimator could be
+built. We do not claim any of these directions is solved; they are
+open items in Section~\ref{sec:tradeoffs} and are intended to focus
+follow-up work on the specific latent event each estimator is trying
+to identify.
+
+\begin{table}[t]
+\caption{Estimands, the closest existing surrogate metrics, and
+example estimator improvements suggested by the latent-chain view.}
+\label{tab:future_estimators}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}p{2.8cm}Y@{}}
+\toprule
+Estimand & Closest surrogate today & Improvement direction \\
+\midrule
+$\theta_{\mathrm{obs}}$ & Pool support recall at Top-$N$ & Chain recall conditional on bridge gold; recall under controlled distractor density; agentic-action attribution. \\
+$\theta_{\mathrm{sel}}$ & Marginal relevance scores & Core-conditioned utility as internal mechanism score; bridge prediction; oracle leave-one-out under partial chains. \\
+$\theta_{\mathrm{exp}}$ & Average position of support & Fixed-membership ordering EM gap; access-depth-conditioned accuracy; lost-in-middle test sets. \\
+$\theta_{\mathrm{fus}}$ & Oracle-evidence EM/F1 & Step accuracy under explicit chains; program execution validity; intervention robustness. \\
+$\theta_{\mathrm{faith}}$ & Citation precision & Joint citation + deletion + counterfactual + parametric-leakage decomposition. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+% =====================================================================
+\section{Reporting Guidelines for Multi-Hop RAG}
+\label{sec:reporting_guidelines}
+% =====================================================================
+
+The latent-chain view directly implies a small set of reporting
+guidelines. We collect them here as a checklist for papers and
+reviewers.
+
+\subsection{Separate Pool, Context, and Reader Claims}
+\label{subsec:separate_claims}
+
+A paper introducing a new multi-hop \RAG system should explicitly
+distinguish three claims: a claim about the retrieved pool $L_N$, a
+claim about the budgeted context $E_K$, and a claim about the reader.
+Reporting only end-to-end accuracy can hide compensating effects.
+Concretely, we recommend at least one number from each of the
+following: pool-level support or path recall; context-level chain
+preservation under the budget actually used; and reader correctness
+under both natural and oracle or near-oracle contexts.
+
+\subsection{Report Diagnostics on Conditional Subsets}
+\label{subsec:conditional_subsets}
+
+Diagnostics should respect the nested-event structure of
+equation~\ref{eq:success_decomp}. Faithfulness numbers should be
+reported on the chain-present subset; exposure ablations should hold
+membership fixed; fusion ablations should hold both membership and
+ordering fixed. Numbers that mix multiple conditions hide the channel
+of improvement and reduce reproducibility.
+
+\subsection{Always Report Budget and Cost}
+\label{subsec:budget_cost}
+
+Agentic and iterative methods can improve accuracy by spending more
+tokens, more retrieval calls, or more verifier calls. Without
+budget-normalized numbers, comparison is unfair. A minimal cost report
+includes: total tokens per question (prompt and generation), retrieval
+calls per question, verifier calls per question, and end-to-end
+latency. Where possible, accuracy-cost curves should replace single
+operating points.
+
+\subsection{Distinguish Gold-Used and Oracle Support}
+\label{subsec:gold_used}
+
+Gold supporting facts in benchmarks are not necessarily the facts a
+system used. Two systems with the same answer can use different
+chains; one chain may be valid and the other may exploit a shortcut.
+Reporting whether the system's actual evidence contains the gold
+supports, together with how often it differs, helps distinguish
+faithful and shortcut behavior.
+
+\subsection{Minimum Reporting Table}
+\label{subsec:min_reporting_table}
+
+Table~\ref{tab:minimum_reporting} distills the guidelines above into
+a minimal checklist. For each of the five component events in
+Proposition~\ref{prop:bottleneck}, the table names one quantity that
+a multi-hop \RAG paper should report if it wishes to make an
+identifiable claim about that event, together with a brief statement
+of why the quantity is necessary. The table is deliberately short: a
+paper that reports fewer than these five numbers can still contribute
+to the field, but its main claim cannot in general be attributed to a
+specific bottleneck without further diagnostics.
+
+\begin{table}[t]
+\caption{Suggested minimum reporting for multi-hop \RAG papers.}
+\label{tab:minimum_reporting}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{3.0cm}p{2.6cm}Y@{}}
+\toprule
+Reported quantity & Stage probed & Why it matters \\
+\midrule
+Pool support/path recall at Top-$N$ & Observability ($\obs$) & Bounds the system; without it, downstream gains are unattributable. \\
+Selected support recall at $K$ & Selection ($\sel$) & Reveals whether the budget preserves the chain. \\
+Position of support in $\pi(E_K)$ & Exposure ($\expo$) & Detects lost-in-the-middle effects. \\
+Oracle-evidence EM/F1 & Fusion ($\fus$) & Isolates reader capability from retrieval. \\
+Deletion or counterfactual sensitivity & Faithfulness ($\faith$) & Distinguishes causal use from parametric leakage. \\
+Token, call, and latency cost & Efficiency / budget & Required for fair comparison across architectures. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Threats to the Latent-Chain View}
+\label{subsec:threats_view}
+
+For completeness, we list four limitations of our framing. First,
+$\echain^\star$ is set-valued, not unique; some questions admit many
+valid chains, and partial supervision systematically undercounts them.
+Second, latent-reasoning methods (Section~\ref{subsec:latent_mechanism})
+push chain inference into model internals, where external diagnostics
+do not apply without additional probes. Third, agentic systems may
+exhibit emergent behavior that is not well captured by any fixed
+factorization. Fourth, our success-factor decomposition
+(equation~\ref{eq:success_decomp}) is exact only as a chain-rule
+expansion over a particular nested event sequence; under parametric
+leakage and shortcut events, the relationship to end-to-end accuracy
+is one of upper bound rather than equality. We have flagged this in
+the relevant theorem and remarks, and recommend that empirical work
+treat the decomposition as a diagnostic tool rather than as a strict
+prediction.
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% =====================================================================
+
+This survey recasts multi-hop \RAG as inference over a latent support
+chain observed through a noisy retrieval pool, budgeted context,
+evidence ordering, and generated answer. Five conditional coordinates---
+observability, selection preservation, exposure, fusion, and causal
+faithfulness---complement architectural taxonomies with a diagnostic
+account of failure. Equation~\ref{eq:success_decomp} and
+Proposition~\ref{prop:bottleneck} shows why grounded success is jointly
+limited and why empirical claims must identify the component event
+that changed. Conditional evidence utility remains a mechanism-level
+score for selection rather than an extra stage probability.
+
+Evaluation should therefore be conditional: faithfulness on chain-absent
+examples conflates retrieval and attribution, while fusion on
+chain-missing examples conflates selection and reasoning. Reporting
+should expose all five factors even when a method targets only one.
+Promising systems will improve several factors without concealing a
+loss in another, for example through process-supervised retrieval,
+bridge-aware selection, or counterfactual training.
+
+Agentic search reformulates evidence acquisition as policy learning;
+long-context readers change evidence granularity; latent-reasoning
+methods move fusion into hidden states. None removes the unobserved
+support chain, and each introduces distinct attribution or auditability
+risks. Naming that persistent object explicitly provides a stable basis
+for comparing the next generation of multi-hop \RAG systems.
+
+% =====================================================================
+\section*{Data and Artifact Availability}
+% =====================================================================
+
+A versioned companion artifact for this survey is publicly available at
+\url{https://github.com/TsingyuL/multi-hop-rag-survey}. The manuscript
+audits revision \texttt{ac6d6d4}. The repository contains machine-readable
+method and benchmark seeds, an imported working library, discovery queries,
+pipeline mappings, reporting guidance, figure sources, and validation and
+site-generation scripts. Record-level status fields separate reviewed
+taxonomy judgments from seeded, imported, and needs-review material;
+Appendix~\ref{app:coverage_counts} reports the counts for this revision.
+
+%==========================================================
+\appendix
+%==========================================================
+
+\section{Canonical Running Examples}\label{app:running_example}
+
+Throughout the manuscript we anchor the latent-chain formalism on a
+publicly verifiable bridge-type item from
+HotpotQA~\cite{yang2018hotpotqa}. Table~\ref{tab:running_examples}
+records the abridged question, ordered support pages, and benchmark
+answer used consistently in the discussion. The example serves as a
+bridge-entity, ordering, exposure, and faithfulness probe in
+Sections~\ref{sec:problem_setup},
+\ref{sec:stat_decomposition}, \ref{sec:estimand_methods},
+\ref{sec:benchmarks}, and~\ref{sec:causal_faithfulness}.
+
+\begin{table}[H]
+\caption{Canonical running example anchored on HotpotQA. ``Support
+pages'' lists the ordered evidence pages, and the answer is the
+benchmark-provided reference string.}
+\label{tab:running_examples}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{1.7cm}p{3.6cm}Yp{2.1cm}@{}}
+\toprule
+Dataset (split) & Question (abridged) & Ordered support pages & Reference answer \\
+\midrule
+HotpotQA (dev) & Government position held by the woman who portrayed Corliss Archer in \emph{Kiss and Tell}? & (i) \emph{Kiss and Tell (1945 film)}; (ii) \emph{Shirley Temple} & Chief of Protocol \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The table is an explanatory anchor, not a newly released benchmark
+instance. Reproduction should use the original HotpotQA development
+data and its supporting-fact annotations.
+
+\section{Artifact Coverage and Curation State}\label{app:coverage_counts}
+
+Table~\ref{tab:coverage_flow} reports the counts that can be audited
+directly from the manuscript build and the public companion artifact.
+They describe different, overlapping layers and must not be read as a
+PRISMA-style funnel. Counts are pinned to companion revision
+\texttt{ac6d6d4}; later versions may expand the imported library or
+promote additional records after verification.
+
+\begin{table}[t]
+\caption{Auditable coverage layers in the manuscript and companion
+artifact. Method, benchmark, and intervention records are counted
+separately because they represent different units of analysis.}
+\label{tab:coverage_flow}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}p{1.2cm}p{3.2cm}Y@{}}
+\toprule
+Layer & Count & Verification state & Role \\
+\midrule
+Rendered bibliography & $N_{\mathrm{bib}}=241$ & Compiled citation entries & Narrative breadth, including auxiliary background \\
+Imported working library & $N_{\mathrm{lib}}=229$ & Deduplicated import; per-record review pending & Broad discovery layer, not an endorsed taxonomy \\
+Method catalog seed & $N_{\mathrm{seed}}=23$ & Mixed seeded, reviewed, and needs-review states exposed per record & Released method-level evidence map \\
+Benchmark seed & $6$ & Curated benchmark records with stated caveats & Diagnostic benchmark map \\
+Pipeline interventions & $27$ & Stage--estimand mappings with status fields & Crosswalk from mechanisms to observable diagnostics \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The imported library intentionally preserves broad adjacent work,
+including records that may later be excluded or reclassified. Promotion
+to the method catalog requires stable metadata, a defensible primary
+label, and a concrete pipeline mapping. Consequently, only reviewed
+records should support comparative taxonomy claims; neither the
+bibliography count nor the imported-library count is evidence of full
+taxonomy verification. The public coverage protocol documents the
+status definitions, discovery queries, adjudication rule, and correction
+policy.
+
+\section{Screening Protocol Details}\label{app:protocol}
+
+\paragraph{Search corpus and time window.}
+The seed collection was assembled from canonical landing pages at ACL
+Anthology, OpenReview, arXiv, venue proceedings, and official project
+repositories, with updates required to consult more than one source where
+possible. The scope begins in January 2017 and extends through the artifact
+cut-off date, 11 July 2026. Because the review is living rather than
+prospectively registered, later releases must record a new cut-off date in
+\texttt{docs/coverage\_protocol.md}.
+
+\paragraph{Query templates.} We combined the following clusters with
+boolean operators:
+\textit{Task} \(\in\) \{multi-hop question answering, multi-hop reasoning,
+multi-hop retrieval, multi-step reasoning, compositional question
+answering, multi-hop fact verification, multi-step retrieval-augmented
+generation, agentic retrieval, multi-document reasoning\};
+\textit{Mechanism} \(\in\) \{retrieval-augmented generation,
+retrieve-then-read, iterative retrieval, agentic search, graph-based
+reasoning, knowledge graph question answering, decomposition, chain of
+thought, process supervision, verification, citation generation,
+counterfactual evaluation, long-context reading\};
+\textit{Family} \(\in\) \{dense retrieval, sparse retrieval, hybrid
+retrieval, reranker, planner, decomposer, reader, fusion-in-decoder,
+agent, tool use, reinforcement learning\}.
+
+\paragraph{Inclusion and exclusion.}
+A paper was \emph{in scope} if it (i) targets multi-hop tasks or multi-step
+reasoning over retrieved or graph evidence, (ii) introduces or analyzes a
+method, benchmark, or evaluation protocol relevant to at least one of our
+five estimands, and (iii) has a stable, publicly inspectable paper or
+proceedings record. A paper was out of scope if its multi-hop framing was
+incidental, if it studied pure single-hop \QA without a mechanism that
+materially informs multi-hop retrieval, or if no stable artifact was
+available for inspection. Citation count was not an inclusion criterion,
+which avoids a publication-time bias against recent work.
+
+\paragraph{Annotation.}
+Each method promoted to the catalog seed records its primary architectural
+family, primary and secondary estimands, evidence source, pipeline stage,
+tasks, datasets, source URL, code URL when verified, review status, and a
+short evidence note. Benchmark records separately expose diagnostics and
+caveats. These schemas support the released crosswalks used in
+Sections~\ref{sec:estimand_methods}--\ref{sec:benchmarks}.
+
+\paragraph{Reproducibility of the screening.}
+The companion repository releases the discovery queries, catalog schemas,
+reviewed taxonomy, imported literature library, and validation scripts at
+\url{https://github.com/TsingyuL/multi-hop-rag-survey}. Reviewed records are
+kept separate from unverified candidates so that future updates can re-run
+the same discovery and validation workflow without conflating candidate
+coverage with the curated evidence base used in this survey.
+
+\section{Mathematical Notes}\label{app:math}
+
+\subsection*{Granularity of evidence units}
+
+In Definition~\ref{def:generative_chain}, evidence units \(e_i\) can be passages,
+sentences, table rows, image regions, code blocks, or
+knowledge-graph triples. The framework is applicable across evidence
+granularities, but the numerical estimands are granularity-dependent:
+refining a passage into sentences typically shortens the chain length
+required for correctness while altering the marginal retrieval
+probability, the budgeted selection probability, and the exposure
+distribution of each unit. Comparisons across granularities are
+therefore only meaningful when the evaluation unit is held fixed.
+Mixed-granularity chains (e.g., a sentence linked to a table row via a
+shared entity) are permitted; the bridge variable then ranges over a
+heterogeneous space that includes entities, dates, numeric matches,
+and image-text grounding links.
+
+\subsection*{Bridge priors and observability}
+
+Chain observability \(\obs(q)\) marginalizes over chain orderings.
+Under the often-reasonable assumption that the underlying chain is a
+directed acyclic graph rather than a strict sequence, observability is
+properly redefined as
+\[
+\obs(q) = \Pr\bigl(\{e_1,\dots,e_L\} \subseteq \mathcal{P} \mid q\bigr),
+\]
+and selection preservation, exposure, fusion, and faithfulness factor
+analogously. We keep the sequential form in the main text because
+all benchmarks we surveyed annotate ordered or unordered chains rather
+than richer DAG structures.
+
+\subsection*{Decomposition under chain ambiguity}
+
+When multiple distinct chains support the same answer, the events in
+equation~\ref{eq:success_decomp} should be read existentially: each
+stage requirement is defined as ``there exists a valid minimal chain
+$C\in\chainset^\star(q)$ for which the stage condition holds'' (chain
+observable in $L_N$, chain preserved in $E_K$, chain exposed within
+depth $r$, chain correctly composed, chain causally used). This is
+the form used by oracle-style evaluators that count any complete
+supporting chain as correct. Under this existential reading, the
+chain-rule factorization of equation~\ref{eq:success_decomp} remains
+an \emph{exact} decomposition of the corresponding grounded-success
+event, and the bottleneck upper bound in
+Proposition~\ref{prop:bottleneck} continues to apply because grounded
+success is still bounded above by the smallest of its five conditional
+stage factors.
+
+\subsection*{Identifiability under partial supervision}
+
+Proposition~\ref{prop:identifiability} states that \(\fus\) is identifiable
+conditional on \((\obs,\sel,\expo)=(1,1,1)\). Under partial supervision,
+where only a subset of bridge variables is annotated, identifiability
+weakens but does not collapse: \(\fus\) is identifiable up to permutation
+on annotated bridges and remains a lower bound on true fusion
+reliability on unannotated bridges, by an argument analogous to that of
+Yang et al. (2024) for hop-resolved attention attribution.
+
+\subsection*{Log-scale decomposition and additive risk}
+
+Taking logs of equation~\ref{eq:success_decomp} yields the exact
+identity
+\[
+\log P(Y_g\mid q)
+\;=\;
+\log\theta_{\mathrm{obs}}
++\log\theta_{\mathrm{sel}}
++\log\theta_{\mathrm{exp}}
++\log\theta_{\mathrm{fus}}
++\log\theta_{\mathrm{faith}}.
+\]
+This form motivates an \emph{additive shortfall} bookkeeping view:
+each conditional factor contributes a non-negative shortfall
+\(-\log\theta_i\) to the total log deficit, and the largest shortfall
+identifies which factor is currently rate-limiting for \(q\). The
+factors are conditional probabilities along a nested chain of events,
+not marginal probabilities of independent modules; the additive
+identity should therefore be read as a diagnostic ranking device
+rather than as a claim that the underlying stages are statistically
+independent. Practitioners can estimate each shortfall on the
+diagnostic subset that reaches the preceding event and rank remediation
+targets accordingly.
+
+\section{Method Catalogue}\label{app:catalogue}
+
+Table~\ref{tab:catalogue} cross-references major method families
+discussed in Sections~\ref{sec:estimand_methods} and~\ref{sec:architecture_view} against the
+five estimands they primarily move. The mapping is intentionally
+non-exclusive: many methods touch several estimands; we record the
+\emph{strongest} effect with \(\bullet\) and \emph{secondary} effects
+with \(\circ\). Empty cells indicate no first-order effect.
+
+\begin{table}[t]
+\centering
+\caption{Method-to-estimand mapping (selected, non-exhaustive).}
+\label{tab:catalogue}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Method family} & \(\obs\) & \(\sel\) & \(\expo\) & \(\fus\) & \(\faith\) \\
+\midrule
+Sparse retrieval (BM25, SPLADE)            & \(\bullet\) & \(\circ\) &            &            &            \\
+Dense retrieval (DPR, Contriever, BGE)     & \(\bullet\) & \(\circ\) &            &            &            \\
+Hybrid retrieval (HyDE, query expansion)   & \(\bullet\) & \(\circ\) &            &            &            \\
+Iterative retrieval (MDR, Baleen, IRCoT)   & \(\bullet\) & \(\bullet\) &           &            &            \\
+Adaptive retrieval (FLARE, DRAGIN)         & \(\bullet\) & \(\bullet\) & \(\circ\) &            &            \\
+Graph traversal (GRAFT-Net, PullNet, ToG)  & \(\bullet\) & \(\bullet\) & \(\circ\) &            &            \\
+GraphRAG / HippoRAG / LightRAG             & \(\bullet\) & \(\bullet\) & \(\circ\) &            &            \\
+Long-context readers (LongRAG, RAPTOR)     &            &            & \(\bullet\) & \(\circ\) &            \\
+Cross-encoder rerankers                    & \(\circ\)  & \(\bullet\) &           &            &            \\
+\LLM-as-reranker (RankGPT, RankZephyr)     & \(\circ\)  & \(\bullet\) &           &            &            \\
+Bridge-aware selectors (HopRetriever)      &            & \(\bullet\) & \(\circ\) &           &            \\
+Compression (LLMLingua, RECOMP, xRAG)      &            & \(\circ\)  & \(\bullet\) &           &            \\
+Decomposition (DecompRC, Self-Ask, IRCoT)  & \(\circ\)  & \(\bullet\) &           & \(\circ\) &            \\
+Fusion-in-decoder, FiD-light               &            &            &           & \(\bullet\) &            \\
+\CoT / ToT / GoT reasoning                 &            &            &           & \(\bullet\) & \(\circ\) \\
+Latent reasoning (Quiet-STaR, Coconut)     &            &            &           & \(\bullet\) &            \\
+Self-verification, CoVe, CRITIC            &            &            &           & \(\circ\)  & \(\bullet\) \\
+PRM, RAG-Gym, MATH-SHEPHERD                &            & \(\circ\)  &           & \(\bullet\) & \(\bullet\) \\
+Counterfactual evaluation, RARR            &            &            &           &            & \(\bullet\) \\
+Citation generation (WebGPT, ALCE)         &            &            &           &            & \(\bullet\) \\
+Agentic \RAG (Search-R1, DeepRAG)          & \(\bullet\) & \(\bullet\) & \(\bullet\) & \(\circ\) & \(\circ\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Writing and Reporting Checklist}\label{app:checklist}
+
+We summarize the reporting guidelines of Section~\ref{sec:reporting_guidelines} as a
+checklist that authors of new multi-hop \RAG methods can apply before
+submission.
+
+\begin{itemize}
+\item \textbf{Estimand identification.} State which of the five estimands
+the proposed method primarily targets, and which it might inadvertently
+affect.
+\item \textbf{Conditional metrics.} Report retrieval coverage on
+chain-present examples, reader accuracy on chain-present examples,
+faithfulness on chain-present-and-attended examples, and corresponding
+chain-absent baselines.
+\item \textbf{Budget.} Report retrieved-token budget, prompt-token
+budget, total \LLM calls, and wall-clock latency per query.
+\item \textbf{Used vs.\ gold support.} Report which gold passages were
+present in the context and which were attended to, distinguished from
+the full pool.
+\item \textbf{Process annotations.} If the benchmark provides path or
+process labels, report path-level metrics in addition to end-to-end
+metrics.
+\item \textbf{Counterfactual probes.} If feasible, report sensitivity to
+deletion or substitution of bridge evidence.
+\item \textbf{Failure analysis.} Provide a small table breaking down
+errors by latent-chain failure mode (\(\obs\)-loss, \(\sel\)-loss,
+\(\expo\)-loss, \(\fus\)-loss, \(\faith\)-loss).
+\item \textbf{Threats.} State the threats to validity of the
+latent-chain framing for the chosen benchmarks (Section~\ref{sec:reporting_guidelines}).
+\end{itemize}
+
+\section{Extended Mapping: Methods to Estimands and Datasets}\label{app:extended}
+
+Table~\ref{tab:extended} provides a finer-grained mapping for selected
+recent methods, listing which datasets they were primarily evaluated on,
+which estimands they targeted, and which estimands they inadvertently
+affected (`spillover'). Spillovers are particularly important for
+fair comparison: a retrieval-quality improvement that also reduces
+exposure pressure should not be credited solely as a fusion improvement.
+
+\begin{table}[t]
+\centering
+\caption{Extended method-to-estimand mapping with spillovers.}
+\label{tab:extended}
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lllll}
+\toprule
+\textbf{Method} & \textbf{Family} & \textbf{Primary} & \textbf{Spillover} & \textbf{Benchmarks} \\
+\midrule
+DPR              & dense ret.     & \(\obs\)            & \(\sel\)            & NQ, HotpotQA \\
+Contriever       & dense ret.     & \(\obs\)            & \(\sel\)            & BEIR, HotpotQA \\
+MDR              & iterative      & \(\obs,\sel\)       & \(\expo\)           & HotpotQA, FEVER \\
+Baleen           & iterative      & \(\obs,\sel\)       & \(\expo\)           & HoVer, FEVEROUS \\
+IRCoT            & decomp.+ret.   & \(\sel,\fus\)       & \(\obs\)            & HotpotQA, 2WikiMQA \\
+FLARE            & adaptive       & \(\sel\)            & \(\fus\)            & 2WikiMQA, ASQA \\
+GraphRAG         & graph-RAG      & \(\obs,\sel\)       & \(\fus\)            & private, MuSiQue \\
+HippoRAG         & graph-RAG      & \(\obs,\sel\)       & \(\fus\)            & MuSiQue, 2WikiMQA \\
+LongRAG          & long-context   & \(\expo\)           & \(\sel\)            & HotpotQA, MuSiQue \\
+RAPTOR           & long-context   & \(\expo,\fus\)      & \(\sel\)            & QuALITY, NarrativeQA \\
+HopRetriever     & bridge-aware   & \(\sel\)            & \(\obs\)            & HotpotQA \\
+LLMLingua        & compression    & \(\expo\)           & \(\sel\)            & MuSiQue, HotpotQA \\
+RECOMP           & compression    & \(\expo\)           & \(\fus\)            & HotpotQA, NQ \\
+RankGPT          & reranker       & \(\sel\)            & \(\obs\)            & BEIR, multi-hop \\
+Self-RAG         & adaptive       & \(\sel,\fus\)       & \(\faith\)          & ASQA, multi-hop \\
+Self-Ask         & decomp.        & \(\sel,\fus\)       & \(\obs\)            & 2WikiMQA \\
+RAG-Gym          & PRM            & \(\fus,\faith\)     & \(\sel\)            & MuSiQue, HotpotQA \\
+RARR             & post-hoc       & \(\faith\)          & \(\sel\)            & ASQA \\
+CoVe             & self-verify.   & \(\fus,\faith\)     & ---                 & ASQA, multi-hop \\
+ALCE             & citation       & \(\faith\)          & ---                 & ASQA, ELI5 \\
+Search-R1        & agentic-RL     & \(\obs,\sel,\expo\) & \(\fus\)            & HotpotQA, MuSiQue \\
+R1-Searcher      & agentic-RL     & \(\obs,\sel,\fus\)  & \(\expo\)           & HotpotQA, MuSiQue \\
+DeepRAG          & agentic-RL     & \(\obs,\sel,\fus\)  & \(\expo,\faith\)    & MuSiQue, 2WikiMQA \\
+PAR-RAG          & planning       & \(\sel,\fus\)       & \(\obs\)            & HotpotQA, MuSiQue \\
+VERITAS          & verifier       & \(\faith\)          & \(\fus\)            & ASQA, multi-hop \\
+ReARTeR          & re-arch.       & \(\sel,\fus\)       & \(\faith\)          & multi-hop \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Claim Templates}\label{app:claims}
+
+For each estimand we provide a template that authors can use to phrase
+empirical claims unambiguously. The templates are intentionally
+verbose; their purpose is to expose the conditioning assumptions that
+remain implicit in the common ``\emph{method X improves multi-hop
+accuracy by $y$ points}'' phrasing.
+
+\begin{description}
+\item[Observability claim.]
+``On queries whose annotated chain is contained in pool \(\mathcal{P}\)
+with probability at least \(\alpha\) (under retrieval depth \(k\)), our
+method increases this probability from \(\alpha\) to \(\alpha'\); we do
+not claim improvement on queries whose chain is unobservable at depth
+\(k\).''
+\item[Selection-utility claim.]
+``Conditional on chain observability (\(\obs=1\)), our method increases
+the probability that all chain elements appear in the reader's context
+window from \(\beta\) to \(\beta'\); the increment is reported under
+fixed token budget \(B\) and reported reranker class.''
+\item[Exposure claim.]
+``Conditional on selection (\(\sel=1\)), our method increases the
+probability that all chain elements are attended to during reading from
+\(\gamma\) to \(\gamma'\), measured by attention-weight masking
+experiments at threshold \(\tau\).''
+\item[Fusion claim.]
+``Conditional on observability, selection, and exposure
+(\(\obs=\sel=\expo=1\)), our method increases the probability of
+producing the correct answer from \(\delta\) to \(\delta'\). The
+remaining failures are attributed to fusion under the assumptions of
+Section~\ref{sec:problem_setup}.''
+\item[Faithfulness claim.]
+``Conditional on a correct answer being produced, our method increases
+the probability that the answer is causally supported by the cited
+evidence chain from \(\epsilon\) to \(\epsilon'\); causal support is
+measured by counterfactual deletion sensitivity at perturbation
+budget \(\rho\).''
+\end{description}
+
+Each template specifies (i) the conditioning event, (ii) the population
+of queries, (iii) the budget and protocol, and (iv) the auxiliary
+assumptions. We argue that adoption of this style would substantially
+reduce comparability problems across the multi-hop \RAG literature.
+
+
+%==========================================================
+% Bibliography (BibTeX). Compile with pdflatex -> bibtex -> pdflatex x2.
+% References live in references.bib. ACM-Reference-Format expands authors only when
+% the full author list is present in each BibTeX author field; `and others` remains
+% abbreviated and must be replaced from authoritative metadata before submission.
+%==========================================================
+\clearpage
+\FloatBarrier
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

@@ -14,7 +14,7 @@ This package contains 10 vector figures for the survey *Multi-Hop Retrieval-Augm
 ## Visual grammar
 
 - Observability: blue
-- Conditional utility / selection: green
+- Selection preservation: green (conditional utility may appear only as a mechanism-level score)
 - Exposure / ordering: orange
 - Fusion: purple
 - Faithfulness: red

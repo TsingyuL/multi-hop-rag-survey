@@ -3,120 +3,240 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A filterable research catalog for multi-hop retrieval-augmented reasoning.">
-    <title>Multi-Hop RAG Survey · Research Catalog</title>
+    <meta name="description" content="The living research hub for Multi-Hop Retrieval-Augmented Reasoning: a latent evidence-chain inference perspective.">
+    <title>Multi-Hop RAG Survey · Research Hub</title>
     <style>
       :root {
-        --ink: #14213d;
+        --navy: #10213f;
+        --navy-2: #19345f;
+        --ink: #162946;
+        --muted: #65718a;
         --paper: #f7f8fc;
         --surface: #ffffff;
-        --line: #dbe1ee;
-        --muted: #5f6c86;
-        --accent: #2457c5;
-        --accent-soft: #e7efff;
-        --teal: #087e8b;
-        --shadow: 0 12px 30px rgba(20, 33, 61, .08);
+        --line: #dce3ef;
+        --blue: #2a62d5;
+        --blue-quiet: #e9f0ff;
+        --teal: #007f88;
+        --teal-quiet: #e0f5f3;
+        --gold: #ad6d00;
+        --gold-quiet: #fff3d8;
+        --shadow: 0 16px 42px rgba(16, 33, 63, .09);
       }
       * { box-sizing: border-box; }
-      body { margin: 0; color: var(--ink); background: var(--paper); font: 16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      a { color: var(--accent); }
-      .hero { background: radial-gradient(circle at 83% 22%, #386cd6 0, #1a3f91 31%, #101f40 72%); color: #fff; padding: 56px 24px 48px; }
-      .wrap { width: min(1180px, 100%); margin: 0 auto; }
-      .eyebrow { margin: 0 0 10px; color: #b7d1ff; font-size: .76rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
-      h1 { max-width: 860px; margin: 0; font-size: clamp(2.1rem, 5vw, 4rem); line-height: 1.04; letter-spacing: -.045em; }
-      .lead { max-width: 750px; margin: 20px 0 0; color: #e5edff; font-size: 1.1rem; }
-      .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-      .links a { border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #fff; padding: 7px 14px; text-decoration: none; font-size: .9rem; }
-      main { padding: 30px 24px 60px; }
-      .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: -25px 0 28px; }
-      .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; box-shadow: var(--shadow); padding: 18px; }
-      .metric strong { display: block; color: var(--accent); font-size: 1.75rem; line-height: 1; }
-      .metric span { color: var(--muted); font-size: .88rem; }
-      .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 22px; }
-      .hub-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-bottom: 18px; }
-      .route-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-      .route { border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--ink); cursor: pointer; padding: 12px; text-align: left; transition: border-color .15s, transform .15s; }
-      .route:hover { border-color: var(--accent); transform: translateY(-1px); }
-      .route strong { display: block; font-size: .91rem; }
-      .route span { color: var(--muted); display: block; font-size: .78rem; line-height: 1.35; margin-top: 3px; }
-      .route em { color: var(--accent); display: block; font-size: .74rem; font-style: normal; font-weight: 750; margin-top: 7px; }
-      .benchmark-list { display: grid; gap: 8px; }
-      .benchmark { border-bottom: 1px solid var(--line); padding-bottom: 8px; }
-      .benchmark:last-child { border: 0; padding-bottom: 0; }
-      .benchmark a { font-weight: 720; text-decoration: none; }
-      .benchmark p { color: var(--muted); font-size: .79rem; margin: 2px 0 0; }
-      h2 { margin: 0 0 4px; font-size: 1.35rem; letter-spacing: -.02em; }
-      .subtle { margin: 0 0 18px; color: var(--muted); font-size: .94rem; }
-      .filters { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 12px; }
-      label { display: grid; gap: 5px; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .03em; }
-      input, select { width: 100%; border: 1px solid #cbd4e6; border-radius: 8px; background: #fff; color: var(--ink); font: inherit; padding: 10px 11px; }
-      input:focus, select:focus { outline: 3px solid #bcd0ff; border-color: var(--accent); }
-      .result-line { margin: 22px 0 12px; color: var(--muted); font-size: .9rem; }
-      .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
-      table { width: 100%; min-width: 920px; border-collapse: collapse; font-size: .9rem; }
-      th { padding: 11px 12px; background: #f3f6fc; color: #52617d; font-size: .72rem; letter-spacing: .06em; text-align: left; text-transform: uppercase; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      a { color: var(--blue); }
+      a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #a9c5ff; outline-offset: 3px; }
+      .wrap { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+      .site-header { background: var(--navy); color: #fff; }
+      .topbar { display: flex; align-items: center; justify-content: space-between; min-height: 72px; gap: 24px; }
+      .brand { color: #fff; font-size: .9rem; font-weight: 780; letter-spacing: -.01em; text-decoration: none; }
+      .brand span { color: #9dc1ff; font-weight: 600; }
+      .topnav { display: flex; flex-wrap: wrap; gap: 18px; }
+      .topnav a { color: #c8d8f8; font-size: .84rem; text-decoration: none; }
+      .topnav a:hover { color: #fff; }
+      .hero { overflow: hidden; position: relative; background: radial-gradient(circle at 83% 20%, #356fdb 0, #1b407c 24%, var(--navy) 61%); padding: 65px 0 76px; }
+      .hero::after { content: ""; position: absolute; right: -12%; bottom: -62%; width: 600px; height: 600px; border: 1px solid rgba(164, 196, 255, .19); border-radius: 50%; box-shadow: 0 0 0 64px rgba(164,196,255,.045), 0 0 0 128px rgba(164,196,255,.035); }
+      .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr); align-items: center; gap: 60px; }
+      .eyebrow { margin: 0 0 14px; color: #9ec1ff; font-size: .73rem; font-weight: 790; letter-spacing: .15em; text-transform: uppercase; }
+      h1 { max-width: 720px; margin: 0; color: #fff; font-size: clamp(2.65rem, 5.4vw, 5rem); letter-spacing: -.06em; line-height: .98; }
+      .hero h1 em { color: #b7d3ff; font-style: normal; }
+      .lead { max-width: 680px; margin: 25px 0 0; color: #dbe7ff; font-size: 1.08rem; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+      .button { display: inline-flex; align-items: center; justify-content: center; min-height: 41px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #fff; font-size: .9rem; font-weight: 700; padding: 8px 17px; text-decoration: none; transition: transform .16s, background .16s; }
+      .button:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+      .button.primary { border-color: #fff; background: #fff; color: #17376b; }
+      .button.primary:hover { background: #e6efff; }
+      .chain-card { padding: 22px; border: 1px solid rgba(194, 216, 255, .35); border-radius: 20px; background: rgba(8, 25, 57, .33); box-shadow: 0 22px 55px rgba(4, 16, 42, .2); backdrop-filter: blur(10px); }
+      .chain-card h2 { margin: 0; color: #fff; font-size: 1rem; letter-spacing: -.01em; }
+      .chain-card p { margin: 5px 0 18px; color: #c9d9f7; font-size: .82rem; }
+      .chain { display: grid; gap: 9px; }
+      .chain-node { display: grid; grid-template-columns: 31px 1fr auto; align-items: center; gap: 10px; min-height: 43px; padding: 7px 10px; border: 1px solid rgba(197, 216, 255, .24); border-radius: 9px; background: rgba(255,255,255,.06); }
+      .chain-node::before { content: attr(data-step); display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; background: #a9c8ff; color: #15346a; font-size: .72rem; font-weight: 800; }
+      .chain-node strong { color: #fff; font-size: .82rem; }
+      .chain-node span { color: #cbdcfb; font-size: .72rem; }
+      .chain-node:nth-child(2)::before { background: #b6ece8; color: #05636a; }
+      .chain-node:nth-child(3)::before { background: #fff0bf; color: #825500; }
+      .chain-node:nth-child(4)::before { background: #e0c9ff; color: #593491; }
+      .chain-node:nth-child(5)::before { background: #f6c8d5; color: #8c2846; }
+      main { padding: 0 0 76px; }
+      .metrics { position: relative; z-index: 2; display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 13px; margin-top: -27px; }
+      .metric { padding: 18px 19px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); box-shadow: var(--shadow); }
+      .metric:first-child { background: var(--blue); border-color: var(--blue); }
+      .metric strong { display: block; color: var(--blue); font-size: 1.75rem; letter-spacing: -.04em; line-height: 1; }
+      .metric:first-child strong, .metric:first-child span { color: #fff; }
+      .metric span { color: var(--muted); font-size: .8rem; }
+      .section { margin-top: 66px; }
+      .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
+      .section-heading h2 { max-width: 740px; margin: 0; font-size: clamp(1.65rem, 3vw, 2.35rem); letter-spacing: -.045em; line-height: 1.08; }
+      .section-heading p { max-width: 560px; margin: 7px 0 0; color: var(--muted); font-size: .96rem; }
+      .overline { margin: 0 0 8px; color: var(--teal); font-size: .73rem; font-weight: 790; letter-spacing: .13em; text-transform: uppercase; }
+      .contribution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+      .contribution { min-height: 220px; padding: 23px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); box-shadow: 0 8px 24px rgba(16,33,63,.045); }
+      .contribution .number { color: var(--blue); font-size: .77rem; font-weight: 800; letter-spacing: .1em; }
+      .contribution h3 { margin: 24px 0 8px; font-size: 1.08rem; letter-spacing: -.02em; }
+      .contribution p { margin: 0; color: var(--muted); font-size: .9rem; }
+      .principle { display: grid; grid-template-columns: .84fr 1.16fr; overflow: hidden; border: 1px solid #cbd8f1; border-radius: 17px; background: var(--surface); box-shadow: var(--shadow); }
+      .principle-intro { padding: 31px; background: linear-gradient(150deg, #eaf1ff, #f8faff 70%); }
+      .principle-intro h2 { margin: 0; font-size: 1.55rem; letter-spacing: -.04em; line-height: 1.12; }
+      .principle-intro p { margin: 14px 0 0; color: #50627e; font-size: .93rem; }
+      .bottleneck-grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+      .bottleneck { min-height: 194px; padding: 24px 18px; border-left: 1px solid var(--line); }
+      .bottleneck:nth-child(2n) { background: #fbfcff; }
+      .bottleneck b { display: block; color: var(--blue); font-size: .73rem; letter-spacing: .08em; text-transform: uppercase; }
+      .bottleneck h3 { margin: 9px 0 5px; font-size: 1rem; letter-spacing: -.02em; }
+      .bottleneck p { margin: 0; color: var(--muted); font-size: .79rem; line-height: 1.45; }
+      .workbench { display: grid; grid-template-columns: 1.08fr .92fr; gap: 17px; }
+      .panel { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); padding: 24px; }
+      .panel h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.035em; }
+      .subtle { margin: 7px 0 18px; color: var(--muted); font-size: .9rem; }
+      .route-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+      .route { border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--ink); cursor: pointer; padding: 13px; text-align: left; transition: border-color .15s, box-shadow .15s, transform .15s; }
+      .route:hover { border-color: #9dbbfa; box-shadow: 0 8px 18px rgba(33, 83, 180, .1); transform: translateY(-1px); }
+      .route strong { display: block; font-size: .9rem; }
+      .route span { display: block; margin-top: 3px; color: var(--muted); font-size: .76rem; line-height: 1.35; }
+      .route em { display: block; margin-top: 7px; color: var(--blue); font-size: .72rem; font-style: normal; font-weight: 780; }
+      .benchmark-list { display: grid; gap: 1px; }
+      .benchmark { padding: 11px 0; border-bottom: 1px solid var(--line); }
+      .benchmark:first-child { padding-top: 0; }
+      .benchmark:last-child { padding-bottom: 0; border: 0; }
+      .benchmark a { font-size: .9rem; font-weight: 750; text-decoration: none; }
+      .benchmark a:hover { text-decoration: underline; }
+      .benchmark p { margin: 2px 0 0; color: var(--muted); font-size: .77rem; }
+      .catalog { scroll-margin-top: 20px; }
+      .catalog-top { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+      .catalog-top h2 { margin: 0; font-size: 1.45rem; letter-spacing: -.04em; }
+      .catalog-top p { max-width: 610px; margin: 5px 0 0; color: var(--muted); font-size: .89rem; }
+      .filters { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 11px; }
+      label { display: grid; gap: 5px; color: var(--muted); font-size: .73rem; font-weight: 760; letter-spacing: .04em; }
+      input, select { width: 100%; border: 1px solid #c8d3e5; border-radius: 8px; background: #fff; color: var(--ink); font: inherit; padding: 10px 11px; }
+      input:focus, select:focus { border-color: var(--blue); outline: 3px solid #c4d7ff; }
+      .result-line { margin: 18px 0 11px; color: var(--muted); font-size: .86rem; }
+      .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 11px; }
+      table { width: 100%; min-width: 920px; border-collapse: collapse; font-size: .87rem; }
+      th { padding: 11px 12px; background: #f1f5fc; color: #596985; font-size: .69rem; letter-spacing: .07em; text-align: left; text-transform: uppercase; }
       td { padding: 13px 12px; border-top: 1px solid var(--line); vertical-align: top; }
-      .paper { display: block; color: var(--ink); font-weight: 720; line-height: 1.3; text-decoration: none; }
-      .paper:hover { color: var(--accent); text-decoration: underline; }
-      .venue { display: block; margin-top: 4px; color: var(--muted); font-size: .78rem; }
-      .tag { display: inline-block; margin: 0 4px 4px 0; border-radius: 999px; background: var(--accent-soft); color: #214a9e; padding: 2px 7px; font-size: .74rem; white-space: nowrap; }
-      .tag.teal { background: #e0f4f2; color: #06636d; }
-      .code { color: var(--teal); font-weight: 700; text-decoration: none; }
+      .paper { display: block; color: var(--ink); font-weight: 730; line-height: 1.3; text-decoration: none; }
+      .paper:hover { color: var(--blue); text-decoration: underline; }
+      .venue { display: block; margin-top: 4px; color: var(--muted); font-size: .76rem; }
+      .tag { display: inline-block; margin: 0 4px 4px 0; border-radius: 999px; background: var(--blue-quiet); color: #214a9e; padding: 2px 7px; font-size: .71rem; white-space: nowrap; }
+      .tag.teal { background: var(--teal-quiet); color: #066870; }
+      .code { color: var(--teal); font-weight: 750; text-decoration: none; }
       .empty { padding: 30px; color: var(--muted); text-align: center; }
-      .notice { margin-top: 22px; border-left: 4px solid var(--teal); padding: 8px 12px; color: #44516a; font-size: .9rem; }
-      footer { padding: 0 24px 40px; color: var(--muted); font-size: .85rem; }
-      @media (max-width: 720px) { .hero { padding-top: 40px; } .metrics, .filters, .hub-grid, .route-grid { grid-template-columns: 1fr; } .panel { padding: 16px; } }
+      .notice { margin: 19px 0 0; border-left: 4px solid var(--teal); padding: 7px 12px; color: #4d5b74; font-size: .85rem; }
+      .resource-strip { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 12px; }
+      .resource { display: block; min-height: 124px; padding: 18px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); color: var(--ink); text-decoration: none; transition: transform .15s, border-color .15s; }
+      .resource:hover { border-color: #9dbbfa; transform: translateY(-2px); }
+      .resource b { display: block; color: var(--blue); font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; }
+      .resource strong { display: block; margin-top: 12px; font-size: .96rem; }
+      .resource span { display: block; margin-top: 4px; color: var(--muted); font-size: .78rem; line-height: 1.4; }
+      footer { padding: 28px 0 43px; color: var(--muted); font-size: .82rem; }
+      footer .footer-inner { display: flex; justify-content: space-between; gap: 20px; padding-top: 22px; border-top: 1px solid var(--line); }
+      @media (max-width: 920px) { .hero-grid, .principle, .workbench { grid-template-columns: 1fr; } .bottleneck-grid { grid-template-columns: repeat(3, 1fr); } .bottleneck { border-top: 1px solid var(--line); } .bottleneck:nth-child(4), .bottleneck:nth-child(5) { border-top: 1px solid var(--line); } .resource-strip { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 680px) { .wrap { width: min(100% - 32px, 1180px); } .topbar { padding: 14px 0; align-items: flex-start; flex-direction: column; gap: 8px; } .topnav { gap: 12px; } .hero { padding: 43px 0 58px; } .hero-grid { gap: 35px; } .metrics, .filters, .contribution-grid, .route-grid, .resource-strip { grid-template-columns: 1fr; } .metrics { margin-top: -18px; } .section { margin-top: 48px; } .section-heading, .catalog-top, footer .footer-inner { align-items: flex-start; flex-direction: column; gap: 7px; } .bottleneck-grid { grid-template-columns: 1fr; } .bottleneck { border-left: 0; } .panel, .principle-intro { padding: 19px; } }
     </style>
   </head>
   <body>
-    <header class="hero">
-      <div class="wrap">
-        <p class="eyebrow">Living research resource</p>
-        <h1>Multi-Hop RAG<br>Research Catalog</h1>
-        <p class="lead">A curated, evidence-aware map of retrieval, reasoning, fusion, and verification methods for multi-hop retrieval-augmented systems.</p>
-        <nav class="links" aria-label="Catalog navigation">
-          <a href="https://github.com/TsingyuL/multi-hop-rag-survey">Repository</a>
-          <a href="taxonomy.md">Taxonomy guide</a>
-          <a href="coverage_protocol.md">Coverage protocol</a>
-          <a href="literature_navigator.md">Reading paths</a>
-          <a href="library.html">Full library</a>
+    <header class="site-header">
+      <div class="wrap topbar">
+        <a class="brand" href="index.html">MULTI-HOP RAG <span>· SURVEY HUB</span></a>
+        <nav class="topnav" aria-label="Primary navigation">
+          <a href="#thesis">Thesis</a><a href="#workbench">Research map</a><a href="#catalog">Catalog</a><a href="library.html">Full library</a><a href="https://github.com/TsingyuL/multi-hop-rag-survey">Repository ↗</a>
         </nav>
       </div>
-    </header>
-    <main class="wrap">
-      <section class="metrics" aria-label="Catalog statistics">
-        <div class="metric"><strong id="method-count">—</strong><span>curated methods</span></div>
-        <div class="metric"><strong id="benchmark-count">—</strong><span>benchmarks & datasets</span></div>
-        <div class="metric"><strong id="library-count">—</strong><span>imported library papers</span></div>
-        <div class="metric"><strong id="code-count">—</strong><span>verified code links</span></div>
-      </section>
-      <section class="hub-grid" aria-label="Research map">
-        <article class="panel"><h2>Research routes</h2><p class="subtle">Start from the evidence-chain bottleneck you want to study. Each route filters the reviewed catalog.</p><div id="routes" class="route-grid"></div></article>
-        <article class="panel"><h2>Benchmark map</h2><p class="subtle">Evaluation targets in the reviewed catalog, with their intended diagnostic scope.</p><div id="benchmarks" class="benchmark-list"></div></article>
-      </section>
-      <section class="panel">
-        <h2>Find papers by the decision they change</h2>
-        <p class="subtle">Filter by latent-chain bottleneck, architectural route, or publication year. The catalog does not use leaderboard rank as a category.</p>
-        <div class="filters">
-          <label>Search title, task, or dataset<input id="search" type="search" placeholder="e.g., HotpotQA, graph, iterative"></label>
-          <label>Primary bottleneck<select id="estimand"><option value="">All bottlenecks</option></select></label>
-          <label>Architecture<select id="family"><option value="">All routes</option></select></label>
-          <label>Year<select id="year"><option value="">All years</option></select></label>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="eyebrow">Living companion to the survey</p>
+            <h1>Multi-Hop RAG as <em>evidence-chain</em> inference.</h1>
+            <p class="lead">A research hub for understanding how retrieval-augmented systems find, preserve, expose, compose, and verify the distributed evidence needed for a multi-hop answer.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="../MH_survey.pdf">Read the paper ↗</a>
+              <a class="button" href="#catalog">Explore reviewed methods</a>
+              <a class="button" href="guide.html#checklist">Evaluation checklist</a>
+            </div>
+          </div>
+          <aside class="chain-card" aria-label="The latent evidence chain">
+            <h2>The latent evidence chain</h2>
+            <p>End-to-end accuracy conceals five distinct research questions.</p>
+            <div class="chain">
+              <div class="chain-node" data-step="1"><strong>Retrieve</strong><span>support exists</span></div>
+              <div class="chain-node" data-step="2"><strong>Select</strong><span>useful support survives</span></div>
+              <div class="chain-node" data-step="3"><strong>Expose</strong><span>support is accessible</span></div>
+              <div class="chain-node" data-step="4"><strong>Fuse</strong><span>facts are composed</span></div>
+              <div class="chain-node" data-step="5"><strong>Verify</strong><span>answer depends on support</span></div>
+            </div>
+          </aside>
         </div>
-        <p id="result-line" class="result-line" aria-live="polite"></p>
-        <div class="scroll"><table>
-          <thead><tr><th>Paper</th><th>Year</th><th>Decision / route</th><th>Tasks & datasets</th><th>Resources</th></tr></thead>
-          <tbody id="rows"><tr><td colspan="5" class="empty">Loading catalog…</td></tr></tbody>
-        </table></div>
-        <p class="notice">This is a curated research map, not a claim of exhaustive systematic coverage. Read the <a href="coverage_protocol.md">coverage protocol</a> before treating absence as evidence.</p>
       </section>
+    </header>
+    <main>
+      <div class="wrap">
+        <section class="metrics" aria-label="Reviewed catalog statistics">
+          <div class="metric"><strong>Evidence-first</strong><span>a taxonomy organized by what a method changes</span></div>
+          <div class="metric"><strong id="method-count">—</strong><span>reviewed methods</span></div>
+          <div class="metric"><strong id="benchmark-count">—</strong><span>benchmarks & datasets</span></div>
+          <div class="metric"><strong id="code-count">—</strong><span>linked implementations</span></div>
+        </section>
+
+        <section id="thesis" class="section" aria-labelledby="thesis-title">
+          <div class="section-heading"><div><p class="overline">Central claim</p><h2 id="thesis-title">Architecture labels are not enough to explain multi-hop RAG.</h2><p>A system can retrieve relevant documents yet fail because a supporting fact was dropped, hidden by context, fused incorrectly, or never causally used. The survey makes these failures separately visible.</p></div></div>
+          <div class="contribution-grid">
+            <article class="contribution"><span class="number">01 / A COMMON OBJECT</span><h3>Latent evidence chain</h3><p>We treat the chain of required support units as the object a system must recover and use—not merely a sequence of model modules.</p></article>
+            <article class="contribution"><span class="number">02 / A DIAGNOSTIC LENS</span><h3>Five coupled bottlenecks</h3><p>Observability, selection, exposure, fusion, and faithfulness turn aggregate scores into specific, testable failure modes.</p></article>
+            <article class="contribution"><span class="number">03 / AN AUDITABLE MAP</span><h3>Methods, benchmarks, decisions</h3><p>Each reviewed record is linked to the decision it changes, its evidence source, task setting, and available implementation.</p></article>
+          </div>
+        </section>
+
+        <section class="section principle" aria-labelledby="bottleneck-title">
+          <div class="principle-intro"><p class="overline">A diagnostic vocabulary</p><h2 id="bottleneck-title">Ask where the evidence chain breaks.</h2><p>Use the taxonomy to separate retrieval coverage from selection quality, context accessibility, reasoning, and causal use. These estimands are coupled, but they should not be conflated.</p><p><a href="guide.html#taxonomy">Read the annotation rules →</a></p></div>
+          <div class="bottleneck-grid">
+            <article class="bottleneck"><b>01</b><h3>Observability</h3><p>Does the retrieved pool contain every required support unit?</p></article>
+            <article class="bottleneck"><b>02</b><h3>Selection</h3><p>Does a budgeted selection preserve the complete support chain?</p></article>
+            <article class="bottleneck"><b>03</b><h3>Exposure</h3><p>Can the reader access evidence at the point of use?</p></article>
+            <article class="bottleneck"><b>04</b><h3>Fusion</h3><p>Can the reader compose distributed facts correctly?</p></article>
+            <article class="bottleneck"><b>05</b><h3>Faithfulness</h3><p>Did the answer actually depend on the evidence provided?</p></article>
+          </div>
+        </section>
+
+        <section id="workbench" class="section workbench" aria-label="Research map">
+          <article class="panel"><h2>Start from the bottleneck</h2><p class="subtle">Choose the research decision you want to study. A route applies the same filter to the reviewed catalog below.</p><div id="routes" class="route-grid"></div></article>
+          <article class="panel"><h2>Benchmark map</h2><p class="subtle">Evaluation targets with their intended diagnostic scope—not a leaderboard.</p><div id="benchmarks" class="benchmark-list"></div></article>
+        </section>
+
+        <section id="catalog" class="section panel catalog" aria-labelledby="catalog-title">
+          <div class="catalog-top"><div><p class="overline">Reviewed evidence layer</p><h2 id="catalog-title">Find papers by the decision they change.</h2><p>Filter by latent-chain bottleneck, architectural route, or year. Records in this catalog are deliberately distinct from the broader imported library.</p></div><a class="button" style="border-color:#a9c0eb;color:#214a9e" href="library.html">Browse full library →</a></div>
+          <div class="filters">
+            <label>Search title, task, or dataset<input id="search" type="search" placeholder="e.g., HotpotQA, graph, iterative"></label>
+            <label>Primary bottleneck<select id="estimand"><option value="">All bottlenecks</option></select></label>
+            <label>Architecture<select id="family"><option value="">All routes</option></select></label>
+            <label>Year<select id="year"><option value="">All years</option></select></label>
+          </div>
+          <p id="result-line" class="result-line" aria-live="polite"></p>
+          <div class="scroll"><table>
+            <thead><tr><th>Paper</th><th>Year</th><th>Decision / route</th><th>Tasks & datasets</th><th>Resources</th></tr></thead>
+            <tbody id="rows"><tr><td colspan="5" class="empty">Loading reviewed catalog…</td></tr></tbody>
+          </table></div>
+          <p class="notice">This is a curated research map, not a claim of exhaustive systematic coverage. Read the <a href="guide.html#coverage">coverage protocol</a> before treating absence as evidence.</p>
+        </section>
+
+        <section class="section" aria-labelledby="resources-title">
+          <div class="section-heading"><div><p class="overline">Reproducibility layer</p><h2 id="resources-title">Use, inspect, and extend the survey.</h2></div></div>
+          <div class="resource-strip">
+            <a class="resource" href="../MH_survey.pdf"><b>Paper</b><strong>Survey manuscript</strong><span>The complete latent evidence-chain framework and synthesis.</span></a>
+            <a class="resource" href="guide.html#taxonomy"><b>Schema</b><strong>Taxonomy guide</strong><span>Dual-axis labels and annotation decisions.</span></a>
+            <a class="resource" href="guide.html#coverage"><b>Methods</b><strong>Coverage protocol</strong><span>Scope, discovery, verification, and corrections.</span></a>
+            <a class="resource" href="guide.html#contribute"><b>Community</b><strong>Contribution guide</strong><span>Add verified methods or challenge a taxonomy label.</span></a>
+          </div>
+        </section>
+      </div>
     </main>
-    <footer class="wrap">Catalog data: <a href="data/methods.csv">methods.csv</a> · <a href="data/benchmarks.csv">benchmarks.csv</a> · <a href="data/library_papers.csv">full imported library</a> · Maintained with the repository’s validation workflow.</footer>
+    <footer class="wrap"><div class="footer-inner"><span>Multi-Hop Retrieval-Augmented Reasoning · a living research companion.</span><span>Data: <a href="data/methods.csv">methods</a> · <a href="data/benchmarks.csv">benchmarks</a> · <a href="data/library_papers.csv">library</a></span></div></footer>
     <script>
       const fields = ["estimand", "family", "year"];
-      const labels = { observability: "observability", utility: "utility", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
+      const labels = { observability: "observability", selection: "selection", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
       const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[char]);
-      const split = value => value.split(";").map(item => item.trim()).filter(Boolean);
+      const split = value => (value || "").split(";").map(item => item.trim()).filter(Boolean);
       const tag = (text, color = "") => `<span class="tag ${color}">${escapeHTML(text)}</span>`;
       fetch("data/catalog.json")
         .then(response => { if (!response.ok) throw new Error("catalog unavailable"); return response.json(); })
@@ -124,21 +244,15 @@
           const methods = catalog.methods.sort((a, b) => Number(b.year) - Number(a.year) || a.title.localeCompare(b.title));
           document.querySelector("#method-count").textContent = methods.length;
           document.querySelector("#benchmark-count").textContent = catalog.benchmarks.length;
-          document.querySelector("#library-count").textContent = (catalog.library || []).length;
           document.querySelector("#code-count").textContent = methods.filter(row => row.code_url).length;
           const options = { estimand: [...new Set(methods.map(row => row.primary_estimand))].sort(), family: [...new Set(methods.map(row => row.architectural_family))].sort(), year: [...new Set(methods.map(row => row.year))].sort((a, b) => b - a) };
           fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));
           const routeMeta = {
-            observability: "Find every required support unit.",
-            utility: "Keep useful evidence under a budget.",
-            exposure: "Make selected evidence usable in context.",
-            fusion: "Compose evidence across units correctly.",
-            faithfulness: "Test whether evidence causally matters.",
-            joint: "Coordinate multiple bottlenecks together.",
+            observability: "Find every required support unit.", selection: "Preserve the complete support chain under a budget.", exposure: "Make selected evidence usable in context.", fusion: "Compose evidence across units correctly.", faithfulness: "Test whether evidence causally matters.", joint: "Coordinate multiple bottlenecks together."
           };
           document.querySelector("#routes").innerHTML = options.estimand.map(estimand => {
             const count = methods.filter(row => row.primary_estimand === estimand).length;
-            return `<button class="route" type="button" data-estimand="${escapeHTML(estimand)}"><strong>${escapeHTML(labels[estimand] || estimand)}</strong><span>${escapeHTML(routeMeta[estimand] || "")}</span><em>${count} curated methods →</em></button>`;
+            return `<button class="route" type="button" data-estimand="${escapeHTML(estimand)}"><strong>${escapeHTML(labels[estimand] || estimand)}</strong><span>${escapeHTML(routeMeta[estimand] || "")}</span><em>${count} reviewed methods →</em></button>`;
           }).join("");
           document.querySelector("#benchmarks").innerHTML = catalog.benchmarks.sort((a, b) => Number(b.year) - Number(a.year)).map(benchmark => `<div class="benchmark"><a href="${escapeHTML(benchmark.source_url)}" target="_blank" rel="noopener">${escapeHTML(benchmark.name)}</a><p>${escapeHTML(benchmark.task_type)} · ${escapeHTML(benchmark.hops)} hop(s) · ${escapeHTML(benchmark.diagnostics)}</p></div>`).join("");
           const render = () => {
@@ -148,22 +262,16 @@
               const haystack = [row.title, row.tasks, row.datasets, row.notes, row.venue].join(" ").toLowerCase();
               return (!query || haystack.includes(query)) && (!selected.estimand || row.primary_estimand === selected.estimand) && (!selected.family || row.architectural_family === selected.family) && (!selected.year || row.year === selected.year);
             });
-            document.querySelector("#result-line").textContent = `${selectedMethods.length} of ${methods.length} methods shown`;
+            document.querySelector("#result-line").textContent = `${selectedMethods.length} of ${methods.length} reviewed methods shown`;
             document.querySelector("#rows").innerHTML = selectedMethods.length ? selectedMethods.map(row => `
-              <tr>
-                <td><a class="paper" href="${escapeHTML(row.source_url)}" target="_blank" rel="noopener">${escapeHTML(row.title)}</a><span class="venue">${escapeHTML(row.venue)}</span></td>
-                <td>${escapeHTML(row.year)}</td>
-                <td>${tag(row.primary_estimand)}${tag(row.architectural_family, "teal")}</td>
-                <td>${split(row.tasks).map(item => tag(item)).join("")}<br>${split(row.datasets).map(item => tag(item, "teal")).join("")}</td>
-                <td>${row.code_url ? `<a class="code" href="${escapeHTML(row.code_url)}" target="_blank" rel="noopener">Code ↗</a>` : "—"}</td>
-              </tr>`).join("") : '<tr><td colspan="5" class="empty">No entries match these filters.</td></tr>';
+              <tr><td><a class="paper" href="${escapeHTML(row.source_url)}" target="_blank" rel="noopener">${escapeHTML(row.title)}</a><span class="venue">${escapeHTML(row.venue)}</span></td><td>${escapeHTML(row.year)}</td><td>${tag(row.primary_estimand)}${tag(row.architectural_family, "teal")}</td><td>${split(row.tasks).map(item => tag(item)).join("")}<br>${split(row.datasets).map(item => tag(item, "teal")).join("")}</td><td>${row.code_url ? `<a class="code" href="${escapeHTML(row.code_url)}" target="_blank" rel="noopener">Code ↗</a>` : "—"}</td></tr>`).join("") : '<tr><td colspan="5" class="empty">No entries match these filters.</td></tr>';
           };
           document.querySelector("#search").addEventListener("input", render);
           fields.forEach(id => document.querySelector(`#${id}`).addEventListener("change", render));
           document.querySelectorAll(".route").forEach(button => button.addEventListener("click", () => {
             document.querySelector("#estimand").value = button.dataset.estimand;
             render();
-            document.querySelector("#search").scrollIntoView({ behavior: "smooth", block: "center" });
+            document.querySelector("#catalog").scrollIntoView({ behavior: "smooth", block: "start" });
           }));
           render();
         })

@@ -1,0 +1,35 @@
+name: Validate catalog and manuscript
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python scripts/validate_catalog.py
+      - run: python scripts/build_catalog_site.py
+      - run: git diff --exit-code -- docs/data
+
+  manuscript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check bibliography metadata
+        run: python scripts/check_manuscript.py --bib paper/references.bib
+      - name: Install TeX
+        run: sudo apt-get update && sudo apt-get install -y latexmk texlive-latex-extra texlive-publishers
+      - name: Compile manuscript
+        working-directory: paper
+        run: latexmk -pdf -halt-on-error main.tex
+      - name: Check references and citations
+        run: python scripts/check_manuscript.py --bib paper/references.bib --log paper/main.log

@@ -7,6 +7,7 @@ This is a survey companion, not a benchmark submission or a claim of independent
 | Artifact | Location | Verification |
 | --- | --- | --- |
 | Manuscript draft | [`MH_survey.pdf`](MH_survey.pdf) | Open the PDF and compare its title and figure references |
+| Buildable manuscript source | [`paper/`](paper) | Run `latexmk -pdf -halt-on-error main.tex` from `paper/` |
 | Figure source | [`mh_figures/source/make_figures.py`](mh_figures/source/make_figures.py) | Run the rebuild commands in [`mh_figures/README.md`](mh_figures/README.md) |
 | Survey catalog | [`taxonomy/`](taxonomy) | Run `python3 scripts/validate_catalog.py` |
 

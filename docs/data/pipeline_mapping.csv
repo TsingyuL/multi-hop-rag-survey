@@ -1,28 +1,25 @@
-citation_key,pipeline_stage,primary_estimand,intervention,observable_diagnostic,common_confounder,status
-sun2018graftnet,retrieve,observability,Question-specific graph retrieval,chain or evidence recall,Incomplete graph coverage,seeded
-sun2018graftnet,read_fuse,fusion,Graph message passing,answer with supporting evidence,Retriever and reader errors are coupled,seeded
-sun2019pullnet,retrieve,observability,Iterative graph expansion,evidence recall at each iteration,Extra iterations change compute budget,seeded
-min2019decomprc,end_to_end,utility,Question decomposition and global rescoring,answer accuracy by decomposition,Subquestion quality and rescoring are coupled,reviewed
-qiu2019dfgn,read_fuse,fusion,Dynamic graph fusion,answer and supporting-fact accuracy,Graph construction quality confounds fusion quality,reviewed
-asai2020pathretriever,retrieve,observability,Sequential graph-path retrieval,evidence recall by hop,Path supervision and corpus graph quality are coupled,reviewed
-perez2020onus,end_to_end,utility,Unsupervised one-to-many question decomposition,answer accuracy and decomposition quality,Subquestion fluency does not guarantee answerable decomposition,reviewed
-feng2020mhgrn,read_fuse,fusion,Multi-hop relational graph reasoning,answer accuracy and rationale inspection,Subgraph extraction quality limits observed reasoning,reviewed
-fang2020hgn,read_fuse,fusion,Hierarchical graph propagation,answer and supporting-fact accuracy,Paragraph selection changes the reader input,reviewed
-izacard2021fid,read_fuse,fusion,Fusion-in-decoder attention,conditional answer accuracy,Retrieved passages may already encode ranking gains,seeded
-asai2021mdr,retrieve,observability,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,seeded
-trivedi2023ircot,end_to_end,observability,Reasoning-conditioned retrieval,retrieval recall by hop,Generated thoughts can leak answer priors,seeded
-jiang2023flare,retrieve,observability,Uncertainty-triggered active retrieval,retrieval timing and conditional answer quality,Uncertainty estimates and retrieval frequency are coupled,needs_review
-asai2023selfrag,verify,faithfulness,Self-reflective critique,citation or support verification,Self-critique is not a causal test,seeded
-sarthi2024raptor,order,exposure,Hierarchical context organization,position-sensitive conditional accuracy,Granularity also changes retrieval recall,seeded
-qiu2019dfgn,read_fuse,fusion,Dynamic graph fusion,answer and supporting-fact accuracy,Graph construction quality confounds fusion quality,reviewed
-asai2020pathretriever,retrieve,observability,Sequential graph-path retrieval,evidence recall by hop,Path supervision and corpus graph quality are coupled,reviewed
-fang2020hgn,read_fuse,fusion,Hierarchical graph propagation,answer and supporting-fact accuracy,Paragraph selection changes the reader input,reviewed
-khattab2021baleen,end_to_end,observability,Condensed retrieval across hops,chain recall and end-task score,Condensation may alter both evidence exposure and retrieval query quality,reviewed
-fu2021rerc,end_to_end,fusion,Decomposition reader and comparison,answer and supporting-fact accuracy,Decomposition and comparison errors are coupled,reviewed
-yao2023react,end_to_end,joint,Interleaved reasoning and actions,task success and trajectory inspection,Reasoning traces are not by themselves evidence of causal grounding,reviewed
-yan2024crag,verify,utility,Retrieved-context evaluation and correction,conditional answer quality;retrieval quality,Web augmentation changes the underlying evidence corpus,reviewed
-jeong2024adaptiverag,end_to_end,joint,Complexity-aware retrieval strategy selection,accuracy-cost frontier,Question complexity labels may encode dataset-specific difficulty,reviewed
-zhang2024beamretrieval,retrieve,observability,Beam search over partial evidence paths,chain recall across hops,Beam width changes both compute and the candidate pool,reviewed
-edge2024graphrag,order,exposure,Community-summary graph indexing,answer comprehensiveness and diversity,Graph construction and summary quality jointly affect evidence exposure,reviewed
-gutierrez2024hipporag,retrieve,observability,Graph-memory personalized PageRank,evidence recall and accuracy-cost frontier,Entity extraction quality changes the graph and retrieval results,reviewed
-zhuang2024efficientrag,retrieve,observability,Decomposition with relevance pruning,evidence recall and retrieval cost,Pruning can trade recall for efficiency,reviewed
+citation_key,pipeline_stage,primary_estimand,mechanism_signal,intervention,observable_diagnostic,common_confounder,status
+sun2018graftnet,retrieve,observability,,Question-specific graph retrieval,chain or evidence recall,Incomplete graph coverage,seeded
+sun2018graftnet,read_fuse,fusion,,Graph message passing,answer with supporting evidence,Retriever and reader errors are coupled,seeded
+sun2019pullnet,retrieve,observability,,Iterative graph expansion,evidence recall at each iteration,Extra iterations change compute budget,seeded
+min2019decomprc,end_to_end,selection,conditional_utility,Question decomposition and global rescoring,answer accuracy by decomposition,Subquestion quality and rescoring are coupled,reviewed
+qiu2019dfgn,read_fuse,fusion,,Dynamic graph fusion,answer and supporting-fact accuracy,Graph construction quality confounds fusion quality,reviewed
+asai2020pathretriever,retrieve,observability,,Sequential graph-path retrieval,evidence recall by hop,Path supervision and corpus graph quality are coupled,reviewed
+perez2020onus,end_to_end,selection,conditional_utility,Unsupervised one-to-many question decomposition,answer accuracy and decomposition quality,Subquestion fluency does not guarantee answerable decomposition,reviewed
+feng2020mhgrn,read_fuse,fusion,,Multi-hop relational graph reasoning,answer accuracy and rationale inspection,Subgraph extraction quality limits observed reasoning,reviewed
+fang2020hgn,read_fuse,fusion,,Hierarchical graph propagation,answer and supporting-fact accuracy,Paragraph selection changes the reader input,reviewed
+izacard2021fid,read_fuse,fusion,,Fusion-in-decoder attention,conditional answer accuracy,Retrieved passages may already encode ranking gains,seeded
+asai2021mdr,retrieve,observability,,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,seeded
+trivedi2023ircot,end_to_end,observability,,Reasoning-conditioned retrieval,retrieval recall by hop,Generated thoughts can leak answer priors,seeded
+jiang2023flare,retrieve,observability,,Uncertainty-triggered active retrieval,retrieval timing and conditional answer quality,Uncertainty estimates and retrieval frequency are coupled,needs_review
+asai2023selfrag,verify,faithfulness,,Self-reflective critique,citation or support verification,Self-critique is not a causal test,seeded
+sarthi2024raptor,order,exposure,,Hierarchical context organization,position-sensitive conditional accuracy,Granularity also changes retrieval recall,seeded
+khattab2021baleen,end_to_end,observability,,Condensed retrieval across hops,chain recall and end-task score,Condensation may alter both evidence exposure and retrieval query quality,reviewed
+fu2021rerc,end_to_end,fusion,,Decomposition reader and comparison,answer and supporting-fact accuracy,Decomposition and comparison errors are coupled,reviewed
+yao2023react,end_to_end,joint,,Interleaved reasoning and actions,task success and trajectory inspection,Reasoning traces are not by themselves evidence of causal grounding,reviewed
+yan2024crag,verify,selection,conditional_utility,Retrieved-context evaluation and correction,conditional answer quality;retrieval quality,Web augmentation changes the underlying evidence corpus,reviewed
+jeong2024adaptiverag,end_to_end,joint,,Complexity-aware retrieval strategy selection,accuracy-cost frontier,Question complexity labels may encode dataset-specific difficulty,reviewed
+zhang2024beamretrieval,retrieve,observability,,Beam search over partial evidence paths,chain recall across hops,Beam width changes both compute and the candidate pool,reviewed
+edge2024graphrag,order,exposure,,Community-summary graph indexing,answer comprehensiveness and diversity,Graph construction and summary quality jointly affect evidence exposure,reviewed
+gutierrez2024hipporag,retrieve,observability,,Graph-memory personalized PageRank,evidence recall and accuracy-cost frontier,Entity extraction quality changes the graph and retrieval results,reviewed
+zhuang2024efficientrag,retrieve,observability,,Decomposition with relevance pruning,evidence recall and retrieval cost,Pruning can trade recall for efficiency,reviewed

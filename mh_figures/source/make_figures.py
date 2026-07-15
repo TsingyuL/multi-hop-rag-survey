@@ -23,6 +23,7 @@ plt.rcParams.update({
 
 COL = {
     'obs':'#2F6BFF',      # blue
+    'sel':'#2CA25F',      # green: selection preservation estimand
     'util':'#2CA25F',     # green
     'exp':'#F28E2B',      # orange
     'fus':'#7B61FF',      # purple
@@ -40,7 +41,7 @@ COL = {
 }
 EST = [
     ('obs','Observability'),
-    ('util','Utility'),
+    ('sel','Selection'),
     ('exp','Exposure'),
     ('fus','Fusion'),
     ('faith','Faithfulness'),
@@ -223,7 +224,7 @@ def method_pill(ax,x,y,w,label,key=None,fs=7.2):
 
 def fig3():
     fig, ax = setup((7.5,4.8))
-    title(ax, 'F3. Graph-based methods as chain-structure estimators',
+    title(ax, 'Graph-based methods as chain-structure estimators',
           'Graphs improve observability through expansion and fusion through path constraints.')
     legend_estimands(ax, 9.0, 9.55, compact=True)
     # miniature graph at left
@@ -238,30 +239,20 @@ def fig3():
     arrow(ax,(1.15,6.8),(1.45,3.1),color=COL['obs'],lw=2.2,rad=-0.18)
     ax.text(1.6,2.05,'path/subgraph\ncan be audited',fontsize=7.6,color=COL['mid'],ha='center')
     # lanes
-    lanes=[('Question-specific heterogeneous graphs','GRAFT-Net','PullNet','DFGN / HGN','SAE / HDE'),
-           ('LM-GNN coupled reasoners','QA-GNN','GreaseLM','UniKGQA','ReaRev / NSM'),
-           ('LLM-built and LLM-traversed graphs','ToG / ToG 2.0','RoG','GraphRAG','HippoRAG / LightRAG')]
+    lanes=[('Question-specific heterogeneous graphs','Build and expand query-conditioned evidence subgraphs','GRAFT-Net','PullNet','DFGN / HGN','SAE / HDE'),
+           ('LM-GNN coupled reasoners','Couple language representations with graph message passing','QA-GNN','GreaseLM','UniKGQA','ReaRev / NSM'),
+           ('LLM-built and LLM-traversed graphs','Construct, retrieve, and traverse graph memories with LLM-guided operations','ToG / ToG 2.0','RoG','GraphRAG','HippoRAG / LightRAG')]
     ys=[7.0,4.85,2.7]
-    for li,(title_lane,*methods) in enumerate(lanes):
+    for li,(title_lane,description,*methods) in enumerate(lanes):
         y=ys[li]
-        rounded(ax,(3.05,y-0.58),12.4,1.38,'',fc='#FFFFFF',ec='#E0E6EF',lw=0.8,r=0.15)
-        ax.text(3.25,y+0.40,title_lane,fontsize=8.2,fontweight='bold',color=COL['dark'],ha='left')
+        rounded(ax,(3.05,y-0.66),12.4,1.50,'',fc='#FFFFFF',ec='#E0E6EF',lw=0.8,r=0.15)
+        ax.text(3.25,y+0.43,title_lane,fontsize=8.0,fontweight='bold',color=COL['dark'],ha='left')
+        ax.text(3.25,y+0.14,description,fontsize=6.1,color=COL['mid'],ha='left')
         x0=3.35
         for j,m in enumerate(methods):
-            method_pill(ax,x0+j*2.75,y-0.25,2.1,m,key=['obs','fus','fus','faith'][min(j,3)])
+            method_pill(ax,x0+j*2.75,y-0.46,2.1,m,key=['obs','fus','fus','faith'][min(j,3)],fs=6.2)
             if j>0:
                 arrow(ax,(x0+j*2.75-0.28,y+0.01),(x0+j*2.75-0.70,y+0.01),color=COL['gray'],style='<|-',lw=0.8,mutation_scale=7)
-        # right badges
-        bx=13.1
-        if li==0:
-            badge(ax,bx,y+0.12,'obs','obs',fs=6.8)
-            badge(ax,bx+0.65,y+0.12,'fus','fus',fs=6.8)
-        elif li==1:
-            badge(ax,bx,y+0.12,'fus','fus',fs=6.8)
-            badge(ax,bx+0.65,y+0.12,'faith','faith',fs=6.8)
-        else:
-            badge(ax,bx,y+0.12,'obs','obs',fs=6.8)
-            badge(ax,bx+0.65,y+0.12,'faith','faith',fs=6.8)
     rounded(ax,(3.05,0.65),12.4,0.65,
             'Takeaway: graph quality is an upstream bottleneck - missing nodes or noisy links cap every downstream gain.',
             fc='#FAFBFD',ec='#E0E6EF',lw=0.8,r=0.12,text_kw={'fontsize':7.8,'color':COL['dark']})
@@ -271,37 +262,31 @@ def fig3():
 
 def fig4():
     fig, ax = setup((7.5,4.8))
-    title(ax, 'F4. Retrieval methods along an adaptivity frontier',
-          'Higher adaptivity increases bridge observability, but also raises noise, latency, and attribution cost.')
-    legend_estimands(ax, 9.1, 9.55, compact=True)
+    title(ax, 'Retrieval methods by adaptivity and retrieval-state richness',
+          'The map describes control and state representation; it does not assert a performance ordering.')
     # axes
     ax.add_line(Line2D([1.0,14.7],[1.1,1.1],color=COL['gray'],lw=1.0))
     ax.add_line(Line2D([1.0,1.0],[1.1,8.2],color=COL['gray'],lw=1.0))
     arrow(ax,(1.0,1.1),(14.9,1.1),color=COL['gray'],lw=1.0)
     arrow(ax,(1.0,1.1),(1.0,8.4),color=COL['gray'],lw=1.0)
     ax.text(14.85,0.65,'adaptivity / control',fontsize=8,color=COL['mid'],ha='right')
-    ax.text(0.45,8.4,'chain observability',fontsize=8,color=COL['mid'],rotation=90,ha='center',va='top')
-    # frontier curve
-    pts=np.array([[1.7,2.0],[4.7,3.6],[8.0,5.2],[11.1,6.2],[14.1,6.9]])
-    for i in range(len(pts)-1): arrow(ax,pts[i],pts[i+1],color=COL['obs'],lw=2.0,rad=0.02)
-    # noise/cost shadow
-    ax.add_patch(Polygon([[1.5,1.1],[14.6,1.1],[14.6,3.4],[11.0,2.7],[7.8,2.1],[4.5,1.55]],closed=True,
-                         facecolor='#FFF4E8',edgecolor='none',alpha=0.9,zorder=0))
-    ax.text(11.6,2.05,'noise + cost grow',fontsize=8,color=COL['exp'],ha='center')
+    ax.text(0.45,8.4,'retrieval-state richness',fontsize=8,color=COL['mid'],rotation=90,ha='center',va='top')
+    for y in [3.45,5.75]:
+        ax.add_line(Line2D([1.02,14.65],[y,y],color='#E5EAF2',lw=0.8,linestyle='dashed'))
     # method clusters
     clusters=[('single-shot\nproposal pool',2.5,2.25,['BM25','DPR','ColBERT','BGE'],['obs','obs','obs','obs']),
-              ('iterative / interleaved\nbridge discovery',5.7,3.85,['MDR','Baleen','IRCoT','FLARE'],['obs','util','obs','util']),
-              ('hierarchical / long-context\ngranularity shift',9.0,5.35,['RAPTOR','LongRAG','HyDE','HiQA'],['exp','exp','obs','exp']),
-              ('agentic / RL search\npolicy learning',12.35,6.45,['Search-R1','DeepRAG','RAG-Gym','PAR-RAG'],['obs','obs','util','faith'])]
+              ('iterative / interleaved\nbridge state',5.7,4.85,['MDR','Baleen','IRCoT','FLARE'],['obs','sel','obs','sel']),
+              ('hierarchical / graph\nmemory state',9.0,6.65,['RAPTOR','GraphRAG','HippoRAG','LongRAG'],['exp','obs','obs','exp']),
+              ('agentic / RL\npolicy state',12.35,4.95,['Search-R1','DeepRAG','RAG-Gym','PAR-RAG'],['obs','obs','sel','faith'])]
     for title_c,x,y,methods,ks in clusters:
         rounded(ax,(x-1.35,y-0.95),2.7,1.85,'',fc='white',ec=mcolors.to_rgba(COL['obs'],0.35),lw=1.0,r=0.17)
         ax.text(x,y+0.64,title_c,fontsize=7.5,fontweight='bold',ha='center',color=COL['dark'])
         for i,m in enumerate(methods):
             xx=x-1.05+(i%2)*1.1; yy=y+0.05-(i//2)*0.46
-            method_pill(ax,xx,yy,0.95,m,key=ks[i],fs=6.4)
+            method_pill(ax,xx,yy,1.05,m,key=ks[i],fs=5.5)
     # diagnostics strip
     rounded(ax,(1.15,8.05),13.7,0.62,
-            'Report both sides of the tradeoff: pool support/path recall at Top-N  +  distractor ratio / calls / latency.',
+            'Vertical position encodes retained retrieval state, not answer quality or chain observability.',
             fc='#FAFBFD',ec='#E0E6EF',lw=0.8,r=0.12,text_kw={'fontsize':7.7,'color':COL['dark']})
     save(fig,'F4_retrieval_adaptivity_frontier')
 
@@ -326,7 +311,7 @@ def fig5():
     for i,x in enumerate(subx):
         rounded(ax,(x-0.72,4.65),1.44,0.75,fr'$e^\star_{i+1}$',fc=mcolors.to_rgba(COL['obs'],0.06),ec=COL['obs'],lw=1.0,r=0.16,text_kw={'fontsize':9,'color':COL['obs']})
         arrow(ax,(x,6.52),(x,5.42),color=COL['obs'],lw=1.4)
-    rounded(ax,(7.05,2.65),6.3,1.05,'composer / reader\n$G(q,\pi(E_K))$',fc=mcolors.to_rgba(COL['fus'],0.07),ec=COL['fus'],lw=1.1,r=0.18,text_kw={'fontsize':8.8,'color':COL['dark'],'fontweight':'bold'})
+    rounded(ax,(7.05,2.65),6.3,1.05,'composer / reader\n$G(q,\\pi(E_K))$',fc=mcolors.to_rgba(COL['fus'],0.07),ec=COL['fus'],lw=1.1,r=0.18,text_kw={'fontsize':8.8,'color':COL['dark'],'fontweight':'bold'})
     for x in subx:
         arrow(ax,(x,4.62),(9.8,3.72),color=COL['fus'],lw=1.1,rad=0.05*(x-9.8))
     rounded(ax,(8.95,1.28),2.45,0.75,'answer',fc='white',ec=COL['faith'],lw=1.1,r=0.16,text_kw={'fontsize':8.8,'color':COL['faith'],'fontweight':'bold'})
@@ -355,7 +340,7 @@ def fig6():
           'The topology changes how evidence is composed, sampled, executed, or hidden.')
     legend_estimands(ax, 9.1, 9.55, compact=True)
     # central reader
-    rounded(ax,(6.35,4.1),3.3,1.25,'reader fusion\n$G(q,\pi(E_K))$',fc=mcolors.to_rgba(COL['fus'],0.08),ec=COL['fus'],lw=1.2,r=0.18,text_kw={'fontsize':9,'fontweight':'bold','color':COL['dark']})
+    rounded(ax,(6.35,4.1),3.3,1.25,'reader fusion\n$G(q,\\pi(E_K))$',fc=mcolors.to_rgba(COL['fus'],0.08),ec=COL['fus'],lw=1.2,r=0.18,text_kw={'fontsize':9,'fontweight':'bold','color':COL['dark']})
     # topologies around
     blocks=[('Linear CoT','CoT, Zero-shot CoT\nAuto-CoT',1.0,6.65,'fus'),
             ('Diverse samples','Self-Consistency\nmajority over traces',5.15,6.9,'fus'),
@@ -436,7 +421,7 @@ def fig8():
     arrow(ax,(12.15,8.0),(13.15,7.07),color=COL['exp'],lw=1.3,ls='dashed',rad=-0.18)
     ax.text(13.42,7.55,'shortcut / leakage',fontsize=7.2,color=COL['exp'],ha='left')
     # interventions
-    rounded(ax,(1.05,3.55),4.2,1.35,'Deletion test\nremove $e^\star_b$ and measure answer change',fc=mcolors.to_rgba(COL['faith'],0.07),ec=COL['faith'],lw=1.0,r=0.18,text_kw={'fontsize':8.2,'color':COL['dark']})
+    rounded(ax,(1.05,3.55),4.2,1.35,'Deletion test\nremove $e^\\star_b$ and measure answer change',fc=mcolors.to_rgba(COL['faith'],0.07),ec=COL['faith'],lw=1.0,r=0.18,text_kw={'fontsize':8.2,'color':COL['dark']})
     rounded(ax,(6.05,3.55),4.45,1.35,'Counterfactual bridge\nswap bridge value; answer should shift',fc=mcolors.to_rgba(COL['faith'],0.07),ec=COL['faith'],lw=1.0,r=0.18,text_kw={'fontsize':8.2,'color':COL['dark']})
     rounded(ax,(11.25,3.55),3.45,1.35,'Citation audit\nnecessary but not sufficient',fc='#FAFBFD',ec='#E0E6EF',lw=0.9,r=0.18,text_kw={'fontsize':8.2,'color':COL['dark']})
     arrow(ax,(3.15,4.9),(3.75,6.05),color=COL['faith'],lw=1.1,rad=-0.1)
@@ -455,7 +440,7 @@ def fig8():
 
 def fig9():
     fig, ax = setup((7.6,5.3), xlim=(0,16), ylim=(0,11))
-    title(ax, 'F9. Benchmark-estimand alignment matrix',
+    title(ax, 'Benchmark-estimand alignment matrix',
           'Benchmarks are diagnostic instruments; they do not all test the same latent event.')
     # matrix
     rows=['Supporting-fact QA\nHotpotQA, 2Wiki, IIRC',
@@ -467,7 +452,7 @@ def fig9():
           'RAG-specific diagnostics\nFRAMES, MultiHop-RAG',
           'Counterfactual QA\nCofCA variants',
           'Agentic / tool-use\nToolBench, WebArena']
-    cols=[('obs','Observability'),('util','Selection\nutility'),('exp','Exposure'),('fus','Fusion'),('faith','Faithfulness')]
+    cols=[('obs','Observability'),('sel','Selection\npreservation'),('exp','Exposure'),('fus','Fusion'),('faith','Faithfulness')]
     M=np.array([
         [3,2,1,1,1],
         [3,2,1,1,1],
@@ -480,7 +465,7 @@ def fig9():
         [2,2,1,2,2],
     ])
     x0,y0=4.35,1.0
-    cw,ch=2.15,0.82
+    cw,ch=2.15,0.74
     # column headers
     for j,(k,c) in enumerate(cols):
         x=x0+j*cw
@@ -501,7 +486,7 @@ def fig9():
     rounded(ax,(x0-0.12,y0-0.10),len(cols)*cw+0.05,len(rows)*ch+1.05,'',fc='none',ec='#DDE5EF',lw=0.8,r=0.10)
     # note
     rounded(ax,(0.45,0.22),14.95,0.5,'Strong empirical coverage should include at least one observability/shortcut benchmark and one faithfulness or counterfactual diagnostic.',
-            fc='#FAFBFD',ec='#E0E6EF',lw=0.8,r=0.12,text_kw={'fontsize':7.5,'color':COL['dark']})
+            fc='#FAFBFD',ec='#E0E6EF',lw=0.8,r=0.12,text_kw={'fontsize':6.6,'color':COL['dark']})
     save(fig,'F9_benchmark_estimand_alignment')
 
 # F10
@@ -572,7 +557,7 @@ def mini_legend(ax, x, y):
 
 def fig1():
     fig, ax = setup((7.5,4.5))
-    title(ax, 'F1. Latent evidence-chain inference view',
+    title(ax, 'Latent evidence-chain inference view',
           'Observable RAG objects are noisy projections of an unobserved support chain.')
     # legend strip
     mini_legend(ax, 8.45, 9.05)
@@ -612,11 +597,11 @@ def fig1():
 
 def fig2():
     fig, ax = setup((7.5,4.45))
-    title(ax, 'F2. Bottleneck coupling among estimands',
+    title(ax, 'Bottleneck coupling among estimands',
           'A single weak factor caps end-to-end success even when other modules are strong.')
     theta=[0.82,0.67,0.74,0.51,0.63]
-    keys=['obs','util','exp','fus','faith']
-    names=['pool\nobservability','conditional\nutility','reader\nexposure','fusion\nreliability','causal\nfaithfulness']
+    keys=['obs','sel','exp','fus','faith']
+    names=['pool\nobservability','selection\npreservation','reader\nexposure','fusion\nreliability','causal\nfaithfulness']
     xs=np.linspace(1.75,12.5,5)
     prod=1.0
     prev=(0.72,7.25)
@@ -642,7 +627,7 @@ def fig2():
     ax.text(xs[3],1.86,'visible bottleneck',fontsize=7.2,color=COL['fus'],ha='center',fontweight='bold')
     # theorem strip - separated cells
     rounded(ax,(0.62,0.45),14.85,0.92,'',fc='#FAFBFD',ec='#DDE5EF',lw=0.9,r=0.16)
-    ax.text(0.92,1.06,'Theorem 1',fontsize=8.2,fontweight='bold',color=COL['dark'])
+    ax.text(0.92,1.06,'Proposition 1',fontsize=8.2,fontweight='bold',color=COL['dark'])
     ax.text(4.9,0.90,'$P(\\hat a=a^\\star) \\leq \\min_i\\theta_i$',fontsize=10.0,color=COL['dark'],ha='center',va='center')
     ax.text(10.9,0.90,'$\\partial P / \\partial\\theta_i \\leq \\prod_{j\\ne i}\\theta_j$',fontsize=10.0,color=COL['dark'],ha='center',va='center')
     save(fig,'F2_estimand_bottleneck_flow')
@@ -700,7 +685,7 @@ def fig7():
         method_pill(ax,x,y,2.18,a,key=k,fs=6.9)
     rounded(ax,(10.35,7.60),4.75,0.88,'Accuracy gain is unattributed unless\nyou report P/S/O/U/T diagnostics.',fc='#FFF8F7',ec=COL['faith'],lw=0.9,r=0.16,text_kw={'fontsize':7.5,'color':COL['dark']})
     rounded(ax,(0.92,0.70),14.5,0.90,'',fc='#FFFFFF',ec='#E0E6EF',lw=0.8,r=0.16)
-    ax.text(1.2,1.15,'$R_T=\\mathbf{1}\{\\hat a=a^\\star\}-\\lambda_c\\sum_t cost(u_t)-\\lambda_f\\mathbf{1}\{\\hat a\\not\\leftarrow C^\\star\}$',fontsize=9.0,color=COL['dark'],ha='left',va='center')
+    ax.text(1.2,1.15,'$R_T=\\mathbf{1}\\{\\hat a=a^\\star\\}-\\lambda_c\\sum_t cost(u_t)-\\lambda_f\\mathbf{1}\\{\\hat a\\not\\leftarrow C^\\star\\}$',fontsize=9.0,color=COL['dark'],ha='left',va='center')
     save(fig,'F7_agentic_rag_mdp')
 
 def fig8():
@@ -741,7 +726,7 @@ def fig8():
 # --- second final pass for F1 and F10 ---
 def fig1():
     fig, ax = setup((7.5,4.5))
-    title(ax, 'F1. Latent evidence-chain inference view',
+    title(ax, 'Latent evidence-chain inference view',
           'Observable RAG objects are noisy projections of an unobserved support chain.')
     # latent/observable layers
     rounded(ax,(0.30,5.80),15.4,2.55,'',fc=COL['latent'],ec='#D6DEE8',lw=1.0,r=0.15,ls='dashed',z=0)
@@ -750,19 +735,19 @@ def fig1():
     ax.text(0.55,4.48,'observable trace',fontsize=8.5,color=COL['mid'],fontweight='bold')
     # estimand legend inside latent layer, not title
     xleg=10.25; yleg=8.08
-    for i,(k,lbl) in enumerate([('obs','obs'),('util','util'),('exp','exp'),('fus','fus'),('faith','faith')]):
+    for i,(k,lbl) in enumerate([('obs','obs'),('sel','sel'),('exp','exp'),('fus','fus'),('faith','faith')]):
         ax.add_patch(Circle((xleg+i*0.84,yleg),0.055,color=COL[k],zorder=4))
         ax.text(xleg+i*0.84+0.09,yleg,lbl,fontsize=6.4,color=COL['mid'],va='center')
     # latent chain nodes
-    xs=[1.85,4.65,7.45,10.25]
-    labs=['$e^\\star_1$\nbiography','$e^\\star_2$\nbridge','$e^\\star_3$\nidentity','$e^\\star_4$\nanswer']
+    xs=[1.65,4.55,7.45,10.35]
+    labs=['$e^\\star_1$\ncast fact','$e^\\star_2$\nShirley Temple','$e^\\star_3$\nbiography','$e^\\star_4$\nChief of Protocol']
     for i,x in enumerate(xs):
-        rounded(ax,(x-0.58,6.67),1.16,0.74,labs[i],fc='white',ec=COL['gray'],lw=1.1,r=0.16,ls='dashed',text_kw={'fontsize':7.3})
+        rounded(ax,(x-0.86,6.67),1.72,0.74,labs[i],fc='white',ec=COL['gray'],lw=1.1,r=0.16,ls='dashed',text_kw={'fontsize':6.7})
         if i>0:
-            arrow(ax,(xs[i-1]+0.60,7.04),(x-0.60,7.04),color=COL['gray'],lw=1.3,ls='dashed')
+            arrow(ax,(xs[i-1]+0.88,7.04),(x-0.88,7.04),color=COL['gray'],lw=1.3,ls='dashed')
     ax.text(12.0,7.02,'$C^\\star=(e^\\star_1,\\ldots,e^\\star_m)$',fontsize=9.2,color=COL['dark'],va='center')
     # projection arrows with labels on top of observable layer
-    proj=[(3.50,'obs','$\\theta_{obs}$','pool'),(6.25,'util','$\\theta_{util}$','budget'),(9.10,'exp','$\\theta_{exp}$','ordering'),(12.05,'faith','$\\theta_{faith}$','causal use')]
+    proj=[(3.50,'obs','$\\theta_{obs}$','pool'),(6.25,'sel','$\\theta_{sel}$','selection'),(9.10,'exp','$\\theta_{exp}$','ordering'),(12.05,'faith','$\\theta_{faith}$','causal use')]
     for x,k,t,lab in proj:
         arrow(ax,(x,6.66),(x,4.58),color=COL[k],lw=1.15,ls='dotted',style='-|>',mutation_scale=9)
         ax.text(x,4.30,t+'  '+lab,fontsize=6.9,color=COL[k],ha='center',fontweight='bold')
@@ -770,15 +755,15 @@ def fig1():
     modules=[('q\nquestion',0.95,3.12,1.08,0.70),('$L_N$\npool',3.00,3.02,1.32,0.86),('$E_K$\ncontext',5.75,3.02,1.42,0.86),('$\\pi(E_K)$\nordering',8.60,3.02,1.52,0.86),('$\\hat a$\nanswer',11.65,3.02,1.42,0.86)]
     for label,x,y,w,h in modules:
         rounded(ax,(x,y),w,h,label,fc='white',ec=COL['edge'],lw=1.15,r=0.16,text_kw={'fontsize':7.8})
-    flow=[((2.05,3.47),(2.98,3.47),'obs','$R_N$'),((4.35,3.47),(5.72,3.47),'util','$S_K$'),((7.20,3.47),(8.57,3.47),'exp','order'),((10.15,3.47),(11.62,3.47),'fus','$G$')]
+    flow=[((2.05,3.47),(2.98,3.47),'obs','$R_N$'),((4.35,3.47),(5.72,3.47),'sel','$S_K$'),((7.20,3.47),(8.57,3.47),'exp','order'),((10.15,3.47),(11.62,3.47),'fus','$G$')]
     for p1,p2,k,lab in flow:
         arrow(ax,p1,p2,color=COL[k],lw=1.7)
         ax.text((p1[0]+p2[0])/2,3.78,lab,fontsize=7.2,color=COL[k],ha='center',fontweight='bold')
-    notes=[('absence\nmissing bridge',2.1,'obs'),('selection bias\nunder K',5.1,'util'),('lost-in-middle\n/ diffusion',8.35,'exp'),('post-hoc\nrationalization',11.65,'faith')]
+    notes=[('absence\nmissing bridge',2.1,'obs'),('selection bias\nunder K',5.1,'sel'),('lost-in-middle\n/ diffusion',8.35,'exp'),('post-hoc\nrationalization',11.65,'faith')]
     for text,x,k in notes:
-        rounded(ax,(x-0.80,1.74),1.60,0.64,text,fc=mcolors.to_rgba(COL[k],0.10),ec=mcolors.to_rgba(COL[k],0.45),lw=0.8,r=0.11,text_kw={'fontsize':6.7,'color':COL['dark']})
+        rounded(ax,(x-0.95,1.74),1.90,0.64,text,fc=mcolors.to_rgba(COL[k],0.10),ec=mcolors.to_rgba(COL[k],0.45),lw=0.8,r=0.11,text_kw={'fontsize':6.3,'color':COL['dark']})
     rounded(ax,(0.55,0.28),14.85,0.55,
-            '$P(\\hat a=a^\\star) \\approx P(P)P(S|P)P(O|S)P(U|O)P(T|U)$',fc='#FBFCFE',ec='#E5EAF2',lw=0.8,r=0.12,
+            '$P(Y_g)=\\theta_{obs}\\theta_{sel}\\theta_{exp}\\theta_{fus}\\theta_{faith}$',fc='#FBFCFE',ec='#E5EAF2',lw=0.8,r=0.12,
             text_kw={'fontsize':8.8,'color':COL['dark']})
     save(fig,'F1_latent_chain_pipeline')
 

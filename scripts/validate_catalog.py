@@ -12,7 +12,8 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 TAXONOMY = ROOT / "taxonomy"
-ALLOWED_ESTIMANDS = {"observability", "utility", "exposure", "fusion", "faithfulness", "joint"}
+ALLOWED_ESTIMANDS = {"observability", "selection", "exposure", "fusion", "faithfulness", "joint"}
+ALLOWED_MECHANISM_SIGNALS = {"", "conditional_utility"}
 ALLOWED_FAMILIES = {
     "retrieval", "graph_kg", "decomposition", "fusion_reader", "llm_reasoning",
     "agentic", "hybrid", "benchmark", "analysis",
@@ -64,7 +65,7 @@ def main() -> int:
     methods = read_csv(
         "methods.csv",
         {"citation_key", "title", "year", "architectural_family", "primary_estimand",
-         "secondary_estimands", "evidence_source", "pipeline_stage", "source_url", "status", "notes",
+         "secondary_estimands", "mechanism_signal", "evidence_source", "pipeline_stage", "source_url", "status", "notes",
          "venue", "tasks", "datasets", "code_url"},
     )
     benchmarks = read_csv(
@@ -74,7 +75,7 @@ def main() -> int:
     )
     mappings = read_csv(
         "pipeline_mapping.csv",
-        {"citation_key", "pipeline_stage", "primary_estimand", "intervention",
+        {"citation_key", "pipeline_stage", "primary_estimand", "mechanism_signal", "intervention",
          "observable_diagnostic", "common_confounder", "status"},
     )
     library = read_csv(
@@ -102,6 +103,7 @@ def main() -> int:
     for filename, rows in (("methods.csv", methods), ("pipeline_mapping.csv", mappings)):
         for number, row in enumerate(rows, start=2):
             require_choice(filename, number, "pipeline_stage", row["pipeline_stage"], ALLOWED_STAGES)
+            require_choice(filename, number, "mechanism_signal", row["mechanism_signal"], ALLOWED_MECHANISM_SIGNALS)
 
     for number, row in enumerate(methods, start=2):
         require_subset("methods.csv", number, "secondary_estimands", row["secondary_estimands"], ALLOWED_ESTIMANDS)
@@ -146,6 +148,18 @@ def main() -> int:
     unmapped_methods = {row["citation_key"] for row in methods} - {row["citation_key"] for row in mappings}
     if unmapped_methods:
         raise ValueError(f"pipeline_mapping.csv is missing method keys: {sorted(unmapped_methods)}")
+
+    mapping_keys = [
+        (
+            row["citation_key"],
+            row["pipeline_stage"],
+            row["primary_estimand"],
+            row["intervention"],
+        )
+        for row in mappings
+    ]
+    if len(mapping_keys) != len(set(mapping_keys)):
+        raise ValueError("pipeline_mapping.csv contains duplicate mappings")
 
     print(f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, {len(mappings)} mappings, {len(library)} imported library records.")
     return 0
