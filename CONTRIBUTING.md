@@ -1,10 +1,10 @@
-# Contributing to the Multi-Hop RAG Survey Paper Repository
+# Contributing to the Multi-Hop RAG Survey Catalog
 
-Thank you for helping keep this paper repository useful and auditable. Contributions may correct manuscript artifacts, add a method or benchmark to the companion catalog, improve a label, or extend repository tooling.
+Thank you for helping keep this survey useful and auditable. Contributions may add a method or benchmark, correct metadata, improve a label, or extend repository tooling.
 
 ## Before opening a pull request
 
-1. For manuscript changes, identify the affected section, figure, or citation. For catalog changes, search existing rows and open issues to avoid duplicates.
+1. Search existing rows and open issues to avoid duplicates.
 2. Add a stable DOI, ACL Anthology, arXiv, or publisher URL. Do not add inaccessible or unverifiable citations.
 3. Classify the work using [`docs/taxonomy.md`](docs/taxonomy.md). If the primary label is debatable, say why in the pull request.
 4. Run `python3 scripts/validate_catalog.py` from the repository root.

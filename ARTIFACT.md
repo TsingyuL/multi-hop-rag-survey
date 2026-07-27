@@ -1,14 +1,13 @@
 # Artifact readiness
 
-This is the artifact note for the paper repository, not a benchmark submission or a claim of independently reproduced experimental results. The repository is centered on the current manuscript source and PDF, with a small companion taxonomy artifact that supports the survey's reporting audit.
+This is a survey companion, not a benchmark submission or a claim of independently reproduced experimental results. It nevertheless follows the artifact-oriented practices relevant to an ACM-style public companion: clear scope, permanent-source metadata, current figure source, catalog schemas, and automated catalog checks.
 
 ## Included artifacts
 
 | Artifact | Location | Verification |
 | --- | --- | --- |
 | Manuscript draft | [`MH_survey.pdf`](MH_survey.pdf) | Open the PDF and compare its title and figure references |
-| Manuscript source | [`paper/main.tex`](paper/main.tex) | Run `latexmk -pdf -outdir=paper/build paper/main.tex` |
-| Figure 1 source | [`paper/figs/fig1_evidence_chain_v3.tex`](paper/figs/fig1_evidence_chain_v3.tex) | Compare with [`paper/figs/fig1_evidence_chain_v3.pdf`](paper/figs/fig1_evidence_chain_v3.pdf) |
+| Figure 1 source | [`mh_figures/source/F1_evidence_chain_v7.tex`](mh_figures/source/F1_evidence_chain_v7.tex) | Run the rebuild command in [`mh_figures/README.md`](mh_figures/README.md) |
 | Survey catalog | [`taxonomy/`](taxonomy) | Run `python3 scripts/validate_catalog.py` |
 | Frozen reporting audit | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Compare counts against `taxonomy/methods.csv` status labels |
 
