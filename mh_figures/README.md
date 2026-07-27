@@ -1,16 +1,12 @@
 # Multi-Hop RAG Survey Figure Package
 
-This package contains vector figures for the survey *Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey*.
+This directory contains the current Figure 1 assets for the survey *Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey*.
 
 ## Folders
 
-- `pdf/`: vector PDFs for LaTeX `\includegraphics`.
-- `pdf/`: committed vector PDFs used by the manuscript.
-- `svg/`: editable vector versions, generated locally when needed.
-- `png/`: high-resolution previews, generated locally when needed.
-- `source/make_figures.py`: Python source used to regenerate most individual figures.
-- `source/F1_evidence_chain_v7.tex`: LaTeX/TikZ source for the manuscript Figure 1 evidence-chain diagram.
-- `rendered_pdf_contact_sheet.png`: render-verified preview of the merged PDF.
+- `pdf/F1_latent_chain_pipeline.pdf`: vector PDF used by the manuscript.
+- `F1_evidence_chain_v7.png`: README preview of the current diagram.
+- `source/F1_evidence_chain_v7.tex`: LaTeX/TikZ source for the current diagram.
 
 ## Visual grammar
 
@@ -22,17 +18,12 @@ This package contains vector figures for the survey *Multi-Hop Retrieval-Augment
 - Latent chain elements: dashed gray boxes
 - Observable system artifacts: solid boxes
 
-## Rebuild
+## Rebuild Figure 1
 
-From the repository root, install the figure dependencies and regenerate the individual figure files:
+From the repository root, regenerate the Figure 1 PDF with LaTeX:
 
 ```bash
-python3 -m pip install -r mh_figures/requirements.txt
-python3 mh_figures/source/make_figures.py
+latexmk -pdf -outdir=mh_figures/pdf mh_figures/source/F1_evidence_chain_v7.tex
 ```
 
-The generator writes to this directory, not to a machine-specific temporary path.
-
-## Recommended LaTeX usage
-
-Copy `pdf/` into your project as `figures/`, then update the paths in `latex/figures.tex` from `pdf/...` to `figures/...` if needed.
+The committed `MH_survey.pdf` already includes the current rendered figure.

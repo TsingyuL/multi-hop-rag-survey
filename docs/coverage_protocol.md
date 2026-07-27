@@ -28,7 +28,7 @@ Suggested query families:
 - `("evidence chain" OR "supporting facts") AND (retrieval OR reasoning)`
 - benchmark names such as `HotpotQA`, `2WikiMultiHopQA`, `MuSiQue`, `HoVer`, and `QASC` combined with retrieval terms.
 
-The tracked [`discovery_queries.csv`](data/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a separate `discovery_queue.csv`; it is intentionally not merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
+The tracked [`discovery_queries.csv`](data/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a local `discovery_queue.csv`; it is intentionally not committed or merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
 
 Searches should be recorded in the pull request or issue that motivates a substantial coverage update. The current seed collection was last curated on **2026-07-11**.
 
@@ -51,22 +51,6 @@ Every method entry must contain:
 - `needs_review`: useful candidate whose placement or scope needs explicit verification before comparative claims rely on it.
 
 `reviewed` does not certify experimental reproducibility, correctness of every result, or superiority over other work.
-
-## Imported full library
-
-[`library_papers.csv`](data/library_papers.csv) is a deduplicated public import of the project's working literature library. It preserves the workbook's original folders in `library_categories`, including broad adjacent areas such as CoT, agentic systems, and surveys. It must not be read as a list of papers that all meet the narrow multi-hop RAG scope. The private source workbook is not committed; a maintainer who has an updated workbook can rebuild the public import with:
-
-```bash
-python3 -m pip install -r scripts/requirements.txt
-python3 scripts/import_library.py --input /path/to/MH_QA_Library.xlsx
-python3 scripts/validate_catalog.py
-python3 scripts/build_catalog_site.py
-```
-
-- `imported` means metadata was carried over from the working library and still needs per-record verification before being promoted to the reviewed catalog.
-- `needs_triage` marks records that were flagged as misclassified or suggested for cleanup in the source library.
-
-The two layers make the hub useful for broad discovery without weakening the validity of comparative claims in the reviewed taxonomy.
 
 ## Taxonomy adjudication
 

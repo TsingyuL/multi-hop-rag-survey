@@ -1,2 +1,0 @@
-# Optional dependency for importing an .xlsx literature workbook.
-openpyxl>=3.1

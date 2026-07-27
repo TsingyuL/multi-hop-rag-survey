@@ -2,9 +2,9 @@
 
 This audit is tied to the manuscript revision dated July 2026. It uses only
 source-verified method records in `taxonomy/methods.csv` and excludes seeded
-examples, needs-review entries, discovery records, and the imported library.
-The denominator is therefore a conservative reviewed seed, not a frequency
-estimate over all multi-hop RAG publications.
+examples, needs-review entries, and local discovery queues. The denominator is
+therefore a conservative reviewed seed, not a frequency estimate over all
+multi-hop RAG publications.
 
 ## Reviewed Denominator
 
@@ -14,7 +14,6 @@ estimate over all multi-hop RAG publications.
 | Source-verified method records used in audit | 20 |
 | Benchmark records in catalog | 6 |
 | Intervention mappings in catalog | 27 |
-| Imported library records awaiting verification | 229 |
 
 ## Primary Target Distribution
 
@@ -43,5 +42,6 @@ mostly secondary or evaluation-side in this seed, which is why future catalog
 releases should explicitly code deletion, conflict, and counterfactual
 evidence-use probes.
 
-The imported library is maintained separately so that broad discovery does
-not become an unsupported taxonomy claim.
+Broad discovery is maintained through query templates and local queues rather
+than a committed imported-paper dump, so the public repository exposes one
+current reviewed version of the taxonomy.

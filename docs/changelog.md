@@ -6,8 +6,10 @@ All notable repository changes are recorded here.
 
 - Synchronized the repository title, citation metadata, taxonomy labels, PDF,
   and Figure 1 assets with the evidence-chain diagnostic manuscript revision.
-- Replaced the former `utility` catalog target with
+- Standardized the catalog target vocabulary around
   `selection_preservation` and regenerated the static catalog payload.
+- Removed stale imported-library and legacy multi-figure artifacts so the
+  repository exposes only the current manuscript version.
 - Added a frozen quantitative reporting audit for the source-verified method
   seed used in the manuscript.
 - Added the initial public repository structure, citation metadata, taxonomy schema, contribution policy, and catalog validation workflow.
