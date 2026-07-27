@@ -1,12 +1,12 @@
 # Taxonomy guide
 
-The survey uses two complementary labels. The **estimand axis** captures the latent quantity a work tries to improve; the **architectural axis** captures how it does so. Neither label is a quality judgment.
+The survey uses two complementary labels. The **evidence-chain target axis** captures the protocol-bound event a work tries to improve; the **architectural axis** captures how it does so. Neither label is a quality judgment.
 
 ## Controlled vocabulary
 
 | Field | Allowed values | Meaning |
 | --- | --- | --- |
-| `primary_estimand` | `observability`, `utility`, `exposure`, `fusion`, `faithfulness`, `joint` | The main latent-chain bottleneck targeted by the work |
+| `primary_estimand` | `observability`, `selection_preservation`, `exposure`, `fusion`, `faithfulness`, `joint` | The main evidence-chain target of the work |
 | `secondary_estimands` | Semicolon-separated values above | Meaningful secondary effects |
 | `architectural_family` | `retrieval`, `graph_kg`, `decomposition`, `fusion_reader`, `llm_reasoning`, `agentic`, `hybrid`, `benchmark`, `analysis` | The work's primary surface design |
 | `evidence_source` | `text`, `knowledge_graph`, `table`, `multimodal`, `hybrid` | Evidence substrate |
@@ -20,7 +20,7 @@ The survey uses two complementary labels. The **estimand axis** captures the lat
 ## Estimand definitions
 
 - **Observability**: increases the chance that every required support unit appears in the retrieved pool.
-- **Utility**: improves selection of useful evidence under a context, cost, or ranking budget.
+- **Selection preservation**: improves whether a valid evidence chain survives the passage, token, or context budget.
 - **Exposure**: makes selected support available at the reader's point of use; it includes ordering, placement, and context organization.
 - **Fusion**: improves correct composition across evidence units conditional on their availability.
 - **Faithfulness**: establishes or improves the causal use of supporting evidence, rather than merely producing a plausible rationale or citation.
@@ -30,7 +30,7 @@ The survey uses two complementary labels. The **estimand axis** captures the lat
 
 1. State the paper's claimed intervention in one sentence.
 2. Select the pipeline stage where that intervention is applied.
-3. Select the primary estimand: the earliest latent bottleneck the central mechanism is intended to affect.
+3. Select the primary estimand: the earliest evidence-chain event the central mechanism is intended to affect.
 4. Add secondary estimands only where the paper supplies an explicit mechanism or evaluation.
 5. Record the benchmark, persistent source URL, and any caveat that limits comparison.
 
@@ -46,4 +46,4 @@ For example, iterative retrieval that expands a pool after resolving a bridge en
 - Every method must have at least one entry in `pipeline_mapping.csv`; this forces an intervention and diagnostic to be stated explicitly.
 - `status` is one of `seeded`, `reviewed`, or `needs_review`.
 
-The seeded rows are examples and starting points—not a claim that the catalog is complete. New additions should follow the same annotation process.
+The seeded rows are examples and starting points, not a claim that the catalog is complete. New additions should follow the same annotation process.

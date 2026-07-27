@@ -10,6 +10,6 @@
 ## Quality bar
 
 - Every catalog entry has a persistent source URL and BibTeX key.
-- Every primary estimand has a short annotation rationale.
+- Every primary evidence-chain target has a short annotation rationale.
 - Claims about coverage or performance identify the dataset and evaluation setting.
 - Published release metadata reflects the final venue record only after it is assigned.

@@ -1,6 +1,6 @@
 # Multi-Hop RAG Survey Figure Package
 
-This package contains 10 vector figures for the survey *Multi-Hop Retrieval-Augmented Reasoning: A Latent Evidence-Chain Inference Perspective*.
+This package contains vector figures for the survey *Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey*.
 
 ## Folders
 
@@ -8,13 +8,14 @@ This package contains 10 vector figures for the survey *Multi-Hop Retrieval-Augm
 - `pdf/`: committed vector PDFs used by the manuscript.
 - `svg/`: editable vector versions, generated locally when needed.
 - `png/`: high-resolution previews, generated locally when needed.
-- `source/make_figures.py`: Python source used to regenerate individual figures.
+- `source/make_figures.py`: Python source used to regenerate most individual figures.
+- `source/F1_evidence_chain_v7.tex`: LaTeX/TikZ source for the manuscript Figure 1 evidence-chain diagram.
 - `rendered_pdf_contact_sheet.png`: render-verified preview of the merged PDF.
 
 ## Visual grammar
 
 - Observability: blue
-- Conditional utility / selection: green
+- Selection preservation: green
 - Exposure / ordering: orange
 - Fusion: purple
 - Faithfulness: red

@@ -70,7 +70,7 @@ The two layers make the hub useful for broad discovery without weakening the val
 
 ## Taxonomy adjudication
 
-The catalog labels the **earliest primary bottleneck deliberately targeted by the central mechanism**, not every metric that improves in an experiment. When a label is genuinely ambiguous, retain the primary label only if the rationale is defensible and use `secondary_estimands` for material downstream effects. Discuss new categories or contested labels in an issue before merging.
+The catalog labels the **earliest evidence-chain event deliberately targeted by the central mechanism**, not every metric that improves in an experiment. When a label is genuinely ambiguous, retain the primary label only if the rationale is defensible and use `secondary_estimands` for material downstream effects. Discuss new categories or contested labels in an issue before merging.
 
 ## Update and correction policy
 

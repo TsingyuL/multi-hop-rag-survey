@@ -40,7 +40,7 @@ COL = {
 }
 EST = [
     ('obs','Observability'),
-    ('util','Utility'),
+    ('util','Selection preservation'),
     ('exp','Exposure'),
     ('fus','Fusion'),
     ('faith','Faithfulness'),
@@ -176,7 +176,7 @@ def fig2():
     # flow base
     theta=[0.82,0.67,0.74,0.51,0.63]
     keys=['obs','util','exp','fus','faith']
-    names=['pool\nobservability','conditional\nutility','reader\nexposure','fusion\nreliability','causal\nfaithfulness']
+    names=['pool\nobservability','selection\npreservation','reader\nexposure','fusion\nreliability','causal\nfaithfulness']
     xs=np.linspace(2.0,12.7,5)
     prod=1.0
     ytop=7.2
@@ -309,7 +309,7 @@ def fig4():
 
 def fig5():
     fig, ax = setup((7.5,4.8))
-    title(ax, 'F5. Decomposition as variance reduction for utility and fusion',
+    title(ax, 'F5. Decomposition as variance reduction for selection preservation and fusion',
           'A plan makes hidden bridge variables explicit, but bad intermediate states propagate.')
     legend_estimands(ax, 9.1, 9.55, compact=True)
     # complex query to planner
@@ -341,7 +341,7 @@ def fig5():
     ax.text(0.95,2.13,'Cascading-error channel',fontsize=8.3,fontweight='bold',color=COL['dark'])
     ax.text(1.0,1.70,r'wrong $q_i$  $\rightarrow$ wrong retrieval  $\rightarrow$ biased fusion',fontsize=7.5,color=COL['mid'])
     # highlight actual estimands
-    badge(ax,6.5,1.43,'util','utility',fs=7)
+    badge(ax,6.5,1.43,'util','selection preservation',fs=7)
     badge(ax,7.55,1.43,'fus','fusion',fs=7)
     badge(ax,8.58,1.43,'faith','faithfulness',fs=7)
     ax.text(9.95,1.60,'Decomposition helps only when the plan is itself grounded.',fontsize=7.7,color=COL['mid'],ha='left')
@@ -467,7 +467,7 @@ def fig9():
           'RAG-specific diagnostics\nFRAMES, MultiHop-RAG',
           'Counterfactual QA\nCofCA variants',
           'Agentic / tool-use\nToolBench, WebArena']
-    cols=[('obs','Observability'),('util','Selection\nutility'),('exp','Exposure'),('fus','Fusion'),('faith','Faithfulness')]
+    cols=[('obs','Observability'),('util','Selection\npreservation'),('exp','Exposure'),('fus','Fusion'),('faith','Faithfulness')]
     M=np.array([
         [3,2,1,1,1],
         [3,2,1,1,1],
@@ -616,7 +616,7 @@ def fig2():
           'A single weak factor caps end-to-end success even when other modules are strong.')
     theta=[0.82,0.67,0.74,0.51,0.63]
     keys=['obs','util','exp','fus','faith']
-    names=['pool\nobservability','conditional\nutility','reader\nexposure','fusion\nreliability','causal\nfaithfulness']
+    names=['pool\nobservability','selection\npreservation','reader\nexposure','fusion\nreliability','causal\nfaithfulness']
     xs=np.linspace(1.75,12.5,5)
     prod=1.0
     prev=(0.72,7.25)
@@ -649,7 +649,7 @@ def fig2():
 
 def fig5():
     fig, ax = setup((7.5,4.8))
-    title(ax, 'F5. Decomposition as utility and fusion control',
+    title(ax, 'F5. Decomposition as selection preservation and fusion control',
           'A plan exposes bridge variables, but intermediate errors propagate downstream.')
     # top flow
     rounded(ax,(0.70,6.45),2.20,1.00,'complex query\n$q$',fc='#FBFCFE',ec=COL['edge'],r=0.18,text_kw={'fontsize':8.2})
@@ -659,7 +659,7 @@ def fig5():
     for i,x in enumerate(subx):
         rounded(ax,(x-0.52,6.55),1.04,0.68,fr'$q_{i+1}$',fc='white',ec=COL['util'],lw=1.0,r=0.14,text_kw={'fontsize':8.7,'color':COL['util'],'fontweight':'bold'})
         arrow(ax,(5.62,6.95),(x-0.55,6.90),color=COL['util'],lw=1.1,rad=0.05*(i-1.5))
-    ax.text(9.55,7.55,'sub-questions reduce utility-estimation variance',fontsize=7.2,color=COL['util'],ha='center')
+    ax.text(9.55,7.55,'sub-questions reduce selection-preservation estimation variance',fontsize=7.2,color=COL['util'],ha='center')
     for i,x in enumerate(subx):
         rounded(ax,(x-0.55,4.70),1.10,0.65,fr'$e^\star_{i+1}$',fc='#EEF4FF',ec=COL['obs'],lw=1.0,r=0.14,text_kw={'fontsize':8.5,'color':COL['obs'],'fontweight':'bold'})
         arrow(ax,(x,6.53),(x,5.38),color=COL['obs'],lw=1.35)

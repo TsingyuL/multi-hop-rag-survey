@@ -9,6 +9,7 @@ This is a survey companion, not a benchmark submission or a claim of independent
 | Manuscript draft | [`MH_survey.pdf`](MH_survey.pdf) | Open the PDF and compare its title and figure references |
 | Figure source | [`mh_figures/source/make_figures.py`](mh_figures/source/make_figures.py) | Run the rebuild commands in [`mh_figures/README.md`](mh_figures/README.md) |
 | Survey catalog | [`taxonomy/`](taxonomy) | Run `python3 scripts/validate_catalog.py` |
+| Frozen reporting audit | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Compare counts against `taxonomy/methods.csv` status labels |
 
 ## Reproducibility boundary
 
