@@ -1,16 +1,30 @@
-# Multi-Hop Retrieval-Augmented Generation through Evidence Chains
+# Multi-Hop RAG Research Hub
 
-> **A diagnostic survey of multi-hop RAG through evidence-chain events.**
+> **A curated companion hub for multi-hop retrieval-augmented generation through evidence-chain events.**
 
-[![Paper](https://img.shields.io/badge/paper-PDF-B31B1B.svg)](MH_survey.pdf)
+[![Catalog](https://img.shields.io/badge/catalog-static%20site-2457C5.svg)](docs/index.html)
+[![Artifact](https://img.shields.io/badge/artifact-validated-087E8B.svg)](ARTIFACT.md)
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
-[![ACM template](https://img.shields.io/badge/typeset%20with-acmart-00629B.svg)](MH_survey.pdf)
 
-This repository is the living companion to the survey **“Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey.”** It organizes multi-hop retrieval-augmented generation around the evidence chain that a system must recover, preserve, expose, compose, and causally use, rather than around architecture alone.
+This repository is the public research hub cited by the manuscript **“Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey.”** It keeps the survey's machine-readable taxonomy, reviewed method and benchmark records, quantitative reporting audit, figure sources, and validation scripts in one place.
 
-> **Research hub:** the repository ships a filterable static catalog in [`docs/index.html`](docs/index.html). The included GitHub Pages workflow deploys it whenever GitHub Pages is enabled for this repository.
+The manuscript source is maintained outside this hub. This repository exists so readers can inspect, reproduce, and extend the evidence-chain catalog behind the survey claims.
 
-The paper frames end-to-end success as five coupled bottlenecks:
+## Start here
+
+| Need | Open |
+| --- | --- |
+| Browse the reviewed catalog | [`docs/index.html`](docs/index.html) |
+| Inspect machine-readable records | [`taxonomy/methods.csv`](taxonomy/methods.csv), [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv), [`taxonomy/pipeline_mapping.csv`](taxonomy/pipeline_mapping.csv) |
+| Check coding rules | [`docs/taxonomy.md`](docs/taxonomy.md), [`docs/coverage_protocol.md`](docs/coverage_protocol.md) |
+| Review frozen audit counts | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) |
+| Validate the artifact | `python3 scripts/validate_catalog.py` |
+
+The hub keeps one current, reviewed catalog instead of multiple historical or imported-library versions. The current catalog contains **23 method records**, **6 benchmark records**, and **27 intervention mappings**; the manuscript's frozen quantitative audit uses the **20 source-verified method records** and excludes seeded or needs-review entries. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
+
+## Evidence-chain frame
+
+The survey organizes multi-hop RAG around five coupled bottlenecks:
 
 | Evidence-chain target | Question it asks |
 | --- | --- |
@@ -21,14 +35,6 @@ The paper frames end-to-end success as five coupled bottlenecks:
 | **Causal faithfulness** | Did the generated answer actually depend on the evidence? |
 
 ![Evidence-chain diagnostic diagram](mh_figures/F1_evidence_chain_v7.png)
-
-## Paper
-
-- [Read the manuscript (PDF)](MH_survey.pdf)
-- Authors: Yuqing Luo and Kai Zhang, University of Science and Technology of China
-- Venue status: author manuscript draft, typeset with the ACM `acmart` class.
-
-> The PDF currently contains placeholder publication metadata (including the DOI). It is **not** the ACM Version of Record. Replace this notice, the citation metadata, and any DOI links only after the publisher supplies the final bibliographic record.
 
 ## What is in this repository
 
@@ -44,8 +50,6 @@ The paper frames end-to-end success as five coupled bottlenecks:
 └── LICENSE                        # license for repository-authored materials
 ```
 
-The hub keeps one current, reviewed catalog instead of multiple historical or imported-library versions. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current catalog contains **23 method records**, **6 benchmark records**, and **27 intervention mappings**; the manuscript's frozen quantitative audit uses the **20 source-verified method records** and excludes seeded or needs-review entries. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
-
 | File | Contents |
 | --- | --- |
 | [`taxonomy/methods.csv`](taxonomy/methods.csv) | Methods and analyses, tagged by architectural family and primary evidence-chain target |
@@ -56,6 +60,7 @@ The hub keeps one current, reviewed catalog instead of multiple historical or im
 | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | Scope, discovery, verification, and correction rules |
 | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Reproducible query families for maintaining a separate unreviewed candidate queue |
 | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Frozen seed counts used by the manuscript reporting audit |
+| [`MH_survey.pdf`](MH_survey.pdf) | Convenience copy of the current manuscript draft |
 
 ## Literature navigator
 
@@ -73,12 +78,14 @@ The catalog is designed to be read as a map, not as an unstructured paper list. 
 - **Looking for a specific paper?** Use the [chronological index](docs/literature_navigator.md#chronological-index) or open the machine-readable [methods catalog](taxonomy/methods.csv).
 - **Adding a paper?** Follow the [annotation rules](docs/taxonomy.md) and [contribution guide](CONTRIBUTING.md).
 
-## Start here
+## Associated manuscript
 
-1. Read [the taxonomy guide](docs/taxonomy.md) for the dual-axis annotation rules.
-2. Browse the catalog files above, or filter them in a spreadsheet/dataframe.
-3. Use the [reporting checklist](docs/reporting_checklist.md) when evaluating a multi-hop RAG system.
-4. See [the roadmap](docs/roadmap.md) for planned catalog coverage and releases.
+- Title: **Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey**
+- Authors: Yuqing Luo and Kai Zhang, University of Science and Technology of China
+- Convenience PDF: [`MH_survey.pdf`](MH_survey.pdf)
+- Venue status: author manuscript draft, typeset with the ACM `acmart` class.
+
+> The PDF currently contains placeholder publication metadata. It is **not** the ACM Version of Record. Replace this notice, the citation metadata, and any DOI links only after the publisher supplies the final bibliographic record.
 
 ## Scope
 
