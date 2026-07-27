@@ -1,0 +1,1753 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+%%% Source-verified and citation-pruned bibliography for the TOIS manuscript.
+%%% Generated from the uploaded main.bbl plus TOIS_verified_2025_2026.bib.
+%%% Only entries cited by MH_RAG_TOIS_revision_v5_bibliography_verified.tex are retained.
+
+\begin{thebibliography}{180}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Hofst{\"a}tter et~al\mbox{.}(2023)]%
+        {hofstatter2023fidlight}
+\bibfield{author}{\bibinfo{person}{S. Hofst{\"a}tter}, \bibinfo{person}{J.
+  Chen}, \bibinfo{person}{K. Raman}, {and} \bibinfo{person}{H. Zamani}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{FiD}-light: Efficient and effective
+  retrieval-augmented text generation}. In \bibinfo{booktitle}{\emph{SIGIR}}.
+\newblock
+
+\bibitem[Guti{\'e}rrez et~al\mbox{.}(2024)]%
+        {gutierrez2024hipporag}
+\bibfield{author}{\bibinfo{person}{B. Guti{\'e}rrez}, \bibinfo{person}{Y. Shu},
+  \bibinfo{person}{Y. Gu}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{HippoRAG}: Neurobiologically inspired long-term
+  memory for large language models}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Asai et~al\mbox{.}(2020)]%
+        {asai2020learning}
+\bibfield{author}{\bibinfo{person}{A. Asai}, \bibinfo{person}{K. Hashimoto},
+  \bibinfo{person}{H. Hajishirzi}, \bibinfo{person}{R. Socher}, {and}
+  \bibinfo{person}{C. Xiong}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Learning to retrieve reasoning paths over wikipedia
+  graph for question answering}. In \bibinfo{booktitle}{\emph{International
+  Conference on Learning Representations}}.
+\newblock
+
+\bibitem[Asai et~al\mbox{.}(2024)]%
+        {asai2024selfrag}
+\bibfield{author}{\bibinfo{person}{A. Asai}, \bibinfo{person}{Z. Wu},
+  \bibinfo{person}{Y. Wang}, \bibinfo{person}{A. Sil}, {and}
+  \bibinfo{person}{H. Hajishirzi}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Self-{RAG}: Learning to retrieve, generate, and
+  critique through self-reflection}. In \bibinfo{booktitle}{\emph{International
+  Conference on Learning Representations}}.
+\newblock
+
+\bibitem[Bai et~al\mbox{.}(2024)]%
+        {bai2024longbench}
+\bibfield{author}{\bibinfo{person}{Y. Bai}, \bibinfo{person}{X. Lv},
+  \bibinfo{person}{J. Zhang}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{LongBench}: A bilingual, multitask benchmark for
+  long context understanding}. In \bibinfo{booktitle}{\emph{Association for
+  Computational Linguistics}}.
+\newblock
+
+\bibitem[Besta et~al\mbox{.}(2024)]%
+        {besta2024got}
+\bibfield{author}{\bibinfo{person}{M. Besta}, \bibinfo{person}{N. Blach},
+  \bibinfo{person}{A. Kubicek}, {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Graph of thoughts: Solving elaborate problems with
+  large language models}. In \bibinfo{booktitle}{\emph{AAAI Conference on
+  Artificial Intelligence}}.
+\newblock
+
+\bibitem[Chang et~al\mbox{.}(2022)]%
+        {chang2022webqa}
+\bibfield{author}{\bibinfo{person}{Y. Chang}, \bibinfo{person}{M. Narang},
+  \bibinfo{person}{H. Suzuki}, {et~al\mbox{.}}}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{WebQA}: Multihop and multimodal {QA}}. In
+  \bibinfo{booktitle}{\emph{Computer Vision and Pattern Recognition}}.
+\newblock
+
+\bibitem[Chen et~al\mbox{.}(2017)]%
+        {chen2017drqa}
+\bibfield{author}{\bibinfo{person}{D. Chen}, \bibinfo{person}{A. Fisch},
+  \bibinfo{person}{J. Weston}, {and} \bibinfo{person}{A. Bordes}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Reading wikipedia to answer open-domain questions}.
+  In \bibinfo{booktitle}{\emph{Association for Computational Linguistics}}.
+\newblock
+
+\bibitem[Chen et~al\mbox{.}(2025)]%
+        {chen2025research}
+\bibfield{author}{\bibinfo{person}{Mingyang Chen}, \bibinfo{person}{Tianpeng
+  Li}, \bibinfo{person}{Haoze Sun}, \bibinfo{person}{Yijie Zhou},
+  \bibinfo{person}{Chenzheng Zhu}, \bibinfo{person}{Fan Yang},
+  \bibinfo{person}{Zenan Zhou}, \bibinfo{person}{Weipeng Chen},
+  \bibinfo{person}{Haofen Wang}, \bibinfo{person}{Jeff~Z. Pan},
+  \bibinfo{person}{Wen Zhang}, {and} \bibinfo{person}{Huajun Chen}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{ReSearch}: Learning to Reason with Search for
+  {LLM}s via Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2503.19470}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2503.19470}{doi:\nolinkurl{10.48550/arXiv.2503.19470}}
+
+\bibitem[Chen et~al\mbox{.}(2020b)]%
+        {chen2020hybridqa}
+\bibfield{author}{\bibinfo{person}{W. Chen}, \bibinfo{person}{H. Zha},
+  \bibinfo{person}{Z. Chen}, {et~al\mbox{.}}} \bibinfo{year}{2020}\natexlab{b}.
+\newblock \showarticletitle{{HybridQA}: A dataset of multi-hop question
+  answering over tabular and textual data}. In
+  \bibinfo{booktitle}{\emph{Findings of EMNLP}}.
+\newblock
+
+\bibitem[Chen et~al\mbox{.}(2021)]%
+        {chen2021opentableqa}
+\bibfield{author}{\bibinfo{person}{W. Chen}, \bibinfo{person}{M.-W. Chang},
+  \bibinfo{person}{E. Schlinger}, \bibinfo{person}{W. Wang}, {and}
+  \bibinfo{person}{W.~W. Cohen}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Open question answering over tables and text}. In
+  \bibinfo{booktitle}{\emph{International Conference on Learning
+  Representations}}.
+\newblock
+
+\bibitem[Chen et~al\mbox{.}(2023)]%
+        {chen2023pot}
+\bibfield{author}{\bibinfo{person}{W. Chen}, \bibinfo{person}{X. Ma},
+  \bibinfo{person}{X. Wang}, {and} \bibinfo{person}{W.~W. Cohen}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Program of thoughts prompting: Disentangling
+  computation from reasoning for numerical reasoning tasks}. In
+  \bibinfo{booktitle}{\emph{Transactions on Machine Learning Research}}.
+\newblock
+
+\bibitem[Chen et~al\mbox{.}(2024)]%
+        {chen2024hiqa}
+\bibfield{author}{\bibinfo{person}{X. Chen}, \bibinfo{person}{X. Gao},
+  \bibinfo{person}{Y. Lin}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{HiQA}: A hierarchical contextual augmentation
+  {RAG} for multi-document question answering}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2402.01767}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Cheng et~al\mbox{.}(2025)]%
+        {cheng2025dualrag}
+\bibfield{author}{\bibinfo{person}{Rong Cheng}, \bibinfo{person}{Jinyi Liu},
+  \bibinfo{person}{Yan Zheng}, \bibinfo{person}{Fei Ni},
+  \bibinfo{person}{Jiazhen Du}, \bibinfo{person}{Hangyu Mao},
+  \bibinfo{person}{Fuzheng Zhang}, \bibinfo{person}{Bo Wang}, {and}
+  \bibinfo{person}{Jianye Hao}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{DualRAG}: A Dual-Process Approach to Integrate
+  Reasoning and Retrieval for Multi-Hop Question Answering}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 63rd Annual Meeting of the
+  Association for Computational Linguistics (Volume 1: Long Papers)}}.
+  \bibinfo{publisher}{Association for Computational Linguistics},
+  \bibinfo{pages}{31877--31899}.
+\newblock
+\href{https://doi.org/10.18653/v1/2025.acl-long.1539}{doi:\nolinkurl{10.18653/v1/2025.acl-long.1539}}
+
+\bibitem[Cheng et~al\mbox{.}(2024)]%
+        {cheng2024xrag}
+\bibfield{author}{\bibinfo{person}{X. Cheng} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{xRAG}: Extreme context compression for
+  retrieval-augmented generation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2405.13792}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Chu et~al\mbox{.}(2024)]%
+        {chu2024cotsurvey}
+\bibfield{author}{\bibinfo{person}{Z. Chu} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{A survey of chain-of-thought reasoning: Advances,
+  frontiers and future}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2309.15402}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Dalvi et~al\mbox{.}(2021)]%
+        {dalvi2021entailmentbank}
+\bibfield{author}{\bibinfo{person}{B. Dalvi}, \bibinfo{person}{P. Jansen},
+  \bibinfo{person}{O. Tafjord}, {et~al\mbox{.}}}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Explaining answers with entailment trees}. In
+  \bibinfo{booktitle}{\emph{Empirical Methods in Natural Language Processing}}.
+\newblock
+
+\bibitem[Dhuliawala et~al\mbox{.}(2024)]%
+        {dhuliawala2024cove}
+\bibfield{author}{\bibinfo{person}{S. Dhuliawala}, \bibinfo{person}{M.
+  Komeili}, \bibinfo{person}{J. Xu}, {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Chain-of-verification reduces hallucination in
+  large language models}. In \bibinfo{booktitle}{\emph{Findings of ACL}}.
+\newblock
+
+\bibitem[Dua et~al\mbox{.}(2022)]%
+        {dua2022successive}
+\bibfield{author}{\bibinfo{person}{D. Dua}, \bibinfo{person}{S. Gupta},
+  \bibinfo{person}{S. Singh}, {and} \bibinfo{person}{M. Gardner}.}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Successive prompting for decomposing complex
+  questions}. In \bibinfo{booktitle}{\emph{Empirical Methods in Natural
+  Language Processing}}.
+\newblock
+
+\bibitem[Edge et~al\mbox{.}(2024)]%
+        {edge2024graphrag}
+\bibfield{author}{\bibinfo{person}{D. Edge}, \bibinfo{person}{H. Trinh},
+  \bibinfo{person}{N. Cheng}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{From local to global: A graph {RAG} approach to
+  query-focused summarization}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2404.16130}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Fan et~al\mbox{.}(2024)]%
+        {fan2024ragllmsurvey}
+\bibfield{author}{\bibinfo{person}{W. Fan} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{A survey on {RAG} meeting {LLMs}: Towards
+  retrieval-augmented large language models}. In
+  \bibinfo{booktitle}{\emph{KDD}}.
+\newblock
+
+\bibitem[Fang et~al\mbox{.}(2020)]%
+        {fang2020hgn}
+\bibfield{author}{\bibinfo{person}{Y. Fang}, \bibinfo{person}{S. Sun},
+  \bibinfo{person}{Z. Gan}, \bibinfo{person}{R. Pillai}, \bibinfo{person}{S.
+  Wang}, {and} \bibinfo{person}{J. Liu}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Hierarchical graph network for multi-hop question
+  answering}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Feldman and El-Yaniv(2019)]%
+        {feldman2019muppet}
+\bibfield{author}{\bibinfo{person}{Y. Feldman} {and} \bibinfo{person}{R.
+  El-Yaniv}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Multi-hop paragraph retrieval for open-domain
+  question answering}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Ferguson et~al\mbox{.}(2020)]%
+        {ferguson2020iirc}
+\bibfield{author}{\bibinfo{person}{J. Ferguson}, \bibinfo{person}{M. Gardner},
+  \bibinfo{person}{H. Hajishirzi}, \bibinfo{person}{T. Khot}, {and}
+  \bibinfo{person}{P. Dasigi}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{IIRC}: A dataset of incomplete information reading
+  comprehension questions}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Formal et~al\mbox{.}(2021)]%
+        {formal2021splade}
+\bibfield{author}{\bibinfo{person}{T. Formal}, \bibinfo{person}{B. Piwowarski},
+  {and} \bibinfo{person}{S. Clinchant}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{SPLADE}: Sparse lexical and expansion model for
+  first stage ranking}. In \bibinfo{booktitle}{\emph{SIGIR}}.
+\newblock
+
+\bibitem[Gao et~al\mbox{.}(2023b)]%
+        {gao2023hyde}
+\bibfield{author}{\bibinfo{person}{L. Gao}, \bibinfo{person}{X. Ma},
+  \bibinfo{person}{J. Lin}, {and} \bibinfo{person}{J. Callan}.}
+  \bibinfo{year}{2023}\natexlab{b}.
+\newblock \showarticletitle{Precise zero-shot dense retrieval without relevance
+  labels}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Gao et~al\mbox{.}(2023c)]%
+        {gao2023pal}
+\bibfield{author}{\bibinfo{person}{L. Gao}, \bibinfo{person}{A. Madaan},
+  \bibinfo{person}{S. Zhou}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{c}.
+\newblock \showarticletitle{{PAL}: Program-aided language models}. In
+  \bibinfo{booktitle}{\emph{ICML}}.
+\newblock
+
+\bibitem[Gao et~al\mbox{.}(2023a)]%
+        {gao2023rarr}
+\bibfield{author}{\bibinfo{person}{L. Gao}, \bibinfo{person}{Z. Dai},
+  \bibinfo{person}{P. Pasupat}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{a}.
+\newblock \showarticletitle{{RARR}: Researching and revising what language
+  models say, using language models}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Gao et~al\mbox{.}(2023f)]%
+        {gao2023alce}
+\bibfield{author}{\bibinfo{person}{T. Gao}, \bibinfo{person}{H. Yen},
+  \bibinfo{person}{J. Yu}, {and} \bibinfo{person}{D. Chen}.}
+  \bibinfo{year}{2023}\natexlab{f}.
+\newblock \showarticletitle{Enabling large language models to generate text
+  with citations}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Gao et~al\mbox{.}(2023)]%
+        {gao2023ragsurvey}
+\bibfield{author}{\bibinfo{person}{Yunfan Gao}, \bibinfo{person}{Yun Xiong},
+  \bibinfo{person}{Xinyu Gao}, \bibinfo{person}{Kangxiang Jia},
+  \bibinfo{person}{Jinliu Pan}, \bibinfo{person}{Yuxi Bi}, \bibinfo{person}{Yi
+  Dai}, \bibinfo{person}{Jiawei Sun}, \bibinfo{person}{Meng Wang}, {and}
+  \bibinfo{person}{Haofen Wang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Retrieval-Augmented Generation for Large Language
+  Models: A Survey}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2312.10997}
+  (\bibinfo{year}{2023}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2312.10997}{doi:\nolinkurl{10.48550/arXiv.2312.10997}}
+
+\bibitem[Gou et~al\mbox{.}(2024)]%
+        {gou2024critic}
+\bibfield{author}{\bibinfo{person}{Z. Gou}, \bibinfo{person}{Z. Shao},
+  \bibinfo{person}{Y. Gong}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{CRITIC}: Large language models can self-correct
+  with tool-interactive critiquing}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Gu et~al\mbox{.}(2022)]%
+        {gu2022knowledgesurvey}
+\bibfield{author}{\bibinfo{person}{Y. Gu} {et~al\mbox{.}}}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{A survey on complex factoid question answering with
+  a focus on multi-hop reasoning}. In \bibinfo{booktitle}{\emph{ACM Computing
+  Surveys}}.
+\newblock
+
+\bibitem[Guan et~al\mbox{.}(2026)]%
+        {guan2025deeprag}
+\bibfield{author}{\bibinfo{person}{Xinyan Guan}, \bibinfo{person}{Jiali Zeng},
+  \bibinfo{person}{Fandong Meng}, \bibinfo{person}{Chunlei Xin},
+  \bibinfo{person}{Yaojie Lu}, \bibinfo{person}{Hongyu Lin},
+  \bibinfo{person}{Xianpei Han}, \bibinfo{person}{Le Sun}, {and}
+  \bibinfo{person}{Jie Zhou}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{DeepRAG}: Thinking to Retrieve Step by Step for
+  Large Language Models}. In \bibinfo{booktitle}{\emph{International Conference
+  on Learning Representations}}.
+\newblock
+\urldef\tempurl%
+\url{https://openreview.net/forum?id=VI2YaggHIF}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{ICLR 2026 Poster; preprint arXiv:2502.01142}.
+
+\bibitem[Guo et~al\mbox{.}(2024)]%
+        {guo2024lightrag}
+\bibfield{author}{\bibinfo{person}{Z. Guo}, \bibinfo{person}{L. Xia},
+  \bibinfo{person}{Y. Yu}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{LightRAG}: Simple and fast retrieval-augmented
+  generation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2410.05779}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Gupta et~al\mbox{.}(2025)]%
+        {novelhopqa2025}
+\bibfield{author}{\bibinfo{person}{Abhay Gupta}, \bibinfo{person}{Kevin Zhu},
+  \bibinfo{person}{Vasu Sharma}, \bibinfo{person}{Sean O'Brien}, {and}
+  \bibinfo{person}{Michael Lu}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{NovelHopQA}: Diagnosing Multi-Hop Reasoning
+  Failures in Long Narrative Contexts}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 2025 Conference on Empirical
+  Methods in Natural Language Processing}}. \bibinfo{publisher}{Association for
+  Computational Linguistics}, \bibinfo{pages}{26134--26151}.
+\newblock
+\href{https://doi.org/10.18653/v1/2025.emnlp-main.1328}{doi:\nolinkurl{10.18653/v1/2025.emnlp-main.1328}}
+
+\bibitem[Guu et~al\mbox{.}(2020)]%
+        {guu2020realm}
+\bibfield{author}{\bibinfo{person}{K. Guu}, \bibinfo{person}{K. Lee},
+  \bibinfo{person}{Z. Tung}, \bibinfo{person}{P. Pasupat}, {and}
+  \bibinfo{person}{M. Chang}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{REALM}: Retrieval-augmented language model
+  pre-training}. In \bibinfo{booktitle}{\emph{ICML}}.
+\newblock
+
+\bibitem[Hannan et~al\mbox{.}(2020)]%
+        {hannan2020manymodalqa}
+\bibfield{author}{\bibinfo{person}{D. Hannan}, \bibinfo{person}{A. Jain}, {and}
+  \bibinfo{person}{M. Bansal}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{ManyModalQA}: Modality disambiguation and {QA}
+  over diverse inputs}. In \bibinfo{booktitle}{\emph{AAAI}}.
+\newblock
+
+\bibitem[He et~al\mbox{.}(2021)]%
+        {he2021nsm}
+\bibfield{author}{\bibinfo{person}{G. He}, \bibinfo{person}{Y. Lan},
+  \bibinfo{person}{J. Jiang}, \bibinfo{person}{W.~X. Zhao}, {and}
+  \bibinfo{person}{J.-R. Wen}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Improving multi-hop knowledge base question
+  answering by learning intermediate supervision signals}. In
+  \bibinfo{booktitle}{\emph{WSDM}}.
+\newblock
+
+\bibitem[He et~al\mbox{.}(2024a)]%
+        {he2024positionrobust}
+\bibfield{author}{\bibinfo{person}{Q. He} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{Position-robust evidence reading for multi-hop
+  {RAG}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[He et~al\mbox{.}(2024b)]%
+        {he2024wikimixqa}
+\bibfield{author}{\bibinfo{person}{W. He} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{{WikiMixQA}: A multimodal multi-hop {QA}
+  benchmark}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Ho et~al\mbox{.}(2020)]%
+        {ho2020wikimultihopqa}
+\bibfield{author}{\bibinfo{person}{X. Ho}, \bibinfo{person}{A. Nguyen},
+  \bibinfo{person}{S. Sugawara}, {and} \bibinfo{person}{A. Aizawa}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Constructing a multi-hop {QA} dataset for
+  comprehensive evaluation of reasoning steps}. In
+  \bibinfo{booktitle}{\emph{COLING}}.
+\newblock
+
+\bibitem[Huang et~al\mbox{.}(2023)]%
+        {huang2023hallucinationsurvey}
+\bibfield{author}{\bibinfo{person}{L. Huang}, \bibinfo{person}{W. Yu},
+  \bibinfo{person}{W. Ma}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{A survey on hallucination in large language models:
+  Principles, taxonomy, challenges, and open questions}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2311.05232}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+\bibitem[Huang and Huang(2024)]%
+        {huang2024ragsurvey}
+\bibfield{author}{\bibinfo{person}{Y. Huang} {and} \bibinfo{person}{J. Huang}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{A survey on retrieval-augmented text generation for
+  large language models}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2404.10981}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Izacard and Grave(2021)]%
+        {izacard2021fid}
+\bibfield{author}{\bibinfo{person}{G. Izacard} {and} \bibinfo{person}{E.
+  Grave}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Leveraging passage retrieval with generative models
+  for open-domain question answering}. In \bibinfo{booktitle}{\emph{EACL}}.
+\newblock
+
+\bibitem[Izacard et~al\mbox{.}(2022)]%
+        {izacard2022contriever}
+\bibfield{author}{\bibinfo{person}{G. Izacard}, \bibinfo{person}{M. Caron},
+  \bibinfo{person}{L. Hosseini}, {et~al\mbox{.}}}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Unsupervised dense information retrieval with
+  contrastive learning}. In \bibinfo{booktitle}{\emph{Transactions on Machine
+  Learning Research}}.
+\newblock
+
+\bibitem[Izacard et~al\mbox{.}(2023)]%
+        {izacard2022atlas}
+\bibfield{author}{\bibinfo{person}{G. Izacard}, \bibinfo{person}{P. Lewis},
+  \bibinfo{person}{M. Lomeli}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{Atlas}: Few-shot learning with retrieval augmented
+  language models}. In \bibinfo{booktitle}{\emph{Journal of Machine Learning
+  Research}}.
+\newblock
+
+\bibitem[Jeong et~al\mbox{.}(2024)]%
+        {jeong2024adaptiverag}
+\bibfield{author}{\bibinfo{person}{S. Jeong}, \bibinfo{person}{J. Baek},
+  \bibinfo{person}{S. Cho}, \bibinfo{person}{S. Hwang}, {and}
+  \bibinfo{person}{J. Park}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Adaptive-{RAG}: Learning to adapt
+  retrieval-augmented large language models through question complexity}. In
+  \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Jhamtani and Clark(2020)]%
+        {jhamtani2020eqasc}
+\bibfield{author}{\bibinfo{person}{H. Jhamtani} {and} \bibinfo{person}{P.
+  Clark}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Learning to explain: Datasets and models for
+  identifying valid reasoning chains in multihop question-answering}. In
+  \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Ji et~al\mbox{.}(2026)]%
+        {ji2026retrievalreasoning}
+\bibfield{author}{\bibinfo{person}{Yuelyu Ji}, \bibinfo{person}{Zhuochun Li},
+  \bibinfo{person}{Rui Meng}, {and} \bibinfo{person}{Daqing He}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{Retrieval--Reasoning Processes for Multi-hop
+  Question Answering: A Four-Axis Design Framework and Empirical Trends}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2601.00536}
+  (\bibinfo{year}{2026}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2601.00536}{doi:\nolinkurl{10.48550/arXiv.2601.00536}}
+
+\bibitem[Jiang et~al\mbox{.}(2023a)]%
+        {jiang2023llmlingua}
+\bibfield{author}{\bibinfo{person}{H. Jiang}, \bibinfo{person}{Q. Wu},
+  \bibinfo{person}{C.-Y. Lin}, \bibinfo{person}{Y. Yang}, {and}
+  \bibinfo{person}{L. Qiu}.} \bibinfo{year}{2023}\natexlab{a}.
+\newblock \showarticletitle{{LLMLingua}: Compressing prompts for accelerated
+  inference of large language models}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Jiang et~al\mbox{.}(2023c)]%
+        {jiang2023unikgqa}
+\bibfield{author}{\bibinfo{person}{J. Jiang}, \bibinfo{person}{K. Zhou},
+  \bibinfo{person}{W. Zhao}, {and} \bibinfo{person}{J.-R. Wen}.}
+  \bibinfo{year}{2023}\natexlab{c}.
+\newblock \showarticletitle{{UniKGQA}: Unified retrieval and reasoning for
+  solving multi-hop question answering over knowledge graph}. In
+  \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Jiang et~al\mbox{.}(2020)]%
+        {jiang2020hover}
+\bibfield{author}{\bibinfo{person}{Y. Jiang}, \bibinfo{person}{S. Bordia},
+  \bibinfo{person}{Z. Zhong}, {et~al\mbox{.}}} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{HoVer}: A dataset for many-hop fact extraction and
+  claim verification}. In \bibinfo{booktitle}{\emph{Findings of EMNLP}}.
+\newblock
+
+\bibitem[Jiang et~al\mbox{.}(2023b)]%
+        {jiang2023flare}
+\bibfield{author}{\bibinfo{person}{Z. Jiang}, \bibinfo{person}{F.~F. Xu},
+  \bibinfo{person}{L. Gao}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{b}.
+\newblock \showarticletitle{Active retrieval augmented generation}. In
+  \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Jiang et~al\mbox{.}(2024)]%
+        {jiang2024longrag}
+\bibfield{author}{\bibinfo{person}{Z. Jiang}, \bibinfo{person}{X. Ma}, {and}
+  \bibinfo{person}{W. Chen}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{LongRAG}: Enhancing retrieval-augmented generation
+  with long-context {LLMs}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2406.15319}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Jin et~al\mbox{.}(2025)]%
+        {jin2025searchr1}
+\bibfield{author}{\bibinfo{person}{Bowen Jin}, \bibinfo{person}{Hansi Zeng},
+  \bibinfo{person}{Zhenrui Yue}, \bibinfo{person}{Dong Wang},
+  \bibinfo{person}{Hamed Zamani}, {and} \bibinfo{person}{Jiawei Han}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{Search-R1}: Training {LLM}s to Reason and Leverage
+  Search Engines with Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2503.09516}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2503.09516}{doi:\nolinkurl{10.48550/arXiv.2503.09516}}
+
+\bibitem[Karpukhin et~al\mbox{.}(2020)]%
+        {karpukhin2020dpr}
+\bibfield{author}{\bibinfo{person}{V. Karpukhin}, \bibinfo{person}{B.
+  O\u{g}uz}, \bibinfo{person}{S. Min}, {et~al\mbox{.}}}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Dense passage retrieval for open-domain question
+  answering}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Khattab and Zaharia(2020)]%
+        {khattab2020colbert}
+\bibfield{author}{\bibinfo{person}{O. Khattab} {and} \bibinfo{person}{M.
+  Zaharia}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{ColBERT}: Efficient and effective passage search
+  via contextualized late interaction over {BERT}}. In
+  \bibinfo{booktitle}{\emph{SIGIR}}.
+\newblock
+
+\bibitem[Khattab et~al\mbox{.}(2021)]%
+        {khattab2021baleen}
+\bibfield{author}{\bibinfo{person}{O. Khattab}, \bibinfo{person}{C. Potts},
+  {and} \bibinfo{person}{M. Zaharia}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{Baleen}: Robust multi-hop reasoning at scale via
+  condensed retrieval}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Khot et~al\mbox{.}(2023)]%
+        {khot2023decomposed}
+\bibfield{author}{\bibinfo{person}{T. Khot}, \bibinfo{person}{H. Trivedi},
+  \bibinfo{person}{M. Finlayson}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Decomposed prompting: A modular approach for
+  solving complex tasks}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Krishna et~al\mbox{.}(2024)]%
+        {krishna2024frames}
+\bibfield{author}{\bibinfo{person}{S. Krishna} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{FRAMES}: A benchmark for factuality, retrieval,
+  and multi-hop {RAG} reasoning}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Lan et~al\mbox{.}(2021)]%
+        {lan2021complexkbqasurvey}
+\bibfield{author}{\bibinfo{person}{Y. Lan}, \bibinfo{person}{G. He},
+  \bibinfo{person}{J. Jiang}, \bibinfo{person}{J. Jiang}, \bibinfo{person}{W.
+  Zhao}, {and} \bibinfo{person}{J.-R. Wen}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{A survey on complex knowledge base question
+  answering: Methods, challenges and solutions}. In
+  \bibinfo{booktitle}{\emph{IJCAI}}.
+\newblock
+
+\bibitem[Lee et~al\mbox{.}(2019)]%
+        {lee2019orqa}
+\bibfield{author}{\bibinfo{person}{K. Lee}, \bibinfo{person}{M.-W. Chang},
+  {and} \bibinfo{person}{K. Toutanova}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Latent retrieval for weakly supervised open domain
+  question answering}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Lewis et~al\mbox{.}(2020)]%
+        {lewis2020rag}
+\bibfield{author}{\bibinfo{person}{P. Lewis}, \bibinfo{person}{E. Perez},
+  \bibinfo{person}{A. Piktus}, {et~al\mbox{.}}}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Retrieval-augmented generation for
+  knowledge-intensive {NLP} tasks}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2023e)]%
+        {li2023attributionsurvey}
+\bibfield{author}{\bibinfo{person}{D. Li}, \bibinfo{person}{A. Sun},
+  \bibinfo{person}{X. Tang}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{e}.
+\newblock \showarticletitle{A survey of large language model attribution}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2311.03731}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2023b)]%
+        {li2023attribution}
+\bibfield{author}{\bibinfo{person}{D. Li} {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{b}.
+\newblock \showarticletitle{Towards verifiable text generation with evolving
+  memory and self-reflection}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2024a)]%
+        {li2024ragdecoupledsurvey}
+\bibfield{author}{\bibinfo{person}{H. Li} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{A survey on decoupled retrieval-augmented
+  generation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2023a)]%
+        {li2023halueval}
+\bibfield{author}{\bibinfo{person}{J. Li}, \bibinfo{person}{X. Cheng},
+  \bibinfo{person}{W. Zhao}, \bibinfo{person}{J.-Y. Nie}, {and}
+  \bibinfo{person}{J.-R. Wen}.} \bibinfo{year}{2023}\natexlab{a}.
+\newblock \showarticletitle{{HaluEval}: A large-scale hallucination evaluation
+  benchmark for large language models}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2021)]%
+        {li2020hopretriever}
+\bibfield{author}{\bibinfo{person}{S. Li}, \bibinfo{person}{X. Li},
+  \bibinfo{person}{L. Shang}, {et~al\mbox{.}}} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{HopRetriever}: Retrieve hops over wikipedia to
+  answer complex questions}. In \bibinfo{booktitle}{\emph{AAAI}}.
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2023c)]%
+        {li2023reasonpath}
+\bibfield{author}{\bibinfo{person}{X. Li} {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{c}.
+\newblock \showarticletitle{Reasoning-path-aware retrieval for multi-hop {QA}}.
+  In \bibinfo{booktitle}{\emph{ACL Findings}}.
+\newblock
+
+\bibitem[Li et~al\mbox{.}(2025)]%
+        {li2025searcho1}
+\bibfield{author}{\bibinfo{person}{Xiaoxi Li}, \bibinfo{person}{Guanting Dong},
+  \bibinfo{person}{Jiajie Jin}, \bibinfo{person}{Yuyao Zhang},
+  \bibinfo{person}{Yujia Zhou}, \bibinfo{person}{Yutao Zhu},
+  \bibinfo{person}{Peitian Zhang}, {and} \bibinfo{person}{Zhicheng Dou}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{Search-o1}: Agentic Search-Enhanced Large
+  Reasoning Models}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2501.05366}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2501.05366}{doi:\nolinkurl{10.48550/arXiv.2501.05366}}
+
+\bibitem[Li et~al\mbox{.}(2024c)]%
+        {li2024selfchecker}
+\bibfield{author}{\bibinfo{person}{Z. Li} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{c}.
+\newblock \showarticletitle{Self-checker for fact-checking factual claims by
+  language models}. In \bibinfo{booktitle}{\emph{ACL Findings}}.
+\newblock
+
+\bibitem[Liang et~al\mbox{.}(2025b)]%
+        {liang2025reasoningragsurvey}
+\bibfield{author}{\bibinfo{person}{Jintao Liang}, \bibinfo{person}{Gang Su},
+  \bibinfo{person}{Huifeng Lin}, \bibinfo{person}{You Wu}, \bibinfo{person}{Rui
+  Zhao}, {and} \bibinfo{person}{Ziyue Li}.} \bibinfo{year}{2025}\natexlab{b}.
+\newblock \showarticletitle{Reasoning {RAG} via System 1 or System 2: A Survey
+  on Reasoning Agentic Retrieval-Augmented Generation for Industry Challenges}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 14th International Joint
+  Conference on Natural Language Processing and the 4th Conference of the
+  Asia-Pacific Chapter of the Association for Computational Linguistics}}.
+  \bibinfo{publisher}{The Asian Federation of Natural Language Processing and
+  The Association for Computational Linguistics}, \bibinfo{pages}{1954--1966}.
+\newblock
+\href{https://doi.org/10.18653/v1/2025.findings-ijcnlp.122}{doi:\nolinkurl{10.18653/v1/2025.findings-ijcnlp.122}}
+
+\bibitem[Lightman et~al\mbox{.}(2024)]%
+        {lightman2024process}
+\bibfield{author}{\bibinfo{person}{H. Lightman}, \bibinfo{person}{V. Kosaraju},
+  \bibinfo{person}{Y. Burda}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Let's verify step by step}. In
+  \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Liu et~al\mbox{.}(2023)]%
+        {liu2023evaluating}
+\bibfield{author}{\bibinfo{person}{N.~F. Liu}, \bibinfo{person}{T. Zhang},
+  {and} \bibinfo{person}{P. Liang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Evaluating verifiability in generative search
+  engines}. In \bibinfo{booktitle}{\emph{EMNLP Findings}}.
+\newblock
+
+\bibitem[Liu et~al\mbox{.}(2024a)]%
+        {liu2024lostmiddle}
+\bibfield{author}{\bibinfo{person}{N.~F. Liu}, \bibinfo{person}{K. Lin},
+  \bibinfo{person}{J. Hewitt}, {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{Lost in the middle: How language models use long
+  contexts}. In \bibinfo{booktitle}{\emph{Transactions of the ACL}}.
+\newblock
+
+\bibitem[Liu et~al\mbox{.}(2024b)]%
+        {liu2024agentbench}
+\bibfield{author}{\bibinfo{person}{X. Liu}, \bibinfo{person}{H. Yu},
+  \bibinfo{person}{H. Zhang}, {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{{AgentBench}: Evaluating {LLMs} as agents}. In
+  \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Luo et~al\mbox{.}(2024)]%
+        {luo2024rog}
+\bibfield{author}{\bibinfo{person}{L. Luo}, \bibinfo{person}{Y.-F. Li},
+  \bibinfo{person}{G. Haffari}, {and} \bibinfo{person}{S. Pan}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Reasoning on graphs: Faithful and interpretable
+  large language model reasoning}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Lyu et~al\mbox{.}(2023)]%
+        {lyu2023faithfulcot}
+\bibfield{author}{\bibinfo{person}{Q. Lyu}, \bibinfo{person}{S. Havaldar},
+  \bibinfo{person}{A. Stein}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Faithful chain-of-thought reasoning}. In
+  \bibinfo{booktitle}{\emph{IJCNLP-AACL}}.
+\newblock
+
+\bibitem[Ma et~al\mbox{.}(2024c)]%
+        {ma2024rankllama}
+\bibfield{author}{\bibinfo{person}{X. Ma}, \bibinfo{person}{L. Wang},
+  \bibinfo{person}{N. Yang}, \bibinfo{person}{F. Wei}, {and}
+  \bibinfo{person}{J. Lin}.} \bibinfo{year}{2024}\natexlab{c}.
+\newblock \showarticletitle{Fine-tuning {LLaMA} for multi-stage text
+  retrieval}. In \bibinfo{booktitle}{\emph{SIGIR}}.
+\newblock
+
+\bibitem[Ma et~al\mbox{.}(2024a)]%
+        {ma2024exfever}
+\bibfield{author}{\bibinfo{person}{X. Ma} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{{Ex-FEVER}: A multi-hop explainable fact
+  verification dataset}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2310.09754}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Ma et~al\mbox{.}(2024b)]%
+        {ma2024tog2}
+\bibfield{author}{\bibinfo{person}{Y. Ma} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{Think-on-graph 2.0: Deep and interpretable {LLM}
+  reasoning with knowledge graph-guided retrieval}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Madaan et~al\mbox{.}(2023)]%
+        {madaan2023selfrefine}
+\bibfield{author}{\bibinfo{person}{A. Madaan}, \bibinfo{person}{N. Tandon},
+  \bibinfo{person}{P. Gupta}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Self-refine: Iterative refinement with
+  self-feedback}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Malaviya et~al\mbox{.}(2024)]%
+        {malaviya2024expertqa}
+\bibfield{author}{\bibinfo{person}{C. Malaviya}, \bibinfo{person}{S. Lee},
+  \bibinfo{person}{S. Chen}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{ExpertQA}: Expert-curated questions and attributed
+  answers}. In \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Manakul et~al\mbox{.}(2023)]%
+        {manakul2023selfcheckgpt}
+\bibfield{author}{\bibinfo{person}{P. Manakul}, \bibinfo{person}{A. Liusie},
+  {and} \bibinfo{person}{M. Gales}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{SelfCheckGPT}: Zero-resource black-box
+  hallucination detection for generative large language models}. In
+  \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Mavi et~al\mbox{.}(2022)]%
+        {mavi2022mhqasurvey}
+\bibfield{author}{\bibinfo{person}{V. Mavi}, \bibinfo{person}{A. Jangra}, {and}
+  \bibinfo{person}{A. Jatowt}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{A survey on multi-hop question answering and
+  generation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2204.09140}}
+  (\bibinfo{year}{2022}).
+\newblock
+
+\bibitem[Mavromatis and Karypis(2022)]%
+        {mavromatis2022rearev}
+\bibfield{author}{\bibinfo{person}{C. Mavromatis} {and} \bibinfo{person}{G.
+  Karypis}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{ReaRev}: Adaptive reasoning for question answering
+  over knowledge graphs}. In \bibinfo{booktitle}{\emph{EMNLP Findings}}.
+\newblock
+
+\bibitem[Mavromatis and Karypis(2024)]%
+        {mavromatis2024gnnrag}
+\bibfield{author}{\bibinfo{person}{C. Mavromatis} {and} \bibinfo{person}{G.
+  Karypis}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{GNN-RAG}: Graph neural retrieval for large
+  language model reasoning}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2405.20139}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Menick et~al\mbox{.}(2022)]%
+        {menick2022gophercite}
+\bibfield{author}{\bibinfo{person}{J. Menick}, \bibinfo{person}{M. Trebacz},
+  \bibinfo{person}{V. Mikulik}, {et~al\mbox{.}}}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Teaching language models to support answers with
+  verified quotes}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2203.11147}}
+  (\bibinfo{year}{2022}).
+\newblock
+
+\bibitem[Min et~al\mbox{.}(2019a)]%
+        {min2019golden}
+\bibfield{author}{\bibinfo{person}{S. Min}, \bibinfo{person}{D. Chen},
+  \bibinfo{person}{H. Hajishirzi}, {and} \bibinfo{person}{L. Zettlemoyer}.}
+  \bibinfo{year}{2019}\natexlab{a}.
+\newblock \showarticletitle{A discrete hard {EM} approach for weakly supervised
+  question answering}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Min et~al\mbox{.}(2019b)]%
+        {min2019decomprc}
+\bibfield{author}{\bibinfo{person}{S. Min}, \bibinfo{person}{V. Zhong},
+  \bibinfo{person}{L. Zettlemoyer}, {and} \bibinfo{person}{H. Hajishirzi}.}
+  \bibinfo{year}{2019}\natexlab{b}.
+\newblock \showarticletitle{Multi-hop reading comprehension through question
+  decomposition and rescoring}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Mohammadi et~al\mbox{.}(2024)]%
+        {mohammadi2024mhmrcsurvey}
+\bibfield{author}{\bibinfo{person}{M. Mohammadi} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{A survey of multi-hop machine reading
+  comprehension}. In \bibinfo{booktitle}{\emph{Knowledge-Based Systems}}.
+\newblock
+
+\bibitem[Nakano et~al\mbox{.}(2021)]%
+        {nakano2021webgpt}
+\bibfield{author}{\bibinfo{person}{R. Nakano}, \bibinfo{person}{J. Hilton},
+  \bibinfo{person}{S. Balaji}, {et~al\mbox{.}}}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{WebGPT}: Browser-assisted question-answering with
+  human feedback}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2112.09332}}
+  (\bibinfo{year}{2021}).
+\newblock
+
+\bibitem[Nan et~al\mbox{.}(2022)]%
+        {nan2022fetaqa}
+\bibfield{author}{\bibinfo{person}{L. Nan}, \bibinfo{person}{C. Hsieh},
+  \bibinfo{person}{Z. Mao}, {et~al\mbox{.}}} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{FeTaQA}: Free-form table question answering}. In
+  \bibinfo{booktitle}{\emph{Transactions of the ACL}}.
+\newblock
+
+\bibitem[Ni et~al\mbox{.}(2022)]%
+        {ni2022gtr}
+\bibfield{author}{\bibinfo{person}{J. Ni}, \bibinfo{person}{C. Qu},
+  \bibinfo{person}{J. Lu}, {et~al\mbox{.}}} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Large dual encoders are generalizable retrievers}.
+  In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Niu et~al\mbox{.}(2024)]%
+        {niu2024ragtruth}
+\bibfield{author}{\bibinfo{person}{C. Niu}, \bibinfo{person}{Y. Wu},
+  \bibinfo{person}{J. Zhu}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{RAGTruth}: A hallucination corpus for developing
+  trustworthy retrieval-augmented language models}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Nogueira et~al\mbox{.}(2020)]%
+        {nogueira2020monot5}
+\bibfield{author}{\bibinfo{person}{R. Nogueira}, \bibinfo{person}{Z. Jiang},
+  \bibinfo{person}{R. Pradeep}, {and} \bibinfo{person}{J. Lin}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Document ranking with a pretrained
+  sequence-to-sequence model}. In \bibinfo{booktitle}{\emph{Findings of
+  EMNLP}}.
+\newblock
+
+\bibitem[Nogueira and Cho(2019)]%
+        {nogueira2019passage}
+\bibfield{author}{\bibinfo{person}{Rodrigo Nogueira} {and}
+  \bibinfo{person}{Kyunghyun Cho}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Passage Re-ranking with {BERT}}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1901.04085}
+  (\bibinfo{year}{2019}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.1901.04085}{doi:\nolinkurl{10.48550/arXiv.1901.04085}}
+
+\bibitem[Pan et~al\mbox{.}(2023)]%
+        {pan2023programfc}
+\bibfield{author}{\bibinfo{person}{L. Pan}, \bibinfo{person}{X. Wu},
+  \bibinfo{person}{X. Lu}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Fact-checking complex claims with program-guided
+  reasoning}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Pan et~al\mbox{.}(2024b)]%
+        {pan2024llmkgsurvey}
+\bibfield{author}{\bibinfo{person}{S. Pan}, \bibinfo{person}{L. Luo},
+  \bibinfo{person}{Y. Wang}, \bibinfo{person}{C. Chen}, \bibinfo{person}{J.
+  Wang}, {and} \bibinfo{person}{X. Wu}.} \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{Unifying large language models and knowledge
+  graphs: A roadmap}. In \bibinfo{booktitle}{\emph{IEEE Transactions on
+  Knowledge and Data Engineering}}.
+\newblock
+
+\bibitem[Pan et~al\mbox{.}(2024a)]%
+        {pan2024longllmlingua2}
+\bibfield{author}{\bibinfo{person}{Z. Pan} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{{LLMLingua}-2: Data distillation for efficient and
+  faithful task-agnostic prompt compression}. In \bibinfo{booktitle}{\emph{ACL
+  Findings}}.
+\newblock
+
+\bibitem[Plaat et~al\mbox{.}(2024)]%
+        {plaat2024multistepsurvey}
+\bibfield{author}{\bibinfo{person}{A. Plaat} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Reasoning with large language models, a survey}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2407.11511}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Pradeep et~al\mbox{.}(2023)]%
+        {pradeep2023rankzephyr}
+\bibfield{author}{\bibinfo{person}{R. Pradeep}, \bibinfo{person}{S.
+  Sharifymoghaddam}, {and} \bibinfo{person}{J. Lin}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{RankZephyr}: Effective and robust zero-shot
+  listwise reranking}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2312.02724}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+\bibitem[Press et~al\mbox{.}(2023)]%
+        {press2022selfask}
+\bibfield{author}{\bibinfo{person}{O. Press}, \bibinfo{person}{M. Zhang},
+  \bibinfo{person}{S. Min}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Measuring and narrowing the compositionality gap in
+  language models}. In \bibinfo{booktitle}{\emph{Findings of EMNLP}}.
+\newblock
+
+\bibitem[Qiao et~al\mbox{.}(2023)]%
+        {qiao2023reasoningsurvey}
+\bibfield{author}{\bibinfo{person}{S. Qiao}, \bibinfo{person}{Y. Ou},
+  \bibinfo{person}{N. Zhang}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Reasoning with language model prompting: A survey}.
+  In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Qin et~al\mbox{.}(2023)]%
+        {qin2023toolbench}
+\bibfield{author}{\bibinfo{person}{Y. Qin}, \bibinfo{person}{S. Hu},
+  \bibinfo{person}{Y. Lin}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{ToolBench}: Benchmarking the tool-use capability
+  of {LLMs}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2023}).
+\newblock
+
+\bibitem[Qiu et~al\mbox{.}(2019)]%
+        {qiu2019dfgn}
+\bibfield{author}{\bibinfo{person}{L. Qiu}, \bibinfo{person}{Y. Xiao},
+  \bibinfo{person}{Y. Qu}, {et~al\mbox{.}}} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Dynamically fused graph network for multi-hop
+  reasoning}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Robertson and Zaragoza(2009)]%
+        {robertson2009bm25}
+\bibfield{author}{\bibinfo{person}{S. Robertson} {and} \bibinfo{person}{H.
+  Zaragoza}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{The probabilistic relevance framework: {BM25} and
+  beyond}. In \bibinfo{booktitle}{\emph{Foundations and Trends in Information
+  Retrieval}}.
+\newblock
+
+\bibitem[Santhanam et~al\mbox{.}(2022)]%
+        {santhanam2022colbertv2}
+\bibfield{author}{\bibinfo{person}{K. Santhanam}, \bibinfo{person}{O. Khattab},
+  \bibinfo{person}{J. Saad-Falcon}, \bibinfo{person}{C. Potts}, {and}
+  \bibinfo{person}{M. Zaharia}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{ColBERTv2}: Effective and efficient retrieval via
+  lightweight late interaction}. In \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Sarthi et~al\mbox{.}(2024)]%
+        {sarthi2024raptor}
+\bibfield{author}{\bibinfo{person}{P. Sarthi}, \bibinfo{person}{S. Abdullah},
+  \bibinfo{person}{A. Tuli}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{RAPTOR}: Recursive abstractive processing for
+  tree-organized retrieval}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Schick et~al\mbox{.}(2023)]%
+        {schick2023toolformer}
+\bibfield{author}{\bibinfo{person}{T. Schick}, \bibinfo{person}{J. Dwivedi-Yu},
+  \bibinfo{person}{R. Dess{\`\i}}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{Toolformer}: Language models can teach themselves
+  to use tools}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Schlichtkrull et~al\mbox{.}(2024)]%
+        {schlichtkrull2024averitec}
+\bibfield{author}{\bibinfo{person}{M. Schlichtkrull}, \bibinfo{person}{Z. Guo},
+  {and} \bibinfo{person}{A. Vlachos}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{AVeriTeC}: A dataset for real-world claim
+  verification with evidence from the web}. In
+  \bibinfo{booktitle}{\emph{NeurIPS Datasets and Benchmarks Track}}.
+\newblock
+
+\bibitem[Schnitzler et~al\mbox{.}(2024)]%
+        {schnitzler2024morehopqa}
+\bibfield{author}{\bibinfo{person}{J. Schnitzler} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{MoreHopQA}: More than multi-hop reasoning}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2406.13397}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Shaham et~al\mbox{.}(2023)]%
+        {shaham2023zeroscrolls}
+\bibfield{author}{\bibinfo{person}{U. Shaham}, \bibinfo{person}{M. Ivgi},
+  \bibinfo{person}{A. Efrat}, \bibinfo{person}{J. Berant}, {and}
+  \bibinfo{person}{O. Levy}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{ZeroSCROLLS}: A zero-shot benchmark for long text
+  understanding}. In \bibinfo{booktitle}{\emph{EMNLP Findings}}.
+\newblock
+
+\bibitem[Shao et~al\mbox{.}(2023)]%
+        {shao2023iterretgen}
+\bibfield{author}{\bibinfo{person}{Z. Shao}, \bibinfo{person}{Y. Gong},
+  \bibinfo{person}{Y. Shen}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Enhancing retrieval-augmented large language models
+  with iterative retrieval-generation synergy}. In
+  \bibinfo{booktitle}{\emph{Findings of EMNLP}}.
+\newblock
+
+\bibitem[Shi et~al\mbox{.}(2026)]%
+        {shi2026multicuberag}
+\bibfield{author}{\bibinfo{person}{Jimeng Shi}, \bibinfo{person}{Wei Hu},
+  \bibinfo{person}{Runchu Tian}, \bibinfo{person}{Bowen Jin},
+  \bibinfo{person}{Wonbin Kweon}, \bibinfo{person}{SeongKu Kang},
+  \bibinfo{person}{Yunfan Kang}, \bibinfo{person}{Dingqi Ye},
+  \bibinfo{person}{Sizhe Zhou}, \bibinfo{person}{Shaowen Wang}, {and}
+  \bibinfo{person}{Jiawei Han}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{MultiCube-RAG} for Multi-hop Question Answering}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2602.15898}
+  (\bibinfo{year}{2026}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2602.15898}{doi:\nolinkurl{10.48550/arXiv.2602.15898}}
+
+\bibitem[Shinn et~al\mbox{.}(2023)]%
+        {shinn2023reflexion}
+\bibfield{author}{\bibinfo{person}{N. Shinn}, \bibinfo{person}{F. Cassano},
+  \bibinfo{person}{A. Gopinath}, \bibinfo{person}{K. Narasimhan}, {and}
+  \bibinfo{person}{S. Yao}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{Reflexion}: Language agents with verbal
+  reinforcement learning}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Singh et~al\mbox{.}(2025)]%
+        {singh2025agenticragsurvey}
+\bibfield{author}{\bibinfo{person}{Aditi Singh}, \bibinfo{person}{Abul
+  Ehtesham}, \bibinfo{person}{Saket Kumar}, {and} \bibinfo{person}{Tala~Talaei
+  Khoei}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Agentic Retrieval-Augmented Generation: A Survey on
+  Agentic {RAG}}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2501.09136}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2501.09136}{doi:\nolinkurl{10.48550/arXiv.2501.09136}}
+
+\bibitem[Song et~al\mbox{.}(2025)]%
+        {song2025r1searcher}
+\bibfield{author}{\bibinfo{person}{Huatong Song}, \bibinfo{person}{Jinhao
+  Jiang}, \bibinfo{person}{Yingqian Min}, \bibinfo{person}{Jie Chen},
+  \bibinfo{person}{Zhipeng Chen}, \bibinfo{person}{Wayne~Xin Zhao},
+  \bibinfo{person}{Lei Fang}, {and} \bibinfo{person}{Ji-Rong Wen}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{R1-Searcher}: Incentivizing the Search Capability
+  in {LLM}s via Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2503.05592}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2503.05592}{doi:\nolinkurl{10.48550/arXiv.2503.05592}}
+
+\bibitem[Su et~al\mbox{.}(2024)]%
+        {su2024dragin}
+\bibfield{author}{\bibinfo{person}{W. Su}, \bibinfo{person}{Y. Tang},
+  \bibinfo{person}{Q. Ai}, \bibinfo{person}{Z. Wu}, {and} \bibinfo{person}{Y.
+  Liu}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{DRAGIN}: Dynamic retrieval augmented generation
+  based on the information needs of large language models}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Sun et~al\mbox{.}(2018)]%
+        {sun2018graftnet}
+\bibfield{author}{\bibinfo{person}{H. Sun}, \bibinfo{person}{B. Dhingra},
+  \bibinfo{person}{M. Zaheer}, \bibinfo{person}{K. Mazaitis},
+  \bibinfo{person}{R. Salakhutdinov}, {and} \bibinfo{person}{W. Cohen}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Open domain question answering using early fusion
+  of knowledge bases and text}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Sun et~al\mbox{.}(2019)]%
+        {sun2019pullnet}
+\bibfield{author}{\bibinfo{person}{H. Sun}, \bibinfo{person}{T. Bedrax-Weiss},
+  {and} \bibinfo{person}{W.~W. Cohen}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{{PullNet}: Open domain question answering with
+  iterative retrieval on knowledge bases and text}. In
+  \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Sun et~al\mbox{.}(2024)]%
+        {sun2024tog}
+\bibfield{author}{\bibinfo{person}{J. Sun}, \bibinfo{person}{C. Xu},
+  \bibinfo{person}{L. Tang}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Think-on-graph: Deep and responsible reasoning of
+  large language model on knowledge graph}. In
+  \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Sun et~al\mbox{.}(2023)]%
+        {sun2023rankgpt}
+\bibfield{author}{\bibinfo{person}{W. Sun}, \bibinfo{person}{L. Yan},
+  \bibinfo{person}{X. Ma}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Is {ChatGPT} good at search? {Investigating} large
+  language models as re-ranking agents}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Sun et~al\mbox{.}(2025)]%
+        {sun2025rearter}
+\bibfield{author}{\bibinfo{person}{Zhongxiang Sun}, \bibinfo{person}{Qipeng
+  Wang}, \bibinfo{person}{Weijie Yu}, \bibinfo{person}{Xiaoxue Zang},
+  \bibinfo{person}{Kai Zheng}, \bibinfo{person}{Jun Xu}, \bibinfo{person}{Xiao
+  Zhang}, \bibinfo{person}{Yang Song}, {and} \bibinfo{person}{Han Li}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{ReARTeR}: Retrieval-Augmented Reasoning with
+  Trustworthy Process Rewarding}. In \bibinfo{booktitle}{\emph{Proceedings of
+  the 48th International ACM SIGIR Conference on Research and Development in
+  Information Retrieval}}. \bibinfo{publisher}{Association for Computing
+  Machinery}, \bibinfo{pages}{1251--1261}.
+\newblock
+\href{https://doi.org/10.1145/3726302.3730102}{doi:\nolinkurl{10.1145/3726302.3730102}}
+
+\bibitem[Suri et~al\mbox{.}(2024)]%
+        {suri2024dochop}
+\bibfield{author}{\bibinfo{person}{A. Suri} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{DocHop}: Multi-document multi-hop reasoning
+  benchmark}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Tafjord et~al\mbox{.}(2021)]%
+        {tafjord2021proofwriter}
+\bibfield{author}{\bibinfo{person}{O. Tafjord}, \bibinfo{person}{B. Dalvi},
+  {and} \bibinfo{person}{P. Clark}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{ProofWriter}: Generating implications, proofs, and
+  abductive statements over natural language}. In
+  \bibinfo{booktitle}{\emph{Findings of ACL}}.
+\newblock
+
+\bibitem[Talmor and Berant(2018)]%
+        {talmor2018complexwebquestions}
+\bibfield{author}{\bibinfo{person}{A. Talmor} {and} \bibinfo{person}{J.
+  Berant}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{The web as a knowledge-base for answering complex
+  questions}. In \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Talmor et~al\mbox{.}(2021)]%
+        {talmor2021multimodalqa}
+\bibfield{author}{\bibinfo{person}{A. Talmor}, \bibinfo{person}{O. Yoran},
+  \bibinfo{person}{A. Catav}, {et~al\mbox{.}}} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{MultiModalQA}: Complex question answering over
+  text, tables and images}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Tang et~al\mbox{.}(2024)]%
+        {tang2024found}
+\bibfield{author}{\bibinfo{person}{R. Tang} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{Found-in-the-middle}: Calibrating positional
+  attention for long-context reading}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Tang and Yang(2024)]%
+        {tang2024multihoprag}
+\bibfield{author}{\bibinfo{person}{Y. Tang} {and} \bibinfo{person}{Y. Yang}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{MultiHop-RAG}: Benchmarking retrieval-augmented
+  generation for multi-hop queries}. In \bibinfo{booktitle}{\emph{COLM}}.
+\newblock
+
+\bibitem[Thorne et~al\mbox{.}(2018)]%
+        {thorne2018fever}
+\bibfield{author}{\bibinfo{person}{J. Thorne}, \bibinfo{person}{A. Vlachos},
+  \bibinfo{person}{C. Christodoulopoulos}, {and} \bibinfo{person}{A. Mittal}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{{FEVER}: A large-scale dataset for fact extraction
+  and verification}. In \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Trivedi et~al\mbox{.}(2020)]%
+        {trivedi2020nohotpot}
+\bibfield{author}{\bibinfo{person}{H. Trivedi}, \bibinfo{person}{N.
+  Balasubramanian}, \bibinfo{person}{T. Khot}, {and} \bibinfo{person}{A.
+  Sabharwal}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Is multihop {QA} in {DiRe} condition? {Measuring}
+  and reducing disconnected reasoning}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Trivedi et~al\mbox{.}(2022)]%
+        {trivedi2022musique}
+\bibfield{author}{\bibinfo{person}{H. Trivedi}, \bibinfo{person}{N.
+  Balasubramanian}, \bibinfo{person}{T. Khot}, {and} \bibinfo{person}{A.
+  Sabharwal}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{MuSiQue}: Multihop questions via single-hop
+  question composition}. In \bibinfo{booktitle}{\emph{Transactions of the
+  ACL}}.
+\newblock
+
+\bibitem[Trivedi et~al\mbox{.}(2023)]%
+        {trivedi2023ircot}
+\bibfield{author}{\bibinfo{person}{H. Trivedi}, \bibinfo{person}{N.
+  Balasubramanian}, \bibinfo{person}{T. Khot}, {and} \bibinfo{person}{A.
+  Sabharwal}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Interleaving retrieval with chain-of-thought
+  reasoning for knowledge-intensive multi-step questions}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Wadden et~al\mbox{.}(2020)]%
+        {wadden2020scifact}
+\bibfield{author}{\bibinfo{person}{D. Wadden}, \bibinfo{person}{S. Lin},
+  \bibinfo{person}{K. Lo}, {et~al\mbox{.}}} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Fact or fiction: Verifying scientific claims}. In
+  \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2022)]%
+        {wang2022e5}
+\bibfield{author}{\bibinfo{person}{L. Wang}, \bibinfo{person}{N. Yang},
+  \bibinfo{person}{X. Huang}, {et~al\mbox{.}}} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Text embeddings by weakly-supervised contrastive
+  pre-training}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2212.03533}}
+  (\bibinfo{year}{2022}).
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2023b)]%
+        {wang2023planandsolve}
+\bibfield{author}{\bibinfo{person}{L. Wang}, \bibinfo{person}{W. Xu},
+  \bibinfo{person}{Y. Lan}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{b}.
+\newblock \showarticletitle{Plan-and-solve prompting: Improving zero-shot
+  chain-of-thought reasoning by large language models}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2024a)]%
+        {wang2024loong}
+\bibfield{author}{\bibinfo{person}{M. Wang} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{{Loong}: Generating long contexts with linearizable
+  transformers}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2024b)]%
+        {wang2024visdom}
+\bibfield{author}{\bibinfo{person}{M. Wang} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{{VisDoM}: Visual document multi-hop {QA}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2024d)]%
+        {wang2023mathshepherd}
+\bibfield{author}{\bibinfo{person}{P. Wang}, \bibinfo{person}{L. Li},
+  \bibinfo{person}{Z. Shao}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{d}.
+\newblock \showarticletitle{{Math}-{Shepherd}: Verify and reinforce {LLMs}
+  step-by-step without human annotations}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2023a)]%
+        {wang2023selfconsistency}
+\bibfield{author}{\bibinfo{person}{X. Wang}, \bibinfo{person}{J. Wei},
+  \bibinfo{person}{D. Schuurmans}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{a}.
+\newblock \showarticletitle{Self-consistency improves chain of thought
+  reasoning in language models}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Wang et~al\mbox{.}(2024c)]%
+        {wang2024executable}
+\bibfield{author}{\bibinfo{person}{X. Wang} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{c}.
+\newblock \showarticletitle{Executable code actions elicit better {LLM}
+  agents}. In \bibinfo{booktitle}{\emph{ICML}}.
+\newblock
+
+\bibitem[Welbl et~al\mbox{.}(2018)]%
+        {welbl2018qangaroo}
+\bibfield{author}{\bibinfo{person}{J. Welbl}, \bibinfo{person}{P. Stenetorp},
+  {and} \bibinfo{person}{S. Riedel}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Constructing datasets for multi-hop reading
+  comprehension across documents}. In \bibinfo{booktitle}{\emph{Transactions of
+  the ACL}}.
+\newblock
+
+\bibitem[Weng et~al\mbox{.}(2023)]%
+        {weng2023selfverification}
+\bibfield{author}{\bibinfo{person}{Y. Weng}, \bibinfo{person}{M. Zhu},
+  \bibinfo{person}{F. Xia}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Large language models are better reasoners with
+  self-verification}. In \bibinfo{booktitle}{\emph{Findings of EMNLP}}.
+\newblock
+
+\bibitem[Wolfson et~al\mbox{.}(2020)]%
+        {wolfson2020break}
+\bibfield{author}{\bibinfo{person}{T. Wolfson}, \bibinfo{person}{M. Geva},
+  \bibinfo{person}{A. Gupta}, {et~al\mbox{.}}} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Break it down: A question understanding benchmark}.
+  In \bibinfo{booktitle}{\emph{Transactions of the ACL}}.
+\newblock
+
+\bibitem[Wu et~al\mbox{.}(2024a)]%
+        {wu2024iterdragon}
+\bibfield{author}{\bibinfo{person}{F. Wu} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{{IterDRAGON}: Iterative decomposition and retrieval
+  for agentic multi-hop {QA}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Wu et~al\mbox{.}(2024b)]%
+        {wu2024cofca}
+\bibfield{author}{\bibinfo{person}{J. Wu} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{{CofCA}: A step-wise counterfactual multi-hop {QA}
+  benchmark}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2402.11924}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Wu et~al\mbox{.}(2026)]%
+        {wu2025hiprag}
+\bibfield{author}{\bibinfo{person}{Peilin Wu}, \bibinfo{person}{Mian Zhang},
+  \bibinfo{person}{Kun Wan}, \bibinfo{person}{Wentian Zhao},
+  \bibinfo{person}{Kaiyu He}, \bibinfo{person}{Xinya Du}, {and}
+  \bibinfo{person}{Zhiyu Chen}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{HiPRAG}: Hierarchical Process Rewards for
+  Efficient Agentic Retrieval Augmented Generation}. In
+  \bibinfo{booktitle}{\emph{International Conference on Learning
+  Representations}}.
+\newblock
+\urldef\tempurl%
+\url{https://openreview.net/forum?id=Gt4v9WBPzm}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{ICLR 2026; preprint arXiv:2510.07794}.
+
+\bibitem[Xiao et~al\mbox{.}(2022)]%
+        {xiao2022retromae}
+\bibfield{author}{\bibinfo{person}{S. Xiao}, \bibinfo{person}{Z. Liu},
+  \bibinfo{person}{Y. Shao}, {and} \bibinfo{person}{Z. Cao}.}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{RetroMAE}: Pre-training retrieval-oriented
+  language models via masked auto-encoder}. In
+  \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Xiao et~al\mbox{.}(2024)]%
+        {xiao2024bge}
+\bibfield{author}{\bibinfo{person}{S. Xiao}, \bibinfo{person}{Z. Liu},
+  \bibinfo{person}{P. Zhang}, {and} \bibinfo{person}{N. Muennighoff}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{C-pack: Packaged resources to advance general
+  {C}hinese embedding}. In \bibinfo{booktitle}{\emph{SIGIR}}.
+\newblock
+
+\bibitem[Xiong et~al\mbox{.}(2025)]%
+        {xiong2025raggym}
+\bibfield{author}{\bibinfo{person}{Guangzhi Xiong}, \bibinfo{person}{Qiao Jin},
+  \bibinfo{person}{Xiao Wang}, \bibinfo{person}{Yin Fang},
+  \bibinfo{person}{Haolin Liu}, \bibinfo{person}{Yifan Yang},
+  \bibinfo{person}{Fangyuan Chen}, \bibinfo{person}{Zhixing Song},
+  \bibinfo{person}{Dengyu Wang}, \bibinfo{person}{Minjia Zhang},
+  \bibinfo{person}{Zhiyong Lu}, {and} \bibinfo{person}{Aidong Zhang}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{RAG-Gym}: Optimizing Reasoning and Search Agents
+  with Process Supervision}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2502.13957}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2502.13957}{doi:\nolinkurl{10.48550/arXiv.2502.13957}}
+
+\bibitem[Xiong et~al\mbox{.}(2021b)]%
+        {xiong2020ance}
+\bibfield{author}{\bibinfo{person}{L. Xiong}, \bibinfo{person}{C. Xiong},
+  \bibinfo{person}{Y. Li}, {et~al\mbox{.}}} \bibinfo{year}{2021}\natexlab{b}.
+\newblock \showarticletitle{Approximate nearest neighbor negative contrastive
+  learning for dense text retrieval}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Xiong et~al\mbox{.}(2021a)]%
+        {xiong2021mdr}
+\bibfield{author}{\bibinfo{person}{W. Xiong}, \bibinfo{person}{X.~L. Li},
+  \bibinfo{person}{S. Iyer}, {et~al\mbox{.}}} \bibinfo{year}{2021}\natexlab{a}.
+\newblock \showarticletitle{Answering complex open-domain questions with
+  multi-hop dense retrieval}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Xu et~al\mbox{.}(2024c)]%
+        {xu2023recomp}
+\bibfield{author}{\bibinfo{person}{F. Xu}, \bibinfo{person}{W. Shi}, {and}
+  \bibinfo{person}{E. Choi}.} \bibinfo{year}{2024}\natexlab{c}.
+\newblock \showarticletitle{{RECOMP}: Improving retrieval-augmented {LMs} with
+  context compression and selective augmentation}. In
+  \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Xu et~al\mbox{.}(2024a)]%
+        {xu2024docnli}
+\bibfield{author}{\bibinfo{person}{L. Xu} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{Document-level natural language inference for
+  evidence verification}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Xu et~al\mbox{.}(2024b)]%
+        {xu2024bridger}
+\bibfield{author}{\bibinfo{person}{Y. Xu} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{Bridge-aware retrieval for multi-hop question
+  answering}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Xu et~al\mbox{.}(2025)]%
+        {xu2025veritas}
+\bibfield{author}{\bibinfo{person}{Zhichao Xu}, \bibinfo{person}{Zongyu Wu},
+  \bibinfo{person}{Yun Zhou}, \bibinfo{person}{Aosong Feng},
+  \bibinfo{person}{Kang Zhou}, \bibinfo{person}{Sangmin Woo},
+  \bibinfo{person}{Kiran Ramnath}, \bibinfo{person}{Yijun Tian},
+  \bibinfo{person}{Xuan Qi}, \bibinfo{person}{Weikang Qiu},
+  \bibinfo{person}{Lin~Lee Cheong}, {and} \bibinfo{person}{Haibo Ding}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Beyond Correctness: Rewarding Faithful Reasoning in
+  Retrieval-Augmented Generation}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2510.13272}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2510.13272}{doi:\nolinkurl{10.48550/arXiv.2510.13272}}
+\newblock
+\shownote{Introduces VERITAS}.
+
+\bibitem[Yan et~al\mbox{.}(2024)]%
+        {yan2024crag}
+\bibfield{author}{\bibinfo{person}{S.-Q. Yan}, \bibinfo{person}{J.-C. Gu},
+  \bibinfo{person}{Y. Zhu}, {and} \bibinfo{person}{Z.-H. Ling}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Corrective retrieval augmented generation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2401.15884}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Yang et~al\mbox{.}(2024a)]%
+        {yang2024crag}
+\bibfield{author}{\bibinfo{person}{X. Yang} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{{CRAG}: Comprehensive {RAG} benchmark}. In
+  \bibinfo{booktitle}{\emph{NeurIPS Datasets and Benchmarks Track}}.
+\newblock
+
+\bibitem[Yang et~al\mbox{.}(2023)]%
+        {yang2023prca}
+\bibfield{author}{\bibinfo{person}{Y. Yang} {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{PRCA}: Pluggable reward-driven contextual adapter
+  for {RAG}}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Yang et~al\mbox{.}(2018)]%
+        {yang2018hotpotqa}
+\bibfield{author}{\bibinfo{person}{Z. Yang}, \bibinfo{person}{P. Qi},
+  \bibinfo{person}{S. Zhang}, {et~al\mbox{.}}} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{{HotpotQA}: A dataset for diverse, explainable
+  multi-hop question answering}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Yang et~al\mbox{.}(2022)]%
+        {yang2022muger}
+\bibfield{author}{\bibinfo{person}{Z. Yang} {et~al\mbox{.}}}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{MuGER}: Multi-granularity evidence retrieval and
+  reasoning for hybrid question answering}. In
+  \bibinfo{booktitle}{\emph{Findings of EMNLP}}.
+\newblock
+
+\bibitem[Yao et~al\mbox{.}(2023a)]%
+        {yao2023tot}
+\bibfield{author}{\bibinfo{person}{S. Yao}, \bibinfo{person}{D. Yu},
+  \bibinfo{person}{J. Zhao}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{a}.
+\newblock \showarticletitle{Tree of thoughts: Deliberate problem solving with
+  large language models}. In \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+\bibitem[Yao et~al\mbox{.}(2023b)]%
+        {yao2023react}
+\bibfield{author}{\bibinfo{person}{S. Yao}, \bibinfo{person}{J. Zhao},
+  \bibinfo{person}{D. Yu}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{b}.
+\newblock \showarticletitle{{ReAct}: Synergizing reasoning and acting in
+  language models}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Yasunaga et~al\mbox{.}(2021)]%
+        {yasunaga2021qagnn}
+\bibfield{author}{\bibinfo{person}{M. Yasunaga}, \bibinfo{person}{H. Ren},
+  \bibinfo{person}{A. Bosselut}, \bibinfo{person}{P. Liang}, {and}
+  \bibinfo{person}{J. Leskovec}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{QA-GNN}: Reasoning with language models and
+  knowledge graphs for question answering}. In
+  \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Yen et~al\mbox{.}(2024a)]%
+        {yen2024lcontext}
+\bibfield{author}{\bibinfo{person}{H. Yen} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{Long-context evaluation for multi-hop reasoning}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint}} (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Yen et~al\mbox{.}(2024b)]%
+        {yen2024helmet}
+\bibfield{author}{\bibinfo{person}{H. Yen}, \bibinfo{person}{T. Gao},
+  \bibinfo{person}{M. Hou}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{{HELMET}: How to evaluate long-context language
+  models effectively and thoroughly}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2410.02694}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Yu et~al\mbox{.}(2022)]%
+        {yu2022kgfid}
+\bibfield{author}{\bibinfo{person}{D. Yu}, \bibinfo{person}{C. Zhu},
+  \bibinfo{person}{Y. Fang}, {et~al\mbox{.}}} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{KG-FiD}: Infusing knowledge graph in
+  fusion-in-decoder for open-domain question answering}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Yu et~al\mbox{.}(2023)]%
+        {yu2023chainofnote}
+\bibfield{author}{\bibinfo{person}{W. Yu}, \bibinfo{person}{H. Zhang},
+  \bibinfo{person}{X. Pan}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Chain-of-note: Enhancing robustness in
+  retrieval-augmented language models}. In \bibinfo{booktitle}{\emph{EMNLP}}.
+\newblock
+
+\bibitem[Zhang et~al\mbox{.}(2025)]%
+        {zhang2025parrag}
+\bibfield{author}{\bibinfo{person}{Ningning Zhang}, \bibinfo{person}{Chi
+  Zhang}, \bibinfo{person}{Zhizhong Tan}, \bibinfo{person}{Xingxing Yang},
+  \bibinfo{person}{Weiping Deng}, {and} \bibinfo{person}{Wenyong Wang}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Credible Plan-Driven {RAG} Method for Multi-Hop
+  Question Answering}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/2504.16787}
+  (\bibinfo{year}{2025}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2504.16787}{doi:\nolinkurl{10.48550/arXiv.2504.16787}}
+
+\bibitem[Zhang et~al\mbox{.}(2022a)]%
+        {zhang2022greaselm}
+\bibfield{author}{\bibinfo{person}{X. Zhang}, \bibinfo{person}{A. Bosselut},
+  \bibinfo{person}{M. Yasunaga}, {et~al\mbox{.}}}
+  \bibinfo{year}{2022}\natexlab{a}.
+\newblock \showarticletitle{{GreaseLM}: Graph reasoning enhanced language
+  models for question answering}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Zhang et~al\mbox{.}(2024a)]%
+        {zhang2024infinitybench}
+\bibfield{author}{\bibinfo{person}{X. Zhang}, \bibinfo{person}{Y. Chen},
+  \bibinfo{person}{S. Hu}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{$\infty${Bench}: Extending long context evaluation
+  beyond 100k tokens}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Zhao et~al\mbox{.}(2021)]%
+        {zhao2021beamdr}
+\bibfield{author}{\bibinfo{person}{C. Zhao} {et~al\mbox{.}}}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Multi-step reasoning over unstructured text with
+  beam dense retrieval}. In \bibinfo{booktitle}{\emph{NAACL}}.
+\newblock
+
+\bibitem[Zhao et~al\mbox{.}(2024)]%
+        {zhao2024ragaigcsurvey}
+\bibfield{author}{\bibinfo{person}{P. Zhao} {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Retrieval-augmented generation for {AI}-generated
+  content: A survey}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2402.19473}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+\bibitem[Zhao et~al\mbox{.}(2023)]%
+        {zhao2023verifyedit}
+\bibfield{author}{\bibinfo{person}{R. Zhao} {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Verify-and-edit: A knowledge-enhanced
+  chain-of-thought framework}. In \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Zhou et~al\mbox{.}(2023)]%
+        {zhou2023leasttomost}
+\bibfield{author}{\bibinfo{person}{D. Zhou}, \bibinfo{person}{N. Sch{\"a}rli},
+  \bibinfo{person}{L. Hou}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Least-to-most prompting enables complex reasoning
+  in large language models}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Zhou et~al\mbox{.}(2024a)]%
+        {zhou2024webarena}
+\bibfield{author}{\bibinfo{person}{S. Zhou}, \bibinfo{person}{F.~F. Xu},
+  \bibinfo{person}{H. Zhu}, {et~al\mbox{.}}} \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{{WebArena}: A realistic web environment for
+  building autonomous agents}. In \bibinfo{booktitle}{\emph{ICLR}}.
+\newblock
+
+\bibitem[Zhu et~al\mbox{.}(2024)]%
+        {zhu2024fanoutqa}
+\bibfield{author}{\bibinfo{person}{A. Zhu}, \bibinfo{person}{A. Cohen},
+  \bibinfo{person}{A. Hu}, \bibinfo{person}{K. Mahowald}, {and}
+  \bibinfo{person}{W. Yang}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{FanOutQA}: A multi-hop, multi-document question
+  answering benchmark for large language models}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Zhu et~al\mbox{.}(2021)]%
+        {zhu2021tatqa}
+\bibfield{author}{\bibinfo{person}{F. Zhu}, \bibinfo{person}{W. Lei},
+  \bibinfo{person}{Y. Huang}, {et~al\mbox{.}}} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{TAT-QA}: A question answering benchmark on a
+  hybrid of tabular and textual content in finance}. In
+  \bibinfo{booktitle}{\emph{ACL}}.
+\newblock
+
+\bibitem[Zhuang et~al\mbox{.}(2023)]%
+        {zhuang2023rankt5}
+\bibfield{author}{\bibinfo{person}{H. Zhuang}, \bibinfo{person}{Z. Qin},
+  \bibinfo{person}{R. Jagerman}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{RankT5}: Fine-tuning {T5} for text ranking with
+  ranking losses}. In \bibinfo{booktitle}{\emph{SIGIR}}.
+\newblock
+
+\end{thebibliography}

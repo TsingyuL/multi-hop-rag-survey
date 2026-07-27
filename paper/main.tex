@@ -1,0 +1,1431 @@
+\pdfminorversion=7
+% =====================================================================
+%  Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains
+%  Target venue: ACM Transactions on Information Systems (TOIS)
+%  Revision v7: strengthened ACM 2026 journal submission format
+% =====================================================================
+
+\documentclass[manuscript,review]{acmart}
+\citestyle{acmnumeric}
+
+% The acmart review option supplies review line numbering.
+
+
+% ---------- ACM TOIS submission metadata -----------------------------
+\acmJournal{TOIS}
+% Volume, issue, article number, month, and DOI are assigned by ACM upon
+% acceptance. For initial review, ACM currently requires the single-column manuscript
+% format. Journal-specific volume, issue, article number, month, and DOI are
+% assigned after acceptance.
+\acmDOI{}
+\setcopyright{none}
+\settopmatter{printacmref=false,printccs=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+% Keep the standard ACM manuscript review page style.
+
+% ---------- Packages -------------------------------------------------
+\let\Bbbk\relax
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\graphicspath{{figs/}}
+
+% ---------- Figure helpers ------------------------------------------
+% The current manuscript uses a corrected evidence-chain figure under ./figs/.
+% Figure assets must not contain an internal figure number or caption.
+% Use \paperfigure{<width fraction>}{<file>}{<caption>}{<label>}.
+\newcommand{\paperfigure}[4]{%
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=#1\linewidth]{#2}
+  \caption{#3}
+  \Description{#3}
+  \label{#4}
+\end{figure}
+}
+
+% Keep floats close to their discussion without creating large white gaps.
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{1}
+\setcounter{totalnumber}{3}
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.80}
+\emergencystretch=3em
+
+\usepackage{url}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{makecell}
+\usepackage{threeparttable}
+\usepackage{adjustbox}
+\usepackage{rotating}
+
+% ---------- Macros ---------------------------------------------------
+\newcommand{\MHRAG}{\textsc{MH-RAG}\xspace}
+\newcommand{\RAG}{\textsc{RAG}\xspace}
+\newcommand{\LLM}{\textsc{LLM}\xspace}
+\newcommand{\PLM}{\textsc{PLM}\xspace}
+\newcommand{\KG}{\textsc{KG}\xspace}
+\newcommand{\QA}{\textsc{QA}\xspace}
+\newcommand{\MHQA}{\textsc{MH-QA}\xspace}
+\newcommand{\LLMs}{\textsc{LLM}s\xspace}
+\newcommand{\KGs}{\textsc{KG}s\xspace}
+\newcommand{\KGQA}{\textsc{KGQA}\xspace}
+\newcommand{\LM}{\textsc{LM}\xspace}
+\newcommand{\KB}{\textsc{KB}\xspace}
+\newcommand{\GNN}{\textsc{GNN}\xspace}
+\newcommand{\CoT}{\textsc{CoT}\xspace}
+\newcommand{\FiD}{\textsc{FiD}\xspace}
+\newcommand{\PRM}{\textsc{PRM}\xspace}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\newcommand{\eunit}{\ensuremath{e}}
+\newcommand{\echain}{\ensuremath{\mathcal{C}}}
+\newcommand{\kstore}{\ensuremath{\mathcal{K}}}
+\newcommand{\retr}{\ensuremath{\mathcal{R}}}
+\newcommand{\fuse}{\ensuremath{\mathcal{F}}}
+\newcommand{\reason}{\ensuremath{\mathcal{G}}}
+\newcommand{\verify}{\ensuremath{\mathcal{V}}}
+\newcommand{\pool}{\ensuremath{L_N}}
+\newcommand{\budgetset}{\ensuremath{E_K}}
+\newcommand{\orderctx}{\ensuremath{\pi(E_K)}}
+\newcommand{\obs}{\ensuremath{\mathcal{P}}}
+\newcommand{\sel}{\ensuremath{\mathcal{S}}}
+\newcommand{\expo}{\ensuremath{\mathcal{O}}}
+\newcommand{\fus}{\ensuremath{\mathcal{U}}}
+\newcommand{\faith}{\ensuremath{\mathcal{T}}}
+
+\newcommand{\chainset}{\ensuremath{\mathfrak{C}}}
+
+% ---------- Review-scope macro ---------------------------------------
+% Update only after the literature and bibliography audit is frozen.
+\newcommand{\ReviewCutoff}{July 2026}
+\newcommand{\support}{\ensuremath{\operatorname{supp}}}
+\newcommand{\doop}{\ensuremath{\operatorname{do}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\cost}{cost}
+\DeclareMathOperator{\len}{len}
+\DeclareMathOperator{\KL}{KL}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+% ---------- Title ----------------------------------------------------
+\begin{document}
+
+\title[Multi-Hop RAG through Evidence Chains]
+{Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains:\\
+A Diagnostic Survey}
+
+% TOIS review is single-blind; author identities remain visible.
+\author{Yuqing Luo}
+\affiliation{%
+  \institution{University of Science and Technology of China}
+  \city{Hefei}
+  \state{Anhui}
+  \country{China}
+}
+\author{Kai Zhang}
+\affiliation{%
+  \institution{University of Science and Technology of China}
+  \city{Hefei}
+  \state{Anhui}
+  \country{China}
+}
+
+\begin{abstract}
+Multi-hop retrieval-augmented generation (RAG) serves information needs whose
+support is distributed across evidence units and whose later retrieval steps
+depend on intermediate results. This dependency creates an information retrieval
+problem beyond ranking several independently relevant documents: a
+system must acquire at least one valid evidence chain, preserve it under a
+passage, token, or retrieval-call budget, organize it for reader access,
+compose its elements correctly, and produce an answer that is faithfully
+supported by the supplied evidence. Existing surveys mainly organize the
+literature by architecture or control flow, which obscures the stage at which
+a method acts and the evidence needed to validate its claim. We present an
+IR-centered diagnostic survey organized around five evidence-chain targets:
+chain observability, budgeted chain preservation, evidence exposure,
+cross-evidence fusion, and causal faithfulness. We synthesize sparse, dense,
+iterative, graph-guided, hierarchical, and agentic retrieval; bridge- and
+path-aware selection; compression and context organization; fusion and
+decomposition methods; and verification and attribution approaches through
+\ReviewCutoff. Across these families, we compare the state used to issue the
+next query, the unit of selection, the operative budget, the supervision
+signal, the reported diagnostic, and the characteristic failure mode. We
+then map benchmark annotations and metrics to the targets they can and cannot
+identify, distinguish grounded success from ordinary answer accuracy, and
+propose a conditional reporting protocol covering retrieval depth, context
+budget, membership, ordering, reader capability, faithfulness, and cost. The
+framework is intended as a comparative and evaluation tool rather than a
+predictive theory of system performance. A versioned companion artifact
+records the review protocol, coded entries, and provenance of taxonomy
+assignments.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10002951.10003317</concept_id>
+<concept_desc>Information systems~Information retrieval</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003317.10003347</concept_id>
+<concept_desc>Information systems~Question answering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010178.10010179.10003352</concept_id>
+<concept_desc>Computing methodologies~Natural language generation</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Information retrieval}
+\ccsdesc[500]{Information systems~Question answering}
+\ccsdesc[300]{Computing methodologies~Natural language generation}
+
+\keywords{multi-hop retrieval, retrieval-augmented generation, evidence
+chains, evidence selection, context organization, question answering,
+faithfulness, evaluation}
+
+\maketitle
+\section{Introduction}
+\label{sec:introduction}
+
+Retrieval-augmented generation is often described as a two-stage system:
+retrieve documents and generate an answer. That description is inadequate
+for questions whose evidence is distributed across sources and connected by
+dependencies. In a multi-hop question, an answer-bearing passage may not be
+retrievable from the original query at all. It becomes identifiable only
+after an earlier passage reveals a bridge entity, relation, date, or partial
+conclusion. The retrieval problem is therefore sequential and conditional:
+the system must discover a support structure, not merely collect several
+high-scoring documents.
+
+This distinction matters for both system design and evaluation. A complete
+support chain may be absent from the initial retrieval pool. It may be
+present in the pool but removed by a top-$K$ selector that favors marginal
+query relevance. It may survive selection but be placed in a reader-unfriendly
+position, separated from its companion evidence by distractors, or compressed
+in a way that removes the bridge relation. Even when all required evidence is
+available, the reader may fail to combine it. Conversely, a correct answer
+may be produced from parametric memory, annotation artifacts, or a single-hop
+shortcut without using the retrieved chain. End-to-end exact match or F1
+collapses these cases into one number and therefore gives limited guidance
+about where a method succeeds.
+
+For a question $q$, let $\chainset^\star(q)$ denote the set of valid minimal
+evidence chains that support the reference answer. A retrieval system
+constructs a candidate pool $L_N$, a selector places a subset $E_K$ under a
+passage or token budget, an ordering or packing policy produces
+$\pi(E_K)$, and a reader generates $\hat a$. We use this sequence to organize
+the literature around five diagnostic questions:
+\begin{enumerate}[leftmargin=1.5em]
+\item Does $L_N$ contain at least one valid chain?
+\item Conditional on chain presence, does the selected context preserve one?
+\item Conditional on preservation, is the chain presented where and how the
+reader can access it?
+\item Given accessible evidence, can the reader perform the required
+cross-evidence composition?
+\item Is the resulting answer causally supported by the supplied evidence?
+\end{enumerate}
+These questions correspond to chain observability, selection preservation,
+evidence exposure, fusion reliability, and causal faithfulness. They are not
+independent modules, and a single system change can affect several of them.
+Their value is diagnostic: they separate claims that are routinely conflated
+in multi-hop RAG experiments.
+
+\paperfigure{1.0}{fig1_evidence_chain_v3.pdf}
+{An evidence-chain view of multi-hop RAG. A system constructs a retrieval
+pool $L_N$, selects a budgeted context $E_K$, presents the context through an
+ordering or packing policy $\pi$, and generates an answer. Evaluation should
+separately test whether a valid chain is observable, preserved, exposed,
+correctly fused, and causally used. Ordinary answer accuracy also includes
+answers obtained through shortcuts, parametric memory, or guessing.}
+{fig:latent_chain_view}
+
+The product shown in Figure~\ref{fig:latent_chain_view} is the exact
+chain-rule decomposition of the grounded-success event $Y_g$ under the declared
+evaluation protocol; it is not an approximation to ordinary answer accuracy.
+
+Existing surveys provide broad taxonomies of RAG architectures, multi-hop
+question answering, graph reasoning, chain-of-thought, and agentic
+retrieval~\cite{gao2023ragsurvey,fan2024ragllmsurvey,
+mavi2022mhqasurvey,mohammadi2024mhmrcsurvey,
+plaat2024multistepsurvey,singh2025agenticragsurvey,
+liang2025reasoningragsurvey}. These taxonomies answer an important procedural
+question: how is a system built? They are less suited to a second question:
+which failure event does the central mechanism change? An iterative dense
+retriever, a graph expander, and a search agent have different
+architectures, yet all can increase the probability that a bridge-dependent
+chain enters the candidate pool. A cross-encoder, a bridge-aware selector,
+and a compressor can all change which chain elements survive the final
+budget. A long-context model and an ordering policy can both affect evidence
+access without altering retrieval recall.
+
+The survey therefore uses two complementary views. The primary view follows
+the evidence chain from acquisition to causal use. A compact architectural
+crosswalk is retained to connect this organization to familiar method
+families. This positioning is deliberately narrower than a general RAG or
+LLM-reasoning survey. We focus on systems in which external evidence and
+cross-evidence dependency are necessary parts of the task. Purely parametric
+reasoning, general-purpose agents without retrieval-grounded evidence use,
+and single-hop retrieval methods are discussed only when they provide a
+component or baseline for multi-hop systems.
+
+\subsection{Position Relative to Existing Surveys}
+\label{subsec:survey_position}
+
+Prior work surveys general RAG~\cite{gao2023ragsurvey,fan2024ragllmsurvey,
+huang2024ragsurvey,zhao2024ragaigcsurvey,li2024ragdecoupledsurvey}, multi-hop
+question answering and reading comprehension~\cite{mavi2022mhqasurvey,
+mohammadi2024mhmrcsurvey}, complex and knowledge-graph QA~\cite{lan2021complexkbqasurvey,
+gu2022knowledgesurvey,pan2024llmkgsurvey}, step-by-step reasoning~\cite{plaat2024multistepsurvey,
+chu2024cotsurvey,qiao2023reasoningsurvey}, attribution and hallucination~\cite{li2023attributionsurvey,
+huang2023hallucinationsurvey}, and agentic or reasoning-oriented RAG~\cite{singh2025agenticragsurvey,
+liang2025reasoningragsurvey}. A close process-centric framework organizes
+retrieval--reasoning systems by execution plan, index structure, next-step
+control, and stopping criterion~\cite{ji2026retrievalreasoning}. These views
+explain what systems do. Our complementary view asks which evidence-chain
+failure stage a mechanism changes and which conditional evidence supports
+that claim.
+
+\begin{table}[t]
+\caption{Positioning of the present survey relative to major survey families.}
+\label{tab:survey_crosswalk}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.5cm}p{2.7cm}p{2.8cm}Y@{}}
+\toprule
+Survey family & Representative scope & Primary organizing axis & Gap addressed here \\
+\midrule
+General RAG~\cite{gao2023ragsurvey,fan2024ragllmsurvey} & Retrieval, augmentation, and generation & System architecture and lifecycle & Multi-hop failure stages are usually aggregated. \\
+Multi-hop QA / MRC~\cite{mavi2022mhqasurvey,mohammadi2024mhmrcsurvey} & Bridge, comparison, and compositional reasoning & Task and reasoning type & Pool, budget, presentation, and evidence use are not separated. \\
+Reasoning and agentic RAG~\cite{singh2025agenticragsurvey,liang2025reasoningragsurvey} & Adaptive retrieval, planning, and tool use & Control flow and agent design & End-to-end gains remain difficult to attribute. \\
+Retrieval--reasoning process~\cite{ji2026retrievalreasoning} & Plan, index, control, and stopping & Procedural decisions & No stage-conditional metric and reporting map. \\
+\textbf{This survey} & \textbf{Multi-hop RAG over text, graphs, tables, and hybrid sources} & \textbf{Evidence-chain stages plus architecture} & \textbf{Conditional diagnostics, failure attribution, and reporting protocol.} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The ingredients of this framing are not new in isolation. Retrieved documents
+have been modeled as latent variables in end-to-end RAG~\cite{lewis2020rag,guu2020realm};
+multi-hop datasets annotate support chains~\cite{yang2018hotpotqa,ho2020wikimultihopqa,trivedi2022musique};
+and attribution work studies whether answers depend on evidence~\cite{gao2023alce,liu2023evaluating,wu2024cofca,xu2025veritas}.
+The contribution is their integration into one IR-centered diagnostic
+organization that supports cross-architecture comparison and exposes what
+common metrics do not identify.
+
+The survey is guided by four research questions:
+\begin{description}[leftmargin=1.5em,style=nextline]
+\item[RQ1: Evidence acquisition.] Which retrieval mechanisms make dependent
+support chains observable, and how do they trade coverage against noise,
+cost, and query drift?
+\item[RQ2: Budget and presentation.] How do selection, compression, ordering,
+and context construction determine whether an observable chain remains
+usable by the reader?
+\item[RQ3: Composition and support.] Which reader, decomposition, graph, and
+verification mechanisms improve cross-evidence reasoning and evidence-grounded
+answers?
+\item[RQ4: Evaluation.] Which benchmarks, annotations, and interventions can
+identify each failure stage, and which common metrics conflate them?
+\end{description}
+
+\subsection{Contributions}
+\label{subsec:contributions}
+
+This survey makes four contributions.
+\begin{itemize}[leftmargin=1.3em]
+\item \textbf{An IR-centered evidence-chain framework.} We formalize the
+observable sequence from retrieval pool to generated answer and define five
+protocol-bound events that make retrieval, selection, presentation,
+reasoning, and faithfulness claims comparable across architectures.
+\item \textbf{A dual-axis review.} We organize methods primarily by the stage
+they target while retaining an architectural crosswalk covering iterative
+retrieval, graph-based methods, decomposition, fusion readers, long-context
+systems, verification, and agentic search.
+\item \textbf{Benchmark and metric alignment.} We reinterpret supporting-fact,
+path-annotated, long-context, heterogeneous-evidence, and counterfactual
+benchmarks according to the failure events they expose, and we distinguish
+pool recall, context preservation, fixed-membership presentation, oracle-
+evidence reasoning, and causal-support diagnostics.
+\item \textbf{A reporting protocol and auditable artifact.} We propose a
+minimum set of conditional diagnostics and budget measures for multi-hop RAG
+studies, and release the literature protocol and coded records with explicit
+verification status.
+\end{itemize}
+
+\paragraph{Organization.}
+Section~\ref{sec:survey_methodology} describes the review protocol and scope.
+Sections~\ref{sec:problem_setup} and~\ref{sec:stat_decomposition} introduce
+the task model and diagnostic decomposition. Section~\ref{sec:estimand_methods}
+reviews method families along the evidence-chain pipeline, and
+Section~\ref{sec:architecture_view} provides the architectural crosswalk.
+Section~\ref{sec:benchmarks} aligns benchmarks and metrics with diagnostic
+claims. Section~\ref{sec:causal_faithfulness} focuses on causal evidence use.
+Sections~\ref{sec:tradeoffs} and~\ref{sec:reporting_guidelines} summarize open
+problems and reporting recommendations.
+\section{Review Protocol and Literature Coverage}
+\label{sec:survey_methodology}
+
+The review is designed as a structured evidence map rather than a statistical
+meta-analysis. Its purpose is to compare mechanisms and evaluation claims
+across communities whose terminology differs, while preserving a traceable
+record of why each work is included and how it is coded.
+
+\subsection{Search Sources and Time Window}
+\label{subsec:search_protocol}
+
+We searched ACL Anthology, OpenReview, arXiv, ACM and other publisher
+proceedings pages, and official project repositories. DBLP and Semantic
+Scholar were used for secondary discovery and deduplication. The review
+covers work from January 2017 through July 2026. Query families combined task
+terms (e.g., \emph{multi-hop question answering}, \emph{multi-step
+retrieval}, \emph{compositional question answering}), mechanism terms
+(e.g., \emph{iterative retrieval}, \emph{graph retrieval}, \emph{question
+decomposition}, \emph{context compression}, \emph{agentic search}), and
+evaluation terms (e.g., \emph{supporting facts}, \emph{path recall},
+\emph{citation faithfulness}, \emph{counterfactual evaluation}). Backward
+and forward citation tracing from major surveys, benchmarks, and canonical
+methods supplemented keyword search.
+
+\subsection{Inclusion, Exclusion, and Coding}
+
+A work is included when it satisfies at least one of four conditions: it
+proposes a method for retrieving or using dependent evidence; introduces a
+benchmark or annotation scheme that exposes multi-step evidence dependency;
+analyzes evidence use or failure in a retrieval-grounded setting; or provides
+a foundational component repeatedly used by multi-hop RAG systems. We exclude
+works whose multi-hop framing is incidental, general agents without a
+retrieval-grounded evidence objective, and single-hop methods that do not
+materially inform a multi-hop stage.
+
+Each method record stores its evidence substrate, retrieval setting, context
+budget, architectural family, primary diagnostic target, secondary targets,
+benchmarks, cost information, and source-verification status. The primary
+target is the earliest evidence-chain stage directly changed by the central
+mechanism; later effects are recorded as secondary targets. For example, a
+query-rewriting method that expands the candidate pool is coded primarily as
+observability, even when the resulting evidence also improves fusion.
+
+The coding scheme separates three objects that should not be conflated:
+\emph{discovery records}, which maximize recall during literature search;
+\emph{reviewed method and benchmark records}, whose metadata and assignments
+have been checked against the paper or official project page; and
+\emph{manuscript citations}, which additionally include background and
+component papers. Only reviewed records support taxonomy-level comparisons.
+The companion artifact reports these layers and their status independently.
+
+\subsection{Quality Control and Limitations}
+
+Borderline assignments are logged with the competing labels, the relevant
+source passage, and the reason for the final decision. Records whose primary
+intervention stage remains unresolved after full-text checking stay in a
+\emph{needs-review} state and are excluded from taxonomy-level comparisons.
+Because most records are single-coded rather than independently double-coded,
+we do not report an inter-annotator agreement coefficient. Absence from the
+catalog is likewise not interpreted as evidence of irrelevance or low
+quality.
+
+Three limitations follow. First, rapid publication in 2025--2026 means that
+titles, venue status, and versions can change; the artifact therefore records
+a cut-off date and canonical source. Second, valid support chains are often
+non-unique, so benchmark annotations identify only a subset of the chains a
+system might use. Third, bibliography breadth is not equivalent to verified
+taxonomy coverage. The companion artifact therefore records a versioned
+release, the reviewed-record denominator used by generated comparisons, and
+the common source-level checklist required for every included entry.
+
+\subsection{Quantitative Reporting Audit}
+\label{subsec:quantitative_audit}
+
+To avoid treating bibliography size as empirical coverage, we conducted a
+small reporting audit on the frozen reviewed seed used for this revision. The
+denominator is the set of method records in the companion artifact with
+source-verified status, excluding discovery-only and needs-review entries.
+The audit is therefore a diagnostic sample of the catalog, not a frequency
+estimate over all multi-hop RAG publications.
+
+\begin{table}[t]
+\caption{Frozen seed audit over source-verified method records. Counts use
+the reviewed denominator $n=20$ and do not include discovery-only entries.}
+\label{tab:reviewed_seed_audit}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{3.1cm}p{2.0cm}Y@{}}
+\toprule
+Audit item & Count & Interpretation \\
+\midrule
+Primary target: observability & 7/20 & Acquisition remains the dominant
+coded intervention target. \\
+Primary target: budgeted selection & 3/20 & Selection-preservation claims
+are present but less often isolated than acquisition claims. \\
+Primary target: evidence exposure & 2/20 & Context organization appears
+mainly in hierarchical or graph-summary systems. \\
+Primary target: fusion reliability & 5/20 & Reader and graph-reasoning
+methods remain a substantial family. \\
+Primary target: causal faithfulness & 0/20 & No reviewed seed method is
+primarily coded as a causal-use intervention. \\
+Joint or adaptive primary control & 3/20 & Agentic systems often span
+several events and require event-specific logs before attribution. \\
+Public code URL recorded & 13/20 & Reproducibility metadata is common but
+not universal in the reviewed seed. \\
+Benchmark records reviewed & 6 & Most benchmark entries identify joint
+answer or support behavior rather than a single controlled stage. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Two patterns are visible even in this conservative seed. First, the catalog is
+front-loaded toward acquisition and fusion: observability and fusion account
+for 12 of the 20 reviewed method records, whereas selection and exposure are
+usually evaluated through downstream answer gains rather than conditional
+chain-preservation or fixed-membership tests. Second, faithfulness is mostly
+a secondary or evaluation-side concern in the seed. This supports the
+reporting protocol in Section~\ref{sec:reporting_guidelines}: future catalog
+releases should code whether each paper reports stage-aligned metrics, token
+budget, retrieval-call budget, latency, membership/order controls, and
+deletion, conflict, or counterfactual evidence-use probes. Those fields are
+required before stronger temporal or architecture-family reporting-gap claims
+can be made.
+\section{Problem Setup: Multi-Hop Retrieval as Evidence-Chain Acquisition}
+\label{sec:problem_setup}
+
+\subsection{What Makes Retrieval Multi-Hop?}
+\label{subsec:what_is_mh}
+
+A retrieval task is multi-hop when at least one required evidence unit becomes
+retrievable or interpretable only after an intermediate state has been
+resolved. This definition emphasizes dependency rather than the raw number of
+documents. A question can require many passages but remain single-hop if all
+passages are independently query-relevant. Conversely, a two-document bridge
+question is multi-hop when the second document cannot be specified before the
+first reveals an entity or relation.
+
+Three properties are useful in practice. \emph{Semantic non-locality} means
+that some required evidence is weakly related to the original query surface.
+\emph{Dependency} means that an intermediate result changes the next
+retrieval or interpretation step. \emph{Joint sufficiency} means that no
+proper subset of the selected support is sufficient under the task protocol.
+These properties distinguish multi-hop RAG from long-document reading,
+ordinary multi-document aggregation, and difficult single-evidence reasoning.
+
+\subsection{Evidence Chains and Observable System Objects}
+\label{subsec:latent_chain}
+
+Let $q$ be a question, $a^\star$ its reference answer, and $\kstore$ an
+external knowledge store. An evidence unit may be a sentence, passage, table
+row, image region, knowledge-graph triple, or another retrievable object. Let
+$\chainset^\star(q)$ denote the set of valid minimal evidence chains for $q$.
+A chain is sufficient if it supports $a^\star$ under the task definition and
+minimal if removing any required unit destroys that sufficiency. The set-valued
+definition accommodates alternative valid sources and paths.
+
+A system exposes the following observable sequence:
+\begin{align}
+L_N &= \retr_N(q,\kstore), \\
+E_K &= S_K(q,L_N), \qquad E_K\subseteq L_N, \\
+\pi(E_K) &= O(q,E_K), \\
+\hat a &= \reason(q,\pi(E_K)),
+\end{align}
+where $L_N$ is the retrieval pool, $E_K$ is a selected context under token or
+passage budget $K$, $\pi$ is the reader-facing ordering or packing policy,
+and $\hat a$ is the generated answer. We use $K$ as a generic context budget rather than only a passage
+count because compression and heterogeneous evidence make unit lengths
+variable.
+
+\subsection{Running Example}
+\label{subsec:running_example}
+
+Consider the HotpotQA question: \emph{``What government position was held by
+the woman who portrayed Corliss Archer in the film Kiss and Tell?''}
+The first support unit identifies Shirley Temple as the actor who portrayed
+Corliss Archer; the second states that she later served as United States Chief
+of Protocol~\cite{yang2018hotpotqa}. The second unit is poorly specified by
+the original query and becomes straightforward to retrieve only after the
+bridge entity has been resolved.
+
+This example separates five failures. The biography may be missing from
+$L_N$; it may appear in the pool but be removed from $E_K$; both passages may
+be selected but placed or compressed so that the reader cannot connect them;
+the reader may fail to compose the cast and biographical facts; or it may
+produce the correct title from parametric memory without using the supplied
+chain. The same answer-level error can therefore originate at different
+stages, and a correct answer does not certify retrieval-grounded reasoning.
+
+\subsection{Adjacent Problems and Scope Boundaries}
+
+Graph paths, question decompositions, and agent trajectories are possible
+representations of an evidence chain, but none is identical to the chain by
+definition. A graph system can retrieve a path that is not sufficient; an
+agent can execute several tool calls without acquiring dependent evidence; a
+chain-of-thought can be multi-step while remaining entirely parametric. This
+survey includes these systems only when their external evidence acquisition,
+selection, composition, or verification is central to the task.
+
+Long-context systems also require care. Enlarging the input may reduce the
+need for repeated retrieval, but it does not remove dependency, budget, or
+position effects. Similarly, multimodal and table-text systems change the
+type of evidence unit while preserving the same acquisition and composition
+problem. These substrates are discussed where they reveal a distinct
+retrieval or fusion mechanism rather than as independent application domains.
+\section{A Diagnostic Decomposition of Grounded Success}
+\label{sec:stat_decomposition}
+
+The evidence-chain view is used as an evaluation decomposition. It does not
+assume that components are independent, that the stages can be changed one at
+a time, or that a method has an intrinsic score independent of its corpus,
+budget, reader, and intervention protocol.
+
+\subsection{Five Stage Events}
+
+For a question $q$, define the following events:
+\begin{align}
+\obs &= \{\exists C\in\chainset^\star(q): C\subseteq L_N\}, \\
+\sel &= \{\exists C\in\chainset^\star(q): C\subseteq E_K\}, \\
+\expo &= \{\exists C\in\chainset^\star(q): C\subseteq E_K,
+          \operatorname{access}_{\pi}(C)\le r\}, \\
+\fus &= \{\hat a=a^\star \text{ under the realized chain-containing,
+          accessibility-controlled context}\}, \\
+\faith &= \{\exists C\in\chainset^\star(q): C\subseteq E_K,
+          \hat a=a^\star,\; \hat a\leftarrow C\}.
+\end{align}
+The accessibility function is protocol-specific. It can encode the latest
+support position, the maximum separation between dependent units, or the
+outcome of a controlled packing treatment. It must therefore be declared for
+the reader and context format being evaluated. The notation
+$\hat a\leftarrow C$ denotes the latent claim that the answer causally depends
+on a valid chain $C$; it is not directly observed from answer text or citation
+overlap.
+
+The grounded-success event is
+\begin{equation}
+Y_g=\obs\cap\sel\cap\expo\cap\fus\cap\faith.
+\end{equation}
+Applying the chain rule in pipeline order gives
+\begin{align}
+P(Y_g)=&\;P(\obs)P(\sel\mid\obs)
+P(\expo\mid\obs,\sel) \\
+&\times P(\fus\mid\obs,\sel,\expo)
+P(\faith\mid\obs,\sel,\expo,\fus).
+\label{eq:success_decomp}
+\end{align}
+Equation~\ref{eq:success_decomp} is an exact bookkeeping identity once the
+population and evaluation protocol are fixed. It is not a product model for
+predicting end-to-end performance. Its practical role is to specify the
+conditional subset on which each claim should be tested. Ordinary answer
+success $Y=\{\hat a=a^\star\}$ also contains $Y\cap\neg Y_g$, including
+parametric-memory answers, single-hop shortcuts, incomplete but lucky
+reasoning, and guessing.
+
+\begin{table}[t]
+\caption{Evidence-chain stages, suitable diagnostics, and common confounds.}
+\label{tab:diagnostic_protocol}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}p{3.1cm}p{3.1cm}Y@{}}
+\toprule
+Stage & Target quantity & Suitable diagnostic & Main confound \\
+\midrule
+Pool construction & $P(\obs)$ & complete-chain or path recall at Top-$N$ & incomplete or non-unique gold chains \\
+Budgeted selection & $P(\sel\mid\obs)$ & chain preservation under a fixed token or passage budget & changing retrieval depth or evidence granularity \\
+Presentation & $P(\expo\mid\obs,\sel)$ & fixed-membership ordering or packing ablation & changing membership and order together \\
+Fusion & $P(\fus\mid\obs,\sel,\expo)$ & oracle-evidence or controlled-context EM/F1; step validity & parametric answer availability \\
+Causal faithfulness & $P(\faith\mid\obs,\sel,\expo,\fus)$ & deletion, conflict, and bridge-counterfactual tests & redundant chains and out-of-distribution interventions \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Conditional Evidence Contribution}
+\label{subsec:conditional_utility}
+
+Query--document relevance is an incomplete selection signal in a dependent
+retrieval task. For a fixed reader and partial context $C$, a useful mechanism
+quantity is the conditional contribution
+\begin{equation}
+u(e\mid q,C)=F_q(C\cup\{e\})-F_q(C),
+\end{equation}
+where $F_q(C)$ is the reader's probability of the correct answer under
+context $C$. This signed, reader-dependent quantity is not a stage probability
+and is generally expensive to estimate. It nevertheless clarifies why a
+bridge passage can have low query-only relevance and high value after a core
+passage is known. Bridge-aware reranking, path scoring, note construction,
+and leave-one-out supervision estimate different surrogates of $u$.
+
+\subsection{Budget, Exposure, and Fusion}
+\label{subsec:fusion_program}
+
+The transition from $L_N$ to $E_K$ is a constrained set-selection problem.
+A deeper pool can increase observability while adding distractors; a smaller
+reader context can reduce noise while discarding a complementary bridge.
+Compression changes both the cost and the semantic content of an evidence
+unit and should therefore be evaluated for chain preservation and provenance,
+not only token reduction.
+
+Presentation must be separated from membership. If a reranker changes both
+which passages are selected and where they appear, an answer gain cannot be
+attributed to exposure. The cleanest test fixes $E_K$ and varies only
+$\pi(E_K)$. Fusion should likewise be evaluated on examples where a valid
+chain is supplied in a controlled context. Oracle-evidence accuracy is not a
+deployment score; it is a reader diagnostic for bridge resolution,
+comparison, aggregation, or verification once evidence acquisition has been
+removed as a failure source.
+
+\subsection{Identifiability under Partial Annotation}
+
+Supporting-fact and path annotations identify only annotated versions of the
+pool, selection, and exposure events. A positive match establishes that at
+least one labeled chain is present; a negative match does not rule out an
+unannotated valid chain. Fusion and causal faithfulness are less identifiable
+from observational outputs. A correct answer with a plausible citation can
+still be produced from parametric memory. Evidence removal, factual conflict,
+and bridge substitution provide stronger evidence, but deletion can create
+unnatural inputs and alternative valid chains can mask sensitivity. Stage
+metrics should therefore be reported as protocol-bound estimators with their
+annotation and intervention assumptions made explicit.
+
+\section{Method Families Along the Evidence-Chain Pipeline}
+\label{sec:estimand_methods}
+
+We code a method by the earliest evidence-chain stage directly changed by its
+central mechanism and record later effects as spillovers. This rule prevents
+an architectural label from standing in for a causal claim: graph methods can
+alter acquisition, selection, or fusion; decomposition can generate retrieval
+queries or simplify reader computation; and an agent can act across the full
+pipeline. Each subsection therefore asks both what state the method uses and
+what evidence would be required to validate its stage-aligned claim.
+
+\subsection{Evidence Acquisition and Chain Observability}
+\label{subsec:methods_observability}
+
+Acquisition methods differ mainly in the state used to issue the next query,
+the unit expanded, and the rule that stops search. Table~\ref{tab:acquisition_design}
+summarizes these distinctions.
+
+\begin{table}[t]
+\caption{Design choices for evidence acquisition. ``Diagnostic'' denotes the
+minimum evidence needed to support an observability claim.}
+\label{tab:acquisition_design}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.25cm}p{2.6cm}p{2.3cm}p{2.5cm}Y@{}}
+\toprule
+Family & State for the next query & Search unit / budget & Diagnostic & Characteristic risk \\
+\midrule
+Single-shot sparse or dense & original question & passages; fixed Top-$N$ & complete-chain recall at fixed $N$ & later hops absent from the query surface \\
+Iterative / interleaved & question plus retrieved or generated state & passages; hop or call budget & chain recall by hop and call count & query drift and error propagation \\
+Graph expansion / traversal & local entities, paths, or subgraph state & nodes, edges, linked text; expansion depth & path or chain recall plus graph coverage & missing links, noisy linking, explosive neighborhoods \\
+Hierarchical / coarse retrieval & summaries, clusters, or hypothetical units & variable-granularity units; token budget & chain coverage at matched reader tokens & compression and granularity confounds \\
+Agentic / RL search & reasoning history, tool observations, memory & queries and actions; learned stopping & chain recall, actions, tokens, and latency & more compute and weak action attribution \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Single-shot pool construction.}
+BM25~\cite{robertson2009bm25}, learned sparse retrieval such as
+\textsc{SPLADE}~\cite{formal2021splade}, dense retrievers including
+\textsc{DPR}~\cite{karpukhin2020dpr}, \textsc{REALM}~\cite{guu2020realm},
+\textsc{ANCE}~\cite{xiong2020ance}, \textsc{Contriever}~\cite{izacard2022contriever},
+\textsc{GTR}~\cite{ni2022gtr}, \textsc{E5}~\cite{wang2022e5},
+\textsc{BGE}~\cite{xiao2024bge}, and \textsc{RetroMAE}~\cite{xiao2022retromae},
+and late-interaction systems such as \textsc{ColBERT} and
+\textsc{ColBERTv2}~\cite{khattab2020colbert,santhanam2022colbertv2}
+provide scalable candidate pools. They are indispensable baselines, but their
+query state is fixed. When a later hop is specified only by a bridge revealed
+inside earlier evidence, changing the matching function alone does not remove
+the structural information gap.
+
+\paragraph{Iterative and reasoning-interleaved retrieval.}
+\textsc{GoldEn Retriever}~\cite{min2019golden}, \textsc{MDR}~\cite{xiong2021mdr},
+\textsc{Baleen}~\cite{khattab2021baleen}, and \textsc{MUPPET}~\cite{feldman2019muppet}
+condition later retrieval on accumulated evidence or bridge state.
+\textsc{IRCoT}~\cite{trivedi2023ircot} uses intermediate reasoning as a
+query state; \textsc{FLARE}~\cite{jiang2023flare},
+\textsc{ITER-RETGEN}~\cite{shao2023iterretgen},
+\textsc{Adaptive-RAG}~\cite{jeong2024adaptiverag},
+\textsc{DRAGIN}~\cite{su2024dragin}, \textsc{Self-RAG}~\cite{asai2024selfrag},
+and \textsc{ITER-DRAGON}~\cite{wu2024iterdragon} adapt retrieval timing,
+depth, or filtering to generator state. Their common benefit is state-
+conditioned reachability; their common confound is that more calls also
+change compute, pool size, and downstream context.
+
+\paragraph{Graph and hierarchical acquisition.}
+Question-specific graph systems such as \textsc{GRAFT-Net}~\cite{sun2018graftnet},
+\textsc{PullNet}~\cite{sun2019pullnet}, \textsc{HGN}~\cite{fang2020hgn}, and
+\textsc{DFGN}~\cite{qiu2019dfgn} expand through entity--passage structure.
+\textsc{ToG}, \textsc{ToG 2.0}, and \textsc{RoG}~\cite{sun2024tog,ma2024tog2,luo2024rog}
+traverse knowledge-graph paths under language-model control, while
+\textsc{KG-FiD} and \textsc{GNN-RAG}~\cite{yu2022kgfid,mavromatis2024gnnrag}
+use graph signals to prune or aggregate retrieved evidence. Corpus-level graph
+indexes such as \textsc{GraphRAG}, \textsc{LightRAG}, and
+\textsc{HippoRAG}~\cite{edge2024graphrag,guo2024lightrag,gutierrez2024hipporag}
+change the retrieval substrate itself. Hierarchical methods including
+\textsc{RAPTOR}, \textsc{LongRAG}, and \textsc{HiQA}~\cite{sarthi2024raptor,jiang2024longrag,chen2024hiqa}
+change evidence granularity, while \textsc{HyDE}~\cite{gao2023hyde} changes
+the query representation through a hypothetical document. For these systems,
+path reachability or summary coverage should be reported separately from the
+reader gain produced by a coarser context.
+
+\paragraph{Agentic and adaptive search.}
+\textsc{ReAct} and \textsc{Toolformer}~\cite{yao2023react,schick2023toolformer}
+made search and tool invocation part of the reasoning trajectory. Recent
+systems span reinforcement-learned search agents---including
+\textsc{Search-R1}~\cite{jin2025searchr1},
+\textsc{R1-Searcher}~\cite{song2025r1searcher},
+\textsc{ReSearch}~\cite{chen2025research}, and
+\textsc{RAG-Gym}~\cite{xiong2025raggym}---and adaptive or structured
+controllers such as \textsc{DeepRAG}~\cite{guan2025deeprag},
+\textsc{PAR-RAG}~\cite{zhang2025parrag},
+\textsc{DualRAG}~\cite{cheng2025dualrag},
+\textsc{Search-o1}~\cite{li2025searcho1}, and
+\textsc{MultiCube-RAG}~\cite{shi2026multicuberag}. These systems place query
+generation, retrieve-or-reason decisions, review, document analysis, or
+structured expansion inside an adaptive control loop, but their training
+regimes differ substantially. Answer accuracy alone cannot show whether a
+controller improved chain observability or merely spent more reasoning and
+retrieval budget. At minimum, comparisons should match or expose retrieval
+calls, tokens, stopping behavior, and complete-chain recall.
+
+\subsection{Budgeted Evidence Selection and Context Construction}
+\label{subsec:methods_utility}
+
+Once a chain is present in $L_N$, selection determines whether it survives in
+$E_K$. The key distinction is the decision unit: an independently scored
+document, a list, a path, a set conditioned on partial evidence, or a
+compressed representation. Table~\ref{tab:selection_design} summarizes the
+consequences.
+
+\begin{table}[t]
+\caption{Selection mechanisms under a fixed reader budget.}
+\label{tab:selection_design}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.2cm}p{2.0cm}p{2.6cm}p{2.7cm}Y@{}}
+\toprule
+Mechanism & Decision unit & Conditioning signal & What it can preserve & Main confound \\
+\midrule
+Pointwise reranking & one document & query--document relevance & individually relevant supports & low-surface bridge evidence \\
+Listwise reranking & ordered candidate list & query plus candidate interactions & relative membership and order & membership and exposure changed together \\
+Bridge / path selection & next node, passage, or path & partial chain or bridge entity & complementary chain elements & dependence on noisy intermediate state \\
+Plan / subquestion selection & evidence per subtask & explicit decomposition or plan & step-aligned evidence & decomposition errors and duplicated evidence \\
+Compression / notes & tokens, spans, or generated notes & salience or reader contribution proxy & more evidence within token budget & lost relation, provenance, or factual detail \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Cross-encoders and neural rerankers, from passage reranking and
+\textsc{monoT5} to \textsc{RankT5}, \textsc{RankLLaMA},
+\textsc{RankGPT}, and \textsc{RankZephyr}~\cite{nogueira2019passage,nogueira2020monot5,zhuang2023rankt5,ma2024rankllama,sun2023rankgpt,pradeep2023rankzephyr},
+primarily estimate query-conditioned relevance. Listwise language-model
+rerankers~\cite{tang2024found} can model candidate interactions, but a
+better listwise score is not yet evidence that a complementary bridge was
+preserved. The required diagnostic is complete-chain preservation under the
+same pool and final token budget.
+
+Bridge- and path-aware methods explicitly condition on partial state.
+\textsc{Baleen}~\cite{khattab2021baleen},
+\textsc{HopRetriever}~\cite{li2020hopretriever},
+\textsc{PathRetriever}~\cite{asai2020learning},
+\textsc{BeamDR}~\cite{zhao2021beamdr},
+\textsc{MuGER2}~\cite{yang2022muger}, and
+\textsc{Bridge-R}~\cite{xu2024bridger} score next-hop candidates, bridge
+entities, or chain hypotheses using more than the original query. Their design
+is closer to the conditional contribution $u(e\mid q,C)$, but the score is
+reader- and state-dependent and should not be presented as a universal notion
+of relevance.
+
+Decomposition and planning methods such as \textsc{DecompRC},
+\textsc{Self-Ask}, \textsc{Least-to-Most}, \textsc{BREAK},
+\textsc{Plan-and-Solve}, and
+\textsc{ProgramFC}~\cite{min2019decomprc,press2022selfask,zhou2023leasttomost,wolfson2020break,wang2023planandsolve,pan2023programfc}
+convert a complex information need into subqueries or executable steps. This
+can make evidence selection more nearly single-hop, but it also introduces a
+new failure source: a wrong or overly coarse decomposition can make the valid
+chain unreachable before ranking begins.
+
+Compression methods including \textsc{LLMLingua} and
+\textsc{LongLLMLingua-2}~\cite{jiang2023llmlingua,pan2024longllmlingua2},
+\textsc{RECOMP}~\cite{xu2023recomp}, \textsc{Chain-of-Note}~\cite{yu2023chainofnote},
+and \textsc{xRAG}~\cite{cheng2024xrag} alter both the budget and the evidence
+representation. A compressed context may retain an answer-bearing phrase
+while removing the bridge relation or source provenance. Compression should
+therefore report chain preservation and citation validity at matched tokens,
+not only compression ratio and answer accuracy.
+
+Supervision for selection can come from gold supports, path annotations,
+reader-derived leave-one-out labels, verifier scores, or synthetic
+counterfactual chains. Each signal has bias: gold supports are incomplete,
+reader-derived contribution is model-specific, and verifier scores may reward
+plausibility.
+A strong study states the surrogate and reports whether its gain survives a
+reader change.
+
+\subsection{Evidence Presentation and Exposure}
+\label{subsec:methods_exposure}
+
+Exposure concerns how a fixed evidence set is made available to a particular
+reader. Ordering and packing heuristics respond to documented position
+sensitivity~\cite{liu2024lostmiddle,bai2024longbench,yen2024lcontext}; learned
+approaches such as \textsc{PRCA}~\cite{yang2023prca} and position-robust
+training~\cite{he2024positionrobust} alter the layout or reader. Fusion-in-
+decoder architectures such as \textsc{FiD}, \textsc{FiD-Light},
+\textsc{KG-FiD}, and \textsc{Atlas}~\cite{izacard2021fid,hofstatter2023fidlight,yu2022kgfid,izacard2022atlas}
+reduce interference caused by concatenating all passages into one encoder
+sequence, but they do not remove selection failure. Compression can also
+improve access by shortening distractors, while simultaneously changing
+membership at the token level.
+
+The decisive experiment is a fixed-membership treatment: hold $E_K$, the
+reader, and the total budget constant, then vary only ordering, grouping, or
+packing. Without that control, an ``ordering'' gain may be a hidden selection
+gain. Exposure is reader-specific, so the same layout should be tested across
+at least the reader families for which a general claim is made.
+
+\subsection{Cross-Evidence Fusion}
+\label{subsec:methods_fusion}
+
+Fusion methods act after usable evidence has reached the reader. Retrieve-
+then-read systems such as \textsc{DrQA}, \textsc{ORQA}, \textsc{RAG},
+\textsc{REALM}, \textsc{Atlas}, and \textsc{FiD}~\cite{chen2017drqa,lee2019orqa,lewis2020rag,guu2020realm,izacard2022atlas,izacard2021fid}
+differ in retrieval training and passage encoding, but their fusion claim is
+best isolated with oracle or controlled evidence. Graph-aware readers such as
+\textsc{QA-GNN}, \textsc{GreaseLM}, \textsc{UniKGQA},
+\textsc{ReaRev}, and \textsc{NSM}~\cite{yasunaga2021qagnn,zhang2022greaselm,jiang2023unikgqa,mavromatis2022rearev,he2021nsm}
+constrain composition through explicit structure.
+
+Decomposition and programmatic reasoning reduce the complexity of the reader
+operation. \textsc{DecompRC}, \textsc{Self-Ask},
+\textsc{Least-to-Most}, \textsc{Decomposed Prompting},
+\textsc{Successive Prompting}, and \textsc{ReasonPath}~\cite{min2019decomprc,press2022selfask,zhou2023leasttomost,khot2023decomposed,dua2022successive,li2023reasonpath}
+externalize intermediate steps; \textsc{PoT}, \textsc{PAL},
+\textsc{Faithful CoT}, and code-based reasoning~\cite{chen2023pot,gao2023pal,lyu2023faithfulcot,wang2024executable}
+make some operations executable. Sampling and search over reasoning traces,
+including self-consistency, Tree-of-Thought, and Graph-of-Thought~\cite{wang2023selfconsistency,yao2023tot,besta2024got},
+can increase the chance that one trajectory composes the evidence correctly,
+but also add inference cost.
+
+A fusion claim requires a chain-containing context and a declared
+presentation policy. If accuracy remains low under oracle evidence, the
+reader or decomposition is the binding failure. If accuracy improves only
+when the retrieval pool changes, the result should not be attributed to
+fusion alone.
+
+\subsection{Verification and Causal Faithfulness}
+\label{subsec:methods_faithfulness}
+
+Verification methods differ in where their evidence comes from. Self-
+verification and critique methods such as \textsc{Self-Refine},
+\textsc{Reflexion}, \textsc{CoVe}, \textsc{SelfCheckGPT}, and self-
+verification prompting~\cite{madaan2023selfrefine,shinn2023reflexion,dhuliawala2024cove,manakul2023selfcheckgpt,weng2023selfverification}
+reuse the model's own judgments. Externally grounded approaches including
+\textsc{CRITIC}, \textsc{RARR}, \textsc{Verify-and-Edit},
+\textsc{CRAG}, \textsc{Self-Checker}, and attribution-oriented traces~\cite{gou2024critic,gao2023rarr,zhao2023verifyedit,yan2024crag,li2024selfchecker,li2023attribution}
+retrieve or check evidence before revision. Process-supervised systems such
+as the process reward model of Lightman et al., \textsc{Math-Shepherd},
+\textsc{ReARTeR}, \textsc{RAG-Gym}, \textsc{HiPRAG}, and
+\textsc{VERITAS}~\cite{lightman2024process,wang2023mathshepherd,sun2025rearter,xiong2025raggym,wu2025hiprag,xu2025veritas}
+move step-level reasoning, search-decision, or faithfulness signals into
+training. Their supervision targets differ: \textsc{HiPRAG} penalizes
+suboptimal search decisions, whereas \textsc{VERITAS} rewards trace-level
+faithfulness among information, reasoning, answers, and search actions.
+
+Citation-generating systems such as \textsc{WebGPT}, \textsc{GopherCite},
+and \textsc{ALCE}~\cite{nakano2021webgpt,menick2022gophercite,gao2023alce}
+make attribution inspectable. Deletion tests~\cite{liu2023evaluating,xu2024docnli}
+and bridge counterfactuals such as \textsc{CofCA}~\cite{wu2024cofca}
+intervene on evidence more directly. These mechanisms should not be collapsed
+into one ``faithfulness'' score: self-critique tests consistency, citation
+metrics test entailment and coverage, and counterfactuals provide stronger
+but still imperfect evidence of causal use.
+
+\subsection{Hybrid and Agentic Systems: The Attribution Problem}
+\label{subsec:methods_joint}
+
+Hybrid systems combine search, selection, reasoning, and verification, so an
+architectural name is least informative precisely where the system is most
+capable. Table~\ref{tab:recent_methods_diagnostic} illustrates how recent
+systems can be described without treating the coded stage as a performance
+claim.
+
+\begin{table}[t]
+\caption{Representative recent systems and the diagnostics needed to support
+their coded stage-aligned interpretation. The table describes mechanisms, not a
+comparative performance ranking.}
+\label{tab:recent_methods_diagnostic}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.1cm}p{2.7cm}p{2.2cm}Y@{}}
+\toprule
+System & Central control signal & Primary target (secondary effect) & Required supporting diagnostic \\
+\midrule
+Search-R1~\cite{jin2025searchr1} & RL-trained query generation during reasoning & observability & complete-chain recall and cost at matched calls \\
+DeepRAG~\cite{guan2025deeprag} & retrieve-or-reason policy & observability (cost control) & retrieval frequency, chain coverage, and accuracy--cost curve \\
+RAG-Gym~\cite{xiong2025raggym} & process supervision for search actions & observability (selection) & step-level rewards plus pool, context, and cost diagnostics \\
+PAR-RAG~\cite{zhang2025parrag} & top-down plan--act--review loop & observability (fusion) & plan validity, chain recall, and review ablation \\
+VERITAS~\cite{xu2025veritas} & fine-grained trace-faithfulness rewards & causal faithfulness & information--think, think--answer, and think--search faithfulness \\
+MultiCube-RAG~\cite{shi2026multicuberag} & ontology-guided structured retrieval & observability & chain coverage, noise, and ontology-construction cost \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The general rule is simple: when an end-to-end system improves answer
+accuracy, the paper should show which observable object changed---the pool,
+the final context, its presentation, the reader outcome under controlled
+evidence, or the answer's response to evidence interventions. Otherwise a
+gain from deeper search, more computation, or parametric answering is easily
+misattributed to the advertised component.
+
+\subsection{Cross-Family Synthesis}
+\label{subsec:cross_family_synthesis}
+
+Four cross-family findings follow from the diagnostic view. First, most
+architectures that advertise multi-hop capability still make their strongest
+claim at the acquisition boundary: iterative retrievers, graph expanders,
+hierarchical indexes, and search agents all try to make an otherwise latent
+chain reachable. Their results are only comparable when retrieval depth,
+call count, and pool size are reported together.
+
+Second, budgeted selection remains the least cleanly isolated middle stage.
+Rerankers, decomposers, compressors, and graph pruners often change both
+membership and ordering, so answer gains cannot by themselves show that a
+valid chain survived the final budget. This is where complete-chain
+preservation under matched passage or token budgets is most valuable.
+
+Third, long context and graph structure help only when exposure is measured
+separately from membership. A larger context, community summary, or graph
+path can increase the chance that evidence is present while still placing
+dependent units too far apart, overcompressing the bridge, or obscuring
+provenance.
+
+Fourth, causal faithfulness remains under-instrumented relative to answer
+accuracy and citation quality. Verification and attribution methods make
+support more inspectable, but deletion, conflict, and bridge-counterfactual
+probes are needed before a paper can claim that the supplied chain caused the
+answer rather than merely agreeing with it.
+
+\section{Architectural Crosswalk}
+\label{sec:architecture_view}
+
+The diagnostic organization does not replace architecture. It clarifies why
+architectural labels alone are insufficient for comparison. Table
+\ref{tab:architecture_estimand} maps common families to the stages they most
+often affect. The mapping is non-exclusive: an iterative retriever can also
+perform selection, a graph system can support both acquisition and fusion,
+and an agent can act across the full pipeline.
+
+\begin{table}[H]
+\caption{Architectural families and their typical evidence-chain effects. A
+filled circle marks a common primary effect and an open circle a frequent
+secondary effect.}
+\label{tab:architecture_estimand}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}CCCCC@{}}
+\toprule
+Family & Observability & Selection & Exposure & Fusion & Faithfulness \\
+\midrule
+Single-shot retrieval & $\bullet$ & $\circ$ &  &  &  \\
+Iterative / adaptive retrieval & $\bullet$ & $\bullet$ & $\circ$ &  &  \\
+Graph-guided retrieval & $\bullet$ & $\bullet$ &  & $\circ$ & $\circ$ \\
+Decomposition / planning & $\circ$ & $\bullet$ &  & $\bullet$ & $\circ$ \\
+Compression / context packing &  & $\circ$ & $\bullet$ & $\circ$ &  \\
+Fusion readers / structured reasoning &  &  & $\circ$ & $\bullet$ &  \\
+Verification / attribution &  &  &  & $\circ$ & $\bullet$ \\
+Agentic / RL search & $\bullet$ & $\bullet$ & $\circ$ & $\circ$ & $\circ$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Three distinctions are especially important. First, graph-based methods are
+not a single stage: graph construction can increase candidate coverage,
+subgraph pruning can change selection, and message passing can change fusion.
+Second, ``long context'' is not a substitute for retrieval analysis. It
+changes the feasible budget and evidence granularity but can preserve or
+worsen position sensitivity. Third, agentic systems add adaptive control
+rather than a new diagnostic target. Their main evaluation problem is
+attribution: additional calls can improve answer accuracy through deeper
+search, better selection, more computation, or self-correction. Per-stage
+and cost-normalized results are therefore more informative than a single
+agent-versus-pipeline comparison.
+\section{Benchmarks as Diagnostic Instruments}
+\label{sec:benchmarks}
+
+A benchmark is diagnostically useful when its annotations or interventions
+make a failure stage observable while controlling preceding stages. Domain
+and release year matter, but they are secondary to what the benchmark can
+identify.
+
+\subsection{Supporting Facts, Paths, and Chain Coverage}
+\label{subsec:coverage_diagnostics}
+
+\textsc{HotpotQA}, \textsc{2WikiMultiHopQA}, \textsc{IIRC},
+\textsc{ComplexWebQuestions}, and \textsc{QAngaroo}~\cite{yang2018hotpotqa,ho2020wikimultihopqa,ferguson2020iirc,talmor2018complexwebquestions,welbl2018qangaroo}
+provide varying degrees of support or path information. These labels allow
+pool-level and context-level coverage diagnostics, but they identify
+annotated chains rather than every valid chain or the chain actually used by
+the model. \textsc{2WikiMultiHopQA}, \textsc{EntailmentBank},
+\textsc{eQASC}, and \textsc{ProofWriter}~\cite{ho2020wikimultihopqa,dalvi2021entailmentbank,jhamtani2020eqasc,tafjord2021proofwriter}
+make more intermediate structure explicit and are therefore better suited to
+path or step analysis. Even then, a gold path need not be unique.
+
+\subsection{Shortcut Resistance and Longer Dependencies}
+\label{subsec:shortcut_diagnostics}
+
+\textsc{MuSiQue}~\cite{trivedi2022musique} was designed to reduce
+single-hop shortcuts in composed questions. \textsc{MoreHopQA}~\cite{schnitzler2024morehopqa}
+stresses longer chains, while \textsc{HotpotQA-NoShortcut}~\cite{trivedi2020nohotpot}
+and related filtered settings reduce examples that can be solved from one
+support. \textsc{NovelHopQA}~\cite{novelhopqa2025} combines dependency with
+longer narrative context. These datasets are useful for acquisition claims,
+but a low end-to-end score still cannot reveal whether the chain was missing,
+removed by the context budget, or mishandled by the reader.
+
+\subsection{Heterogeneous Evidence and Long Context}
+\label{subsec:hetero_diagnostics}
+
+\textsc{HybridQA}, \textsc{OTT-QA}, \textsc{MultiModalQA},
+\textsc{WebQA}, \textsc{ManyModalQA}, \textsc{TAT-QA},
+\textsc{FeTaQA}, \textsc{VisDoM}, \textsc{DocHop-QA}, and
+\textsc{WikiMixQA}~\cite{chen2020hybridqa,chen2021opentableqa,talmor2021multimodalqa,chang2022webqa,hannan2020manymodalqa,zhu2021tatqa,nan2022fetaqa,wang2024visdom,suri2024dochop,he2024wikimixqa}
+require chains that cross text, tables, documents, or images. Their primary
+value is to test whether evidence representation and fusion remain coherent
+across substrates; alignment errors can dominate ordinary retrieval error.
+
+Long-context suites such as \textsc{LongBench}, $\infty$Bench,
+\textsc{HELMET}, \textsc{Loong}, and \textsc{ZeroSCROLLS}~\cite{bai2024longbench,zhang2024infinitybench,yen2024helmet,wang2024loong,shaham2023zeroscrolls}
+can reveal access failures, but their default protocols rarely isolate
+presentation from membership. To support an exposure claim, a study should
+construct fixed-set variants that move the same support chain across
+positions or separations while holding tokens and reader constant.
+
+\subsection{Support, Attribution, and Counterfactual Use}
+\label{subsec:faithfulness_diagnostics}
+
+Fact-verification datasets such as \textsc{FEVER}, \textsc{HoVer},
+\textsc{EX-FEVER}, \textsc{SciFact}, and \textsc{AVeriTeC}~\cite{thorne2018fever,jiang2020hover,ma2024exfever,wadden2020scifact,schlichtkrull2024averitec}
+measure whether claims are supported or refuted by evidence. Citation-oriented
+benchmarks such as \textsc{ALCE}~\cite{gao2023alce}, together with
+\textsc{HaluEval} and \textsc{ExpertQA}~\cite{li2023halueval,malaviya2024expertqa},
+measure attribution, factuality, or support quality. These are important
+faithfulness proxies, but support entailment does not show that the evidence
+caused the answer. Bridge-counterfactual protocols such as
+\textsc{CofCA}~\cite{wu2024cofca}, conflict tests, and carefully controlled
+deletion experiments provide stronger evidence because they intervene on the
+chain.
+
+\subsection{End-to-End RAG and Agentic Behavior}
+\label{subsec:rag_specific_diagnostics}
+
+\textsc{MultiHop-RAG}, \textsc{FRAMES}, \textsc{CRAG},
+\textsc{FanOutQA}, and \textsc{RAGTruth}~\cite{tang2024multihoprag,krishna2024frames,yang2024crag,zhu2024fanoutqa,niu2024ragtruth}
+measure end-to-end RAG behavior under complex information needs.
+\textsc{ToolBench}, \textsc{AgentBench}, and \textsc{WebArena}~\cite{qin2023toolbench,liu2024agentbench,zhou2024webarena}
+add tool or environment interaction. They are valuable deployment tests, but
+their scores combine action policy, retrieval affordances, context
+construction, reader reasoning, and cost. Stage-level logs are required for
+mechanism claims.
+
+\begin{table}[t]
+\caption{Benchmark families interpreted as diagnostic instruments.}
+\label{tab:benchmark_families_extended}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.5cm}p{2.8cm}p{2.3cm}Y@{}}
+\toprule
+Family & Available signal & Best-identified target & Principal blind spot \\
+\midrule
+Supporting-fact QA & document or sentence supports & observability and selection & incomplete chains and shortcut answers \\
+Path / proof annotated & ordered paths, trees, or steps & fusion and process validity & alternative valid derivations \\
+Shortcut-resistant QA & composed or filtered questions & dependent acquisition & stage of failure remains mixed \\
+Heterogeneous evidence & table, text, graph, or image links & cross-substrate fusion & alignment and representation confounds \\
+Long-context suites & long inputs and position variation & exposure when membership is controlled & default tasks mix selection and layout \\
+Verification / citation & support labels, entailment, citations & support validity and attribution & causal use is not identified \\
+Counterfactual / conflict & altered bridge or evidence facts & causal faithfulness & intervention naturalness and redundancy \\
+Agentic / tool use & action traces and environment outcomes & joint control and efficiency & tool affordances dominate comparisons \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Metric--Claim Alignment}
+\label{subsec:metric_alignment}
+
+Answer EM and F1 are deployment-level metrics rather than stage-aligned
+metrics.
+Supporting-fact F1 approximates annotated membership; Top-$N$ recall estimates
+pool observability; citation precision estimates attribution; and
+counterfactual sensitivity estimates response to an intervention. None is a
+universal ``multi-hop RAG quality'' score.
+
+\begin{table}[t]
+\caption{Metrics and the claims they can support when the required control is
+satisfied.}
+\label{tab:metric_estimand_alignment}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.5cm}p{3.0cm}p{2.8cm}Y@{}}
+\toprule
+Claim & Suitable metric & Conditional subset / control & Misleading substitute \\
+\midrule
+Pool contains a valid chain & complete support or path recall at Top-$N$ & fixed corpus, evidence unit, and retrieval budget & answer F1 alone \\
+Budget preserves the chain & selected-chain recall at $K$ & chain present in pool; fixed token budget & reranker relevance score \\
+Presentation improves access & fixed-set ordering or packing gap & identical membership and reader & reranking that also changes membership \\
+Reader composes evidence & oracle- or controlled-evidence EM/F1; step validity & chain supplied and presentation declared & Top-$N$ retrieval recall \\
+Answer is faithfully supported & joint citation, deletion, conflict, and counterfactual diagnostics & answer-correct and chain-present subsets & citation overlap alone \\
+System is efficient & tokens, calls, latency, cost--quality curve & matched model/API/hardware conditions & selector-only latency \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A balanced empirical portfolio should include at least one benchmark with
+chain annotations, one that reduces shallow shortcuts or increases dependency
+length, and one that tests support or counterfactual behavior. No individual
+dataset substitutes for conditional evaluation on the system's own pool,
+context, ordering, reader, and evidence interventions.
+
+\section{Faithfulness as Causal Evidence Use}
+\label{sec:causal_faithfulness}
+
+Correctness, attribution, and causal use are distinct. A model can answer
+correctly without citing evidence, cite an entailing passage that it did not
+use, or produce a well-supported chain whose final composition is wrong.
+Faithfulness evaluation should therefore ask how the answer responds when the
+relevant evidence is withheld, contradicted, or altered, rather than treating
+a plausible citation as proof of use.
+
+\subsection{Operational Probes}
+\label{subsec:faithfulness_probes}
+
+For a candidate chain $C\subseteq E_K$, a simple deletion statistic is
+\begin{equation}
+D_{\mathrm{del}}(C)=
+P(a^\star\mid q,\pi(E_K))-P(a^\star\mid q,\pi(E_K\setminus C)).
+\end{equation}
+A large value suggests that $C$ is load-bearing, but it is not a definition of
+faithfulness. Deletion can create an unnatural input, and redundant valid
+chains can make a faithful answer insensitive to any one removal.
+
+\begin{table}[t]
+\caption{Complementary probes of evidence use. No single row identifies
+causal faithfulness in all settings.}
+\label{tab:faithfulness_probes}
+\centering
+\scriptsize
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}p{2.8cm}p{2.7cm}Y@{}}
+\toprule
+Probe & What it asks & Strong evidence when & Failure mode \\
+\midrule
+Closed-book / conflict control & does the answer follow supplied evidence rather than parametric memory? & evidence conflicts are coherent and answerable & model may distrust artificial conflicts \\
+Deletion / sufficiency & does removing a support chain reduce the answer probability? & input remains natural and alternatives are controlled & redundancy and distribution shift \\
+Bridge counterfactual & does an altered intermediate fact propagate to the answer? & replacement yields a coherent alternative chain & expensive construction and leakage from unchanged cues \\
+Citation entailment / coverage & do cited units support the generated claims? & claim segmentation and entailment judgments are reliable & post-hoc citation without causal use \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Counterfactual bridge substitution is often stronger than deletion because it
+preserves a coherent context while changing the fact that should propagate
+through the chain. Closed-book and evidence-conflict controls estimate the
+availability and dominance of parametric knowledge. Citation entailment is
+necessary for auditable output, but it measures support compatibility rather
+than the internal cause of generation. These probes should be combined rather
+than averaged into an opaque single score.
+
+\subsection{Reporting Faithfulness}
+
+A credible audit reports at least three joint quantities on the answer-correct
+subset: citation entailment or support precision, sensitivity to a declared
+evidence intervention, and closed-book or conflict behavior. Results should
+also be stratified by whether an annotated chain is present in the final
+context. Faithfulness on chain-absent examples mainly measures parametric
+answering or retrieval failure; faithfulness averaged over all examples can
+hide that distinction.
+
+Verification methods should be described by the stage at which they act.
+Self-critique tests internal consistency, externally grounded verification
+checks or retrieves additional support, process supervision changes the
+training objective, and counterfactual training changes the data distribution.
+Their outputs are complementary evidence about causal use, not interchangeable
+measurements of one universal property.
+
+\section{Open Problems and Tradeoffs}
+\label{sec:tradeoffs}
+
+\paragraph{Dependent retrieval under controlled cost.}
+Iterative and agentic search can expose bridge evidence that is invisible to
+the original query, but each step also increases latency, distractor mass, and
+query-drift risk. Progress requires accuracy--cost curves, chain-recall curves
+by call count, and stopping policies trained against evidence acquisition
+rather than only final-answer reward.
+
+\paragraph{Set- and path-level selection.}
+Most rerankers still score documents independently or listwise against the
+original query. Multi-hop selection requires complementarity: a passage can
+be weak alone and decisive with another passage. Core-conditioned scoring,
+path-level objectives, set selection, and counterfactual contribution labels
+are promising, but they must be evaluated under fixed pools and reader token
+budgets.
+
+\paragraph{Evidence granularity, compression, and provenance.}
+Passages, sentences, graph triples, summaries, and generated notes induce
+different chain lengths and costs. Compression can preserve an answer string
+while removing the relation or provenance required to justify it. Studies
+should report the evidence unit, token accounting, chain preservation, and
+citation recoverability after compression.
+
+\paragraph{Reader-specific context organization.}
+Long-context models do not make presentation irrelevant. Ordering, separation,
+grouping, and instruction layout interact with the reader architecture and
+training distribution. Exposure metrics should therefore be reader-specific,
+and presentation claims require fixed-membership tests across the reader
+families to which the claim is intended to generalize.
+
+\paragraph{Identifiable benchmarks with alternative chains.}
+Many benchmarks annotate one support path even when several valid chains
+exist. New evaluation instruments should include alternative chain labels,
+controlled distractor density, fixed-set ordering variants, oracle contexts,
+and coherent bridge counterfactuals. These additions are more informative
+than another end-to-end leaderboard with no failure localization.
+
+\paragraph{Attribution and robustness in adaptive systems.}
+Agents, graph builders, and verifiers increase both capability and attack
+surface. Retrieval-side prompt injection, poisoned or stale corpora, source
+conflicts, and unverifiable generated graph edges can corrupt the chain while
+leaving the answer fluent. Trust-aware retrieval, provenance-preserving
+context construction, and per-action audit logs should be evaluated alongside
+accuracy and efficiency.
+
+\section{Reporting Guidelines for Multi-Hop RAG}
+\label{sec:reporting_guidelines}
+
+The evidence-chain framework implies a compact reporting protocol. A paper
+need not optimize every stage, but it should measure the stage it claims to
+improve, expose major spillovers, and state the budget under which the claim
+holds.
+
+\begin{table}[t]
+\caption{Minimum evidence-chain reporting for multi-hop RAG studies.}
+\label{tab:minimum_reporting}
+\centering
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}p{2.8cm}p{2.1cm}Y@{}}
+\toprule
+Reported quantity & Claim & Required control \\
+\midrule
+Chain/path recall at Top-$N$ & pool observability & fixed corpus, retrieval budget, and evidence unit \\
+Chain preservation at budget $K$ & selection & chain present in the pool; fixed token budget \\
+Order/packing gap on a fixed set & exposure & identical evidence membership, budget, and reader \\
+Controlled-context EM/F1 & fusion & valid chain supplied and presentation specified \\
+Entailment plus intervention probes & causal faithfulness & answer-correct and chain-present subsets \\
+Tokens, calls, and end-to-end latency & efficiency & comparable model, API, and hardware conditions \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Four practices are necessary for interpretable comparison. First,
+retrieval depth $N$, final context budget $K$, evidence granularity, reader
+model, and maximum calls must appear next to the headline score. Second,
+stage-aligned metrics must be reported on the corresponding conditional subset:
+selection on chain-present pools, exposure on fixed membership, fusion on
+controlled evidence, and faithfulness on answer-correct cases with available
+support. Third, hybrid and agentic systems need stage-aligned ablations and
+cost--quality curves because additional computation can conceal the source of
+an improvement. Fourth, benchmark and survey papers should publish their
+coding assumptions and distinguish verified records from discovery records.
+
+Incomplete gold chains make recall a lower-bound proxy; reader-derived
+contribution is model-specific; deletion sensitivity is affected by
+redundancy; and citation entailment does not establish causal use. Stating
+these limitations produces more comparable evidence than assigning one
+overloaded score to ``RAG quality.''
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Multi-hop RAG is an information-retrieval problem over dependent evidence,
+not simply a larger retrieve--then--read pipeline. The evidence-chain view
+separates five questions that end-to-end answer accuracy conflates: whether a
+valid chain enters the pool, survives the reader budget, is organized for
+access, is composed correctly, and faithfully supports the answer. This
+organization connects sparse and dense retrieval, graph expansion,
+decomposition, compression, fusion readers, verification, and agentic search
+without treating an architectural family as an explanation of performance.
+
+The main methodological implication is conditional evaluation. Pool recall
+cannot support a reader claim; reranking that changes both membership and
+order cannot isolate exposure; oracle-evidence accuracy does not establish
+faithfulness; and citation overlap does not prove causal use. Each claim
+requires a corresponding observable object, subset, intervention, and budget.
+The companion artifact operationalizes the same discipline for the survey
+itself by separating discovery breadth from source-verified taxonomy records.
+
+Future progress will depend less on adding another pipeline label and more on
+building controlled instruments for dependent acquisition, complementary
+selection, reader-specific context organization, cross-evidence composition,
+and counterfactual support. These instruments are what allow improvements to
+be compared across rapidly changing retrievers, readers, graph indexes, and
+search agents.
+
+\section*{Data and Artifact Availability}
+
+The companion artifact is available at
+\url{https://github.com/TsingyuL/multi-hop-rag-survey}. It contains the search
+protocol, machine-readable method and benchmark records, coding fields,
+source URLs, status labels, figure sources, and validation scripts. Versioned
+releases allow the manuscript, bibliography, figures, and coded records to be
+associated with the same frozen snapshot.
+
+\appendix
+
+\section{Artifact Status and Update Policy}
+\label{app:coverage_counts}
+
+The artifact separates three layers that serve different purposes.
+\emph{Discovery records} maximize recall during literature search and may
+contain adjacent or unverified work. \emph{Source-verified records} have been
+checked against the canonical paper or official project page and can support
+artifact-derived taxonomy analyses. \emph{Manuscript citations} additionally
+include background and component papers needed for exposition. These layers
+overlap and should not be interpreted as a PRISMA-style screening funnel.
+
+Each public release records its literature cut-off, canonical-source
+policy, status vocabulary, and correction history. Numerical catalog summaries
+are generated from the release rather than copied into the source by hand,
+which prevents stale counts and restricts artifact-derived tables to records
+that satisfy the stated verification rule.
+
+\section{Screening and Coding Checklist}
+\label{app:protocol}
+
+A method is promoted to reviewed status only after the following fields have
+been checked against the full paper or an official project page: canonical
+title and venue/version; multi-hop scope; evidence substrate; retrieval and
+reader budgets; architectural family; primary and secondary evidence-chain
+stages; benchmark and metric claims; source and code URLs; and a short passage
+supporting the taxonomy assignment. Comparative tables should be generated
+from reviewed records rather than maintained manually.
+
+\input{main_TOIS_verified.bbl}
+
+\end{document}

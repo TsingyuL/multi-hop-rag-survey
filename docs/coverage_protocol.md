@@ -2,7 +2,7 @@
 
 ## Purpose and claim boundary
 
-This repository is a **living, curated evidence map** for multi-hop retrieval-augmented reasoning. It is not a registered systematic review and does not make a PRISMA-style claim of exhaustive retrieval. In particular, an absent paper should never be interpreted as evidence that the paper is irrelevant or low quality.
+This repository is a **paper repository with a curated companion evidence map** for multi-hop retrieval-augmented reasoning. It is not a registered systematic review and does not make a PRISMA-style claim of exhaustive retrieval. In particular, an absent paper should never be interpreted as evidence that the paper is irrelevant or low quality.
 
 The protocol exists so readers can distinguish three things that are often conflated in survey repositories: scope, metadata verification, and interpretive taxonomy labels.
 

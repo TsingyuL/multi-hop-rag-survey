@@ -1,6 +1,6 @@
 # Literature navigator
 
-This page offers conceptual reading paths through the current reviewed catalog. For a filterable view with venue, task, dataset, and verified-code metadata, open the [research catalog site](index.html). This guide is curated rather than exhaustive; see the [coverage protocol](coverage_protocol.md) for what that means.
+This page offers conceptual reading paths through the current reviewed catalog that accompanies the manuscript. For a filterable view with venue, task, dataset, and verified-code metadata, open the [companion catalog preview](index.html). This guide is curated rather than exhaustive; see the [coverage protocol](coverage_protocol.md) for what that means.
 
 ## Start with your question
 

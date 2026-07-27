@@ -6,9 +6,9 @@
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 [![ACM template](https://img.shields.io/badge/typeset%20with-acmart-00629B.svg)](MH_survey.pdf)
 
-This repository is the living companion to the survey **“Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey.”** It organizes multi-hop retrieval-augmented generation around the evidence chain that a system must recover, preserve, expose, compose, and causally use, rather than around architecture alone.
+This is the paper repository for **“Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey.”** It contains the current manuscript PDF, LaTeX source, figure source, and the companion taxonomy artifact used to audit the survey's evidence-chain claims.
 
-> **Research hub:** the repository ships a filterable static catalog in [`docs/index.html`](docs/index.html). The included GitHub Pages workflow deploys it whenever GitHub Pages is enabled for this repository.
+The taxonomy pages in [`docs/`](docs/) are supporting material for the manuscript. They are kept intentionally small and versioned with the paper, so the repository has one current public version rather than a separate catalog site.
 
 The paper frames end-to-end success as five coupled bottlenecks:
 
@@ -20,11 +20,12 @@ The paper frames end-to-end success as five coupled bottlenecks:
 | **Fusion reliability** | Can the reader compose the evidence correctly? |
 | **Causal faithfulness** | Did the generated answer actually depend on the evidence? |
 
-![Evidence-chain diagnostic diagram](mh_figures/F1_evidence_chain_v7.png)
+![Evidence-chain diagnostic diagram](paper/figs/fig1_evidence_chain_v3.png)
 
 ## Paper
 
 - [Read the manuscript (PDF)](MH_survey.pdf)
+- [Read the manuscript source](paper/main.tex)
 - Authors: Yuqing Luo and Kai Zhang, University of Science and Technology of China
 - Venue status: author manuscript draft, typeset with the ACM `acmart` class.
 
@@ -34,17 +35,20 @@ The paper frames end-to-end success as five coupled bottlenecks:
 
 ```text
 .
-├── MH_survey.pdf                  # survey manuscript
-├── taxonomy/                      # machine-readable, community-maintained catalog
-├── docs/                          # taxonomy rules, roadmap, and change log
-├── mh_figures/                    # rendered figures and generation source
-├── scripts/                       # catalog utilities and validation
+├── MH_survey.pdf                  # compiled manuscript draft
+├── paper/                         # LaTeX source, bibliography snapshot, and figures
+│   ├── main.tex
+│   ├── main_TOIS_verified.bbl
+│   └── figs/
+├── taxonomy/                      # machine-readable companion artifact
+├── docs/                          # taxonomy guide, audit notes, and catalog preview
+├── scripts/                       # artifact validation and catalog-page builder
 ├── CITATION.cff                   # GitHub citation metadata
 ├── CONTRIBUTING.md                # how to propose catalog updates
 └── LICENSE                        # license for repository-authored materials
 ```
 
-The hub keeps one current, reviewed catalog instead of multiple historical or imported-library versions. Its stable schemas make it possible to review, filter, and extend the survey without changing prose in the PDF. The current catalog contains **23 method records**, **6 benchmark records**, and **27 intervention mappings**; the manuscript's frozen quantitative audit uses the **20 source-verified method records** and excludes seeded or needs-review entries. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
+The repository keeps one current manuscript and one current companion artifact. The current catalog contains **23 method records**, **6 benchmark records**, and **27 intervention mappings**; the manuscript's frozen quantitative audit uses the **20 source-verified method records** and excludes seeded or needs-review entries. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
 
 | File | Contents |
 | --- | --- |
@@ -52,14 +56,29 @@ The hub keeps one current, reviewed catalog instead of multiple historical or im
 | [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv) | Benchmarks, observed diagnostics, and evaluation cautions |
 | [`taxonomy/pipeline_mapping.csv`](taxonomy/pipeline_mapping.csv) | Which pipeline stage and evidence-chain target a method affects |
 | [`taxonomy/reading_list.bib`](taxonomy/reading_list.bib) | BibTeX entries for catalogued work |
-| [`docs/index.html`](docs/index.html) | Filterable catalog interface, automatically built from the CSV catalog |
+| [`docs/index.html`](docs/index.html) | Filterable companion-catalog preview, automatically built from the CSV catalog |
 | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | Scope, discovery, verification, and correction rules |
 | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Reproducible query families for maintaining a separate unreviewed candidate queue |
 | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Frozen seed counts used by the manuscript reporting audit |
 
-## Literature navigator
+## Build and validate
 
-The catalog is designed to be read as a map, not as an unstructured paper list. Start from either the bottleneck you want to solve or the system design you want to study:
+Build the manuscript from the checked-in source:
+
+```bash
+latexmk -pdf -outdir=paper/build paper/main.tex
+```
+
+Validate the companion artifact:
+
+```bash
+python3 scripts/validate_catalog.py
+python3 scripts/build_catalog_site.py
+```
+
+## Literature Navigator
+
+The catalog is designed as a manuscript companion, not as an unstructured paper list. Start from either the bottleneck you want to solve or the system design you want to study:
 
 | Navigate by research question | Navigate by design route |
 | --- | --- |
