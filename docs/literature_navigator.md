@@ -6,7 +6,7 @@ This page offers conceptual reading paths through the current reviewed catalog. 
 
 | If you are asking… | Begin with | Then compare |
 | --- | --- | --- |
-| Can a system recover every supporting document? | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH) → [MDR](https://aclanthology.org/2021.naacl-main.424/) | [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx) and [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/) for more structured search. |
+| Can a system recover every supporting document? | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH) → [MDR](https://openreview.net/forum?id=EMHoBG0avc1) | [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx) and [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/) for more structured search. |
 | Should a complex question be decomposed before retrieval? | [DecompRC](https://aclanthology.org/P19-1613/) → [ONUS](https://aclanthology.org/2020.emnlp-main.713/) | [RERC](https://aclanthology.org/2021.findings-emnlp.17/) and [EfficientRAG](https://aclanthology.org/2024.emnlp-main.199/) for staged decomposition. |
 | How should a model combine scattered evidence? | [DFGN](https://aclanthology.org/P19-1617/) → [HGN](https://aclanthology.org/2020.emnlp-main.710/) | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282) for passage-level generative fusion. |
 | When should retrieval be iterative or adaptive? | [IRCoT](https://aclanthology.org/2023.acl-long.557/) → [ReAct](https://arxiv.org/abs/2210.03629) | [FLARE](https://arxiv.org/abs/2305.06983), [Self-RAG](https://arxiv.org/abs/2310.11511), and [Adaptive-RAG](https://arxiv.org/abs/2403.14403). |
@@ -17,7 +17,7 @@ This page offers conceptual reading paths through the current reviewed catalog. 
 ### Observability: find the support chain
 
 - [GRAFT-Net (2018)](https://aclanthology.org/D18-1455/) and [PullNet (2019)](https://aclanthology.org/D19-1242/) — early graph-based retrieval over text and knowledge bases.
-- [PathRetriever (2020)](https://openreview.net/forum?id=SJgVHkrYDH) and [MDR (2021)](https://aclanthology.org/2021.naacl-main.424/) — sequential and dense retrieval for open-domain multi-hop QA.
+- [PathRetriever (2020)](https://openreview.net/forum?id=SJgVHkrYDH) and [MDR (2021)](https://openreview.net/forum?id=EMHoBG0avc1) — sequential and dense retrieval for open-domain multi-hop QA.
 - [Baleen (2021)](https://openreview.net/forum?id=Ghk0AJ8XtVx) and [Beam Retrieval (2024)](https://aclanthology.org/2024.naacl-long.96/) — address uncertainty and combinatorial growth in multi-hop search.
 - [HippoRAG (2024)](https://arxiv.org/abs/2405.14831) — retrieves through a graph-memory index using personalized PageRank.
 - [IRCoT (2023)](https://aclanthology.org/2023.acl-long.557/) and [FLARE (2023)](https://arxiv.org/abs/2305.06983) — make reasoning or generation state inform the next retrieval action.
@@ -70,7 +70,7 @@ This page offers conceptual reading paths through the current reviewed catalog. 
 | 2018 | [GRAFT-Net](https://aclanthology.org/D18-1455/) | Graph / KG | Observability |
 | 2019 | [DecompRC](https://aclanthology.org/P19-1613/), [DFGN](https://aclanthology.org/P19-1617/), [PullNet](https://aclanthology.org/D19-1242/) | Decomposition / Graph | Selection preservation / Fusion / Observability |
 | 2020 | [PathRetriever](https://openreview.net/forum?id=SJgVHkrYDH), [ONUS](https://aclanthology.org/2020.emnlp-main.713/), [HGN](https://aclanthology.org/2020.emnlp-main.710/), [MHGRN](https://aclanthology.org/2020.emnlp-main.99/) | Retrieval / Decomposition / Graph | Observability / Selection preservation / Fusion |
-| 2021 | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282), [MDR](https://aclanthology.org/2021.naacl-main.424/), [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx), [RERC](https://aclanthology.org/2021.findings-emnlp.17/) | Reader / Retrieval / Decomposition | Fusion / Observability |
+| 2021 | [Fusion-in-Decoder](https://arxiv.org/abs/2007.01282), [MDR](https://openreview.net/forum?id=EMHoBG0avc1), [Baleen](https://openreview.net/forum?id=Ghk0AJ8XtVx), [RERC](https://aclanthology.org/2021.findings-emnlp.17/) | Reader / Retrieval / Decomposition | Fusion / Observability |
 | 2023 | [ReAct](https://arxiv.org/abs/2210.03629), [IRCoT](https://aclanthology.org/2023.acl-long.557/), [FLARE](https://arxiv.org/abs/2305.06983) | Agentic / Reasoning | Joint / Observability |
 | 2024 | [Self-RAG](https://arxiv.org/abs/2310.11511), [RAPTOR](https://arxiv.org/abs/2401.18059), [CRAG](https://arxiv.org/abs/2401.15884), [Adaptive-RAG](https://arxiv.org/abs/2403.14403), [Beam Retrieval](https://aclanthology.org/2024.naacl-long.96/), [GraphRAG](https://arxiv.org/abs/2404.16130), [HippoRAG](https://arxiv.org/abs/2405.14831), [EfficientRAG](https://aclanthology.org/2024.emnlp-main.199/) | Agentic / Retrieval / Graph / Decomposition | Joint / Exposure / Selection preservation / Observability |
 

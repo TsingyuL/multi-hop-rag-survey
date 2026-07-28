@@ -154,21 +154,21 @@
       "notes": "Fusion-in-decoder reader over retrieved passages."
     },
     {
-      "citation_key": "asai2021mdr",
-      "title": "Learning Dense Retrieval for Multi-hop Question Answering",
+      "citation_key": "xiong2021mdr",
+      "title": "Answering Complex Open-Domain Questions with Multi-Hop Dense Retrieval",
       "year": "2021",
-      "venue": "NAACL",
+      "venue": "ICLR",
       "architectural_family": "retrieval",
       "primary_estimand": "observability",
       "secondary_estimands": "selection_preservation",
       "evidence_source": "text",
       "pipeline_stage": "retrieve",
-      "tasks": "open-domain multi-hop QA",
-      "datasets": "HotpotQA;2WikiMultiHopQA;MuSiQue",
-      "source_url": "https://aclanthology.org/2021.naacl-main.424/",
+      "tasks": "open-domain multi-hop QA;multi-hop fact verification",
+      "datasets": "HotpotQA;multi-evidence FEVER",
+      "source_url": "https://openreview.net/forum?id=EMHoBG0avc1",
       "code_url": "https://github.com/facebookresearch/multihop_dense_retrieval",
       "status": "reviewed",
-      "notes": "Dense retriever trained for multi-hop evidence acquisition."
+      "notes": "Dense retriever conditions each hop on previously retrieved evidence without requiring corpus-specific links."
     },
     {
       "citation_key": "khattab2021baleen",
@@ -1035,7 +1035,7 @@
       "status": "reviewed"
     },
     {
-      "citation_key": "asai2021mdr",
+      "citation_key": "xiong2021mdr",
       "pipeline_stage": "retrieve",
       "primary_estimand": "observability",
       "intervention": "Dense multi-hop retrieval",

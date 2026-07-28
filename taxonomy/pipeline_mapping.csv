@@ -9,7 +9,7 @@ perez2020onus,end_to_end,selection_preservation,Unsupervised one-to-many questio
 feng2020mhgrn,read_fuse,fusion,Multi-hop relational graph reasoning,answer accuracy and rationale inspection,Subgraph extraction quality limits observed reasoning,reviewed
 fang2020hgn,read_fuse,fusion,Hierarchical graph propagation,answer and supporting-fact accuracy,Paragraph selection changes the reader input,reviewed
 izacard2021fid,read_fuse,fusion,Fusion-in-decoder attention,conditional answer accuracy,Retrieved passages may already encode ranking gains,reviewed
-asai2021mdr,retrieve,observability,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,reviewed
+xiong2021mdr,retrieve,observability,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,reviewed
 trivedi2023ircot,end_to_end,observability,Reasoning-conditioned retrieval,retrieval recall by hop,Generated thoughts can leak answer priors,reviewed
 jiang2023flare,retrieve,observability,Uncertainty-triggered active retrieval,retrieval timing and conditional answer quality,Uncertainty estimates and retrieval frequency are coupled,needs_review
 asai2023selfrag,end_to_end,observability,Self-reflective retrieval generation and critique,retrieval frequency plus citation or support verification,Self-critique is not a causal test,reviewed
