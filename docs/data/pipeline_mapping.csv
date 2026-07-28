@@ -8,21 +8,45 @@ asai2020pathretriever,retrieve,observability,Sequential graph-path retrieval,evi
 perez2020onus,end_to_end,selection_preservation,Unsupervised one-to-many question decomposition,answer accuracy and decomposition quality,Subquestion fluency does not guarantee answerable decomposition,reviewed
 feng2020mhgrn,read_fuse,fusion,Multi-hop relational graph reasoning,answer accuracy and rationale inspection,Subgraph extraction quality limits observed reasoning,reviewed
 fang2020hgn,read_fuse,fusion,Hierarchical graph propagation,answer and supporting-fact accuracy,Paragraph selection changes the reader input,reviewed
-izacard2021fid,read_fuse,fusion,Fusion-in-decoder attention,conditional answer accuracy,Retrieved passages may already encode ranking gains,seeded
-asai2021mdr,retrieve,observability,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,seeded
-trivedi2023ircot,end_to_end,observability,Reasoning-conditioned retrieval,retrieval recall by hop,Generated thoughts can leak answer priors,seeded
+izacard2021fid,read_fuse,fusion,Fusion-in-decoder attention,conditional answer accuracy,Retrieved passages may already encode ranking gains,reviewed
+asai2021mdr,retrieve,observability,Dense multi-hop retrieval,chain recall,Gold evidence and corpus mismatch,reviewed
+trivedi2023ircot,end_to_end,observability,Reasoning-conditioned retrieval,retrieval recall by hop,Generated thoughts can leak answer priors,reviewed
 jiang2023flare,retrieve,observability,Uncertainty-triggered active retrieval,retrieval timing and conditional answer quality,Uncertainty estimates and retrieval frequency are coupled,needs_review
-asai2023selfrag,verify,faithfulness,Self-reflective critique,citation or support verification,Self-critique is not a causal test,seeded
-sarthi2024raptor,order,exposure,Hierarchical context organization,position-sensitive conditional accuracy,Granularity also changes retrieval recall,seeded
-qiu2019dfgn,read_fuse,fusion,Dynamic graph fusion,answer and supporting-fact accuracy,Graph construction quality confounds fusion quality,reviewed
-asai2020pathretriever,retrieve,observability,Sequential graph-path retrieval,evidence recall by hop,Path supervision and corpus graph quality are coupled,reviewed
-fang2020hgn,read_fuse,fusion,Hierarchical graph propagation,answer and supporting-fact accuracy,Paragraph selection changes the reader input,reviewed
+asai2023selfrag,end_to_end,observability,Self-reflective retrieval generation and critique,retrieval frequency plus citation or support verification,Self-critique is not a causal test,reviewed
+sarthi2024raptor,order,exposure,Hierarchical context organization,position-sensitive conditional accuracy,Granularity also changes retrieval recall,reviewed
 khattab2021baleen,end_to_end,observability,Condensed retrieval across hops,chain recall and end-task score,Condensation may alter both evidence exposure and retrieval query quality,reviewed
 fu2021rerc,end_to_end,fusion,Decomposition reader and comparison,answer and supporting-fact accuracy,Decomposition and comparison errors are coupled,reviewed
-yao2023react,end_to_end,joint,Interleaved reasoning and actions,task success and trajectory inspection,Reasoning traces are not by themselves evidence of causal grounding,reviewed
+yao2023react,end_to_end,observability,Interleaved reasoning and retrieval actions,task success plus trajectory-level retrieval inspection,Reasoning traces are not by themselves evidence of causal grounding,reviewed
 yan2024crag,verify,selection_preservation,Retrieved-context evaluation and correction,conditional answer quality;retrieval quality,Web augmentation changes the underlying evidence corpus,reviewed
-jeong2024adaptiverag,end_to_end,joint,Complexity-aware retrieval strategy selection,accuracy-cost frontier,Question complexity labels may encode dataset-specific difficulty,reviewed
+jeong2024adaptiverag,end_to_end,observability,Complexity-aware retrieval strategy selection,accuracy-cost frontier,Question complexity labels may encode dataset-specific difficulty,reviewed
 zhang2024beamretrieval,retrieve,observability,Beam search over partial evidence paths,chain recall across hops,Beam width changes both compute and the candidate pool,reviewed
 edge2024graphrag,order,exposure,Community-summary graph indexing,answer comprehensiveness and diversity,Graph construction and summary quality jointly affect evidence exposure,reviewed
 gutierrez2024hipporag,retrieve,observability,Graph-memory personalized PageRank,evidence recall and accuracy-cost frontier,Entity extraction quality changes the graph and retrieval results,reviewed
 zhuang2024efficientrag,retrieve,observability,Decomposition with relevance pruning,evidence recall and retrieval cost,Pruning can trade recall for efficiency,reviewed
+sun2023rankgpt,select,selection_preservation,Listwise LLM reranking,ranking quality and downstream answer accuracy,Ordering and membership can change together,reviewed
+pradeep2023rankzephyr,select,selection_preservation,Open listwise reranking,nDCG and robustness to initial order,Candidate-count and windowing choices alter the effective budget,reviewed
+ma2024rankllama,select,selection_preservation,LLM pointwise reranking,passage and document ranking metrics,Retriever improvements are coupled with reranker improvements in the full pipeline,reviewed
+xu2023recomp,select,selection_preservation,Context compression and selective augmentation,answer quality at a fixed compressed-token budget,Compression can alter both membership and wording,reviewed
+pan2024longllmlingua2,select,selection_preservation,Token-level prompt compression,answer preservation and compression ratio,Answer preservation does not establish evidence-use faithfulness,reviewed
+yu2024rankrag,select,selection_preservation,Joint context ranking and answer generation,ranking metrics plus answer accuracy,Shared-model training couples selector and reader changes,reviewed
+lee2025setr,select,selection_preservation,Complementary set-wise passage selection,complete-set retrieval quality and answer correctness,Chain-of-thought requirements may inject generator priors,reviewed
+xin2025rcps,select,selection_preservation,Reader-centered reranking and clustering,answer accuracy and passage consistency,Reader predictions are used both to select and to evaluate utility,reviewed
+yang2023prca,order,exposure,Reward-driven retrieved-context refinement,conditional answer accuracy and retained-token budget,Refinement can remove information as well as change presentation,reviewed
+tang2024found,order,exposure,Positional-attention calibration,accuracy by relevant-context position,Attention changes may also alter fusion behavior,reviewed
+jin2025longcontextrag,order,exposure,Context ordering for long-input RAG,answer quality under fixed membership and varied order,Results depend on reader size prompt and context length,reviewed
+cheng2024xrag,order,exposure,One-token representation of retrieved context,answer quality and FLOP reduction at fixed retrieval,Compression and modality projection are coupled,reviewed
+liu2024lostmiddle,order,exposure,Controlled relocation of relevant context,accuracy by evidence position,Analysis diagnoses exposure but does not itself improve retrieval,reviewed
+yu2022kgfid,read_fuse,fusion,Knowledge-graph-guided Fusion-in-Decoder,answer accuracy plus passage filtering quality,Graph construction and passage filtering also change selection,reviewed
+mavromatis2022rearev,read_fuse,fusion,Adaptive graph instruction execution,answer accuracy and intermediate graph behavior,Initial subgraph coverage constrains observed reasoning,reviewed
+he2021nsm,read_fuse,fusion,Teacher-student intermediate supervision,answer accuracy and intermediate entity distributions,Teacher paths may encode dataset-specific supervision,reviewed
+zhang2022greaselm,read_fuse,fusion,Joint graph and language-model reasoning,answer accuracy and graph-language ablations,Retrieved subgraph quality limits the fusion estimate,reviewed
+gao2023rarr,verify,faithfulness,Evidence-backed research and revision,attribution and preservation metrics,Post-hoc revision is not a direct deletion test,reviewed
+zhao2023verifyedit,verify,faithfulness,Retrieved-evidence verification and editing,answer accuracy plus verification ablations,Editing gains can reflect new retrieval rather than faithful use of the original context,reviewed
+gao2023alce,verify,faithfulness,Citation-grounded generation and automatic evaluation,citation correctness and completeness,Citation overlap does not establish causal dependence,reviewed
+wu2024cofca,verify,faithfulness,Step-wise counterfactual evidence substitution,answer and reasoning-chain consistency under counterfactuals,Counterfactual construction can change item difficulty,reviewed
+li2024selfchecker,verify,faithfulness,Claim decomposition retrieval and fact checking,factuality labels with retrieved evidence,Verification accuracy is not a direct causal-use test of the generator,reviewed
+gou2024critic,verify,faithfulness,Tool-interactive critique and revision,task accuracy before and after critique,External-tool correction can replace rather than validate the original evidence path,reviewed
+xu2025veritas,verify,faithfulness,Faithfulness rewards for agentic search,information-think think-answer and think-search metrics,Learned faithfulness rewards inherit evaluator-model error,reviewed
+jin2025searchr1,retrieve,observability,RL-trained multi-turn search,answer accuracy retrieval behavior and response length,Outcome reward can hide incomplete evidence chains,reviewed
+guan2025deeprag,end_to_end,observability,Retrieve-or-reason policy,accuracy-cost frontier and retrieval frequency,Policy and generator capability are coupled,reviewed
+xiong2025raggym,end_to_end,observability,Process-supervised search agent,trajectory reward answer accuracy and search behavior,Process reward models may encode evaluator bias,reviewed

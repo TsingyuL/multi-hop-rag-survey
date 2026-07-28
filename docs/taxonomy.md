@@ -6,8 +6,8 @@ The survey uses two complementary labels. The **evidence-chain target axis** cap
 
 | Field | Allowed values | Meaning |
 | --- | --- | --- |
-| `primary_estimand` | `observability`, `selection_preservation`, `exposure`, `fusion`, `faithfulness`, `joint` | The main evidence-chain target of the work |
-| `secondary_estimands` | Semicolon-separated values above | Meaningful secondary effects |
+| `primary_estimand` | `observability`, `selection_preservation`, `exposure`, `fusion`, `faithfulness` | The earliest evidence-chain target directly changed by the central mechanism |
+| `secondary_estimands` | Semicolon-separated primary values, plus optional `joint` | Meaningful later effects; `joint` is secondary only |
 | `architectural_family` | `retrieval`, `graph_kg`, `decomposition`, `fusion_reader`, `llm_reasoning`, `agentic`, `hybrid`, `benchmark`, `analysis` | The work's primary surface design |
 | `evidence_source` | `text`, `knowledge_graph`, `table`, `multimodal`, `hybrid` | Evidence substrate |
 | `pipeline_stage` | `retrieve`, `select`, `order`, `read_fuse`, `verify`, `end_to_end` | Primary intervention point |
@@ -24,13 +24,15 @@ The survey uses two complementary labels. The **evidence-chain target axis** cap
 - **Exposure**: makes selected support available at the reader's point of use; it includes ordering, placement, and context organization.
 - **Fusion**: improves correct composition across evidence units conditional on their availability.
 - **Faithfulness**: establishes or improves the causal use of supporting evidence, rather than merely producing a plausible rationale or citation.
-- **Joint**: intentionally optimizes multiple bottlenecks without a defensible single primary target.
+- **Joint**: indicates that a system intentionally optimizes multiple
+  bottlenecks. It is a secondary marker, not a primary estimand; the primary
+  code remains the earliest active intervention stage.
 
 ## Annotation procedure
 
 1. State the paper's claimed intervention in one sentence.
 2. Select the pipeline stage where that intervention is applied.
-3. Select the primary estimand: the earliest evidence-chain event the central mechanism is intended to affect.
+3. Select the primary estimand: the earliest evidence-chain event the central mechanism is intended to affect. Never use `joint` as a primary code.
 4. Add secondary estimands only where the paper supplies an explicit mechanism or evaluation.
 5. Record the benchmark, persistent source URL, and any caveat that limits comparison.
 
@@ -45,5 +47,8 @@ For example, iterative retrieval that expands a pool after resolving a bridge en
 - `code_url` is optional, but must point to an official or author-maintained implementation when present. Do not substitute an unrelated reimplementation.
 - Every method must have at least one entry in `pipeline_mapping.csv`; this forces an intervention and diagnostic to be stated explicitly.
 - `status` is one of `seeded`, `reviewed`, or `needs_review`.
+- Audit inclusion is stricter than `reviewed` catalog status. Comparative audit
+  records must also satisfy `taxonomy/audit_codebook_v1.md` and appear in
+  `taxonomy/audit_records.csv`.
 
 The seeded rows are examples and starting points, not a claim that the catalog is complete. New additions should follow the same annotation process.

@@ -5,7 +5,9 @@ on:
     paths:
       - "taxonomy/**"
       - "docs/data/**"
+      - "docs/quantitative_audit.md"
       - "scripts/build_catalog_site.py"
+      - "scripts/build_quantitative_audit.py"
       - "scripts/validate_catalog.py"
       - ".github/workflows/catalog-validation.yml"
   push:
@@ -13,7 +15,9 @@ on:
     paths:
       - "taxonomy/**"
       - "docs/data/**"
+      - "docs/quantitative_audit.md"
       - "scripts/build_catalog_site.py"
+      - "scripts/build_quantitative_audit.py"
       - "scripts/validate_catalog.py"
 
 jobs:
@@ -25,5 +29,6 @@ jobs:
         with:
           python-version: "3.11"
       - run: python scripts/validate_catalog.py
+      - run: python scripts/build_quantitative_audit.py
       - run: python scripts/build_catalog_site.py
-      - run: git diff --exit-code -- docs/data
+      - run: git diff --exit-code -- docs/data docs/quantitative_audit.md

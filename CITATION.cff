@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this survey or its catalog, please cite it as below."
-title: "Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey"
+title: "Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey"
 type: article
 authors:
   - family-names: Luo

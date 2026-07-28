@@ -6,7 +6,7 @@
 [![Artifact](https://img.shields.io/badge/artifact-validated-087E8B.svg)](ARTIFACT.md)
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 
-This repository is the public research hub cited by the manuscript **“Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey.”** It keeps the survey's machine-readable taxonomy, reviewed method and benchmark records, quantitative reporting audit, figure sources, and validation scripts in one place.
+This repository is the public research hub cited by the manuscript **“Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey.”** It keeps the survey's machine-readable taxonomy, reviewed method and benchmark records, quantitative reporting audit, figure sources, and validation scripts in one place.
 
 The manuscript source is maintained outside this hub. This repository exists so readers can inspect, reproduce, and extend the evidence-chain catalog behind the survey claims.
 
@@ -16,11 +16,23 @@ The manuscript source is maintained outside this hub. This repository exists so 
 | --- | --- |
 | Browse the reviewed catalog | [`docs/index.html`](docs/index.html) |
 | Inspect machine-readable records | [`taxonomy/methods.csv`](taxonomy/methods.csv), [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv), [`taxonomy/pipeline_mapping.csv`](taxonomy/pipeline_mapping.csv) |
+| Inspect the frozen 40-record audit | [`taxonomy/audit_records.csv`](taxonomy/audit_records.csv), [`taxonomy/audit_codebook_v1.md`](taxonomy/audit_codebook_v1.md) |
 | Check coding rules | [`docs/taxonomy.md`](docs/taxonomy.md), [`docs/coverage_protocol.md`](docs/coverage_protocol.md) |
 | Review frozen audit counts | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) |
 | Validate the artifact | `python3 scripts/validate_catalog.py` |
 
-The hub keeps one current, reviewed catalog instead of multiple historical or imported-library versions. The current catalog contains **23 method records**, **6 benchmark records**, and **27 intervention mappings**; the manuscript's frozen quantitative audit uses the **20 source-verified method records** and excludes seeded or needs-review entries. This distinction is deliberate: coverage should not be confused with a taxonomy judgment.
+The hub keeps one current catalog instead of conflating discovery breadth with
+comparative evidence. The current catalog contains **50 method records**, of
+which **47 are source-reviewed**, plus **6 reviewed benchmark records** and
+**51 unique intervention mappings**. The frozen comparative audit is stricter:
+it contains **40 audit-eligible methods** coded under the 24-field codebook.
+This distinction is deliberate: `reviewed` metadata is not automatically
+audit-eligible evidence.
+
+The frozen v1.0 audit is single-coded. Its validators reproduce schemas and
+counts but do not certify semantic labels, and this release does not report an
+inter-coder agreement coefficient. See the codebook's
+[reliability boundary](taxonomy/audit_codebook_v1.md#reliability-and-verification-boundary).
 
 ## Evidence-chain frame
 
@@ -40,7 +52,6 @@ The survey organizes multi-hop RAG around five coupled bottlenecks:
 
 ```text
 .
-├── MH_survey.pdf                  # survey manuscript
 ├── taxonomy/                      # machine-readable, community-maintained catalog
 ├── docs/                          # taxonomy rules, roadmap, and change log
 ├── mh_figures/                    # rendered figures and generation source
@@ -55,12 +66,13 @@ The survey organizes multi-hop RAG around five coupled bottlenecks:
 | [`taxonomy/methods.csv`](taxonomy/methods.csv) | Methods and analyses, tagged by architectural family and primary evidence-chain target |
 | [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv) | Benchmarks, observed diagnostics, and evaluation cautions |
 | [`taxonomy/pipeline_mapping.csv`](taxonomy/pipeline_mapping.csv) | Which pipeline stage and evidence-chain target a method affects |
+| [`taxonomy/audit_records.csv`](taxonomy/audit_records.csv) | Frozen 40-record claim-and-evidence audit |
+| [`taxonomy/audit_codebook_v1.md`](taxonomy/audit_codebook_v1.md) | Eligibility, 24 fields, allowed values, and counting rules |
 | [`taxonomy/reading_list.bib`](taxonomy/reading_list.bib) | BibTeX entries for catalogued work |
 | [`docs/index.html`](docs/index.html) | Filterable catalog interface, automatically built from the CSV catalog |
 | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | Scope, discovery, verification, and correction rules |
 | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Reproducible query families for maintaining a separate unreviewed candidate queue |
-| [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Frozen seed counts used by the manuscript reporting audit |
-| [`MH_survey.pdf`](MH_survey.pdf) | Convenience copy of the current manuscript draft |
+| [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Generated counts for the frozen 40-record comparative audit |
 
 ## Literature navigator
 
@@ -80,12 +92,14 @@ The catalog is designed to be read as a map, not as an unstructured paper list. 
 
 ## Associated manuscript
 
-- Title: **Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey**
+- Title: **Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey**
 - Authors: Yuqing Luo and Kai Zhang, University of Science and Technology of China
-- Convenience PDF: [`MH_survey.pdf`](MH_survey.pdf)
 - Venue status: author manuscript draft, typeset with the ACM `acmart` class.
 
-> The PDF currently contains placeholder publication metadata. It is **not** the ACM Version of Record. Replace this notice, the citation metadata, and any DOI links only after the publisher supplies the final bibliographic record.
+> The submission manuscript is maintained separately from this evidence
+> artifact. This repository does not contain an ACM Version of Record. Update
+> citation metadata and DOI links only after the publisher supplies the final
+> bibliographic record.
 
 ## Scope
 
@@ -104,7 +118,7 @@ Until a DOI and final venue record exist, cite this work as an unpublished manus
 ```bibtex
 @article{luo2026multihopragsurvey,
   author  = {Yuqing Luo and Kai Zhang},
-  title   = {Multi-Hop Retrieval-Augmented Generation through the Lens of Evidence Chains: A Diagnostic Survey},
+  title   = {Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey},
   year    = {2026},
   note    = {Manuscript draft. Repository companion: https://github.com/TsingyuL/multi-hop-rag-survey}
 }

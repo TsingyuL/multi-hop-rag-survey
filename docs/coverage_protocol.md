@@ -28,7 +28,7 @@ Suggested query families:
 - `("evidence chain" OR "supporting facts") AND (retrieval OR reasoning)`
 - benchmark names such as `HotpotQA`, `2WikiMultiHopQA`, `MuSiQue`, `HoVer`, and `QASC` combined with retrieval terms.
 
-The tracked [`discovery_queries.csv`](data/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a local `discovery_queue.csv`; it is intentionally not committed or merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
+The tracked [`discovery_queries.csv`](../taxonomy/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a local `discovery_queue.csv`; it is intentionally not committed or merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
 
 Searches should be recorded in the pull request or issue that motivates a substantial coverage update. The current seed collection was last curated on **2026-07-11**.
 
@@ -52,14 +52,23 @@ Every method entry must contain:
 
 `reviewed` does not certify experimental reproducibility, correctness of every result, or superiority over other work.
 
+Reviewed status also does not automatically confer audit eligibility. The
+frozen comparative audit applies the stricter inclusion and 24-field coding
+rules in [`taxonomy/audit_codebook_v1.md`](../taxonomy/audit_codebook_v1.md).
+The admitted records are listed in
+[`taxonomy/audit_records.csv`](../taxonomy/audit_records.csv); broad catalog
+records excluded from that file must not enter audit-derived counts.
+
 ## Taxonomy adjudication
 
-The catalog labels the **earliest evidence-chain event deliberately targeted by the central mechanism**, not every metric that improves in an experiment. When a label is genuinely ambiguous, retain the primary label only if the rationale is defensible and use `secondary_estimands` for material downstream effects. Discuss new categories or contested labels in an issue before merging.
+The catalog labels the **earliest evidence-chain event deliberately targeted by the central mechanism**, not every metric that improves in an experiment. `joint` is secondary only and never replaces that earliest-stage primary label. When a label is genuinely ambiguous, retain the primary label only if the rationale is defensible and use `secondary_estimands` for material downstream effects. Discuss new categories or contested labels in an issue before merging.
 
 ## Update and correction policy
 
 1. Add the catalog row, BibTeX key, and pipeline mapping in the same change.
-2. Run `python3 scripts/validate_catalog.py` and `python3 scripts/build_catalog_site.py`.
+2. Run `python3 scripts/validate_catalog.py`,
+   `python3 scripts/build_quantitative_audit.py`, and
+   `python3 scripts/build_catalog_site.py`.
 3. Update the reading paths only when a new work changes the recommended conceptual route; do not turn the guide into a leaderboard.
 4. For factual corrections, open an issue or pull request with the authoritative URL. Corrections are preferred over silent deletion; summarize material changes in the [change log](changelog.md).
 
