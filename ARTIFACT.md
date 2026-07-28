@@ -1,12 +1,12 @@
 # Artifact readiness
 
-This is a survey companion, not a benchmark submission or a claim of independently reproduced experimental results. It nevertheless follows the artifact-oriented practices relevant to an ACM-style public companion: clear scope, permanent-source metadata, current figure source, catalog schemas, and automated catalog checks.
+This is a survey companion, not a benchmark submission or a claim of independently reproduced experimental results. It nevertheless follows the artifact-oriented practices relevant to an ACM-style public companion: clear scope, permanent-source metadata, the current Figure 1 asset, catalog schemas, and automated catalog checks.
 
 ## Included artifacts
 
 | Artifact | Location | Verification |
 | --- | --- | --- |
-| Figure 1 source | [`mh_figures/source/F1_evidence_chain_v7.tex`](mh_figures/source/F1_evidence_chain_v7.tex) | Run the rebuild command in [`mh_figures/README.md`](mh_figures/README.md) |
+| Figure 1 | [`mh_figures/fig1.pdf`](mh_figures/fig1.pdf) | Open the PDF and compare it with the manuscript figure |
 | Survey catalog | [`taxonomy/`](taxonomy) | Run `python3 scripts/validate_catalog.py` |
 | Frozen audit records | [`taxonomy/audit_records.csv`](taxonomy/audit_records.csv) | Validate against [`taxonomy/audit_codebook_v1.md`](taxonomy/audit_codebook_v1.md) |
 | Generated reporting audit | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Run `python3 scripts/build_quantitative_audit.py` and verify a clean diff |

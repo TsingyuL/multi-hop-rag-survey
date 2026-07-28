@@ -6,7 +6,7 @@
 [![Artifact](https://img.shields.io/badge/artifact-validated-087E8B.svg)](ARTIFACT.md)
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 
-This repository is the public research hub cited by the manuscript **“Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey.”** It keeps the survey's machine-readable taxonomy, reviewed method and benchmark records, quantitative reporting audit, figure sources, and validation scripts in one place.
+This repository is the public research hub cited by the manuscript **“Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey.”** It keeps the survey's machine-readable taxonomy, reviewed method and benchmark records, quantitative reporting audit, current Figure 1 asset, and validation scripts in one place.
 
 The manuscript source is maintained outside this hub. This repository exists so readers can inspect, reproduce, and extend the evidence-chain catalog behind the survey claims.
 
@@ -46,7 +46,7 @@ The survey organizes multi-hop RAG around five coupled bottlenecks:
 | **Fusion reliability** | Can the reader compose the evidence correctly? |
 | **Causal faithfulness** | Did the generated answer actually depend on the evidence? |
 
-![Evidence-chain diagnostic diagram](mh_figures/F1_evidence_chain_v7.png)
+[Open Figure 1 (PDF)](mh_figures/fig1.pdf)
 
 ## What is in this repository
 
@@ -54,7 +54,7 @@ The survey organizes multi-hop RAG around five coupled bottlenecks:
 .
 ├── taxonomy/                      # machine-readable, community-maintained catalog
 ├── docs/                          # taxonomy rules, roadmap, and change log
-├── mh_figures/                    # rendered figures and generation source
+├── mh_figures/                    # current Figure 1 PDF
 ├── scripts/                       # catalog utilities and validation
 ├── CITATION.cff                   # GitHub citation metadata
 ├── CONTRIBUTING.md                # how to propose catalog updates
