@@ -20,6 +20,32 @@ ALLOWED_FAMILIES = {
 ALLOWED_SOURCES = {"text", "knowledge_graph", "table", "multimodal", "hybrid"}
 ALLOWED_STAGES = {"retrieve", "select", "order", "read_fuse", "verify", "end_to_end"}
 ALLOWED_STATUS = {"seeded", "reviewed", "needs_review"}
+ALLOWED_AUDIT_STRATA = {
+    "existing_seed", "targeted_observability", "targeted_selection",
+    "targeted_exposure", "targeted_fusion", "targeted_faithfulness",
+    "discretionary_recency", "discretionary_process",
+}
+ALLOWED_CLAIM_CODES = {"primary", "secondary", "not_coded", "unclear"}
+ALLOWED_EVIDENCE_CODES = {"yes", "partial", "unclear", "not_reported", "not_applicable"}
+AUDIT_CLAIM_FIELDS = {
+    "claim_observability": "observability",
+    "claim_selection": "selection_preservation",
+    "claim_exposure": "exposure",
+    "claim_fusion": "fusion",
+    "claim_faithfulness": "faithfulness",
+}
+AUDIT_EVIDENCE_FIELDS = {
+    "ev_chain_recall", "ev_budget_match", "ev_membership", "ev_ordering",
+    "ev_stage_metric", "ev_fusion_ablation", "ev_deletion", "ev_conflict",
+    "ev_counterfactual", "ev_cost",
+}
+EXPECTED_AUDIT_DISTRIBUTION = {
+    "observability": 12,
+    "selection_preservation": 8,
+    "exposure": 5,
+    "fusion": 8,
+    "faithfulness": 7,
+}
 
 
 def values(value: str) -> set[str]:
@@ -76,6 +102,12 @@ def main() -> int:
         {"citation_key", "pipeline_stage", "primary_estimand", "intervention",
          "observable_diagnostic", "common_confounder", "status"},
     )
+    audit = read_csv(
+        "audit_records.csv",
+        {"citation_key", "title", "year", "architectural_family", "primary_estimand",
+         "secondary_estimands", "source_url", "audit_stratum", *AUDIT_CLAIM_FIELDS,
+         *AUDIT_EVIDENCE_FIELDS, "adjudication_note"},
+    )
     all_rows = [("methods.csv", row) for row in methods] + [("benchmarks.csv", row) for row in benchmarks]
     keys = [row["citation_key"] for _, row in all_rows]
     if len(keys) != len(set(keys)):
@@ -84,6 +116,11 @@ def main() -> int:
     for filename, rows in (("methods.csv", methods), ("benchmarks.csv", benchmarks), ("pipeline_mapping.csv", mappings)):
         for number, row in enumerate(rows, start=2):
             require_choice(filename, number, "primary_estimand", row["primary_estimand"], ALLOWED_ESTIMANDS)
+            if filename != "benchmarks.csv" and row["primary_estimand"] == "joint":
+                raise ValueError(
+                    f"{filename}: row {number} uses joint as a primary estimand; "
+                    "code the earliest active stage and keep joint secondary"
+                )
             if row["status"] not in ALLOWED_STATUS:
                 raise ValueError(f"{filename}: row {number} has invalid status: {row['status']}")
             if not row["citation_key"] or not re.fullmatch(r"[a-z0-9]+", row["citation_key"]):
@@ -128,7 +165,74 @@ def main() -> int:
     if unmapped_methods:
         raise ValueError(f"pipeline_mapping.csv is missing method keys: {sorted(unmapped_methods)}")
 
-    print(f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, {len(mappings)} mappings.")
+    mapping_identity = [
+        (row["citation_key"], row["pipeline_stage"], row["primary_estimand"], row["intervention"])
+        for row in mappings
+    ]
+    if len(mapping_identity) != len(set(mapping_identity)):
+        raise ValueError("pipeline_mapping.csv contains duplicate intervention mappings")
+
+    method_by_key = {row["citation_key"]: row for row in methods}
+    for number, row in enumerate(mappings, start=2):
+        method = method_by_key[row["citation_key"]]
+        if row["status"] != method["status"]:
+            raise ValueError(
+                f"pipeline_mapping.csv: row {number} status {row['status']} "
+                f"does not match methods.csv status {method['status']}"
+            )
+
+    audit_keys = [row["citation_key"] for row in audit]
+    if len(audit_keys) != len(set(audit_keys)):
+        raise ValueError("audit_records.csv citation_key values must be unique")
+    if len(audit) != 40:
+        raise ValueError(f"audit_records.csv must contain the frozen 40 records, found {len(audit)}")
+
+    audit_distribution: dict[str, int] = {}
+    for number, row in enumerate(audit, start=2):
+        key = row["citation_key"]
+        if key not in method_by_key:
+            raise ValueError(f"audit_records.csv: row {number} has unknown method key {key}")
+        method = method_by_key[key]
+        if method["status"] != "reviewed":
+            raise ValueError(f"audit_records.csv: row {number} is not reviewed in methods.csv")
+        for field in ("title", "year", "architectural_family", "primary_estimand", "source_url"):
+            if row[field] != method[field]:
+                raise ValueError(
+                    f"audit_records.csv: row {number} field {field} does not match methods.csv"
+                )
+        require_choice(
+            "audit_records.csv", number, "audit_stratum", row["audit_stratum"], ALLOWED_AUDIT_STRATA
+        )
+        for field in AUDIT_CLAIM_FIELDS:
+            require_choice("audit_records.csv", number, field, row[field], ALLOWED_CLAIM_CODES)
+        for field in AUDIT_EVIDENCE_FIELDS:
+            require_choice("audit_records.csv", number, field, row[field], ALLOWED_EVIDENCE_CODES)
+        primary_claim_field = next(
+            field for field, estimand in AUDIT_CLAIM_FIELDS.items()
+            if estimand == row["primary_estimand"]
+        )
+        if row[primary_claim_field] != "primary":
+            raise ValueError(
+                f"audit_records.csv: row {number} must mark {primary_claim_field}=primary"
+            )
+        if sum(row[field] == "primary" for field in AUDIT_CLAIM_FIELDS) != 1:
+            raise ValueError(f"audit_records.csv: row {number} must have exactly one primary claim")
+        audit_distribution[row["primary_estimand"]] = (
+            audit_distribution.get(row["primary_estimand"], 0) + 1
+        )
+        if not row["adjudication_note"].strip():
+            raise ValueError(f"audit_records.csv: row {number} has a blank adjudication note")
+
+    if audit_distribution != EXPECTED_AUDIT_DISTRIBUTION:
+        raise ValueError(
+            "audit_records.csv primary distribution changed: "
+            f"{audit_distribution} != {EXPECTED_AUDIT_DISTRIBUTION}"
+        )
+
+    print(
+        f"Catalog valid: {len(methods)} methods, {len(benchmarks)} benchmarks, "
+        f"{len(mappings)} unique mappings, {len(audit)} audited methods."
+    )
     return 0
 
 

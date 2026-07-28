@@ -7,7 +7,13 @@ Thank you for helping keep this survey useful and auditable. Contributions may a
 1. Search existing rows and open issues to avoid duplicates.
 2. Add a stable DOI, ACL Anthology, arXiv, or publisher URL. Do not add inaccessible or unverifiable citations.
 3. Classify the work using [`docs/taxonomy.md`](docs/taxonomy.md). If the primary label is debatable, say why in the pull request.
-4. Run `python3 scripts/validate_catalog.py` from the repository root.
+4. If the record is proposed for the comparative audit, apply
+   [`taxonomy/audit_codebook_v1.md`](taxonomy/audit_codebook_v1.md) and add all
+   24 fields to `taxonomy/audit_records.csv`. Catalog `reviewed` status alone is
+   insufficient.
+5. Run `python3 scripts/validate_catalog.py`,
+   `python3 scripts/build_quantitative_audit.py`, and
+   `python3 scripts/build_catalog_site.py` from the repository root.
 
 ## Catalog rules
 
@@ -23,6 +29,8 @@ Thank you for helping keep this survey useful and auditable. Contributions may a
 - [ ] The corresponding BibTeX entry uses the same `citation_key`.
 - [ ] New labels have been discussed in an issue or added to the taxonomy guide.
 - [ ] `python3 scripts/validate_catalog.py` succeeds.
+- [ ] `python3 scripts/build_quantitative_audit.py` leaves the generated audit current.
+- [ ] `python3 scripts/build_catalog_site.py` leaves the static catalog current.
 - [ ] I have not added a publisher Version of Record without redistribution permission.
 
 ## Code and documentation
