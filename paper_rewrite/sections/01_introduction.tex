@@ -1,0 +1,59 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Many real-world questions cannot be answered by retrieving a single document. Their solutions require discovering intermediate entities, resolving hidden relations, and collecting information from sources that become relevant only after earlier evidence has been found. Consider the HotpotQA question~\cite{yang2018hotpotqa}:
+\begin{quote}
+\emph{What government position was held by the woman who portrayed Corliss Archer in the film \emph{Kiss and Tell}?}
+\end{quote}
+The original query does not directly name the target person. A system must first connect \emph{Kiss and Tell} to the character Corliss Archer, identify Shirley Temple as the actor who portrayed that character, and then search for the government position she later held. The information path is therefore approximately
+\[
+\textit{Kiss and Tell}
+\rightarrow \textit{Corliss Archer}
+\rightarrow \textit{Shirley Temple}
+\rightarrow \textit{government position}
+\rightarrow \textit{Chief of Protocol}.
+\]
+What makes the problem multi-hop is not merely that several documents are involved. The later information need is conditional on an earlier discovery: a search for Shirley Temple's government service becomes well specified only after the bridge entity has been resolved.
+
+Conventional retrieval-augmented generation commonly follows a single-shot pattern,
+\[
+q \rightarrow \operatorname{Retrieve}(q) \rightarrow \operatorname{Generate}(q,E),
+\]
+which implicitly assumes that the original query is sufficient to retrieve the supporting evidence. This assumption is often violated in multi-hop settings. A more faithful abstraction is
+\[
+q_1=q, \qquad
+E_t=\operatorname{Retrieve}(q_t), \qquad
+q_{t+1}=\operatorname{Update}(q,E_{1:t}),
+\]
+followed by evidence integration and answer or report generation. The central challenge is therefore not only how to retrieve relevant information, but also how to decide what information is missing, what should be searched next, when the search should stop, and how evidence collected at different steps should be combined.
+
+The field has evolved through several overlapping stages. Early multi-hop question answering benchmarks made cross-document dependencies explicit and often provided supporting-fact annotations~\cite{welbl2018qangaroo,yang2018hotpotqa,trivedi2022musique}. Multi-hop retrieval methods then learned to retrieve later passages from intermediate entities, paths, or previously retrieved passages~\cite{min2019golden,xiong2021mdr,khattab2021baleen}. Retrieval--reasoning systems subsequently interleaved search with generated reasoning or uncertainty signals~\cite{trivedi2023ircot,jiang2023flare,asai2024selfrag,jeong2024adaptiverag}. More recent agentic search and deep research systems extend the process to tool use, open-web navigation, longer horizons, source synthesis, and report generation~\cite{nakano2021webgpt,yao2023react,lala2023paperqa,jin2025searchr1}. These developments enlarge the operational setting, but they preserve the same core dependency: information found at one step determines what can be searched or inferred at the next.
+
+Existing surveys provide valuable views of multi-hop question answering, retrieval-augmented generation, reasoning, and agentic systems~\cite{mavi2022mhqasurvey,gao2023ragsurvey,fan2024ragllmsurvey,singh2025agenticragsurvey}. Their organizing axes usually emphasize model architecture, retrieval mechanism, reasoning form, data source, or agent framework. These views do not always make it easy to compare systems that use different architectures to solve the same information-acquisition function. They also tend to treat evaluation primarily at the answer level, even when a method's main claim concerns query generation, hop completion, stopping, source use, trajectory efficiency, or improvement across tasks.
+
+This survey adopts a functional perspective centered on the question:
+\begin{quote}
+\emph{How does a system find, follow, combine, and learn from information across multiple dependent hops?}
+\end{quote}
+We organize the literature into four categories. \emph{Initial retrieval} obtains entry evidence from the original query. \emph{Follow-up retrieval} determines and executes subsequent searches from intermediate results. \emph{Evidence integration} selects, preserves, organizes, and reasons over the collected information. \emph{Feedback learning} converts evaluations, trajectories, experience, or reusable procedures into improvements on future tasks. The first three functions primarily solve the current task; the fourth links completed tasks to future behavior. Deep search and deep research are consequently treated as system-level compositions of these functions rather than as independent top-level categories.
+
+\paragraph{Scope.}
+We focus on systems in which retrieval-grounded information acquisition is necessary for solving a multi-step task. The review covers textual, graph-structured, semi-structured, hybrid, and open-web evidence settings, together with long-form synthesis when it depends on multi-source acquisition. General-purpose agents, tool-use systems, memory architectures, and skill-learning methods are included only when they directly affect multi-hop retrieval, evidence integration, or cross-task improvement. The survey is therefore broader than a multi-hop RAG review, but it is not a general survey of autonomous agents.
+
+\subsection{Contributions}
+\label{subsec:contributions}
+
+This survey makes four contributions.
+
+\begin{itemize}[leftmargin=1.35em]
+\item \textbf{A unified information-acquisition view.} We define multi-hop retrieval and reasoning as the process of acquiring, following, integrating, and learning from information across dependent steps. This definition separates genuine multi-hop dependence from tasks that merely contain multiple documents or multiple tool calls.
+
+\item \textbf{A four-part functional taxonomy.} We organize methods into initial retrieval, follow-up retrieval, evidence integration, and feedback learning. The taxonomy provides a common language for comparing static multi-hop pipelines, graph-based systems, adaptive retrieval, agentic search, deep research, memory, and skill-based approaches without collapsing the survey into a generic agent taxonomy.
+
+\item \textbf{A cross-generation review of methods and systems.} We connect early multi-hop QA and path retrieval with modern retrieval-augmented generation, graph retrieval, long-context evidence processing, browser-based search, deep research, and retrieval-grounded experience and skill learning. The companion artifact currently contains \CorpusSize{} literature records, with record-level source status exposed rather than treating all discovered papers as equally verified.
+
+\item \textbf{A process-oriented evaluation framework.} We extend evaluation beyond final-answer accuracy to retrieval recall, hop-level success, query and action trajectories, evidence preservation and use, grounding, stopping behavior, cost, and cross-task improvement. A stratified \AuditSize-paper selection is used for the full-text diagnostic audit, with unreviewed fields left explicitly unresolved until source evidence is collected.
+\end{itemize}
+
+\paragraph{Organization.}
+Section~\ref{sec:background} traces the evolution from multi-hop QA to deep research. Section~\ref{sec:overview} introduces the basic concepts, formalization, running examples, and taxonomy. Sections~\ref{sec:initial_retrieval}--\ref{sec:feedback_learning} review the four functional categories. Section~\ref{sec:evaluation} organizes evaluation by component and system claim. Section~\ref{sec:future} presents open problems, and Section~\ref{sec:conclusion} concludes the survey. The appendices document the review protocol, datasets, full taxonomy, and diagnostic audit.
