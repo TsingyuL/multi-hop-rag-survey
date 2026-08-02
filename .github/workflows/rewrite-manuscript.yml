@@ -1,12 +1,6 @@
 name: Build rewritten survey
 
 on:
-  push:
-    branches:
-      - rewrite/multi-hop-retrieval-reasoning-v1
-    paths:
-      - 'paper_rewrite/**'
-      - '.github/workflows/rewrite-manuscript.yml'
   pull_request:
     branches:
       - main
@@ -16,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: rewrite-manuscript-${{ github.ref }}
+  group: rewrite-manuscript-pr-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
