@@ -1,37 +1,90 @@
 \section{Follow-up Retrieval}
 \label{sec:follow_up_retrieval}
 
-Follow-up retrieval begins when the next information need depends on evidence, entities, constraints, or uncertainty produced earlier in the trajectory. This chapter therefore focuses on search-state transitions rather than first-stage ranking alone. The key design questions are how to represent the current state, how to generate or select the next query or action, how to control branching and stopping, and how to recover from earlier retrieval errors.
+Follow-up retrieval begins when the next information need depends on evidence, entities, constraints, uncertainty, or failures produced earlier in the trajectory. Its defining transformation is
+\[
+(q,E_{1:t},h_t) \rightarrow u_t \rightarrow E_{t+1},
+\]
+where $u_t$ may be a textual query, a subquestion, a graph traversal, a browser action, or a decision to stop. The chapter therefore concerns search-state transitions rather than first-stage ranking alone. The main design questions are how to represent what is currently known, identify what is still missing, choose the next action, control branching, recover from bad evidence, and terminate before search cost overwhelms value.
 
 \subsection{Query Decomposition}
 \label{subsec:query_decomposition}
-% Cover explicit subquestions, decomposition supervision, modular prompting,
-% decomposition faithfulness, and decomposition error propagation.
+
+Question decomposition replaces a complex information need with smaller subproblems. DecompRC separates decomposition from answer composition and showed that supervised subquestions can make multi-hop reading more interpretable~\cite{min2019decomprc}. BREAK provides structured question decompositions that expose operations and dependencies~\cite{wolfson2020break}. Prompting methods later generated subquestions without task-specific training. Self-Ask explicitly alternates follow-up questions and intermediate answers~\cite{press2022selfask}, while decomposed prompting assigns subproblems to modular prompts or tools~\cite{khot2023decomposed}. Least-to-most prompting similarly solves easier subproblems before harder ones~\cite{zhou2023leasttomost}.
+
+Decomposition supports follow-up retrieval only when subproblems are executed conditionally. A fixed list of independent queries can improve recall, but it does not represent a true multi-hop trajectory unless later subquestions depend on earlier answers. Conditional decomposition is especially important when an entity name, date, or type is unavailable at the start. In the running example, ``Who portrayed Corliss Archer?'' can be generated from the original question, but ``What government position did Shirley Temple hold?'' becomes precise only after the first answer is resolved.
+
+Decomposition introduces its own error channel. A plausible but incorrect subquestion can redirect every later hop; redundant subquestions increase cost; and a decomposition can omit an implicit comparison or verification step even when all individual facts are retrieved. Evaluation should therefore include subquestion validity, dependency preservation, execution success, and answerability from the resulting evidence, rather than reporting only final exact match.
 
 \subsection{Iterative Retrieval}
 \label{subsec:iterative_retrieval}
-% Cover GoldEn Retriever, MDR, Baleen, IRCoT, iterative retrieval-generation,
-% and hop-conditioned dense retrieval.
+
+Iterative retrieval conditions later retrieval on earlier passages or generated states. GoldEn Retriever uses weak supervision and latent intermediate retrieval decisions to locate supporting documents~\cite{min2019golden}. MDR encodes the original question together with previously retrieved evidence to retrieve the next passage~\cite{xiong2021mdr}. BeamDR preserves multiple partial paths to reduce the risk of committing to a single early error~\cite{zhao2021beamdr}. Baleen improves robustness by condensing earlier evidence into retrieval-focused representations before the next hop~\cite{khattab2021baleen}.
+
+These learned retrievers operationalize a path probability,
+\[
+P(e_{1:T}\mid q)=P(e_1\mid q)\prod_{t=2}^{T}P(e_t\mid q,e_{1:t-1}),
+\]
+and differ in how they represent $e_{1:t-1}$, supervise intermediate hops, and search over alternatives. Greedy retrieval is efficient but vulnerable to error propagation. Beam search preserves alternatives but increases memory and retrieval calls. Condensed state representations control context growth but can remove a bridge relation needed by a later hop.
+
+LLM-era systems interleave retrieval with generated reasoning. IRCoT alternates chain-of-thought steps with retrieval, allowing generated intermediate reasoning to expose the next query target~\cite{trivedi2023ircot}. ITER-RETGEN repeatedly couples retrieval and generation so that each component refines the other~\cite{shao2023iterretgen}. This interleaving increases flexibility, but the generated state may hallucinate an entity and then retrieve evidence for the hallucination. Reliable systems therefore need state attribution: the query should be traceable to either the original task or a supported intermediate observation.
+
+The most informative iterative-retrieval evaluations report hop-wise recall, path recall, beam coverage, query traces, and retrieval cost. Final answer accuracy alone cannot distinguish a better path retriever from a reader that succeeds despite an incomplete path.
 
 \subsection{Graph and Path Search}
 \label{subsec:graph_path_search}
-% Cover iterative graph expansion, evidence-path retrieval, beam search,
-% KG traversal, and graph-guided LLM search.
+
+Graph and path methods represent the search space explicitly. PullNet expands a heterogeneous graph by deciding which entities and documents to retrieve next~\cite{sun2019pullnet}. Learning to Retrieve Reasoning Paths over Wikipedia Graph scores multi-document paths rather than isolated passages~\cite{asai2020learning}. HopRetriever and related models retrieve connected hops through entity or hyperlink structure~\cite{li2020hopretriever}. These systems make dependency structure visible and can avoid retrieving topically similar but disconnected documents.
+
+The central control problem is expansion. At state $s_t$, the system must choose a frontier node or relation, retrieve its neighbors, and decide whether the new subgraph advances the task. Breadth-first expansion provides coverage but grows rapidly; greedy expansion is efficient but brittle; beam or best-first strategies preserve alternatives under a budget. Graph-guided LLM systems such as Think-on-Graph use the language model to select relations or entities during traversal~\cite{sun2024tog}. They gain semantic flexibility but inherit sensitivity to prompt wording and incomplete graph neighborhoods.
+
+Path search also changes the unit of evaluation. Document recall may be high even when the retrieved documents cannot be ordered into a valid reasoning path. Useful diagnostics include path validity, edge precision, connected-support recall, search depth, branching factor, and whether the selected path preserves source provenance.
 
 \subsection{Adaptive Retrieval}
 \label{subsec:adaptive_retrieval}
-% Cover uncertainty-triggered retrieval, complexity routing, retrieve/read/stop
-% policies, self-reflection within a task, and corrective retrieval.
+
+Adaptive retrieval determines whether, when, and how much to retrieve. FLARE triggers retrieval when the model anticipates low-confidence future tokens~\cite{jiang2023flare}. Self-RAG learns special reflection signals that control retrieval and critique generated content~\cite{asai2024selfrag}. Adaptive-RAG routes questions to different retrieval and reasoning strategies according to estimated complexity~\cite{jeong2024adaptiverag}. DRAGIN detects information needs from the model's internal uncertainty during generation~\cite{su2024dragin}. Corrective RAG evaluates retrieved documents and invokes corrective search when evidence quality is poor~\cite{yan2024crag}.
+
+These systems replace a fixed hop count with a policy over actions such as \textsc{retrieve}, \textsc{read}, \textsc{rewrite}, \textsc{verify}, and \textsc{stop}. The policy must balance the expected value of another retrieval against latency, token cost, and the risk of introducing noise. Over-retrieval can reduce answer quality even when recall increases; under-retrieval leaves unresolved information needs. Stopping is therefore not a secondary implementation detail but a core multi-hop decision.
+
+Adaptive systems require calibrated signals. Token entropy may capture linguistic uncertainty rather than missing knowledge. A complexity classifier may route unfamiliar domains incorrectly. A critic may accept fluent but unsupported evidence. Evaluation should report action frequencies, trigger precision and recall, unnecessary retrieval rate, premature stopping, and cost-adjusted task performance.
 
 \subsection{Deep Search}
 \label{subsec:deep_search}
-% Cover browser and open-web search agents, longer-horizon research trajectories,
-% source discovery, stopping, and report-oriented information acquisition.
+
+Deep search extends follow-up retrieval to open-web or tool-rich environments. It is not a separate functional category: it is a system setting in which initial retrieval, follow-up retrieval, evidence integration, and sometimes feedback learning are composed over longer horizons. WebGPT demonstrated browser-assisted question answering with human feedback~\cite{nakano2021webgpt}. ReAct interleaves reasoning traces with external actions~\cite{yao2023react}. PaperQA applies retrieval and iterative evidence gathering to scientific literature~\cite{lala2023paperqa}. Search-R1 trains language models to reason and use search engines through reinforcement learning~\cite{jin2025searchr1}, and RAG-Gym provides process supervision for reasoning and search agents~\cite{xiong2025raggym}.
+
+Open-web search changes the evidence model. Sources are dynamic, duplicated, adversarial, and heterogeneous in quality. Pages can disappear or change between evaluation runs. Search APIs expose snippets rather than full documents, and browser interfaces impose action-level costs. A system must therefore manage source discovery, page reading, query reformulation, deduplication, credibility, temporal consistency, and stopping. Long-form outputs add another dependency: information must not only be found but also organized into claims with citations.
+
+Deep-search evaluation should preserve complete trajectories where licensing permits. At minimum, reports should include query and action counts, pages opened, unique sources, elapsed time, token and API cost, source dates, citation coverage, and stopping behavior. End-to-end report scores without these fields make it difficult to determine whether a system is a better searcher, a better writer, or simply a more expensive one.
 
 \subsection{Feedback-Assisted Retrieval}
 \label{subsec:feedback_assisted_retrieval}
-% Cover within-task process feedback, reward-guided search, verifier-guided
-% retrieval, and search policies trained from trajectory-level signals.
 
-\paragraph{Within-task versus cross-task feedback.}
-Feedback belongs in this chapter when it changes a later action in the same task. Feedback that is retained to improve subsequent tasks is treated as feedback learning in Section~\ref{sec:feedback_learning}.
+Feedback can guide the current search without becoming persistent cross-task learning. A verifier may reject a document and trigger a query rewrite; a process reward may favor trajectories that retrieve useful evidence early; an environment response may reveal that an action failed; or a reader may expose an unanswered subproblem. Such feedback belongs in follow-up retrieval when it changes a later action in the same trajectory.
+
+Training can nevertheless use collections of trajectories to improve a within-task search policy. Search-R1 optimizes search behavior from outcome rewards, while RAG-Gym studies process-level supervision for search and reasoning~\cite{jin2025searchr1,xiong2025raggym}. Agentic-R trains retrievers for agentic search using both local query--passage relevance and global answer correctness, and iteratively improves the retriever with evolving agent queries~\cite{liu2026agenticr}. The functional placement depends on the claim: the learned retriever is discussed as a policy-improvement mechanism in Section~\ref{sec:feedback_learning}, while its execution produces follow-up retrieval actions here.
+
+This distinction prevents the word ``feedback'' from collapsing two timescales. Within-task feedback answers, ``What should the system do next on this problem?'' Cross-task learning answers, ``What should change so that future problems are solved better?''
+
+\begin{table*}[tbp]
+\centering
+\caption{Control choices in follow-up retrieval.}
+\label{tab:followup_control}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.8cm}p{3.2cm}Y Y@{}}
+\toprule
+Family & State used for the next action & Main benefit & Characteristic failure \\
+\midrule
+Query decomposition & Prior subanswers or a dependency plan & Converts implicit needs into executable subproblems & Invalid or non-dependent subquestions propagate error \\
+Iterative retrieval & Previously retrieved passages or condensed state & Learns hop-conditioned evidence acquisition & Early retrieval errors dominate later hops \\
+Graph/path search & Current node, relation, frontier, or partial path & Preserves connectivity and supports explicit search & Branch explosion, linking error, or missing graph edges \\
+Adaptive retrieval & Complexity, uncertainty, critique, or evidence quality & Allocates search only when expected to help & Miscalibrated triggers and premature stopping \\
+Deep search & Full action history, browser state, and heterogeneous sources & Handles open-web, long-horizon research tasks & High cost, unstable sources, duplication, and weak provenance \\
+Feedback-assisted retrieval & Verifier, process reward, or environment response & Corrects a trajectory before completion & Feedback can be noisy, delayed, or reward-hacked \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\paragraph{Summary.}
+Follow-up retrieval is the defining stage of genuine multi-hop information acquisition. The central object is not a static ranked list but a trajectory of state-dependent search decisions. Reliable progress therefore requires both stronger search policies and evaluation that reveals how queries, evidence, branches, and stopping decisions evolve across hops.
