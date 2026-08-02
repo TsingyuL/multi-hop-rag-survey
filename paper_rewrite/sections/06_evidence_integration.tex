@@ -1,0 +1,32 @@
+\section{Evidence Integration}
+\label{sec:evidence_integration}
+
+Evidence integration converts the material acquired across hops into a representation that can support an answer or report. The problem is not equivalent to retrieving more documents: the system must determine which evidence is jointly necessary, preserve bridge relations under a context budget, organize sources for a reader or generator, and combine information without losing provenance or introducing unsupported claims.
+
+\subsection{Evidence Selection}
+\label{subsec:evidence_selection}
+% Cover set-level selection, redundancy and complementarity, reader-aware
+% selection, evidence filtering, and oracle-selection analyses.
+
+\subsection{Evidence Preservation and Compression}
+\label{subsec:evidence_compression}
+% Cover extractive and abstractive compression, token compression, notes,
+% chain preservation, provenance retention, and compression failure modes.
+
+\subsection{Context Construction}
+\label{subsec:context_construction}
+% Cover ordering, packing, hierarchical context, long-context position effects,
+% memory-backed context management, and reader-facing structure.
+
+\subsection{Cross-Evidence Reasoning}
+\label{subsec:cross_evidence_reasoning}
+% Cover Fusion-in-Decoder, graph neural reasoning, text--KG fusion,
+% table/text reasoning, program execution, and heterogeneous evidence composition.
+
+\subsection{Long-Form Synthesis}
+\label{subsec:long_form_synthesis}
+% Cover outlines, report planning, claim--source alignment, citations,
+% coverage, contradiction handling, and research-report generation.
+
+\paragraph{Chapter boundary.}
+Query--document reranking belongs to initial retrieval when its purpose is to refine the candidate ranking. Selection, compression, ordering, or fusion of an already acquired evidence collection belongs to this chapter.
