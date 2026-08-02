@@ -15,6 +15,10 @@ on:
       - '.github/workflows/rewrite-manuscript.yml'
   workflow_dispatch:
 
+concurrency:
+  group: rewrite-manuscript-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate-and-build:
     runs-on: ubuntu-latest
@@ -38,12 +42,3 @@ jobs:
         with:
           name: multi-hop-retrieval-reasoning-draft
           path: paper_rewrite/main.pdf
-
-      - name: Upload figure PDFs
-        uses: actions/upload-artifact@v4
-        with:
-          name: rewrite-figures
-          path: |
-            paper_rewrite/figures/fig1_functional_process.pdf
-            paper_rewrite/figures/fig2_taxonomy_tree.pdf
-          if-no-files-found: warn
