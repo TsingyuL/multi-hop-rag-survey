@@ -1,4 +1,50 @@
 \section{Diagnostic Audit}
 \label{app:diagnostic_audit}
 
-The diagnostic audit uses a stratified 70-paper selection: 15 initial-retrieval papers, 25 follow-up-retrieval papers, 20 evidence-integration papers, and 10 feedback-learning papers. Each record will be coded from the full text for the claimed improvement, task and evidence setting, process metrics, trajectory availability, intervention or ablation evidence, cost reporting, and unresolved evaluation gaps. Missing evidence is recorded as \emph{not reported}, \emph{not applicable}, or \emph{unclear}; these values are not collapsed.
+The diagnostic audit examines whether empirical evidence matches the process-level claim made by a paper. It does not estimate prevalence in the entire literature. The sample is purposively stratified to cover the four functional categories, major subcategories, older and recent methods, fixed-corpus and open-world settings, and both component-level and end-to-end claims.
+
+\subsection{Sampling}
+The \AuditSize-paper selection contains 15 initial-retrieval papers, 25 follow-up-retrieval papers, 20 evidence-integration papers, and 10 feedback-learning papers. Follow-up retrieval receives the largest allocation because it contains the widest range of trajectory-control mechanisms and because final-answer accuracy is particularly insufficient for distinguishing their effects. The audit list is frozen before quantitative summaries are produced.
+
+\subsection{Coding Fields}
+Table~\ref{tab:audit_codebook} summarizes the core codebook. Each field is coded from the full paper, including appendices where relevant.
+
+\begin{table*}[tbp]
+\centering
+\caption{Diagnostic-audit codebook.}
+\label{tab:audit_codebook}
+\small
+\begin{tabularx}{\textwidth}{@{}p{3.0cm}p{3.6cm}Y@{}}
+\toprule
+Field & Allowed or typical values & Coding question \\
+\midrule
+Primary claim & retrieval; search control; integration; grounding; efficiency; cross-task learning & What component does the paper claim to improve? \\
+Task and evidence setting & fixed corpus; graph; table/text; multimodal; open web; repeated tasks & Under what information environment is the claim tested? \\
+End-to-end outcome & EM/F1; accuracy; report score; human preference; task reward & Is the final task outcome reported? \\
+Retrieval diagnostics & Recall@$k$; MRR; nDCG; bridge recall; complete-chain recall & Does the paper directly measure evidence acquisition? \\
+Trajectory diagnostics & subquestion quality; hop success; action validity; stopping; recovery; trace release & Does the paper measure the behavior it uses to control later search? \\
+Integration diagnostics & evidence membership; compression fidelity; ordering; citation; evidence intervention & Does the paper isolate how acquired evidence is transformed and used? \\
+Learning diagnostics & learning curve; transfer; memory or skill retrieval; forgetting; negative transfer & Does the paper demonstrate improvement across tasks rather than only within one episode? \\
+Efficiency & retrieval calls; model calls; tokens; latency; wall-clock time; monetary cost & Is the additional computation needed for the gain reported? \\
+Controls and interventions & fixed candidate pool; fixed evidence set; reader control; evidence removal; component ablation & Can the reported gain be attributed to the claimed component? \\
+Evidence locator & page, section, table, figure, appendix, or quotation paraphrase & Where in the source is the coding supported? \\
+Unresolved gap & free-text diagnosis & What evidence would be needed to support the claim more directly? \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Coding Values}
+Binary-looking fields use four values: \emph{reported}, \emph{not reported}, \emph{not applicable}, and \emph{unclear}. These values are not collapsed. ``Unclear'' is used when the paper's terminology or experimental setup does not permit a defensible decision. ``Not applicable'' is reserved for cases in which the diagnostic is genuinely irrelevant to the stated claim, not merely absent.
+
+A positive code requires a source locator. For example, a method is credited with trajectory evaluation only when the paper reports a query-, action-, hop-, or stopping-level result; showing one qualitative example is recorded separately from aggregate evaluation. Likewise, a paper is credited with causal evidence-use analysis only when evidence is removed, replaced, perturbed, or otherwise intervened on while relevant controls are held fixed.
+
+\subsection{Claim-Aligned Interpretation}
+The audit does not require every paper to report every field. A dense retriever may not need cross-task learning curves, and a skill-learning method may not need MRR. The requirement is alignment: a claim about better retrieval should include retrieval diagnostics; a claim about better long-horizon search should expose trajectories and costs; a claim about evidence use should include membership or intervention evidence; and a claim about learning from experience should compare future-task performance against a matched no-experience baseline.
+
+\subsection{Current Status and Reliability Boundary}
+The released audit file records the frozen selection and the fields to be checked. Records are promoted to completed audit status only after page-level evidence and a short rationale have been entered. Until the full-text pass is finished, the survey should describe the set as a \emph{70-paper audit selection}, not as 70 completed audits.
+
+The current coding is single-coder work. Before publication, a stratified subset should be independently double-coded, disagreements should be adjudicated, and the agreement statistic should be reported together with the sample and field definitions. No reliability statistic is inferred from agreement on metadata or from automated checks.
+
+\subsection{Planned Quantitative Summaries}
+After full-text coding, the audit will report category-wise coverage of retrieval, trajectory, integration, learning, efficiency, and intervention diagnostics. Counts will use the relevant claim-aligned denominator rather than all 70 papers indiscriminately. Qualitative synthesis will focus on recurrent gaps, such as answer-only evaluation for search methods, missing fixed-budget controls, absent source-use interventions, and cross-task learning claims evaluated only on repeated or closely matched tasks.
