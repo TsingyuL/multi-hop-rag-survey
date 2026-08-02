@@ -1,0 +1,37 @@
+\section{Follow-up Retrieval}
+\label{sec:follow_up_retrieval}
+
+Follow-up retrieval begins when the next information need depends on evidence, entities, constraints, or uncertainty produced earlier in the trajectory. This chapter therefore focuses on search-state transitions rather than first-stage ranking alone. The key design questions are how to represent the current state, how to generate or select the next query or action, how to control branching and stopping, and how to recover from earlier retrieval errors.
+
+\subsection{Query Decomposition}
+\label{subsec:query_decomposition}
+% Cover explicit subquestions, decomposition supervision, modular prompting,
+% decomposition faithfulness, and decomposition error propagation.
+
+\subsection{Iterative Retrieval}
+\label{subsec:iterative_retrieval}
+% Cover GoldEn Retriever, MDR, Baleen, IRCoT, iterative retrieval-generation,
+% and hop-conditioned dense retrieval.
+
+\subsection{Graph and Path Search}
+\label{subsec:graph_path_search}
+% Cover iterative graph expansion, evidence-path retrieval, beam search,
+% KG traversal, and graph-guided LLM search.
+
+\subsection{Adaptive Retrieval}
+\label{subsec:adaptive_retrieval}
+% Cover uncertainty-triggered retrieval, complexity routing, retrieve/read/stop
+% policies, self-reflection within a task, and corrective retrieval.
+
+\subsection{Deep Search}
+\label{subsec:deep_search}
+% Cover browser and open-web search agents, longer-horizon research trajectories,
+% source discovery, stopping, and report-oriented information acquisition.
+
+\subsection{Feedback-Assisted Retrieval}
+\label{subsec:feedback_assisted_retrieval}
+% Cover within-task process feedback, reward-guided search, verifier-guided
+% retrieval, and search policies trained from trajectory-level signals.
+
+\paragraph{Within-task versus cross-task feedback.}
+Feedback belongs in this chapter when it changes a later action in the same task. Feedback that is retained to improve subsequent tasks is treated as feedback learning in Section~\ref{sec:feedback_learning}.
