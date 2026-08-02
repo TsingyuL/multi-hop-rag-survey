@@ -1,0 +1,32 @@
+\section{Feedback Learning}
+\label{sec:feedback_learning}
+
+Feedback learning studies how completed trajectories change behavior on future tasks. It differs from adaptive retrieval within a single task: the defining update persists beyond the current episode. The retained object may be a reflection, an experience record, a memory item, a reusable procedure, a skill, retriever supervision, or an updated search policy.
+
+\subsection{Feedback Collection}
+\label{subsec:feedback_collection}
+% Cover outcome rewards, process rewards, verifier signals, human feedback,
+% tool feedback, environment feedback, and automatic critics.
+
+\subsection{Trajectory Diagnosis}
+\label{subsec:trajectory_diagnosis}
+% Cover failure attribution, reflection, comparison of successful and failed
+% trajectories, credit assignment, and diagnosis granularity.
+
+\subsection{Experience Memory}
+\label{subsec:experience_memory}
+% Cover episodic experience stores, distilled lessons, retrieval of prior
+% trajectories, memory consolidation, and interference or staleness.
+
+\subsection{Skill Extraction}
+\label{subsec:skill_extraction}
+% Cover executable skills, textual procedures, skill libraries, automatic
+% skill revision, skill routing, and compositional reuse.
+
+\subsection{Retrieval and Policy Improvement}
+\label{subsec:policy_improvement}
+% Cover reinforcement-learned search policies, process-supervised retrievers,
+% retriever updates from downstream trajectories, and continual adaptation.
+
+\paragraph{Inclusion rule.}
+General memory or skill systems are included only when their retained experience directly improves retrieval-grounded multi-hop behavior. A long-term memory module that merely stores user facts, or an embodied skill unrelated to information acquisition, is outside the primary scope.
