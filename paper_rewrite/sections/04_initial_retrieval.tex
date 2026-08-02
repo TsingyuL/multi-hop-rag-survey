@@ -1,0 +1,27 @@
+\section{Initial Retrieval}
+\label{sec:initial_retrieval}
+
+Initial retrieval establishes the entry evidence available before any task-specific intermediate result has been resolved. Its input is the original query or task description, and its output is a candidate set, ranked list, graph neighborhood, or structured entry point for later search and reasoning. In multi-hop settings, a strong initial retriever must balance local relevance with the probability of exposing bridge information that enables later hops.
+
+\subsection{Sparse Retrieval}
+\label{subsec:sparse_retrieval}
+% Cover BM25, learned sparse retrieval, query expansion, lexical robustness,
+% and the role of sparse signals in hybrid multi-hop systems.
+
+\subsection{Dense and Hybrid Retrieval}
+\label{subsec:dense_hybrid_retrieval}
+% Cover DPR, ANCE, Contriever, ColBERT, E5/BGE-style embeddings,
+% hybrid retrieval, reranking, and reader-aware retrieval refinement.
+
+\subsection{Graph Retrieval}
+\label{subsec:graph_retrieval}
+% Cover graph construction, subgraph retrieval, hierarchical retrieval,
+% GraphRAG/RAPTOR/HippoRAG-style entry points, and structured evidence access.
+
+\subsection{Reasoning-Aware Retrieval}
+\label{subsec:reasoning_aware_retrieval}
+% Cover retrievers trained or prompted with reasoning signals, synthetic
+% explanations, hypothetical documents, process rewards, or downstream reader utility.
+
+\paragraph{Chapter boundary.}
+Methods remain in this chapter when they operate primarily on the original task or a fixed reformulation of it. Once retrieved evidence is used to formulate the next information need, the method is discussed in Section~\ref{sec:follow_up_retrieval}.
