@@ -1,32 +1,82 @@
 \section{Feedback Learning}
 \label{sec:feedback_learning}
 
-Feedback learning studies how completed trajectories change behavior on future tasks. It differs from adaptive retrieval within a single task: the defining update persists beyond the current episode. The retained object may be a reflection, an experience record, a memory item, a reusable procedure, a skill, retriever supervision, or an updated search policy.
+Feedback learning studies how completed trajectories change behavior on future tasks. It differs from adaptive retrieval within one task: the defining update persists beyond the current episode. Given trajectory $\tau_i$ and feedback $f_i$, the system updates a retained state, library, retriever, or policy,
+\[
+(M_{i+1},\pi_{i+1})=\mathcal{U}(M_i,\pi_i,\tau_i,f_i),
+\]
+so that a later task can benefit from earlier success or failure. The retained object may be a reflection, a distilled lesson, an episodic memory, an executable procedure, a reusable skill, retriever supervision, or updated model parameters.
+
+This chapter does not attempt to survey agent memory in general. A method is included when the retained experience has a direct role in retrieval-grounded multi-hop behavior: formulating queries, selecting sources, avoiding search loops, verifying evidence, composing information, or improving the policy that controls those actions.
 
 \subsection{Feedback Collection}
 \label{subsec:feedback_collection}
-% Cover outcome rewards, process rewards, verifier signals, human feedback,
-% tool feedback, environment feedback, and automatic critics.
+
+Feedback can originate from final task outcomes, intermediate process signals, human judgments, tool responses, retrieval metrics, citation checks, or automatic critics. Outcome rewards are inexpensive and directly aligned with task success, but they are delayed and do not identify which search or reasoning step caused failure. Process rewards provide denser supervision, yet they require reliable step-level labels or verifiers and can encourage optimization of the proxy rather than the actual information need.
+
+Human feedback can evaluate answer quality, source quality, or complete trajectories. WebGPT, for example, used human feedback to train browser-assisted question answering~\cite{nakano2021webgpt}. Environment feedback is more direct in interactive systems: a failed tool call, empty result page, invalid action, or contradicted claim can serve as a local signal. Automatic critics such as CRITIC invoke tools to test and revise outputs~\cite{gou2024critic}. Whether such signals belong to follow-up retrieval or feedback learning depends on retention. A critique used only to revise the current answer remains within-task; a critique distilled into a reusable rule or training example becomes cross-task feedback.
+
+Feedback records should preserve enough context to support diagnosis. A scalar reward alone cannot distinguish poor initial recall, an invalid follow-up query, evidence loss during compression, or unsupported synthesis. A useful record links the outcome to the task, trajectory state, action, observation, evidence sources, and downstream consequence.
 
 \subsection{Trajectory Diagnosis}
 \label{subsec:trajectory_diagnosis}
-% Cover failure attribution, reflection, comparison of successful and failed
-% trajectories, credit assignment, and diagnosis granularity.
+
+Trajectory diagnosis converts raw execution traces into explanations of what should be retained or changed. The unit of diagnosis can be an entire episode, a search branch, a query, a retrieved document, a reasoning step, or a stopping decision. Coarse diagnosis is cheap but produces generic lessons; fine-grained diagnosis supports targeted updates but requires stronger attribution.
+
+Reflexion stores natural-language reflections on failed attempts and reuses them in later trials~\cite{shinn2023reflexion}. Self-Refine iteratively generates feedback and revisions~\cite{madaan2023selfrefine}; although commonly used within a task, its feedback records can also serve as reusable training material when retained. ExpeL compares successful and failed trajectories and extracts natural-language insights for future episodes~\cite{zhao2024expel}. These methods illustrate a progression from retry-specific critique to cross-task abstraction.
+
+For retrieval-grounded systems, diagnosis should identify the earliest actionable cause. If the correct source never entered the candidate pool, revising the final reasoning prompt is unlikely to help. If the source was retrieved but ignored, the update should target selection, context construction, or reader behavior. If search continued after the information need was resolved, the lesson concerns stopping and cost. This stage-level attribution links the new taxonomy to the diagnostic framework in Section~\ref{sec:evaluation}.
+
+Diagnosis is vulnerable to hindsight bias and hallucinated causal stories. An LLM may produce a plausible reflection that is unrelated to the actual failure. Strong evidence includes controlled replay, action replacement, counterfactual retrieval, or comparison with successful trajectories under the same task. Retained lessons should also record their provenance and confidence so that weak diagnoses do not become permanent rules.
 
 \subsection{Experience Memory}
 \label{subsec:experience_memory}
-% Cover episodic experience stores, distilled lessons, retrieval of prior
-% trajectories, memory consolidation, and interference or staleness.
+
+Experience memory stores information from previous trajectories and retrieves it when a related task appears. The simplest form is episodic: retain complete or compressed trajectories and select similar examples at inference time. This preserves detail but creates high token cost, noise, and the risk of copying task-specific actions. More abstract memories store lessons, failure patterns, or state--action summaries.
+
+ExpeL distills insights from collections of successful and failed episodes rather than replaying raw traces~\cite{zhao2024expel}. Generative Agents combine a memory stream with retrieval, reflection, and planning in a persistent environment~\cite{park2023generativeagents}. Long-term memory architectures such as LongMem decouple external memory retrieval from the base language model~\cite{wang2023longmem}. These works are broader than multi-hop search, but they provide mechanisms for retaining intermediate observations and behavioral knowledge beyond a single context window.
+
+An experience memory for multi-hop retrieval should support at least three retrieval keys: task similarity, current search state, and failure mode. Task-only similarity can retrieve a superficially related episode whose strategy is inappropriate. State-aware retrieval can surface a lesson such as ``when several search results repeat the same entity, reformulate around the unresolved relation.'' Failure-aware retrieval can surface recovery procedures after empty, contradictory, or low-quality results.
+
+Memory evaluation must measure more than in-domain task success. Relevant questions include whether the memory is actually retrieved, whether it changes actions, whether it transfers to unseen tasks, how performance changes as memory grows, and whether stale or conflicting experiences cause negative transfer. Ablations should compare raw trajectories, summaries, distilled lessons, and no-memory baselines under matched context budgets.
 
 \subsection{Skill Extraction}
 \label{subsec:skill_extraction}
-% Cover executable skills, textual procedures, skill libraries, automatic
-% skill revision, skill routing, and compositional reuse.
+
+Skills are reusable procedures rather than passive records. They may be executable code, tool sequences, textual policies, structured prompts, or folders containing instructions and resources. A skill system requires acquisition, storage, routing, execution, evaluation, and revision. Its relevance to this survey is strongest when the skills encode information-seeking behavior such as query formulation, source verification, document processing, or report construction.
+
+Voyager demonstrated an automatically expanding library of executable skills and reused them to support open-ended exploration~\cite{wang2023voyager}. Although its main environment is embodied, the design pattern---successful behavior becomes a named, retrievable procedure---transfers to search agents. Memento-Skills treats structured skill files as persistent, evolving memory. It retrieves skills with a behavior-oriented router and updates or expands the library from experience, enabling continual adaptation without updating the underlying language model parameters~\cite{zhou2026mementoskills}. The method is relevant here because its elementary and learned skills include web search, terminal use, downloading, and verification procedures.
+
+SkillRL explicitly connects experience distillation to policy learning. It extracts general and task-specific skills from both successful and failed trajectories, organizes them in a hierarchical SkillBank, retrieves relevant skills during execution, and recursively evolves the library together with an RL policy~\cite{xia2026skillrl}. Its evaluation includes search-augmented QA in addition to interactive environments, making it a direct example of skill reuse for retrieval-grounded multi-step tasks.
+
+Skill abstraction creates a bias--variance tradeoff. Highly specific skills are easy to execute but transfer poorly; broad skills transfer but may provide little actionable guidance. Composed skills can reduce planning cost but amplify incompatibilities and hidden assumptions. Evaluation should therefore report skill routing accuracy, execution success, reuse frequency, library growth, token overhead, transfer, negative transfer, and whether performance gains come from the skill content or from additional model calls used to generate it.
 
 \subsection{Retrieval and Policy Improvement}
 \label{subsec:policy_improvement}
-% Cover reinforcement-learned search policies, process-supervised retrievers,
-% retriever updates from downstream trajectories, and continual adaptation.
 
-\paragraph{Inclusion rule.}
-General memory or skill systems are included only when their retained experience directly improves retrieval-grounded multi-hop behavior. A long-term memory module that merely stores user facts, or an embodied skill unrelated to information acquisition, is outside the primary scope.
+Feedback can update the model that controls search rather than an external memory. Search-R1 optimizes language-model search behavior with reinforcement learning~\cite{jin2025searchr1}. RAG-Gym studies process supervision for reasoning and search agents~\cite{xiong2025raggym}. These methods use collections of trajectories to improve how future tasks choose queries, read evidence, and decide when to stop.
+
+Retriever improvement is a distinct but coupled problem. In agentic search, the useful passage for one step may be defined by its effect on the eventual answer rather than local query similarity. Agentic-R uses both local relevance and global answer correctness to train a retriever for multi-turn search, then iteratively improves the retriever with queries produced by the evolving agent~\cite{liu2026agenticr}. This creates a feedback loop: a better agent generates more useful training queries, and a better retriever changes the trajectories from which the agent learns.
+
+Policy learning raises credit-assignment and stability problems. Sparse final rewards do not reveal whether success came from the initial query, a later correction, or parametric knowledge. Dense process rewards can be exploited. Jointly updating the agent, retriever, memory, and skill library can make comparisons nonstationary. Studies should therefore report learning curves, held-out tasks, frozen-component ablations, reward definitions, trajectory costs, and performance after disabling test-time memory updates.
+
+\begin{table*}[tbp]
+\centering
+\caption{Persistent objects in feedback learning.}
+\label{tab:feedback_objects}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.6cm}p{3.1cm}Y Y@{}}
+\toprule
+Retained object & Typical construction & Intended future effect & Required evidence \\
+\midrule
+Reflection or lesson & Critique of a failed or successful trajectory & Avoid a repeated error or reuse a strategy & Retrieval/use trace, matched retry, and transfer beyond the source task \\
+Episodic memory & Stored trajectory, summary, or state--action record & Supply analogous observations or demonstrations & Memory-hit rate, context-matched baseline, staleness and interference tests \\
+Skill or procedure & Distilled executable or textual routine & Reduce planning cost and standardize successful behavior & Routing, execution, reuse, composition, and negative-transfer analyses \\
+Retriever supervision & Query--passage labels augmented with downstream outcomes & Retrieve evidence useful to agent progress and final answers & Fixed-agent retriever evaluation and fixed-retriever agent evaluation \\
+Policy update & RL, imitation, or process-supervised optimization & Improve query, reading, verification, and stopping actions & Learning curve, reward audit, held-out tasks, and cost-adjusted success \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\paragraph{Summary.}
+Feedback learning closes the loop across tasks. Reflection, memory, skills, retriever training, and policy optimization are different ways to transform previous trajectories into future behavior. Their value cannot be established by showing that a system retries the same task successfully; the stronger claim requires evidence of retention, reuse, transfer, and controlled improvement on later tasks.
