@@ -1,12 +1,13 @@
 \begin{tikzpicture}[
   >=Latex,
   root/.style={rounded corners=2pt, draw=black!70, fill=black!5, very thick,
-               text width=5.2cm, minimum height=11mm, align=center},
+               text width=5.5cm, minimum height=11mm, align=center, font=\small},
   category/.style={rounded corners=2pt, draw=#1!70!black, fill=#1!12, very thick,
-                   text width=3.45cm, minimum height=12mm, align=center, inner sep=4pt},
+                   text width=3.55cm, minimum height=13mm, align=center, inner sep=4pt,
+                   font=\small},
   leaves/.style={rounded corners=2pt, draw=#1!55!black, fill=#1!4, thick,
-                 text width=3.45cm, minimum height=28mm, align=left, inner sep=5pt,
-                 font=\footnotesize},
+                 text width=3.55cm, minimum height=31mm, align=left, inner sep=5pt,
+                 font=\scriptsize},
   edge/.style={->, thick, draw=black!55}
 ]
 \definecolor{initialblue}{RGB}{74,112,148}
@@ -14,12 +15,13 @@
 \definecolor{integrateorange}{RGB}{168,119,71}
 \definecolor{learnpurple}{RGB}{119,92,139}
 
-\node[root] (root) {\textbf{Multi-Hop Retrieval and Reasoning}\\Dependent information acquisition across hops};
+\node[category=initialblue] (c1) {\textbf{1. Initial Retrieval}\\$q\rightarrow E_1$};
+\node[category=followgreen, right=4mm of c1] (c2) {\textbf{2. Follow-up Retrieval}\\$(q,E_{1:t})\rightarrow E_{t+1}$};
+\node[category=integrateorange, right=4mm of c2] (c3) {\textbf{3. Evidence Integration}\\$E_{1:T}\rightarrow C\rightarrow y$};
+\node[category=learnpurple, right=4mm of c3] (c4) {\textbf{4. Feedback Learning}\\$(\tau_i,f_i)\rightarrow \pi_{i+1}$};
 
-\node[category=initialblue, below left=12mm and 61mm of root] (c1) {\textbf{1. Initial Retrieval}\\$q\rightarrow E_1$};
-\node[category=followgreen, right=5mm of c1] (c2) {\textbf{2. Follow-up Retrieval}\\$(q,E_{1:t})\rightarrow E_{t+1}$};
-\node[category=integrateorange, right=5mm of c2] (c3) {\textbf{3. Evidence Integration}\\$E_{1:T}\rightarrow C\rightarrow y$};
-\node[category=learnpurple, right=5mm of c3] (c4) {\textbf{4. Feedback Learning}\\$(\tau_i,f_i)\rightarrow \pi_{i+1}$};
+\node[root, above=14mm of $(c2.north)!0.5!(c3.north)$] (root) {
+\textbf{Multi-Hop Retrieval and Reasoning}\\Dependent information acquisition across hops};
 
 \node[leaves=initialblue, below=4mm of c1] (l1) {
 $\bullet$ Sparse retrieval\\
