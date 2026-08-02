@@ -1,6 +1,6 @@
 \documentclass[acmsmall,review,anonymous]{acmart}
 \citestyle{acmnumeric}
-\acmJournal{CSUR}
+\acmJournal{TOIS}
 \acmDOI{}
 \setcopyright{none}
 \renewcommand\footnotetextcopyrightpermission[1]{}
@@ -43,13 +43,11 @@
 }
 
 \begin{abstract}
-Multi-hop retrieval and reasoning aims to solve problems in which a system must acquire information through multiple dependent steps and combine the acquired information to produce an answer or report. Unlike conventional retrieval-augmented generation, which commonly retrieves evidence directly from the original query, a multi-hop system must determine subsequent information needs from previously acquired evidence. This capability has become increasingly important with the development of iterative retrieval, agentic search, and deep research systems.
+Multi-hop retrieval and reasoning addresses information needs whose solution requires a sequence of dependent acquisitions: evidence found at one step determines what can be searched, verified, or combined next. Unlike single-shot retrieval-augmented generation, a multi-hop system must maintain an evolving state, formulate later information needs, control search depth, and integrate evidence collected across steps. These requirements now arise in multi-hop question answering, graph retrieval, adaptive retrieval-augmented generation, agentic search, deep research, and systems with persistent memory or reusable skills.
 
-This survey reviews multi-hop retrieval and reasoning from the perspective of the information-acquisition process. We organize existing methods into four functional categories: (1) \emph{initial retrieval}, which obtains entry evidence from the original query; (2) \emph{follow-up retrieval}, which searches for additional evidence conditioned on intermediate results; (3) \emph{evidence integration}, which selects, preserves, organizes, and combines information across hops; and (4) \emph{feedback learning}, which uses evaluation signals, trajectories, experience, or reusable skills to improve future retrieval and reasoning. Deep search and deep research are treated as systems that compose these functions rather than as separate top-level categories.
+We present a functional survey organized around four stages: \emph{initial retrieval}, which obtains entry evidence from the original task; \emph{follow-up retrieval}, which acquires later evidence conditioned on intermediate results; \emph{evidence integration}, which selects, preserves, organizes, reasons over, and synthesizes the acquired sources; and \emph{feedback learning}, which uses completed trajectories to improve future retrieval and reasoning. Deep search and deep research are treated as system-level compositions of these functions rather than separate top-level categories. The review connects early multi-hop question answering and path retrieval with modern graph-based, long-context, browser-based, reinforcement-learning, memory, and skill-learning systems. Its companion artifact contains a \CorpusSize-record literature corpus and a stratified \AuditSize-paper full-text audit selection, while exposing record-level verification status.
 
-We cover representative work from multi-hop question answering, retrieval-augmented generation, graph retrieval, adaptive and agentic search, long-context evidence processing, long-form synthesis, and retrieval-grounded experience and skill learning. We further organize evaluation around retrieval quality, hop-level progress, search trajectories, evidence utilization, grounding, efficiency, and cross-task improvement. The companion artifact currently contains a \CorpusSize-record literature corpus and a stratified \AuditSize-paper full-text audit selection, while retaining explicit source-verification status for each record.
-
-Finally, we identify open challenges in reasoning-oriented retrieval, reliable long-horizon search, evidence preservation under limited context, experience reuse, and evaluation of autonomous research systems. The resulting view characterizes multi-hop reasoning not merely as longer generation, but as adaptive information seeking: finding what is known, identifying what is missing, deciding what to search next, integrating what has been found, and learning from prior attempts.
+We further develop a claim-aligned evaluation framework covering entry recall, hop completion, search trajectories, stopping, evidence preservation and use, grounding, efficiency, and cross-task improvement. The survey therefore frames multi-hop reasoning not as longer generation, but as adaptive information seeking: identifying what is known, determining what is missing, deciding what to search next, integrating the resulting evidence, and learning from prior attempts.
 \end{abstract}
 
 \begin{CCSXML}
