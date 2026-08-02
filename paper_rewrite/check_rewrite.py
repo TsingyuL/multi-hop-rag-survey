@@ -9,7 +9,6 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-MAIN = ROOT / "main.tex"
 BIB_FILES = [ROOT / "references.bib", ROOT / "references_methods.bib"]
 
 
@@ -17,9 +16,27 @@ def collect_tex() -> list[Path]:
     return sorted(ROOT.rglob("*.tex"))
 
 
+def strip_comments(text: str) -> str:
+    lines: list[str] = []
+    for line in text.splitlines():
+        escaped = False
+        kept: list[str] = []
+        for char in line:
+            if char == "%" and not escaped:
+                break
+            kept.append(char)
+            escaped = char == "\\" and not escaped
+            if char != "\\":
+                escaped = False
+        lines.append("".join(kept))
+    return "\n".join(lines)
+
+
 def parse_citations(text: str) -> set[str]:
     keys: set[str] = set()
-    for match in re.finditer(r"\\cite\w*\{([^}]*)\}", text):
+    # Match citation commands such as \cite, \citep, and \citet, but not
+    # unrelated commands such as \citestyle.
+    for match in re.finditer(r"\\cite(?!style)\w*\{([^}]*)\}", text):
         keys.update(k.strip() for k in match.group(1).split(",") if k.strip())
     return keys
 
@@ -28,20 +45,37 @@ def parse_bibkeys(text: str) -> list[str]:
     return re.findall(r"@\w+\s*\{\s*([^,\s]+)\s*,", text)
 
 
-def check_inputs(text: str) -> list[str]:
+def resolve_input(source: Path, raw: str) -> Path:
+    candidate = source.parent / raw
+    if candidate.suffix == "":
+        candidate = candidate.with_suffix(".tex")
+    if candidate.exists():
+        return candidate
+
+    candidate = ROOT / raw
+    if candidate.suffix == "":
+        candidate = candidate.with_suffix(".tex")
+    return candidate
+
+
+def check_inputs(tex_files: list[Path]) -> list[str]:
     missing: list[str] = []
-    for raw in re.findall(r"\\input\{([^}]+)\}", text):
-        path = ROOT / raw
-        if path.suffix == "":
-            path = path.with_suffix(".tex")
-        if not path.exists():
-            missing.append(str(path.relative_to(ROOT)))
-    return missing
+    for source in tex_files:
+        text = strip_comments(source.read_text(encoding="utf-8"))
+        for raw in re.findall(r"\\input\{([^}]+)\}", text):
+            path = resolve_input(source, raw)
+            if not path.exists():
+                missing.append(
+                    f"{source.relative_to(ROOT)} -> {raw}"
+                )
+    return sorted(set(missing))
 
 
 def main() -> int:
     tex_files = collect_tex()
-    tex_text = "\n".join(path.read_text(encoding="utf-8") for path in tex_files)
+    tex_text = "\n".join(
+        strip_comments(path.read_text(encoding="utf-8")) for path in tex_files
+    )
 
     citations = parse_citations(tex_text)
     bibkeys: list[str] = []
@@ -53,7 +87,7 @@ def main() -> int:
 
     duplicates = sorted(k for k, n in Counter(bibkeys).items() if n > 1)
     undefined = sorted(citations - set(bibkeys))
-    missing_inputs = check_inputs(MAIN.read_text(encoding="utf-8"))
+    missing_inputs = check_inputs(tex_files)
     placeholders = [
         str(path.relative_to(ROOT))
         for path in tex_files
