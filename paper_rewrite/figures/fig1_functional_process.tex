@@ -23,7 +23,7 @@
 \node[endpoint] (task) {\textbf{Task}\\$q$};
 \node[stage=initialblue, right=of task] (initial) {\textbf{Initial Retrieval}\\Find entry evidence\\$q\rightarrow E_1$};
 \node[stage=followgreen, right=of initial] (follow) {\textbf{Follow-up Retrieval}\\Resolve the next need\\$(q,E_{1:t})\rightarrow E_{t+1}$};
-\node[stage=integrateorange, right=of follow] (integrate) {\textbf{Evidence Integration}\\Select, preserve, combine\\$E_{1:T}\rightarrow C$};
+\node[stage=integrateorange, right=of follow] (integrate) {\textbf{Evidence Integration}\\Select and combine\\$E_{1:T}\rightarrow C$};
 \node[endpoint, right=of integrate] (output) {\textbf{Answer or}\\\textbf{cited report}\\$y$};
 
 \draw[arrow] (task) -- (initial);
@@ -31,10 +31,12 @@
 \draw[arrow] (follow) -- (integrate);
 \draw[arrow] (integrate) -- (output);
 
-\draw[taskloop] (follow.south east) to[out=-65,in=-115,looseness=5.0]
-  node[below,note]{update state, search again, or stop} (follow.south west);
+\draw[taskloop] (follow.south east)
+  .. controls +(0,-6mm) and +(0,-6mm) ..
+  node[midway, below=1mm,note]{update state, search again, or stop}
+  (follow.south west);
 
-\node[feedback, below=18mm of follow, xshift=14mm] (learning) {
+\node[feedback, below=19mm of follow, xshift=14mm] (learning) {
 \textbf{Feedback Learning}: diagnose completed trajectories and update persistent
 memory, reusable skills, retrievers, or search policies\\[-1mm]
 $(\tau_i,f_i,M_i)\rightarrow (M_{i+1},\pi_{i+1})$};
