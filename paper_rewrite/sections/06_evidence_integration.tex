@@ -1,32 +1,83 @@
 \section{Evidence Integration}
 \label{sec:evidence_integration}
 
-Evidence integration converts the material acquired across hops into a representation that can support an answer or report. The problem is not equivalent to retrieving more documents: the system must determine which evidence is jointly necessary, preserve bridge relations under a context budget, organize sources for a reader or generator, and combine information without losing provenance or introducing unsupported claims.
+Evidence integration converts material acquired across hops into a representation that can support an answer or report. The problem is not equivalent to retrieving more documents. A system must determine which sources are jointly necessary, preserve bridge relations under a context budget, organize information for a reader or generator, combine heterogeneous facts, and maintain provenance from source to claim. We use \emph{integration} as the umbrella term for selection, compression, context construction, cross-evidence reasoning, and long-form synthesis.
+
+The chapter begins after evidence has been acquired. Pure query--document reranking remains initial retrieval when it only refines a candidate list. By contrast, reasoning about complementarity, compressing an acquired collection, choosing an ordering, or constructing a report from multiple sources belongs here.
 
 \subsection{Evidence Selection}
 \label{subsec:evidence_selection}
-% Cover set-level selection, redundancy and complementarity, reader-aware
-% selection, evidence filtering, and oracle-selection analyses.
+
+Most retrievers score documents individually, but multi-hop tasks often depend on the utility of a \emph{set}. Two passages may each have modest marginal relevance while jointly forming a complete reasoning chain. Conversely, a list of individually relevant passages may repeat the same fact and omit a bridge. Evidence selection therefore seeks a subset
+\[
+S^{\star}=\arg\max_{S\subseteq E,\,\operatorname{cost}(S)\leq B}
+U(S;q),
+\]
+where $U$ captures coverage, complementarity, consistency, and usefulness to the downstream reader under budget $B$.
+
+SetR explicitly shifts from ranking independent passages to selecting a set that satisfies the query's information requirements~\cite{lee2025setr}. This distinction is central for multi-hop retrieval: the target is not merely a better ordering of passages, but a combination that covers the required subproblems. Reader-Centered Passage Selection instead uses reader predictions and answer-oriented clustering to prioritize passages that are useful and mutually consistent from the reader's perspective~\cite{xin2025readercps}. Such methods connect selection to downstream behavior rather than treating retrieval scores as sufficient proxies.
+
+Selection can be extractive, where entire passages or sentences are retained, or generative, where a model proposes which evidence units are necessary. It can also be diversity-aware, entailment-aware, or graph-aware. The main evaluation risk is a changing candidate pool: a selector cannot be compared fairly when one method receives more evidence or a stronger retriever. Useful controls fix the candidate collection, context budget, reader, and output order, then report complete-support coverage, redundancy, contradiction rate, and downstream performance.
 
 \subsection{Evidence Preservation and Compression}
 \label{subsec:evidence_compression}
-% Cover extractive and abstractive compression, token compression, notes,
-% chain preservation, provenance retention, and compression failure modes.
+
+As the number of hops grows, the acquired evidence can exceed the reader's context budget. Compression reduces token cost, but multi-hop systems must preserve more than isolated answer spans. They must retain intermediate entities, relations, temporal qualifiers, negation, source identity, and links between claims. A summary that preserves the final fact but removes the bridge can make the reasoning chain impossible to audit or reuse.
+
+RECOMP learns extractive or abstractive compressors that shorten retrieved documents before generation~\cite{xu2023recomp}. LLMLingua removes low-information tokens to accelerate inference~\cite{jiang2023llmlingua}; LongLLMLingua extends prompt compression to long-context settings and explicitly considers question-aware document reordering~\cite{jiang2023longllmlingua}. xRAG maps retrieved text into compact continuous representations~\cite{cheng2024xrag}. Chain-of-Note writes intermediate notes for retrieved documents, providing a structured representation that can separate relevant, irrelevant, and uncertain evidence~\cite{yu2023chainofnote}.
+
+These methods compress at different levels: tokens, sentences, passages, summaries, latent vectors, or task-oriented notes. The appropriate unit depends on what later stages require. Token deletion can preserve surface facts but disrupt syntax or citation spans. Abstractive summaries improve readability but can merge sources or introduce unsupported relations. Latent compression is compact but reduces inspectability. Notes can preserve decisions but may omit evidence that becomes relevant only after a later query.
+
+Compression evaluation should therefore include both efficiency and preservation. Alongside compression ratio and latency, studies should measure supporting-fact retention, relation preservation, provenance retention, answerability, and robustness to counterfactual or distractor evidence. A compressed context that yields the correct answer through parametric memory is not evidence that the reasoning chain survived compression.
 
 \subsection{Context Construction}
 \label{subsec:context_construction}
-% Cover ordering, packing, hierarchical context, long-context position effects,
-% memory-backed context management, and reader-facing structure.
+
+Context construction determines how selected evidence is presented to the reader. It includes ordering, grouping, sectioning, hierarchical summaries, source labels, and allocation of token budget across evidence types. Because transformer readers are position sensitive, an unchanged evidence set can yield different answers under different orderings. Lost in the Middle showed that long-context models often use information less reliably when it appears in the middle of the input~\cite{liu2024lostmiddle}; subsequent work explored calibration and positional attention to recover middle-context information~\cite{tang2024found}.
+
+Long contexts do not remove the selection problem. Long-Context LLMs Meet RAG reports that adding more retrieved passages can first improve and then reduce output quality, despite increasing recall~\cite{jin2025longcontextrag}. The degradation reflects distractor competition, ordering, and limited effective attention rather than nominal context length alone. Context budgets should therefore be treated as experimental variables rather than fixed implementation details.
+
+Fusion-in-Decoder encodes passages separately and combines them in the decoder, reducing direct cross-passage interference in the encoder~\cite{izacard2021fid}. FiD-Light retains the fusion approach while reducing computational cost~\cite{hofstatter2023fidlight}. LongRAG and hierarchical methods increase the granularity of retrieval units or organize context through summaries and clusters~\cite{jiang2024longrag,sarthi2024raptor}. These approaches illustrate three construction strategies: independent passage encoding, explicit hierarchy, and long-sequence packing.
+
+A context-construction evaluation should fix evidence membership when testing ordering effects. Otherwise, changes in performance conflate which evidence is present with where it is placed. Useful diagnostics include position-wise accuracy, attention or attribution patterns, distance between dependent evidence units, source-marker preservation, and performance across a sweep of context budgets.
 
 \subsection{Cross-Evidence Reasoning}
 \label{subsec:cross_evidence_reasoning}
-% Cover Fusion-in-Decoder, graph neural reasoning, text--KG fusion,
-% table/text reasoning, program execution, and heterogeneous evidence composition.
+
+Cross-evidence reasoning derives conclusions that are not stated in a single evidence unit. Earlier multi-hop readers often represented documents as graphs. DFGN dynamically propagates information over entity graphs~\cite{qiu2019dfgn}; HGN constructs hierarchical graphs across questions, entities, sentences, and documents~\cite{fang2020hgn}. Such models make candidate relations explicit and can expose which nodes support the prediction.
+
+Knowledge-graph and language-model hybrids combine symbolic structure with textual representations. QA-GNN reasons over a joint graph of question concepts and knowledge-base nodes~\cite{yasunaga2021qagnn}; GreaseLM tightly couples graph neural reasoning with language modeling~\cite{zhang2022greaselm}; UniKGQA unifies retrieval and reasoning for multi-hop knowledge-graph QA~\cite{jiang2023unikgqa}; and KG-FiD injects knowledge-graph structure into a Fusion-in-Decoder reader~\cite{yu2022kgfid}. The primary benefit is an explicit relational scaffold, while the main risks are incomplete graphs, entity-linking errors, and shortcuts through dataset artifacts.
+
+Heterogeneous tasks require composition across tables, text, images, or other modalities. HybridQA combines table rows with linked passages~\cite{chen2020hybridqa}; MultiModalQA requires reasoning across text, tables, and images~\cite{talmor2021multimodalqa}. In such settings, integration must normalize values and entities across representations before comparison or aggregation. Retrieval metrics alone are insufficient because the correct evidence may be present in incompatible forms.
+
+LLM-based readers can perform cross-evidence synthesis without an explicit graph, but their reasoning is harder to inspect. Evaluation should therefore combine answer metrics with supporting-fact prediction, rationale or path validity, source attribution, and evidence interventions. Removing, replacing, or permuting a required evidence unit provides a stronger test of evidence use than asking the model to produce a plausible explanation after answering.
 
 \subsection{Long-Form Synthesis}
 \label{subsec:long_form_synthesis}
-% Cover outlines, report planning, claim--source alignment, citations,
-% coverage, contradiction handling, and research-report generation.
 
-\paragraph{Chapter boundary.}
-Query--document reranking belongs to initial retrieval when its purpose is to refine the candidate ranking. Selection, compression, ordering, or fusion of an already acquired evidence collection belongs to this chapter.
+Deep research and scientific assistants often produce reports rather than short answers. Long-form synthesis adds planning and discourse structure to evidence integration. The system must decide which claims to include, organize them into an outline, reconcile conflicting sources, preserve temporal scope, and attach citations that actually support the surrounding text.
+
+RARR retrieves evidence and revises model-generated text to improve attribution~\cite{gao2023rarr}. ALCE evaluates and improves citation-grounded generation, separating citation correctness and completeness from surface writing quality~\cite{gao2023alce}. WebGPT and PaperQA demonstrate report-oriented or research-oriented source use over web pages and scientific papers~\cite{nakano2021webgpt,lala2023paperqa}. GraphRAG's global query mode illustrates how hierarchical community summaries can support broad synthesis over large corpora~\cite{edge2024graphrag}.
+
+Long-form outputs require claim-level evaluation. A report may be fluent and broadly correct while containing unsupported local claims, misplaced citations, inconsistent dates, or duplicated evidence. Recommended dimensions include claim coverage, citation entailment, citation completeness, source quality, contradiction handling, organizational coherence, and cost. Human evaluation remains valuable, but evaluators should be shown the source material and asked claim-specific questions rather than only assigning an overall writing score.
+
+\begin{table*}[tbp]
+\centering
+\caption{Evidence-integration operations and the information that must be preserved.}
+\label{tab:evidence_integration_operations}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.7cm}p{3.0cm}Y Y@{}}
+\toprule
+Operation & Main decision & Information that must survive & Typical diagnostic \\
+\midrule
+Evidence selection & Which subset is jointly useful? & Complete support, complementarity, contradictions, source identity & Set recall, redundancy, fixed-pool downstream gain \\
+Compression & What can be removed or rewritten? & Bridge entities, relations, qualifiers, provenance & Compression ratio plus support and relation retention \\
+Context construction & How should evidence be ordered and grouped? & Membership, dependency proximity, source boundaries & Budget sweep, position-wise use, fixed-set ordering test \\
+Cross-evidence reasoning & How are facts composed into a conclusion? & Valid paths, normalized entities and values, causal support & Supporting facts, path validity, evidence interventions \\
+Long-form synthesis & How are claims organized and cited? & Claim--source alignment, temporal scope, conflicting evidence & Citation correctness/completeness, coverage, coherence, cost \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\paragraph{Summary.}
+Evidence integration is where retrieved material becomes usable knowledge. Its central tension is between context economy and chain preservation. Strong systems must reduce noise and cost without erasing the relations, provenance, and alternative evidence needed for reasoning, verification, and long-form synthesis.
