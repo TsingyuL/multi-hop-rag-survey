@@ -7,6 +7,12 @@ on:
     paths:
       - 'paper_rewrite/**'
       - '.github/workflows/rewrite-manuscript.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'paper_rewrite/**'
+      - '.github/workflows/rewrite-manuscript.yml'
   workflow_dispatch:
 
 jobs:
