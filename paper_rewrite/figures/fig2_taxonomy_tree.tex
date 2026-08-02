@@ -1,60 +1,172 @@
 \begin{tikzpicture}[
-  >=Latex,
-  root/.style={rounded corners=2pt, draw=black!70, fill=black!5, very thick,
-               text width=5.5cm, minimum height=11mm, align=center, font=\small},
-  category/.style={rounded corners=2pt, draw=#1!70!black, fill=#1!12, very thick,
-                   text width=3.55cm, minimum height=13mm, align=center, inner sep=4pt,
-                   font=\small},
-  leaves/.style={rounded corners=2pt, draw=#1!55!black, fill=#1!4, thick,
-                 text width=3.55cm, minimum height=31mm, align=left, inner sep=5pt,
-                 font=\scriptsize},
-  edge/.style={->, thick, draw=black!55}
+  x=1cm,y=1cm,
+  line cap=round,line join=round,
+  branch/.style={draw=black!65,line width=0.55pt},
+  titlebox/.style={rounded corners=2pt,draw=taxblue,line width=0.8pt,
+                  fill=blue!3,minimum width=15.7cm,minimum height=0.68cm,
+                  align=center,font=\bfseries\fontsize{8.2}{9.2}\selectfont},
+  category/.style={rounded corners=2pt,draw=taxblue,line width=0.8pt,
+                   text width=2.75cm,minimum height=1.05cm,align=center,
+                   inner sep=2.5pt,font=\fontsize{7.4}{8.2}\selectfont},
+  subcat/.style={rounded corners=2pt,draw=taxblue,line width=0.65pt,
+                 text width=3.35cm,minimum height=0.52cm,align=center,
+                 inner sep=1.8pt,font=\bfseries\fontsize{6.4}{7.1}\selectfont},
+  works/.style={rounded corners=2pt,draw=taxblue,line width=0.55pt,
+                text width=6.15cm,minimum height=0.52cm,align=left,
+                inner sep=2.0pt,font=\fontsize{5.8}{6.6}\selectfont}
 ]
-\definecolor{initialblue}{RGB}{74,112,148}
-\definecolor{followgreen}{RGB}{83,128,116}
-\definecolor{integrateorange}{RGB}{168,119,71}
-\definecolor{learnpurple}{RGB}{119,92,139}
+\definecolor{taxblue}{RGB}{25,79,120}
+\definecolor{initialfill}{RGB}{252,232,232}
+\definecolor{followfill}{RGB}{235,237,254}
+\definecolor{integrationfill}{RGB}{255,249,218}
+\definecolor{feedbackfill}{RGB}{228,250,230}
+\definecolor{sectred}{RGB}{205,33,33}
 
-\node[category=initialblue] (c1) {\textbf{1. Initial Retrieval}\\$q\rightarrow E_1$};
-\node[category=followgreen, right=4mm of c1] (c2) {\textbf{2. Follow-up Retrieval}\\$(q,E_{1:t})\rightarrow E_{t+1}$};
-\node[category=integrateorange, right=4mm of c2] (c3) {\textbf{3. Evidence Integration}\\$E_{1:T}\rightarrow C\rightarrow y$};
-\node[category=learnpurple, right=4mm of c3] (c4) {\textbf{4. Feedback Learning}\\$(\tau_i,f_i)\rightarrow \pi_{i+1}$};
+% Left vertical title and common trunk.
+\node[titlebox,rotate=90] (root) at (0.42,8.10) {Multi-Hop Retrieval and Reasoning};
+\draw[branch] (1.08,0.20) -- (1.08,16.00);
 
-\node[root, above=14mm of $(c2.north)!0.5!(c3.north)$] (root) {
-\textbf{Multi-Hop Retrieval and Reasoning}\\Dependent information acquisition across hops};
+% Main category nodes.
+\node[category,fill=initialfill] (c4) at (2.95,14.80)
+  {\textbf{Initial Retrieval}\\[-1pt]Section \textcolor{sectred}{4}};
+\node[category,fill=followfill] (c5) at (2.95,10.60)
+  {\textbf{Follow-up Retrieval}\\[-1pt]Section \textcolor{sectred}{5}};
+\node[category,fill=integrationfill] (c6) at (2.95,6.00)
+  {\textbf{Evidence Integration}\\[-1pt]Section \textcolor{sectred}{6}};
+\node[category,fill=feedbackfill] (c7) at (2.95,1.80)
+  {\textbf{Feedback Learning}\\[-1pt]Section \textcolor{sectred}{7}};
 
-\node[leaves=initialblue, below=4mm of c1] (l1) {
-$\bullet$ Sparse retrieval\\
-$\bullet$ Dense and hybrid retrieval\\
-$\bullet$ Graph retrieval\\
-$\bullet$ Reasoning-aware retrieval};
+\draw[branch] (1.08,14.80) -- (c4.west);
+\draw[branch] (1.08,10.60) -- (c5.west);
+\draw[branch] (1.08,6.00) -- (c6.west);
+\draw[branch] (1.08,1.80) -- (c7.west);
 
-\node[leaves=followgreen, below=4mm of c2] (l2) {
-$\bullet$ Query decomposition\\
-$\bullet$ Iterative retrieval\\
-$\bullet$ Graph and path search\\
-$\bullet$ Adaptive retrieval\\
-$\bullet$ Deep search\\
-$\bullet$ Feedback-assisted retrieval};
+% Section 4: Initial Retrieval.
+\node[subcat,fill=initialfill] (s41) at (6.85,16.00)
+  {Sparse Retrieval \textcolor{sectred}{(4.1)}};
+\node[subcat,fill=initialfill] (s42) at (6.85,15.20)
+  {Dense and Hybrid Retrieval \textcolor{sectred}{(4.2)}};
+\node[subcat,fill=initialfill] (s43) at (6.85,14.40)
+  {Graph Retrieval \textcolor{sectred}{(4.3)}};
+\node[subcat,fill=initialfill] (s44) at (6.85,13.60)
+  {Reasoning-Aware Retrieval \textcolor{sectred}{(4.4)}};
 
-\node[leaves=integrateorange, below=4mm of c3] (l3) {
-$\bullet$ Evidence selection\\
-$\bullet$ Preservation and compression\\
-$\bullet$ Context construction\\
-$\bullet$ Cross-evidence reasoning\\
-$\bullet$ Long-form synthesis};
+\node[works,fill=initialfill!45!white] (w41) at (12.35,16.00)
+  {BM25~\cite{robertson2009bm25}, COIL~\cite{gao2021coil}, SPLADE~\cite{formal2021splade}.};
+\node[works,fill=initialfill!45!white] (w42) at (12.35,15.20)
+  {DPR~\cite{karpukhin2020dpr}, ANCE~\cite{xiong2020ance}, Contriever~\cite{izacard2022contriever},\\ColBERT~\cite{khattab2020colbert}, ColBERTv2~\cite{santhanam2022colbertv2}.};
+\node[works,fill=initialfill!45!white] (w43) at (12.35,14.40)
+  {RAPTOR~\cite{sarthi2024raptor}, GraphRAG~\cite{edge2024graphrag}, HippoRAG~\cite{gutierrez2024hipporag}.};
+\node[works,fill=initialfill!45!white] (w44) at (12.35,13.60)
+  {HyDE~\cite{gao2023hyde}, REALM~\cite{guu2020realm}.};
 
-\node[leaves=learnpurple, below=4mm of c4] (l4) {
-$\bullet$ Feedback collection\\
-$\bullet$ Trajectory diagnosis\\
-$\bullet$ Experience memory\\
-$\bullet$ Skill extraction\\
-$\bullet$ Retrieval and policy\\
-\hspace{1.25em}improvement};
+\draw[branch] (c4.east) -- (4.80,14.80);
+\draw[branch] (4.80,13.60) -- (4.80,16.00);
+\foreach \n in {s41,s42,s43,s44}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\draw[branch] (s41.east)--(w41.west);
+\draw[branch] (s42.east)--(w42.west);
+\draw[branch] (s43.east)--(w43.west);
+\draw[branch] (s44.east)--(w44.west);
 
-\foreach \c in {c1,c2,c3,c4} {\draw[edge] (root.south) -- (\c.north);}
-\draw[edge] (c1) -- (l1);
-\draw[edge] (c2) -- (l2);
-\draw[edge] (c3) -- (l3);
-\draw[edge] (c4) -- (l4);
+% Section 5: Follow-up Retrieval.
+\node[subcat,fill=followfill] (s51) at (6.85,12.60)
+  {Query Decomposition \textcolor{sectred}{(5.1)}};
+\node[subcat,fill=followfill] (s52) at (6.85,11.80)
+  {Iterative Retrieval \textcolor{sectred}{(5.2)}};
+\node[subcat,fill=followfill] (s53) at (6.85,11.00)
+  {Graph and Path Search \textcolor{sectred}{(5.3)}};
+\node[subcat,fill=followfill] (s54) at (6.85,10.20)
+  {Adaptive Retrieval \textcolor{sectred}{(5.4)}};
+\node[subcat,fill=followfill] (s55) at (6.85,9.40)
+  {Deep Search \textcolor{sectred}{(5.5)}};
+\node[subcat,fill=followfill] (s56) at (6.85,8.60)
+  {Feedback-Assisted Retrieval \textcolor{sectred}{(5.6)}};
+
+\node[works,fill=followfill!45!white] (w51) at (12.35,12.60)
+  {DecompRC~\cite{min2019decomprc}, BREAK~\cite{wolfson2020break}, Self-Ask~\cite{press2022selfask}.};
+\node[works,fill=followfill!45!white] (w52) at (12.35,11.80)
+  {MDR~\cite{xiong2021mdr}, Baleen~\cite{khattab2021baleen}, IRCoT~\cite{trivedi2023ircot},\\ITER-RETGEN~\cite{shao2023iterretgen}.};
+\node[works,fill=followfill!45!white] (w53) at (12.35,11.00)
+  {PullNet~\cite{sun2019pullnet}, HopRetriever~\cite{li2020hopretriever}, ToG~\cite{sun2024tog}.};
+\node[works,fill=followfill!45!white] (w54) at (12.35,10.20)
+  {FLARE~\cite{jiang2023flare}, Self-RAG~\cite{asai2024selfrag}, Adaptive-RAG~\cite{jeong2024adaptiverag},\\DRAGIN~\cite{su2024dragin}.};
+\node[works,fill=followfill!45!white] (w55) at (12.35,9.40)
+  {WebGPT~\cite{nakano2021webgpt}, ReAct~\cite{yao2023react}, PaperQA~\cite{lala2023paperqa},\\DeepResearcher~\cite{zheng2025deepresearcher}.};
+\node[works,fill=followfill!45!white] (w56) at (12.35,8.60)
+  {Search-R1~\cite{jin2025searchr1}, RAG-Gym~\cite{xiong2025raggym}.};
+
+\draw[branch] (c5.east) -- (4.80,10.60);
+\draw[branch] (4.80,8.60) -- (4.80,12.60);
+\foreach \n in {s51,s52,s53,s54,s55,s56}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\draw[branch] (s51.east)--(w51.west);
+\draw[branch] (s52.east)--(w52.west);
+\draw[branch] (s53.east)--(w53.west);
+\draw[branch] (s54.east)--(w54.west);
+\draw[branch] (s55.east)--(w55.west);
+\draw[branch] (s56.east)--(w56.west);
+
+% Section 6: Evidence Integration.
+\node[subcat,fill=integrationfill] (s61) at (6.85,7.60)
+  {Evidence Selection \textcolor{sectred}{(6.1)}};
+\node[subcat,fill=integrationfill] (s62) at (6.85,6.80)
+  {Preservation and Compression \textcolor{sectred}{(6.2)}};
+\node[subcat,fill=integrationfill] (s63) at (6.85,6.00)
+  {Context Construction \textcolor{sectred}{(6.3)}};
+\node[subcat,fill=integrationfill] (s64) at (6.85,5.20)
+  {Cross-Evidence Reasoning \textcolor{sectred}{(6.4)}};
+\node[subcat,fill=integrationfill] (s65) at (6.85,4.40)
+  {Long-Form Synthesis \textcolor{sectred}{(6.5)}};
+
+\node[works,fill=integrationfill!45!white] (w61) at (12.35,7.60)
+  {SetR~\cite{lee2025setr}, R-CPS~\cite{xin2025readercps}, RankRAG~\cite{yu2024rankrag}.};
+\node[works,fill=integrationfill!45!white] (w62) at (12.35,6.80)
+  {RECOMP~\cite{xu2023recomp}, LLMLingua~\cite{jiang2023llmlingua},\\LongLLMLingua~\cite{jiang2023longllmlingua}, xRAG~\cite{cheng2024xrag}.};
+\node[works,fill=integrationfill!45!white] (w63) at (12.35,6.00)
+  {FiD~\cite{izacard2021fid}, Lost in the Middle~\cite{liu2024lostmiddle}, LongRAG~\cite{jiang2024longrag}.};
+\node[works,fill=integrationfill!45!white] (w64) at (12.35,5.20)
+  {DFGN~\cite{qiu2019dfgn}, HGN~\cite{fang2020hgn}, QA-GNN~\cite{yasunaga2021qagnn},\\GreaseLM~\cite{zhang2022greaselm}.};
+\node[works,fill=integrationfill!45!white] (w65) at (12.35,4.40)
+  {RARR~\cite{gao2023rarr}, ALCE~\cite{gao2023alce}.};
+
+\draw[branch] (c6.east) -- (4.80,6.00);
+\draw[branch] (4.80,4.40) -- (4.80,7.60);
+\foreach \n in {s61,s62,s63,s64,s65}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\draw[branch] (s61.east)--(w61.west);
+\draw[branch] (s62.east)--(w62.west);
+\draw[branch] (s63.east)--(w63.west);
+\draw[branch] (s64.east)--(w64.west);
+\draw[branch] (s65.east)--(w65.west);
+
+% Section 7: Feedback Learning.
+\node[subcat,fill=feedbackfill] (s71) at (6.85,3.40)
+  {Feedback Collection \textcolor{sectred}{(7.1)}};
+\node[subcat,fill=feedbackfill] (s72) at (6.85,2.60)
+  {Trajectory Diagnosis \textcolor{sectred}{(7.2)}};
+\node[subcat,fill=feedbackfill] (s73) at (6.85,1.80)
+  {Experience Memory \textcolor{sectred}{(7.3)}};
+\node[subcat,fill=feedbackfill] (s74) at (6.85,1.00)
+  {Skill Extraction \textcolor{sectred}{(7.4)}};
+\node[subcat,fill=feedbackfill] (s75) at (6.85,0.20)
+  {Retrieval and Policy Improvement \textcolor{sectred}{(7.5)}};
+
+\node[works,fill=feedbackfill!45!white] (w71) at (12.35,3.40)
+  {CRITIC~\cite{gou2024critic}, Self-Refine~\cite{madaan2023selfrefine}.};
+\node[works,fill=feedbackfill!45!white] (w72) at (12.35,2.60)
+  {Reflexion~\cite{shinn2023reflexion}, ExpeL~\cite{zhao2024expel}.};
+\node[works,fill=feedbackfill!45!white] (w73) at (12.35,1.80)
+  {Generative Agents~\cite{park2023generativeagents}, LongMem~\cite{wang2023longmem},\\MemGPT~\cite{packer2023memgpt}.};
+\node[works,fill=feedbackfill!45!white] (w74) at (12.35,1.00)
+  {Voyager~\cite{wang2023voyager}, Memento-Skills~\cite{zhou2026mementoskills}.};
+\node[works,fill=feedbackfill!45!white] (w75) at (12.35,0.20)
+  {SkillRL~\cite{xia2026skillrl}, Agentic-R~\cite{liu2026agenticr}.};
+
+\draw[branch] (c7.east) -- (4.80,1.80);
+\draw[branch] (4.80,0.20) -- (4.80,3.40);
+\foreach \n in {s71,s72,s73,s74,s75}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\draw[branch] (s71.east)--(w71.west);
+\draw[branch] (s72.east)--(w72.west);
+\draw[branch] (s73.east)--(w73.west);
+\draw[branch] (s74.east)--(w74.west);
+\draw[branch] (s75.east)--(w75.west);
+
 \end{tikzpicture}
