@@ -10,6 +10,7 @@
 \usepackage{graphicx,xcolor,xspace}
 \usepackage{enumitem}
 \usepackage{url}
+\graphicspath{{figures/}}
 
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\RAG}{\textsc{RAG}\xspace}
@@ -18,6 +19,14 @@
 \newcommand{\MH}{\textsc{MH}\xspace}
 \newcommand{\CorpusSize}{232}
 \newcommand{\AuditSize}{70}
+\newcommand{\paperfigure}[4]{%
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=#1\linewidth]{#2}
+  \caption{#3}
+  \Description{#3}
+  \label{#4}
+\end{figure}}
 
 \begin{document}
 
@@ -30,9 +39,13 @@
 }
 
 \begin{abstract}
-Multi-hop retrieval and reasoning systems solve information needs whose required evidence is distributed across sources and becomes identifiable only after intermediate results are resolved. The field now spans open-domain question answering, graph retrieval, retrieval-augmented generation, browser agents, deep research, long-form synthesis, and agents that improve through reflection, experience, or reusable skills. Existing surveys usually organize these areas by architecture, task, or data source. Such views are useful locally but make it difficult to compare static multi-hop pipelines with adaptive search agents, or to determine whether a method improves evidence discovery, subsequent search, evidence use, or future behavior.
+Multi-hop retrieval and reasoning aims to solve problems in which a system must acquire information through multiple dependent steps and combine the acquired information to produce an answer or report. Unlike conventional retrieval-augmented generation, which commonly retrieves evidence directly from the original query, a multi-hop system must determine subsequent information needs from previously acquired evidence. This capability has become increasingly important with the development of iterative retrieval, agentic search, and deep research systems.
 
-We present a functional survey organized around four stages: \emph{initial retrieval}, \emph{follow-up retrieval}, \emph{evidence organization and reasoning}, and \emph{feedback learning}. The taxonomy treats deep search and deep research as compositions of these functions rather than separate top-level categories, and distinguishes feedback used within the current task from feedback that changes behavior across tasks. We formalize multi-hop systems as sequential evidence acquisition and transformation processes, provide crosswalks to retrieval, graph, agentic, memory, and skill-based architectures, and separate component claims from end-to-end answer accuracy. The working artifact contains a \CorpusSize-record literature corpus and a stratified \AuditSize-paper full-text audit selection, with source-verification status recorded separately. We conclude with an evaluation framework for retrieval depth, evidence coverage, context use, trajectory cost, grounding, and cross-task improvement.
+This survey reviews multi-hop retrieval and reasoning from the perspective of the information-acquisition process. We organize existing methods into four functional categories: (1) \emph{initial retrieval}, which obtains entry evidence from the original query; (2) \emph{follow-up retrieval}, which searches for additional evidence conditioned on intermediate results; (3) \emph{evidence integration}, which selects, preserves, organizes, and combines information across hops; and (4) \emph{feedback learning}, which uses evaluation signals, trajectories, experience, or reusable skills to improve future retrieval and reasoning. Deep search and deep research are treated as systems that compose these functions rather than as separate top-level categories.
+
+We cover representative work from multi-hop question answering, retrieval-augmented generation, graph retrieval, adaptive and agentic search, long-context evidence processing, long-form synthesis, and retrieval-grounded experience and skill learning. We further organize evaluation around retrieval quality, hop-level progress, search trajectories, evidence utilization, grounding, efficiency, and cross-task improvement. The companion artifact currently contains a \CorpusSize-record literature corpus and a stratified \AuditSize-paper full-text audit selection, while retaining explicit source-verification status for each record.
+
+Finally, we identify open challenges in reasoning-oriented retrieval, reliable long-horizon search, evidence preservation under limited context, experience reuse, and evaluation of autonomous research systems. The resulting view characterizes multi-hop reasoning not merely as longer generation, but as adaptive information seeking: finding what is known, identifying what is missing, deciding what to search next, integrating what has been found, and learning from prior attempts.
 \end{abstract}
 
 \begin{CCSXML}
@@ -59,20 +72,26 @@ We present a functional survey organized around four stages: \emph{initial retri
 \ccsdesc[500]{Information systems~Retrieval models and ranking}
 \ccsdesc[500]{Computing methodologies~Natural language processing}
 
-\keywords{multi-hop retrieval, multi-hop reasoning, retrieval-augmented generation, agentic search, deep research, evidence organization, experience learning, skill learning}
+\keywords{multi-hop retrieval, multi-hop reasoning, retrieval-augmented generation, agentic search, deep research, evidence integration, experience learning, skill learning}
 
 \maketitle
 
 \input{sections/01_introduction}
-\input{sections/02_methodology}
+\input{sections/02_background_and_evolution}
 \input{sections/03_overview}
 \input{sections/04_initial_retrieval}
 \input{sections/05_follow_up_retrieval}
-\input{sections/06_evidence_organization_reasoning}
+\input{sections/06_evidence_integration}
 \input{sections/07_feedback_learning}
 \input{sections/08_evaluation}
 \input{sections/09_future_directions}
 \input{sections/10_conclusion}
+
+\appendix
+\input{appendix/a_literature_review_protocol}
+\input{appendix/b_dataset_details}
+\input{appendix/c_full_taxonomy}
+\input{appendix/d_diagnostic_audit}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
