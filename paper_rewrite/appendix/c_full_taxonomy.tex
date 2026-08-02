@@ -35,7 +35,7 @@ Iterative Retrieval & Conditions later retrieval on earlier passages, entities, 
 Graph and Path Search & Expands or searches a path, subgraph, or beam from the current intermediate state. & Beam search, KG traversal, graph expansion, path scoring. \\
 Adaptive Retrieval & Decides whether, when, how deeply, or with which tool to retrieve during the current task. & Uncertainty trigger, retrieve/read/stop, correction, complexity routing. \\
 Deep Search & Targets long-horizon browser or open-web acquisition with variable sources and stopping. & Web navigation, research planning, source discovery, open-world search. \\
-Feedback-Assisted Retrieval & Uses process, verifier, or reward signals to alter later current-task actions or train search from trajectories. & Process reward, verifier-guided search, reinforcement learning, recovery. \\
+\shortstack[l]{Feedback-Assisted\\Retrieval} & Uses process, verifier, or reward signals to alter later current-task actions or train search from trajectories. & Process reward, verifier-guided search, reinforcement learning, recovery. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -51,7 +51,7 @@ Feedback-Assisted Retrieval & Uses process, verifier, or reward signals to alter
 Subcategory & Primary assignment criterion & Typical secondary tags \\
 \midrule
 Evidence Selection & Chooses a jointly sufficient subset from an already acquired evidence collection. & Set selection, complementarity, filtering, reader-aware selection. \\
-Preservation and Compression & Reduces context while attempting to retain reasoning-critical content or provenance. & Extractive compression, abstractive compression, notes, latent compression. \\
+\shortstack[l]{Preservation and\\Compression} & Reduces context while attempting to retain reasoning-critical content or provenance. & Extractive compression, abstractive compression, notes, latent compression. \\
 Context Construction & Orders, packs, structures, or hierarchically presents acquired evidence to the reader or generator. & Ordering, position effects, context packing, memory-backed context. \\
 Cross-Evidence Reasoning & Explicitly composes information across passages, graphs, tables, images, or tools. & Fusion-in-Decoder, GNN reasoning, text--KG fusion, heterogeneous QA. \\
 Long-Form Synthesis & Produces a multi-claim answer or report requiring source coverage, citation, and contradiction handling. & Outline planning, claim--source alignment, citation, report generation. \\
