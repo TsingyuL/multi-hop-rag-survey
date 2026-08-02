@@ -1,27 +1,67 @@
 \section{Initial Retrieval}
 \label{sec:initial_retrieval}
 
-Initial retrieval establishes the entry evidence available before any task-specific intermediate result has been resolved. Its input is the original query or task description, and its output is a candidate set, ranked list, graph neighborhood, or structured entry point for later search and reasoning. In multi-hop settings, a strong initial retriever must balance local relevance with the probability of exposing bridge information that enables later hops.
+Initial retrieval establishes the entry evidence available before any task-specific intermediate result has been resolved. Its input is the original task $q$; its output may be a ranked passage list, a graph neighborhood, a document cluster, or another structured entry point. In a single-hop task, the best entry evidence is often also answer bearing. In a multi-hop task, however, the first useful item may only expose an entity, relation, or constraint that enables later retrieval. Initial retrieval must therefore balance immediate topical relevance with \emph{bridge potential}: the likelihood that an item makes a later information need identifiable.
+
+This chapter reviews first-stage mechanisms only. A method remains in this category when it operates on the original task or on a reformulation that does not depend on newly retrieved evidence. Once an observation from the current trajectory changes the next information need, the corresponding method belongs to follow-up retrieval in Section~\ref{sec:follow_up_retrieval}.
 
 \subsection{Sparse Retrieval}
 \label{subsec:sparse_retrieval}
-% Cover BM25, learned sparse retrieval, query expansion, lexical robustness,
-% and the role of sparse signals in hybrid multi-hop systems.
+
+Sparse retrieval remains a strong entry mechanism because multi-hop questions frequently contain rare entities, titles, dates, and relation phrases that lexical matching preserves. BM25 provides the canonical probabilistic lexical baseline~\cite{robertson2009bm25}. Its strengths are transparency, index efficiency, and robustness to names that may be poorly represented by a dense encoder. Its weakness is vocabulary mismatch: the bridge document may use an alias, paraphrase, or relation description absent from the original question.
+
+Learned sparse models address part of this mismatch by predicting term weights and lexical expansions while retaining an inverted index. SPLADE, for example, learns sparse expansion vectors that can retrieve documents containing semantically related terms not present in the query~\cite{formal2021splade}. In multi-hop systems, learned sparse retrieval is useful both as a standalone first stage and as a high-recall branch of hybrid retrieval. A recurring design is to combine lexical recall for entities with semantic recall for paraphrased relations, then fuse the candidate lists before reranking.
+
+The relevant diagnostic is not only whether a gold document appears in the top $K$, but whether the initial pool contains at least one viable continuation. For a two-hop question, retrieving the answer-bearing second document without the bridge may still be insufficient if the reader cannot identify why it is relevant; conversely, retrieving only the bridge can be valuable when the system is allowed to issue a second query. Initial-retrieval evaluation should therefore distinguish answer-bearing evidence, bridge evidence, and complete-chain coverage.
 
 \subsection{Dense and Hybrid Retrieval}
 \label{subsec:dense_hybrid_retrieval}
-% Cover DPR, ANCE, Contriever, ColBERT, E5/BGE-style embeddings,
-% hybrid retrieval, reranking, and reader-aware retrieval refinement.
+
+Dense retrieval represents queries and passages in a shared vector space. DPR established the dual-encoder paradigm for open-domain QA~\cite{karpukhin2020dpr}; ANCE improved negative sampling by mining hard examples from an asynchronously refreshed index~\cite{xiong2020ance}; and Contriever showed that useful retrievers can be learned without task-specific relevance labels~\cite{izacard2022contriever}. These models increase semantic recall when the surface form of the task differs from the evidence, but they may overemphasize globally similar passages and miss low-similarity bridge facts.
+
+Late-interaction models such as ColBERT retain token-level matching while supporting efficient retrieval~\cite{khattab2020colbert,santhanam2022colbertv2}. General embedding models such as E5 and BGE broaden transfer across domains and query styles~\cite{wang2022e5,xiao2024bge}. Their relevance to multi-hop retrieval lies less in a specific architecture than in the representation objective: a retriever trained on short query--passage pairs may not assign high scores to evidence whose utility is conditional on an unresolved intermediate entity.
+
+Hybrid retrieval combines sparse and dense signals to reduce the failure modes of either branch. Candidate lists may be merged through reciprocal-rank fusion, score calibration, or learned fusion. A second-stage reranker can then evaluate richer query--document interactions. MonoT5 reframes ranking as sequence-to-sequence prediction~\cite{nogueira2020monot5}, while RankGPT demonstrates listwise reranking with a large language model~\cite{sun2023rankgpt}. We classify such methods under initial retrieval when their input is a fixed candidate pool produced from the original task. If the reranker scores \emph{sets} for complementary coverage rather than individual documents, it crosses into evidence integration.
+
+A central methodological issue is candidate-pool control. Improvements in answer accuracy may result from a better first-stage pool, a stronger reranker, a larger context, or a more capable reader. Initial-retrieval claims are most interpretable when the candidate pool, context budget, and downstream reader are held fixed and recall is reported separately for bridge, answer, and complete support sets.
 
 \subsection{Graph Retrieval}
 \label{subsec:graph_retrieval}
-% Cover graph construction, subgraph retrieval, hierarchical retrieval,
-% GraphRAG/RAPTOR/HippoRAG-style entry points, and structured evidence access.
+
+Graph retrieval exposes structured neighborhoods rather than independent passages. The graph may be explicit, as in a knowledge graph, or induced from documents through entities, hyperlinks, citations, semantic similarity, or hierarchical summaries. Query-conditioned subgraph construction can provide an entry point that already contains multiple candidate relations. GRAFT-Net jointly reasons over text and knowledge-base neighborhoods, illustrating how structured retrieval can connect heterogeneous evidence~\cite{sun2018graftnet}.
+
+Recent RAG systems increasingly construct retrieval structures before inference. RAPTOR recursively clusters and summarizes documents into a tree, enabling retrieval at multiple abstraction levels~\cite{sarthi2024raptor}. GraphRAG builds entity and community representations for local and global queries~\cite{edge2024graphrag}. HippoRAG uses a graph-based long-term memory motivated by associative retrieval~\cite{gutierrez2024hipporag}. These systems can improve entry retrieval for broad or relational questions because the index itself represents connections that a flat passage store omits.
+
+The category boundary depends on execution. Retrieving a query-conditioned neighborhood from a preconstructed graph is initial retrieval. Expanding the graph iteratively after observing an intermediate node is follow-up retrieval. The same underlying graph can therefore support both categories, but the relevant function differs: the former selects an entry region, while the latter chooses the next traversal from the current state.
+
+Graph retrieval introduces additional failure modes. Entity linking errors can remove the correct neighborhood before reasoning starts; overconnected hubs can flood the candidate set; summary nodes can obscure provenance; and graph construction may encode stale or spurious relations. Evaluation should report graph coverage, linking accuracy, and source traceability in addition to downstream answer metrics.
 
 \subsection{Reasoning-Aware Retrieval}
 \label{subsec:reasoning_aware_retrieval}
-% Cover retrievers trained or prompted with reasoning signals, synthetic
-% explanations, hypothetical documents, process rewards, or downstream reader utility.
 
-\paragraph{Chapter boundary.}
-Methods remain in this chapter when they operate primarily on the original task or a fixed reformulation of it. Once retrieved evidence is used to formulate the next information need, the method is discussed in Section~\ref{sec:follow_up_retrieval}.
+Reasoning-aware retrieval uses task structure, generated explanations, reader utility, or synthetic supervision to improve the initial pool. One family expands the original task into a richer retrieval representation. HyDE generates a hypothetical answer document and retrieves real documents near its embedding~\cite{gao2023hyde}. Similar approaches generate rationales, decomposition candidates, or synthetic queries before any external evidence has been observed. They remain initial retrieval because the reformulation depends on the task and model prior rather than on newly acquired sources.
+
+A second family optimizes retrieval for downstream use. Retrieval-augmented language models such as REALM and RAG train retrieval jointly or semi-jointly with language modeling or generation objectives~\cite{guu2020realm,lewis2020rag}. Reader-aware reranking estimates whether a passage improves answer probability rather than whether it is merely semantically similar. This shift is important in multi-hop settings because bridge evidence may have low direct answer relevance but high conditional utility.
+
+A third family uses large language models as ranking or expansion components. Such systems can infer latent constraints and compare candidates at a richer semantic level, but they also introduce cost, order sensitivity, and prompt dependence. Their evaluations should separate retrieval gains from the extra reasoning performed by the ranking model itself. Otherwise, a method can appear to improve retrieval while actually moving part of the answer reasoning into the reranker.
+
+\begin{table*}[tbp]
+\centering
+\caption{Representative initial-retrieval mechanisms and their multi-hop implications.}
+\label{tab:initial_retrieval_mechanisms}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.8cm}p{3.0cm}Y Y@{}}
+\toprule
+Family & Typical output & Multi-hop advantage & Main risk or required control \\
+\midrule
+Sparse / learned sparse & Ranked lexical candidates & Preserves rare entities and explicit relation terms; efficient high-recall branch & Vocabulary mismatch; report bridge and complete-chain recall \\
+Dense / late interaction & Semantic passage candidates & Retrieves paraphrased or implicit evidence & Similarity may not equal conditional bridge utility; control negatives and candidate pool \\
+Hybrid and reranking & Fused and reordered candidate list & Combines lexical precision with semantic recall & Gains may come from larger pools or stronger rerankers; fix reader and budget \\
+Graph / hierarchical retrieval & Subgraph, community, or summary-tree nodes & Exposes relations and multi-resolution entry points & Graph construction, linking, hub noise, and provenance loss \\
+Reasoning-aware retrieval & Expanded query or utility-ranked pool & Encodes latent constraints and downstream usefulness & May shift reasoning into retrieval; evaluate cost and component isolation \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\paragraph{Summary.}
+Initial retrieval determines what the system can know before any intermediate result is available. For multi-hop tasks, the target is not simply the most answer-like document. A useful entry pool must preserve viable continuations under a finite budget. The next chapter examines how systems exploit those continuations once earlier evidence has changed the search state.
