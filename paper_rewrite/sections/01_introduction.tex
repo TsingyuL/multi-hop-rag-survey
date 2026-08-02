@@ -37,7 +37,24 @@ followed by evidence integration and answer or report generation. The central ch
 
 The field has evolved through several overlapping stages. Early multi-hop question answering benchmarks made cross-document dependencies explicit and often provided supporting-fact annotations~\cite{welbl2018qangaroo,yang2018hotpotqa,trivedi2022musique}. Multi-hop retrieval methods then learned to retrieve later passages from intermediate entities, paths, or previously retrieved passages~\cite{min2019golden,xiong2021mdr,khattab2021baleen}. Retrieval--reasoning systems subsequently interleaved search with generated reasoning or uncertainty signals~\cite{trivedi2023ircot,jiang2023flare,asai2024selfrag,jeong2024adaptiverag}. More recent agentic search and deep research systems extend the process to tool use, open-web navigation, longer horizons, source synthesis, and report generation~\cite{nakano2021webgpt,yao2023react,lala2023paperqa,jin2025searchr1}. These developments enlarge the operational setting, but they preserve the same core dependency: information found at one step determines what can be searched or inferred at the next.
 
-Existing surveys provide valuable views of multi-hop question answering, retrieval-augmented generation, reasoning, and agentic systems~\cite{mavi2022mhqasurvey,gao2023ragsurvey,fan2024ragllmsurvey,singh2025agenticragsurvey}. Their organizing axes usually emphasize model architecture, retrieval mechanism, reasoning form, data source, or agent framework. These views do not always make it easy to compare systems that use different architectures to solve the same information-acquisition function. They also tend to treat evaluation primarily at the answer level, even when a method's main claim concerns query generation, hop completion, stopping, source use, trajectory efficiency, or improvement across tasks.
+Existing surveys provide valuable views of multi-hop question answering, retrieval-augmented generation, reasoning, and agentic systems~\cite{mavi2022mhqasurvey,gao2023ragsurvey,fan2024ragllmsurvey,singh2025agenticragsurvey}. Their organizing axes usually emphasize model architecture, retrieval mechanism, reasoning form, data source, or agent framework. These views do not always make it easy to compare systems that use different architectures to solve the same information-acquisition function. They also tend to treat evaluation primarily at the answer or system level, even when a method's main claim concerns query generation, hop completion, stopping, source use, trajectory efficiency, or improvement across tasks. Table~\ref{tab:survey_positioning} summarizes the distinction at the level of survey families; it is intended to clarify emphasis rather than to claim that prior surveys entirely omit adjacent topics.
+
+\begin{table*}[tbp]
+\centering
+\caption{Positioning relative to major survey families. ``Central'' indicates that the dimension is a principal organizing concern rather than an occasional topic.}
+\label{tab:survey_positioning}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{2.0cm}p{2.35cm}Yp{2.05cm}p{1.85cm}p{2.75cm}@{}}
+\toprule
+Survey family & Primary unit & Typical organizing emphasis & Later-query dependence & Persistent learning & Evaluation emphasis \\
+\midrule
+Multi-hop QA surveys~\cite{mavi2022mhqasurvey} & QA task and model & Datasets, reasoning types, architectures, and supporting evidence & Central within QA & Usually outside scope & Answer and supporting-fact metrics \\
+RAG surveys~\cite{gao2023ragsurvey,fan2024ragllmsurvey} & Retrieval--generation pipeline & Indexing, retrieval, augmentation, generation, and applications & One component among many & Usually outside scope & Retrieval and generation quality \\
+Agentic RAG surveys~\cite{singh2025agenticragsurvey} & Agent workflow & Planning, tools, memory, orchestration, and application patterns & Central & Covered as an agent capability & End-to-end task and agent behavior \\
+\textbf{This survey} & Dependent information acquisition & Initial retrieval, follow-up retrieval, evidence integration, and feedback learning & \textbf{Defining property} & \textbf{Dedicated category} & \textbf{Claim-aligned component, trajectory, grounding, cost, and transfer measures} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
 
 This survey adopts a functional perspective centered on the question:
 \begin{quote}
