@@ -31,4 +31,29 @@ Deep search and deep research are not treated as an additional top-level categor
 
 Most classical multi-hop methods reset their state for every question. Recent agent research instead stores reflections, trajectories, experiences, memories, or reusable skills. Reflection methods convert evaluation into textual guidance~\cite{shinn2023reflexion,madaan2023selfrefine,gou2024critic}; experience and skill systems attempt to extract reusable procedures from prior tasks~\cite{wang2023voyager}. This introduces a second timescale. Within-task feedback decides the next retrieval or reasoning action for the current problem. Cross-task feedback changes how future problems are approached. The distinction motivates the Feedback Learning category developed in Section~\ref{sec:feedback_learning}.
 
+\subsection{Literature Corpus and Audit Allocation}
+
+The working corpus contains \CorpusSize{} records and is coded using one primary functional category per record. Table~\ref{tab:corpus_distribution} reports the current distribution and the stratified allocation of the \AuditSize-paper full-text diagnostic audit. The corpus count reflects literature coverage, whereas the audit count reflects deeper source inspection; the two quantities should not be interpreted as the same review depth.
+
+\begin{table}[tbp]
+\centering
+\caption{Working corpus and diagnostic-audit allocation by primary category.}
+\label{tab:corpus_distribution}
+\small
+\begin{tabular}{lrr}
+\toprule
+Primary category & Corpus & Audit selection \\
+\midrule
+Initial Retrieval & 40 & 15 \\
+Follow-up Retrieval & 76 & 25 \\
+Evidence Integration & 83 & 20 \\
+Feedback Learning & 33 & 10 \\
+\midrule
+Total & 232 & 70 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The distribution is not intended as a prevalence estimate. The evidence-integration category is broad because it includes selection, compression, context construction, cross-evidence reasoning, and long-form synthesis. Feedback learning is smaller because the inclusion rule requires persistent improvement of retrieval-grounded behavior rather than generic memory or agent learning. Appendix~\ref{app:review_protocol} documents the screening and verification protocol, and Appendix~\ref{app:diagnostic_audit} defines the audit codebook.
+
 Taken together, the four historical stages show a gradual expansion from fixed-chain reasoning to adaptive information seeking. The functional taxonomy in this survey is designed to span this evolution without assuming that all systems share the same architecture, model family, or interaction environment.
