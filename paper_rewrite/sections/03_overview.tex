@@ -55,11 +55,6 @@ A question asking which of two organizations reached a milestone first requires 
 \paragraph{Open-web research.}
 A request to explain why a recent technical product underperformed may require discovering the product version, locating release notes, finding benchmark results, checking issue reports, and reconciling sources with different dates or incentives. The trajectory is longer, evidence quality is heterogeneous, and the output may be a cited report rather than a short answer. Nevertheless, the same functional stages apply.
 
-% Figure 1 will visualize the functional process:
-% original task -> initial retrieval -> follow-up retrieval loop ->
-% evidence integration -> answer/report, with a cross-task feedback loop.
-% \paperfigure{1.0}{fig1_process.pdf}{...}{fig:process}
-
 \subsection{Task Formulation}
 \label{subsec:task_formulation}
 
@@ -96,7 +91,15 @@ A system is multi-hop under this formulation when there exists a step $t>1$ for 
 \subsection{Taxonomy}
 \label{subsec:taxonomy}
 
-The taxonomy follows the information flow rather than a specific architecture. Table~\ref{tab:taxonomy_overview} summarizes the four categories.
+The taxonomy follows information flow rather than a specific architecture. Figure~\ref{fig:taxonomy_tree} shows the complete hierarchy used in Sections~\ref{sec:initial_retrieval}--\ref{sec:feedback_learning}; Table~\ref{tab:taxonomy_overview} summarizes the transformation associated with each category.
+
+\begin{figure*}[tbp]
+\centering
+\resizebox{0.99\textwidth}{!}{\input{figures/fig2_taxonomy_tree}}
+\caption{Functional taxonomy of multi-hop retrieval and reasoning. The first three categories describe how a system solves the current task: obtaining entry evidence, acquiring later evidence, and integrating the collected information. Feedback learning operates across tasks by retaining evaluations, trajectories, experiences, skills, or policy updates.}
+\Description{A taxonomy tree with four branches: Initial Retrieval, Follow-up Retrieval, Evidence Integration, and Feedback Learning. Each branch lists the corresponding subsections used in the survey.}
+\label{fig:taxonomy_tree}
+\end{figure*}
 
 \begin{table*}[tbp]
 \centering
@@ -114,10 +117,6 @@ Feedback Learning & $(\tau_i,f_i,M_i) \rightarrow M_{i+1},\pi_{i+1}$ & How does 
 \bottomrule
 \end{tabularx}
 \end{table*}
-
-% Figure 2 will present the full taxonomy tree with the subsection structure
-% used in Sections 4--7.
-% \paperfigure{1.0}{fig2_taxonomy.pdf}{...}{fig:taxonomy}
 
 The taxonomy assigns each paper a primary category according to the function most directly targeted by its main contribution, while secondary tags record cross-category effects. For example, Self-RAG performs adaptive retrieval and critique within a task and is therefore primarily discussed under follow-up retrieval, even though its critique mechanism also affects generation. A skill library extracted from completed search trajectories is primarily feedback learning because its defining contribution is reuse across future tasks. This primary-label rule prevents the corpus from double-counting methods while preserving architectural crosswalks.
 
