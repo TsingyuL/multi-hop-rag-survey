@@ -62,7 +62,9 @@
 
 \draw[branch] (c4.east) -- (4.80,14.80);
 \draw[branch] (4.80,13.60) -- (4.80,16.00);
-\foreach \n in {s41,s42,s43,s44}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\foreach \subnode/\yy in {s41/16.00,s42/15.20,s43/14.40,s44/13.60}{
+  \draw[branch] (4.80,\yy) -- (\subnode.west);
+}
 \draw[branch] (s41.east)--(w41.west);
 \draw[branch] (s42.east)--(w42.west);
 \draw[branch] (s43.east)--(w43.west);
@@ -97,7 +99,9 @@
 
 \draw[branch] (c5.east) -- (4.80,10.60);
 \draw[branch] (4.80,8.60) -- (4.80,12.60);
-\foreach \n in {s51,s52,s53,s54,s55,s56}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\foreach \subnode/\yy in {s51/12.60,s52/11.80,s53/11.00,s54/10.20,s55/9.40,s56/8.60}{
+  \draw[branch] (4.80,\yy) -- (\subnode.west);
+}
 \draw[branch] (s51.east)--(w51.west);
 \draw[branch] (s52.east)--(w52.west);
 \draw[branch] (s53.east)--(w53.west);
@@ -130,7 +134,9 @@
 
 \draw[branch] (c6.east) -- (4.80,6.00);
 \draw[branch] (4.80,4.40) -- (4.80,7.60);
-\foreach \n in {s61,s62,s63,s64,s65}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\foreach \subnode/\yy in {s61/7.60,s62/6.80,s63/6.00,s64/5.20,s65/4.40}{
+  \draw[branch] (4.80,\yy) -- (\subnode.west);
+}
 \draw[branch] (s61.east)--(w61.west);
 \draw[branch] (s62.east)--(w62.west);
 \draw[branch] (s63.east)--(w63.west);
@@ -162,7 +168,9 @@
 
 \draw[branch] (c7.east) -- (4.80,1.80);
 \draw[branch] (4.80,0.20) -- (4.80,3.40);
-\foreach \n in {s71,s72,s73,s74,s75}{\draw[branch] (4.80,\n.center|-4.80,0) -- (\n.west);}
+\foreach \subnode/\yy in {s71/3.40,s72/2.60,s73/1.80,s74/1.00,s75/0.20}{
+  \draw[branch] (4.80,\yy) -- (\subnode.west);
+}
 \draw[branch] (s71.east)--(w71.west);
 \draw[branch] (s72.east)--(w72.west);
 \draw[branch] (s73.east)--(w73.west);
