@@ -1,0 +1,57 @@
+\begin{tikzpicture}[
+  >=Latex,
+  root/.style={rounded corners=2pt, draw=black!70, fill=black!5, very thick,
+               text width=5.2cm, minimum height=11mm, align=center},
+  category/.style={rounded corners=2pt, draw=#1!70!black, fill=#1!12, very thick,
+                   text width=3.45cm, minimum height=12mm, align=center, inner sep=4pt},
+  leaves/.style={rounded corners=2pt, draw=#1!55!black, fill=#1!4, thick,
+                 text width=3.45cm, minimum height=28mm, align=left, inner sep=5pt,
+                 font=\footnotesize},
+  edge/.style={->, thick, draw=black!55}
+]
+\definecolor{initialblue}{RGB}{74,112,148}
+\definecolor{followgreen}{RGB}{83,128,116}
+\definecolor{integrateorange}{RGB}{168,119,71}
+\definecolor{learnpurple}{RGB}{119,92,139}
+
+\node[root] (root) {\textbf{Multi-Hop Retrieval and Reasoning}\\Dependent information acquisition across hops};
+
+\node[category=initialblue, below left=12mm and 61mm of root] (c1) {\textbf{1. Initial Retrieval}\\$q\rightarrow E_1$};
+\node[category=followgreen, right=5mm of c1] (c2) {\textbf{2. Follow-up Retrieval}\\$(q,E_{1:t})\rightarrow E_{t+1}$};
+\node[category=integrateorange, right=5mm of c2] (c3) {\textbf{3. Evidence Integration}\\$E_{1:T}\rightarrow C\rightarrow y$};
+\node[category=learnpurple, right=5mm of c3] (c4) {\textbf{4. Feedback Learning}\\$(\tau_i,f_i)\rightarrow \pi_{i+1}$};
+
+\node[leaves=initialblue, below=4mm of c1] (l1) {
+$\bullet$ Sparse retrieval\\
+$\bullet$ Dense and hybrid retrieval\\
+$\bullet$ Graph retrieval\\
+$\bullet$ Reasoning-aware retrieval};
+
+\node[leaves=followgreen, below=4mm of c2] (l2) {
+$\bullet$ Query decomposition\\
+$\bullet$ Iterative retrieval\\
+$\bullet$ Graph and path search\\
+$\bullet$ Adaptive retrieval\\
+$\bullet$ Deep search\\
+$\bullet$ Feedback-assisted retrieval};
+
+\node[leaves=integrateorange, below=4mm of c3] (l3) {
+$\bullet$ Evidence selection\\
+$\bullet$ Preservation and compression\\
+$\bullet$ Context construction\\
+$\bullet$ Cross-evidence reasoning\\
+$\bullet$ Long-form synthesis};
+
+\node[leaves=learnpurple, below=4mm of c4] (l4) {
+$\bullet$ Feedback collection\\
+$\bullet$ Trajectory diagnosis\\
+$\bullet$ Experience memory\\
+$\bullet$ Skill extraction\\
+$\bullet$ Retrieval and policy improvement};
+
+\foreach \c in {c1,c2,c3,c4} {\draw[edge] (root.south) -- (\c.north);}
+\draw[edge] (c1) -- (l1);
+\draw[edge] (c2) -- (l2);
+\draw[edge] (c3) -- (l3);
+\draw[edge] (c4) -- (l4);
+\end{tikzpicture}
