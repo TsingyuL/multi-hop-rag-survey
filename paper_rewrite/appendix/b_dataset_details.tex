@@ -1,4 +1,36 @@
 \section{Dataset Details}
 \label{app:dataset_details}
 
-This appendix will organize datasets by evidence environment, supervision, dependency structure, output form, and process observability. Planned fields include corpus type, number of required hops, supporting-evidence annotations, bridge or decomposition labels, open-web access, trajectory logging, citation requirements, and whether repeated-task learning is evaluated.
+Datasets differ not only in domain or answer format, but also in which parts of the information-acquisition process they expose. Table~\ref{tab:dataset_details} summarizes representative benchmark families used throughout the survey. The table is intentionally diagnostic: it records whether evidence, decomposition, trajectories, or repeated-task learning can be observed, rather than treating all multi-hop datasets as equivalent.
+
+\begin{table*}[tbp]
+\centering
+\caption{Representative benchmark families and the process variables they expose. ``Partial'' indicates that the benchmark provides indirect supervision or system-generated traces rather than a complete gold process.}
+\label{tab:dataset_details}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.3cm}p{2.0cm}p{2.0cm}p{1.5cm}p{1.7cm}p{1.8cm}Y@{}}
+\toprule
+Benchmark & Evidence environment & Typical dependency & Gold supporting evidence & Gold decomposition or path & Interaction trace & Main diagnostic use \\
+\midrule
+QAngaroo~\cite{welbl2018qangaroo} & Wikipedia-derived documents & Cross-document entity chains & No & No & No & Early evaluation of cross-document reading and retrieval difficulty. \\
+HotpotQA~\cite{yang2018hotpotqa} & Wikipedia paragraphs & Bridge and comparison questions & Yes & Partial & No & Supporting-fact retrieval, bridge coverage, and answer--evidence evaluation. \\
+MuSiQue~\cite{trivedi2022musique} & Wikipedia passages & Composed multi-step questions & Yes & Yes & No & Connected reasoning, decomposition, and resistance to disconnected shortcuts. \\
+HybridQA~\cite{chen2020hybridqa} & Tables plus linked text & Table--text traversal & Yes & Partial & No & Heterogeneous evidence access and cross-format integration. \\
+MultiModalQA~\cite{talmor2021multimodalqa} & Text, tables, and images & Cross-modal composition & Yes & Partial & No & Modality selection and heterogeneous evidence reasoning. \\
+Open-web research tasks & Live or archived web & Variable-length search and synthesis & Usually incomplete & Usually no & System dependent & Query quality, source access, stopping, cost, citation, and report evaluation. \\
+Repeated-task environments & Corpus, tools, or web plus persistent memory & Cross-episode adaptation & Task dependent & Task dependent & Required & Transfer from reflection, experience, skills, retriever updates, or policy learning. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Evidence Supervision}
+Gold supporting facts make evidence recall and membership measurable, but they do not by themselves prove that a model used the evidence. Datasets without gold evidence can still evaluate retrieval through judged pools, source citations, or manually annotated subsets, although conclusions should be correspondingly narrower. For open-web tasks, the relevant evidence set may be incomplete or time dependent; reporting the actual pages visited and the retrieval date becomes part of reproducibility.
+
+\subsection{Dependency Supervision}
+A dataset may annotate supporting documents without specifying their dependency order. Decomposition or path labels are more informative for follow-up retrieval because they expose the intermediate information need. However, a single canonical decomposition can underrepresent valid alternative paths. Evaluation should therefore distinguish exact agreement with an annotated path from successful acquisition of an alternative sufficient chain.
+
+\subsection{Trajectory and Cost Observability}
+Static QA datasets generally do not prescribe an action trace. Agentic systems should consequently log queries, tool calls, observations, stopping decisions, and source-access costs during evaluation. Without this record, two systems with the same final score may differ substantially in search depth, duplicated work, source quality, or failure recovery.
+
+\subsection{Cross-Task Learning}
+Feedback-learning claims require an explicit temporal protocol. Experience must be acquired on earlier tasks and evaluated on later held-out tasks without leaking their answers. Suitable benchmarks should report the memory or skill state before evaluation, the number of prior episodes, the retrieval cost of reusable experience, and whether performance gains persist under distribution shift.
