@@ -1,0 +1,34 @@
+\section{Background and Evolution}
+\label{sec:background}
+
+Multi-hop retrieval and reasoning did not emerge from a single research community. Its current form combines ideas from multi-document question answering, open-domain retrieval, graph reasoning, retrieval-augmented generation, browser agents, and continual agent improvement. The historical progression is therefore best understood as an expansion of the information-acquisition setting: from fixed corpora with annotated support chains to open environments in which systems must decide what to search, how long to continue, and what experience to retain.
+
+\subsection{Stage I: Multi-Hop Question Answering}
+
+Early multi-hop QA work made cross-document dependence an explicit benchmark property. Datasets such as QAngaroo and HotpotQA required systems to connect facts distributed across documents, while supporting-fact annotations enabled partial evaluation of the reasoning process~\cite{welbl2018qangaroo,yang2018hotpotqa}. Later benchmarks reduced shortcut opportunities, increased compositional depth, or mixed textual and structured evidence~\cite{trivedi2020nohotpot,trivedi2022musique,chen2020hybridqa,talmor2021multimodalqa}. The dominant setting was a fixed corpus, and many systems were evaluated with gold documents, a small candidate set, or benchmark-specific retrieval assumptions.
+
+This stage established two enduring ideas. First, multi-hop difficulty arises from dependencies among evidence units rather than from document count alone. Second, final-answer accuracy is insufficient when benchmarks expose supporting facts, evidence paths, or intermediate subquestions. However, the search process was often constrained by the benchmark, and the distinction between finding evidence and reasoning over already supplied evidence was not always explicit.
+
+\subsection{Stage II: Multi-Hop Retrieval}
+
+As evaluation moved toward open-domain settings, retrieving the complete support chain became a primary problem. Early approaches expanded graphs or generated intermediate search queries~\cite{sun2019pullnet,min2019golden}. Dense multi-hop retrievers conditioned later retrieval on previously retrieved passages~\cite{xiong2021mdr,zhao2021beamdr}, while condensed and path-based systems attempted to scale the process without allowing distractors to grow uncontrollably~\cite{asai2020learning,khattab2021baleen}.
+
+The defining change was that evidence acquisition became sequential. The original query was no longer the only retrieval input; retrieved passages, bridge entities, partial paths, or generated subquestions became state variables for later search. This line of work introduced problems that remain central today: error propagation across hops, beam allocation, stopping, retrieval depth, evidence-chain recall, and the trade-off between exploration and context budget.
+
+\subsection{Stage III: Adaptive and Agentic Search}
+
+Large language models enabled retrieval decisions to be expressed in natural language and interleaved with reasoning. Systems began to decompose questions, generate search queries, alternate between reasoning and retrieval, and decide whether additional evidence was needed~\cite{press2022selfask,khot2023decomposed,trivedi2023ircot,jiang2023flare}. Adaptive RAG methods routed questions by complexity or learned retrieval and critique decisions~\cite{asai2024selfrag,jeong2024adaptiverag,su2024dragin}. In parallel, tool-using agents such as ReAct framed search as an action within a longer reasoning trajectory~\cite{yao2023react}.
+
+Agentic search enlarges the action space but does not change the basic definition of multi-hop dependence. A browser click, API call, or generated query is relevant to this survey only when it advances retrieval-grounded information acquisition. General planning, coding, or embodied interaction without this evidence dependency lies outside our main scope. This boundary prevents the survey from becoming a generic catalogue of agent architectures.
+
+\subsection{Stage IV: Deep Search and Deep Research}
+
+Open-web and research-oriented systems extend multi-hop search along three dimensions. They operate over changing and weakly structured sources, execute longer trajectories, and produce attributed reports rather than short answers. WebGPT demonstrated browser-assisted question answering with human feedback~\cite{nakano2021webgpt}; PaperQA explored retrieval-augmented scientific research~\cite{lala2023paperqa}; and reinforcement-learning approaches such as Search-R1 optimize search behavior over longer reasoning trajectories~\cite{jin2025searchr1}. Related work studies citation generation, source-supported revision, and long-form synthesis~\cite{gao2023alce,gao2023rarr}.
+
+Deep search and deep research are not treated as an additional top-level category in this survey. They are system configurations that combine initial retrieval, follow-up retrieval, evidence integration, and, in some cases, feedback learning. This decomposition makes it possible to ask which part of a research system actually improved: source discovery, query progression, evidence preservation, report grounding, stopping efficiency, or learning from previous runs.
+
+\subsection{From Single-Task Pipelines to Cross-Task Improvement}
+
+Most classical multi-hop methods reset their state for every question. Recent agent research instead stores reflections, trajectories, experiences, memories, or reusable skills. Reflection methods convert evaluation into textual guidance~\cite{shinn2023reflexion,madaan2023selfrefine,gou2024critic}; experience and skill systems attempt to extract reusable procedures from prior tasks~\cite{wang2023voyager}. This introduces a second timescale. Within-task feedback decides the next retrieval or reasoning action for the current problem. Cross-task feedback changes how future problems are approached. The distinction motivates the Feedback Learning category developed in Section~\ref{sec:feedback_learning}.
+
+Taken together, the four historical stages show a gradual expansion from fixed-chain reasoning to adaptive information seeking. The functional taxonomy in this survey is designed to span this evolution without assuming that all systems share the same architecture, model family, or interaction environment.
