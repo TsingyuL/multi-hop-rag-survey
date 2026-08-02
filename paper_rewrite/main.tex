@@ -1,0 +1,80 @@
+\documentclass[acmsmall,review,anonymous]{acmart}
+\citestyle{acmnumeric}
+\acmJournal{CSUR}
+\acmDOI{}
+\setcopyright{none}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{graphicx,xcolor,xspace}
+\usepackage{enumitem}
+\usepackage{url}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\RAG}{\textsc{RAG}\xspace}
+\newcommand{\LLM}{\textsc{LLM}\xspace}
+\newcommand{\QA}{\textsc{QA}\xspace}
+\newcommand{\MH}{\textsc{MH}\xspace}
+\newcommand{\CorpusSize}{232}
+\newcommand{\AuditSize}{70}
+
+\begin{document}
+
+\title{Multi-Hop Retrieval and Reasoning: A Survey}
+
+\author{Anonymous Author(s)}
+\affiliation{%
+  \institution{Anonymous Institution}
+  \country{Anonymous}
+}
+
+\begin{abstract}
+Multi-hop retrieval and reasoning systems solve information needs whose required evidence is distributed across sources and becomes identifiable only after intermediate results are resolved. The field now spans open-domain question answering, graph retrieval, retrieval-augmented generation, browser agents, deep research, long-form synthesis, and agents that improve through reflection, experience, or reusable skills. Existing surveys usually organize these areas by architecture, task, or data source. Such views are useful locally but make it difficult to compare static multi-hop pipelines with adaptive search agents, or to determine whether a method improves evidence discovery, subsequent search, evidence use, or future behavior.
+
+We present a functional survey organized around four stages: \emph{initial retrieval}, \emph{follow-up retrieval}, \emph{evidence organization and reasoning}, and \emph{feedback learning}. The taxonomy treats deep search and deep research as compositions of these functions rather than separate top-level categories, and distinguishes feedback used within the current task from feedback that changes behavior across tasks. We formalize multi-hop systems as sequential evidence acquisition and transformation processes, provide crosswalks to retrieval, graph, agentic, memory, and skill-based architectures, and separate component claims from end-to-end answer accuracy. The working artifact contains a \CorpusSize-record literature corpus and a stratified \AuditSize-paper full-text audit selection, with source-verification status recorded separately. We conclude with an evaluation framework for retrieval depth, evidence coverage, context use, trajectory cost, grounding, and cross-task improvement.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10002951.10003317.10003347</concept_id>
+<concept_desc>Information systems~Question answering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003317.10003338</concept_id>
+<concept_desc>Information systems~Retrieval models and ranking</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010178.10010179</concept_id>
+<concept_desc>Computing methodologies~Natural language processing</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Question answering}
+\ccsdesc[500]{Information systems~Retrieval models and ranking}
+\ccsdesc[500]{Computing methodologies~Natural language processing}
+
+\keywords{multi-hop retrieval, multi-hop reasoning, retrieval-augmented generation, agentic search, deep research, evidence organization, experience learning, skill learning}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_methodology}
+\input{sections/03_overview}
+\input{sections/04_initial_retrieval}
+\input{sections/05_follow_up_retrieval}
+\input{sections/06_evidence_organization_reasoning}
+\input{sections/07_feedback_learning}
+\input{sections/08_evaluation}
+\input{sections/09_future_directions}
+\input{sections/10_conclusion}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}
