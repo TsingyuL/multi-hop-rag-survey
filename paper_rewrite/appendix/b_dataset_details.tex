@@ -5,20 +5,20 @@ Datasets differ not only in domain or answer format, but also in which parts of 
 
 \begin{table*}[tbp]
 \centering
-\caption{Representative benchmark families and the process variables they expose. ``Partial'' indicates that the benchmark provides indirect supervision or system-generated traces rather than a complete gold process.}
+\caption{Representative benchmark families and the process variables they expose. ``Partial'' indicates indirect supervision or an incomplete gold process.}
 \label{tab:dataset_details}
 \small
-\begin{tabularx}{\textwidth}{@{}p{2.3cm}p{2.0cm}p{2.0cm}p{1.5cm}p{1.7cm}p{1.8cm}Y@{}}
+\begin{tabularx}{\textwidth}{@{}p{2.0cm}p{2.3cm}p{2.5cm}p{3.5cm}Y@{}}
 \toprule
-Benchmark & Evidence environment & Typical dependency & Gold supporting evidence & Gold decomposition or path & Interaction trace & Main diagnostic use \\
+Benchmark & Evidence environment & Typical dependency & Process supervision & Main diagnostic use \\
 \midrule
-QAngaroo~\cite{welbl2018qangaroo} & Wikipedia-derived documents & Cross-document entity chains & No & No & No & Early evaluation of cross-document reading and retrieval difficulty. \\
-HotpotQA~\cite{yang2018hotpotqa} & Wikipedia paragraphs & Bridge and comparison questions & Yes & Partial & No & Supporting-fact retrieval, bridge coverage, and answer--evidence evaluation. \\
-MuSiQue~\cite{trivedi2022musique} & Wikipedia passages & Composed multi-step questions & Yes & Yes & No & Connected reasoning, decomposition, and resistance to disconnected shortcuts. \\
-HybridQA~\cite{chen2020hybridqa} & Tables plus linked text & Table--text traversal & Yes & Partial & No & Heterogeneous evidence access and cross-format integration. \\
-MultiModalQA~\cite{talmor2021multimodalqa} & Text, tables, and images & Cross-modal composition & Yes & Partial & No & Modality selection and heterogeneous evidence reasoning. \\
-Open-web research tasks & Live or archived web & Variable-length search and synthesis & Usually incomplete & Usually no & System dependent & Query quality, source access, stopping, cost, citation, and report evaluation. \\
-Repeated-task environments & Corpus, tools, or web plus persistent memory & Cross-episode adaptation & Task dependent & Task dependent & Required & Transfer from reflection, experience, skills, retriever updates, or policy learning. \\
+QAngaroo~\cite{welbl2018qangaroo} & Wikipedia-derived documents & Cross-document entity chains & No gold supporting set, decomposition, or trace & Early evaluation of cross-document reading and retrieval difficulty. \\
+HotpotQA~\cite{yang2018hotpotqa} & Wikipedia paragraphs & Bridge and comparison questions & Gold supporting facts; partial path information; no interaction trace & Supporting-fact retrieval, bridge coverage, and answer--evidence evaluation. \\
+MuSiQue~\cite{trivedi2022musique} & Wikipedia passages & Composed multi-step questions & Gold support and decomposition; no interaction trace & Connected reasoning, decomposition, and resistance to disconnected shortcuts. \\
+HybridQA~\cite{chen2020hybridqa} & Tables plus linked text & Table--text traversal & Gold evidence with partial path structure; no interaction trace & Heterogeneous evidence access and cross-format integration. \\
+MultiModalQA~\cite{talmor2021multimodalqa} & Text, tables, and images & Cross-modal composition & Gold evidence with partial modality path; no interaction trace & Modality selection and heterogeneous evidence reasoning. \\
+Open-web research tasks & Live or archived web & Variable-length search and synthesis & Usually incomplete evidence; system-generated traces; citation requirements vary & Query quality, source access, stopping, cost, citation, and report evaluation. \\
+Repeated-task environments & Corpus, tools, or web plus persistent memory & Cross-episode adaptation & Task-dependent evidence; interaction trace and temporal split required & Transfer from reflection, experience, skills, retriever updates, or policy learning. \\
 \bottomrule
 \end{tabularx}
 \end{table*}
