@@ -25,7 +25,15 @@ q_1=q, \qquad
 E_t=\operatorname{Retrieve}(q_t), \qquad
 q_{t+1}=\operatorname{Update}(q,E_{1:t}),
 \]
-followed by evidence integration and answer or report generation. The central challenge is therefore not only how to retrieve relevant information, but also how to decide what information is missing, what should be searched next, when the search should stop, and how evidence collected at different steps should be combined.
+followed by evidence integration and answer or report generation. The central challenge is therefore not only how to retrieve relevant information, but also how to decide what information is missing, what should be searched next, when the search should stop, and how evidence collected at different steps should be combined. Figure~\ref{fig:functional_process} shows the four functions and distinguishes adaptation within the current task from learning that persists across tasks.
+
+\begin{figure*}[tbp]
+\centering
+\resizebox{0.98\textwidth}{!}{\input{figures/fig1_functional_process}}
+\caption{Functional process of multi-hop retrieval and reasoning. Initial retrieval finds an entry point from the original task. Follow-up retrieval repeatedly resolves later information needs from the current state. Evidence integration selects, preserves, and combines the acquired sources into an answer or report. Within-task signals can redirect the current search, whereas feedback learning retains trajectory-level information to improve future retrieval, memory, skills, or policies.}
+\Description{A left-to-right pipeline from task to initial retrieval, follow-up retrieval, evidence integration, and answer or report. A dashed within-task loop returns state information to follow-up retrieval. A lower feedback-learning box receives evaluation signals and updates future initial and follow-up retrieval.}
+\label{fig:functional_process}
+\end{figure*}
 
 The field has evolved through several overlapping stages. Early multi-hop question answering benchmarks made cross-document dependencies explicit and often provided supporting-fact annotations~\cite{welbl2018qangaroo,yang2018hotpotqa,trivedi2022musique}. Multi-hop retrieval methods then learned to retrieve later passages from intermediate entities, paths, or previously retrieved passages~\cite{min2019golden,xiong2021mdr,khattab2021baleen}. Retrieval--reasoning systems subsequently interleaved search with generated reasoning or uncertainty signals~\cite{trivedi2023ircot,jiang2023flare,asai2024selfrag,jeong2024adaptiverag}. More recent agentic search and deep research systems extend the process to tool use, open-web navigation, longer horizons, source synthesis, and report generation~\cite{nakano2021webgpt,yao2023react,lala2023paperqa,jin2025searchr1}. These developments enlarge the operational setting, but they preserve the same core dependency: information found at one step determines what can be searched or inferred at the next.
 
