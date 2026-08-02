@@ -9,7 +9,11 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-BIB_FILES = [ROOT / "references.bib", ROOT / "references_methods.bib"]
+BIB_FILES = [
+    ROOT / "references.bib",
+    ROOT / "references_methods.bib",
+    ROOT / "references_figure.bib",
+]
 
 
 def collect_tex() -> list[Path]:
