@@ -91,13 +91,13 @@ A system is multi-hop under this formulation when there exists a step $t>1$ for 
 \subsection{Taxonomy}
 \label{subsec:taxonomy}
 
-The taxonomy follows information flow rather than a specific architecture. Figure~\ref{fig:taxonomy_tree} shows the complete hierarchy used in Sections~\ref{sec:initial_retrieval}--\ref{sec:feedback_learning}; Table~\ref{tab:taxonomy_overview} summarizes the transformation associated with each category.
+The taxonomy follows information flow rather than a specific architecture. Figure~\ref{fig:taxonomy_tree} shows the hierarchy used in Sections~\ref{sec:initial_retrieval}--\ref{sec:feedback_learning}; Table~\ref{tab:taxonomy_overview} summarizes the transformation associated with each category.
 
 \begin{figure*}[tbp]
 \centering
 \resizebox{0.99\textwidth}{!}{\input{figures/fig2_taxonomy_tree}}
-\caption{Functional taxonomy of multi-hop retrieval and reasoning. The first three categories describe how a system solves the current task: obtaining entry evidence, acquiring later evidence, and integrating the collected information. Feedback learning operates across tasks by retaining evaluations, trajectories, experiences, skills, or policy updates.}
-\Description{A taxonomy tree with four branches: Initial Retrieval, Follow-up Retrieval, Evidence Integration, and Feedback Learning. Each branch lists the corresponding subsections used in the survey.}
+\caption{Functional taxonomy of multi-hop retrieval and reasoning. The first three categories describe how a system solves the current task: obtaining entry evidence, acquiring later evidence, and integrating the collected information. Feedback learning operates across tasks by retaining evaluations, trajectories, experiences, skills, or policy updates. The rightmost column lists 60 representative works selected to anchor the taxonomy; the complete \CorpusSize-record corpus and record-level coding are provided in the companion artifact.}
+\Description{A taxonomy tree with four branches: Initial Retrieval, Follow-up Retrieval, Evidence Integration, and Feedback Learning. Each branch contains its survey subsections and a rightmost column of representative cited methods.}
 \label{fig:taxonomy_tree}
 \end{figure*}
 
@@ -114,6 +114,28 @@ Initial Retrieval & $q \rightarrow E_1$ & How is a useful entry point obtained f
 Follow-up Retrieval & $(q,E_{1:t}) \rightarrow u_t \rightarrow E_{t+1}$ & What information should be sought next, and when should search stop? & Query decomposition, iterative retrieval, graph/path search, adaptive retrieval, tool use, deep search, and within-task feedback. \\
 Evidence Integration & $E_{1:T} \rightarrow C \rightarrow y$ & How are acquired sources selected, preserved, organized, combined, and synthesized? & Evidence selection, compression, context construction, cross-evidence reasoning, grounding, and long-form synthesis. \\
 Feedback Learning & $(\tau_i,f_i,M_i) \rightarrow M_{i+1},\pi_{i+1}$ & How does experience from previous tasks improve future behavior? & Feedback collection, trajectory diagnosis, experience memory, skill extraction, retriever learning, and policy optimization. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\paragraph{Architectural crosswalk.}
+The functional categories cut across common system labels. Table~\ref{tab:architectural_crosswalk} shows how typical architectures instantiate the four stages. The entries describe dominant implementations rather than hard membership rules: the same graph, retriever, memory, or language model can serve different functions depending on when it is used and what state it consumes.
+
+\begin{table*}[tbp]
+\centering
+\caption{Crosswalk from common system families to the four functional categories.}
+\label{tab:architectural_crosswalk}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{2.65cm}Y Y Y Y@{}}
+\toprule
+System family & Initial retrieval & Follow-up retrieval & Evidence integration & Feedback learning \\
+\midrule
+Single-shot RAG & One query retrieves a fixed candidate set & Usually absent & Top-$k$ context is passed to a generator & Usually absent \\
+Static multi-hop QA & Entry passages or a fixed evidence pool & Fixed or benchmark-defined hops may be executed & Short-answer reader, supporting-fact predictor, or fusion module & Usually absent \\
+Iterative or graph retriever & Entry passage, node, neighborhood, or hierarchy & Learned hop expansion, path search, or graph traversal & Reader or graph reasoning over the acquired path/subgraph & Usually absent unless trajectories are retained \\
+Adaptive RAG or search agent & Initial query, tool choice, or source selection & Dynamic retrieve/read/verify/stop actions & Context construction and answer synthesis from the current trajectory & Within-task feedback by default; persistent learning is optional \\
+Deep search or deep research & Broad source discovery and task planning & Long-horizon open-web search with variable branching and stopping & Multi-source report generation, citation, and contradiction handling & Optional experience, memory, or policy updates across research tasks \\
+Experience- or skill-enhanced system & Entry behavior may be conditioned on retrieved memories or skills & Later actions reuse lessons, procedures, or a learned policy & Skills may prescribe evidence processing and synthesis & Defining persistent update through reflection, memory, skills, retriever training, or policy learning \\
 \bottomrule
 \end{tabularx}
 \end{table*}
