@@ -5,6 +5,8 @@
 \setcopyright{none}
 \renewcommand\footnotetextcopyrightpermission[1]{}
 
+% acmart/newtxmath defines \Bbbk before amssymb in recent TeX Live.
+\let\Bbbk\relax
 \usepackage{amsmath,amssymb,amsfonts,mathtools}
 \usepackage{booktabs,tabularx,multirow,array}
 \usepackage{graphicx,xcolor,xspace}
