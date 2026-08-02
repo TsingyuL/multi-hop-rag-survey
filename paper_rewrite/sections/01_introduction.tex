@@ -41,17 +41,17 @@ Existing surveys provide valuable views of multi-hop question answering, retriev
 
 \begin{table*}[tbp]
 \centering
-\caption{Positioning relative to major survey families. ``Central'' indicates that the dimension is a principal organizing concern rather than an occasional topic.}
+\caption{Positioning relative to major survey families. ``Central'' indicates a principal organizing concern rather than an occasional topic.}
 \label{tab:survey_positioning}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}p{2.0cm}p{2.35cm}Yp{2.05cm}p{1.85cm}p{2.75cm}@{}}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.2cm}p{2.55cm}Yp{3.35cm}p{3.15cm}@{}}
 \toprule
-Survey family & Primary unit & Typical organizing emphasis & Later-query dependence & Persistent learning & Evaluation emphasis \\
+Survey family & Primary unit & Typical organizing emphasis & Treatment of dependent search and learning & Evaluation emphasis \\
 \midrule
-Multi-hop QA surveys~\cite{mavi2022mhqasurvey} & QA task and model & Datasets, reasoning types, architectures, and supporting evidence & Central within QA & Usually outside scope & Answer and supporting-fact metrics \\
-RAG surveys~\cite{gao2023ragsurvey,fan2024ragllmsurvey} & Retrieval--generation pipeline & Indexing, retrieval, augmentation, generation, and applications & One component among many & Usually outside scope & Retrieval and generation quality \\
-Agentic RAG surveys~\cite{singh2025agenticragsurvey} & Agent workflow & Planning, tools, memory, orchestration, and application patterns & Central & Covered as an agent capability & End-to-end task and agent behavior \\
-\textbf{This survey} & Dependent information acquisition & Initial retrieval, follow-up retrieval, evidence integration, and feedback learning & \textbf{Defining property} & \textbf{Dedicated category} & \textbf{Claim-aligned component, trajectory, grounding, cost, and transfer measures} \\
+Multi-hop QA surveys~\cite{mavi2022mhqasurvey} & QA task and model & Datasets, reasoning types, architectures, and supporting evidence & Later-query dependence is central within QA; persistent cross-task learning is usually outside scope & Answer and supporting-fact metrics \\
+RAG surveys~\cite{gao2023ragsurvey,fan2024ragllmsurvey} & Retrieval--generation pipeline & Indexing, retrieval, augmentation, generation, and applications & Dependent retrieval is one advanced component; persistent learning is usually outside scope & Retrieval and generation quality \\
+Agentic RAG surveys~\cite{singh2025agenticragsurvey} & Agent workflow & Planning, tools, memory, orchestration, and application patterns & Adaptive search is central; persistent memory or learning appears as a broader agent capability & End-to-end task and agent behavior \\
+\textbf{This survey} & Dependent information acquisition & Initial retrieval, follow-up retrieval, evidence integration, and feedback learning & \textbf{Later-query dependence defines the scope; feedback learning is a dedicated category} & \textbf{Claim-aligned component, trajectory, grounding, cost, and transfer measures} \\
 \bottomrule
 \end{tabularx}
 \end{table*}
