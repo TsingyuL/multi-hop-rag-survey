@@ -3,15 +3,23 @@
 
 The complete record-level taxonomy is released in the companion artifact. Table~\ref{tab:taxonomy_codebook} gives the coding scheme used to assign a primary category and secondary mechanism tags. Primary categories are mutually exclusive for corpus statistics; secondary tags are multi-label.
 
-\begin{table*}[tbp]
-\centering
+\begin{longtable}{@{}p{2.55cm}p{3.0cm}p{5.0cm}p{4.75cm}@{}}
 \caption{Full functional taxonomy and primary-assignment criteria.}
-\label{tab:taxonomy_codebook}
-\small
-\begin{tabularx}{\textwidth}{@{}p{2.5cm}p{3.0cm}p{3.5cm}Y@{}}
+\label{tab:taxonomy_codebook}\\
 \toprule
 Primary category & Subcategory & Primary assignment criterion & Typical secondary tags \\
 \midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename~\thetable\ -- continued from previous page}\\
+\toprule
+Primary category & Subcategory & Primary assignment criterion & Typical secondary tags \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
 Initial Retrieval & Sparse Retrieval & The main intervention improves entry evidence from the original task using lexical or learned sparse signals. & BM25, expansion, SPLADE, hybrid retrieval, query expansion. \\
 Initial Retrieval & Dense and Hybrid Retrieval & The main intervention learns or combines vector-space retrieval, late interaction, or first-stage reranking before intermediate evidence is available. & DPR, ANCE, Contriever, ColBERT, embeddings, reranking. \\
 Initial Retrieval & Graph Retrieval & The original task is mapped to a graph, hierarchy, subgraph, or structured entry neighborhood before later task-specific evidence has been resolved. & Graph construction, hierarchical retrieval, community summaries, subgraph retrieval. \\
@@ -22,7 +30,7 @@ Follow-up Retrieval & Iterative Retrieval & Later retrieval is explicitly condit
 Follow-up Retrieval & Graph and Path Search & The system expands or searches a path, subgraph, or beam using the current intermediate state. & Beam search, KG traversal, graph expansion, path scoring. \\
 Follow-up Retrieval & Adaptive Retrieval & A controller decides whether, when, how deeply, or with which tool to retrieve during the current task. & Uncertainty trigger, retrieve/read/stop, correction, complexity routing. \\
 Follow-up Retrieval & Deep Search & The contribution targets long-horizon browser or open-web acquisition with variable sources and stopping. & Web navigation, research planning, source discovery, open-world search. \\
-Follow-up Retrieval & Feedback-Assisted Retrieval & Process, verifier, or reward signals alter later actions within the same task or train a search policy from trajectories. & Process reward, verifier-guided search, RL search, recovery. \\
+Follow-up Retrieval & Feedback-Assisted Retrieval & Process, verifier, or reward signals alter later actions within the same task or train a search policy from trajectories. & Process reward, verifier-guided search, reinforcement learning, recovery. \\
 \midrule
 Evidence Integration & Evidence Selection & The main intervention chooses a jointly sufficient subset from an already acquired evidence collection. & Set selection, complementarity, filtering, reader-aware selection. \\
 Evidence Integration & Preservation and Compression & The method reduces context while attempting to retain reasoning-critical content or provenance. & Extractive compression, abstractive compression, notes, latent compression. \\
@@ -35,9 +43,7 @@ Feedback Learning & Trajectory Diagnosis & Completed trajectories are analyzed t
 Feedback Learning & Experience Memory & Prior episodes, distilled lessons, or task traces are stored and retrieved for future tasks. & Episodic memory, consolidation, memory retrieval, staleness. \\
 Feedback Learning & Skill Extraction & Reusable textual or executable procedures are created, routed, revised, or composed across tasks. & Skill library, routing, revision, composition, lifecycle management. \\
 Feedback Learning & Retrieval and Policy Improvement & Persistent parameter or policy updates use previous trajectories to improve future search behavior. & Retriever training, process supervision, reinforcement learning, continual adaptation. \\
-\bottomrule
-\end{tabularx}
-\end{table*}
+\end{longtable}
 
 \subsection{Boundary Decisions}
 Reranking is coded as initial retrieval when it refines the query--candidate ranking. It is coded as evidence integration only when the central problem is joint selection or reader-facing organization of an already acquired set. Adaptive retrieval and self-critique remain follow-up retrieval when they alter the current episode; they become feedback learning only when the result is retained across tasks. General memory and skill systems are included only when the stored object changes retrieval-grounded multi-hop behavior.
