@@ -1,4 +1,34 @@
 \section{Literature Review Protocol}
 \label{app:review_protocol}
 
-This appendix will report the search sources, query families, date range, deduplication procedure, inclusion and exclusion criteria, primary-category assignment rule, secondary tagging scheme, metadata verification status, and adjudication procedure. The literature artifact distinguishes discovered records, source-identified records, metadata-verified records, and full-text-audited records; these states are not treated as interchangeable evidence of review depth.
+This appendix documents the protocol used to construct the working literature corpus and the diagnostic-audit selection. The current snapshot was frozen on 2 August 2026. It is a structured survey artifact rather than a claim of exhaustive systematic-review coverage: record status is exposed so that discovery breadth is not confused with full-text verification.
+
+\subsection{Sources and Query Families}
+The seed pool was assembled from the bibliography and method catalog of the earlier manuscript, then expanded through ACL Anthology, OpenReview, arXiv, publisher proceedings, and official project or repository pages. DBLP and Semantic Scholar were used as discovery aids rather than final metadata authorities. Query families combined task and mechanism terms, including \emph{multi-hop retrieval}, \emph{multi-hop question answering}, \emph{iterative retrieval}, \emph{query decomposition}, \emph{graph retrieval}, \emph{adaptive retrieval}, \emph{agentic search}, \emph{deep research}, \emph{evidence compression}, \emph{long-form synthesis}, \emph{experience memory}, and \emph{skill learning}. Recent searches were additionally restricted to 2025--2026 where appropriate.
+
+\subsection{Inclusion Criteria}
+A record is included when its primary contribution directly addresses at least one of the following functions:
+\begin{enumerate}[leftmargin=1.5em]
+\item obtaining entry evidence from the original task;
+\item determining or executing a later search from intermediate results;
+\item selecting, preserving, organizing, combining, or synthesizing evidence acquired across steps; or
+\item using retained feedback, trajectories, experience, or skills to improve retrieval-grounded behavior on future tasks.
+\end{enumerate}
+Benchmarks and analyses are included when they make one of these functions observable or diagnose a corresponding failure. Foundational retrieval and reasoning components are retained when they are repeatedly used as baselines or building blocks in multi-hop systems.
+
+\subsection{Exclusion Criteria}
+We exclude purely parametric multi-step reasoning without information acquisition, single-hop retrieval work with no clear relevance to the initial-retrieval baseline space, generic autonomous-agent frameworks without retrieval-grounded evaluation, memory systems that only store user facts or dialogue history, and embodied skills unrelated to information seeking. Pure application papers are excluded unless they introduce a reusable multi-hop method, benchmark, or evaluation protocol.
+
+\subsection{Deduplication and Metadata Checking}
+Records are deduplicated by normalized title, with arXiv and proceedings versions linked rather than counted as separate papers. The preferred canonical record is the peer-reviewed version when available. Titles, years, venues, authors, and source URLs are checked against primary pages before a record is marked as metadata verified. Preprints remain explicitly labeled as such.
+
+\subsection{Primary and Secondary Coding}
+Each record receives one mutually exclusive primary category according to the function most directly targeted by its main contribution. Secondary tags capture additional mechanisms, task settings, evidence environments, and evaluation signals. For example, an adaptive retrieval method that critiques evidence within the current task is coded primarily as follow-up retrieval; a skill library retained across completed tasks is coded primarily as feedback learning. This rule prevents corpus statistics from double-counting methods while preserving cross-category effects.
+
+\subsection{Corpus and Audit Accounting}
+The working artifact contains \CorpusSize{} records. These records do not share one review depth. The status field distinguishes discovery-only records, source-identified records, primary-source metadata checks, preprint records, and full-text-audit selections. The diagnostic audit contains \AuditSize{} papers selected by stratified purposive sampling: 15 initial-retrieval papers, 25 follow-up-retrieval papers, 20 evidence-integration papers, and 10 feedback-learning papers.
+
+The audit sample is designed to cover major subcategories, historical periods, evidence environments, and claim types. Selection into the audit is not itself evidence that a field was reported. Page-level coding is completed only when the relevant text, table, figure, appendix, or intervention has been inspected. Until then, the field remains unresolved rather than being silently coded as absent.
+
+\subsection{Adjudication and Versioning}
+Ambiguous primary categories are resolved using the paper's stated problem, main intervention, and central experimental claim. The coding rationale is retained in the artifact notes. Corrections are versioned rather than overwritten without trace. Before submission, a second coder should independently review a stratified subset and disagreements should be adjudicated; no inter-rater reliability statistic is claimed until that procedure has been completed.
