@@ -1,0 +1,43 @@
+name: Build rewritten survey
+
+on:
+  push:
+    branches:
+      - rewrite/multi-hop-retrieval-reasoning-v1
+    paths:
+      - 'paper_rewrite/**'
+      - '.github/workflows/rewrite-manuscript.yml'
+  workflow_dispatch:
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Static checks
+        run: python paper_rewrite/check_rewrite.py
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: paper_rewrite
+          latexmk_use_xelatex: false
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Upload manuscript PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-hop-retrieval-reasoning-draft
+          path: paper_rewrite/main.pdf
+
+      - name: Upload figure PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: rewrite-figures
+          path: |
+            paper_rewrite/figures/fig1_functional_process.pdf
+            paper_rewrite/figures/fig2_taxonomy_tree.pdf
+          if-no-files-found: warn
