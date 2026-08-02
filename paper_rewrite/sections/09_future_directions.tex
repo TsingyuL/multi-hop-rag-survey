@@ -1,0 +1,28 @@
+\section{Future Directions}
+\label{sec:future}
+
+The functional taxonomy reveals open problems that cut across individual architectures. The following directions concern the reliability and learnability of the complete information-acquisition process.
+
+\subsection{Reasoning-Oriented Retrieval}
+Retrievers should be optimized not only for local query--document relevance, but also for exposing bridge information, complementary evidence, and future search opportunities. This requires supervision and evaluation that distinguish immediately answer-bearing passages from evidence whose value is conditional on later hops.
+
+\subsection{Reliable Long-Horizon Search}
+Longer search trajectories increase coverage but also compound query drift, source duplication, stale assumptions, and tool errors. Future systems need calibrated stopping, uncertainty-aware branching, recovery from incorrect intermediate states, and explicit controls over search cost and source quality.
+
+\subsection{Evidence Preservation under Limited Context}
+Compression and context construction should preserve entities, relations, numerical constraints, temporal qualifiers, and provenance required by later reasoning. Token reduction alone is an inadequate objective when a short summary deletes the bridge that makes the final inference valid.
+
+\subsection{Grounded Long-Form Synthesis}
+Research reports require more than answer correctness. Systems must align claims to sources, distinguish direct evidence from inference, reconcile conflicts, maintain citation granularity, and expose unresolved uncertainty. Evaluation should measure both coverage and whether each central claim is actually supported.
+
+\subsection{Experience and Skill Reuse}
+Cross-task learning remains under-evaluated. Experience stores and skill libraries need retrieval policies, versioning, conflict resolution, and tests of transfer beyond repeated benchmark templates. Future work should report whether reusable knowledge improves new tasks after accounting for additional context and model calls.
+
+\subsection{Continual and Changing Information Environments}
+Open-web evidence changes over time. Multi-hop systems must detect stale memories, refresh source-dependent skills, preserve temporal provenance, and avoid treating an outdated successful trajectory as a universally valid procedure.
+
+\subsection{Process-Level Benchmarks and Reproducibility}
+Benchmarks should expose intermediate queries, source visits, evidence membership, ordering, stopping, and cost when these objects are part of a paper's claim. Releasing trajectories and evaluation scripts would make it possible to compare different architectures at the same functional stage rather than only through final-answer scores.
+
+\subsection{Safety of Autonomous Information Seeking}
+Adaptive search introduces risks involving malicious sources, prompt injection, privacy, biased source selection, and unbounded tool use. Safety evaluation should be integrated with retrieval and trajectory evaluation rather than treated only as a property of the final generated text.
