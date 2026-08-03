@@ -14,6 +14,10 @@ BIB_FILES = [
     ROOT / "references_methods.bib",
     ROOT / "references_figure.bib",
     ROOT / "references_harness.bib",
+    ROOT / "references_expansion_initial.bib",
+    ROOT / "references_expansion_followup.bib",
+    ROOT / "references_expansion_integration.bib",
+    ROOT / "references_expansion_feedback.bib",
 ]
 
 
@@ -39,8 +43,6 @@ def strip_comments(text: str) -> str:
 
 def parse_citations(text: str) -> set[str]:
     keys: set[str] = set()
-    # Match citation commands such as \cite, \citep, and \citet, but not
-    # unrelated commands such as \citestyle.
     for match in re.finditer(r"\\cite(?!style)\w*\{([^}]*)\}", text):
         keys.update(k.strip() for k in match.group(1).split(",") if k.strip())
     return keys
@@ -56,7 +58,6 @@ def resolve_input(source: Path, raw: str) -> Path:
         candidate = candidate.with_suffix(".tex")
     if candidate.exists():
         return candidate
-
     candidate = ROOT / raw
     if candidate.suffix == "":
         candidate = candidate.with_suffix(".tex")
@@ -70,9 +71,7 @@ def check_inputs(tex_files: list[Path]) -> list[str]:
         for raw in re.findall(r"\\input\{([^}]+)\}", text):
             path = resolve_input(source, raw)
             if not path.exists():
-                missing.append(
-                    f"{source.relative_to(ROOT)} -> {raw}"
-                )
+                missing.append(f"{source.relative_to(ROOT)} -> {raw}")
     return sorted(set(missing))
 
 
@@ -81,7 +80,6 @@ def main() -> int:
     tex_text = "\n".join(
         strip_comments(path.read_text(encoding="utf-8")) for path in tex_files
     )
-
     citations = parse_citations(tex_text)
     bibkeys: list[str] = []
     for path in BIB_FILES:
@@ -106,19 +104,16 @@ def main() -> int:
         print("ERROR: duplicate BibTeX keys:")
         for key in duplicates:
             print(f"  - {key}")
-
     if undefined:
         errors += 1
         print("ERROR: undefined citation keys:")
         for key in undefined:
             print(f"  - {key}")
-
     if missing_inputs:
         errors += 1
         print("ERROR: missing input files:")
         for path in missing_inputs:
             print(f"  - {path}")
-
     if placeholders:
         print("WARNING: placeholder comments remain in:")
         for path in placeholders:
