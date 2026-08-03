@@ -1,0 +1,46 @@
+\section{Extended Literature Map}
+\label{app:extended_literature}
+
+Figure~\ref{fig:taxonomy_tree} names 60 representative works so that the taxonomy remains readable. This appendix makes a further 86 coded records visible in the manuscript. The papers below supplement rather than replace the representative set: they include additional methods, datasets, benchmarks, and diagnostic analyses. Their grouping follows the primary-category rule used by the artifact, while secondary effects remain available in the record-level database. Inclusion in this map does not imply completion of the full-text diagnostic audit.
+
+\subsection{Initial Retrieval}
+\paragraph{Representation learning and retrieval-augmented pretraining.}
+Additional dense and retrieval-oriented foundations include GTR, RetroMAE, and Atlas~\cite{extIR016,extIR018,extIR021}. These works broaden the entry-retrieval design space beyond the dual encoders emphasized in the main text.
+
+\paragraph{Reranking and structured indexes.}
+Further ranking systems include RankT5, RankZephyr, and multi-stage LLaMA reranking~\cite{extIR025,extIR026,extIR030}. Graph-oriented entry retrieval is additionally represented by GNN-RAG and LightRAG~\cite{extIR032,extIR034}. Together, these papers motivate evaluating first-stage pools, rerankers, and graph construction separately.
+
+\subsection{Follow-up Retrieval}
+\paragraph{Benchmarks exposing multi-step dependencies.}
+Beyond HotpotQA and MuSiQue, the literature includes ComplexWebQuestions, 2WikiMultiHopQA, HoVer, IIRC, DiRe, and reasoning-chain identification datasets~\cite{extFR003,extFR009,extFR010,extFR011,extFR012,extFR013}. Recent diagnostic sets include Ex-FEVER, FanOutQA, MoreHopQA, MultiHop-RAG, CofCA, and NovelHopQA~\cite{extFR041,extFR043,extFR044,extFR045,extFR054,extFR061}. These datasets differ in whether intermediate entities, support sets, counterfactual steps, or long-context dependencies are observable.
+
+\paragraph{Decomposition and explicit planning.}
+Additional approaches include interpretable complex-question decomposition, successive prompting, program-guided fact checking, Plan-and-Solve prompting, and Tree of Thoughts~\cite{extFR017,extFR022,extFR026,extFR030,extFR033}. They expand the possible state representations used before a later retrieval action, but only become follow-up retrieval when execution is conditioned on intermediate results.
+
+\paragraph{Path-conditioned and efficient retrieval.}
+Reasoning-path-aware retrieval, EfficientRAG, end-to-end beam retrieval, plan-driven RAG, DualRAG, DeepRAG, and MultiCube-RAG study alternatives to a single greedy retrieval chain~\cite{extFR032,extFR039,extFR040,extFR055,extFR059,extFR071,extFR075}. Their common concerns are path preservation, search allocation, state compression, and the cost of maintaining alternatives.
+
+\paragraph{Graph, tool, and browser environments.}
+Reasoning on Graphs, Think-on-Graph 2.0, AgentBench, ToolLLM, and WebArena enlarge the action or evidence environment beyond passage retrieval~\cite{extFR046,extFR065,extFR036,extFR049,extFR050}. Search-o1 further connects search actions to large reasoning models~\cite{extFR064}. These works are relevant only to the extent that tools or graph actions advance a retrieval-grounded information need.
+
+\subsection{Evidence Integration}
+\paragraph{Structured and neuro-symbolic reasoning.}
+The integration literature also includes multi-hop relational graph reasoning, entailment trees, intermediate supervision for knowledge-base QA, ProofWriter, faithful chain-of-thought reasoning, PAL, Program of Thoughts, self-consistency, and Graph of Thoughts~\cite{extEO008,extEO010,extEO011,extEO015,extEO031,extEO035,extEO037,extEO040,extEO051}. These methods differ in whether structure is imposed before generation, induced during reasoning, or used only to aggregate candidate derivations.
+
+\paragraph{Tables, documents, and multimodal evidence.}
+ManyModalQA, OTT-QA, TAT-QA, FeTaQA, MuGER, WebQA, DocHop-QA, VisDoM, and WikiMixQA extend evidence integration beyond homogeneous text passages~\cite{extEO007,extEO014,extEO017,extEO020,extEO023,extEO025,extEO067,extEO073,extEO074}. They expose alignment problems among table cells, document layout, image regions, entities, and textual evidence spans.
+
+\paragraph{Grounding and verifiability.}
+SciFact, verified-quote generation, verifiability evaluation for generative search, HaluEval, AVeriTeC, CRAG, ExpertQA, RAGTruth, and Fact--Fetch--Reason provide complementary views of evidence support and hallucination~\cite{extEO004,extEO024,extEO030,extEO033,extEO046,extEO047,extEO048,extEO058,extEO068}. PRCA additionally optimizes the reader-facing context through a reward-driven adapter~\cite{extEO036}. These works motivate separating source acquisition, context selection, and claim-level support.
+
+\paragraph{Long-context organization.}
+ZeroSCROLLS, HELMET, HiQA, Leave No Document Behind, LongBench, and InfiniteBench analyze or improve long-context utilization~\cite{extEO041,extEO052,extEO053,extEO054,extEO056,extEO064}. They complement compression work by testing whether retained evidence remains accessible as context length, position, modality, and document count change.
+
+\subsection{Feedback Learning}
+\paragraph{Verification and reflective feedback.}
+Self-verification, SelfCheckGPT, evolving-memory verification, Verify-and-Edit, Chain-of-Verification, Let's Verify Step by Step, Math-Shepherd, and Self-Checker illustrate feedback signals ranging from answer-level critique to process verification~\cite{extFL006,extFL013,extFL015,extFL016,extFL019,extFL021,extFL022,extFL023}. The survey treats them as cross-task feedback only when the resulting signal is retained or used for later training.
+
+\paragraph{Tool and policy learning.}
+Toolformer studies self-supervised tool-use learning~\cite{extFL014}. More recent retrieval-grounded optimization includes Beyond Correctness, R1-Searcher, ReARTeR, ReSearch, and HiPRAG~\cite{extFL024,extFL025,extFL027,extFL028,extFL030}. These methods emphasize reward design, process supervision, and learned search control, and should be compared under matched tools, budgets, and test-time update rules.
+
+This extended map raises the number of explicitly cited records substantially while keeping the main narrative selective. The remaining corpus records are retained in the artifact because several are surveys, adjacent analyses, duplicated publication versions, or candidates awaiting stronger source verification; they should not be forced into the prose merely to maximize a reference count.
