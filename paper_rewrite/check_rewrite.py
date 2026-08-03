@@ -13,6 +13,7 @@ BIB_FILES = [
     ROOT / "references.bib",
     ROOT / "references_methods.bib",
     ROOT / "references_figure.bib",
+    ROOT / "references_harness.bib",
 ]
 
 
