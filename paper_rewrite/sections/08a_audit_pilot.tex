@@ -1,0 +1,27 @@
+\subsection{Completed Audit Calibration Batch}
+\label{subsec:audit_pilot}
+
+To test the codebook before completing the full audit, we finished a balanced calibration batch of eight papers: two from each functional category. The batch is deliberately small and is \emph{not} used to estimate field-wide reporting rates. Its purpose is to verify that the coding rules distinguish a diagnostic that is absent from one that is irrelevant to the paper's claim, and to expose revisions needed before scaling the audit to all \AuditSize{} selected papers. The source-located record for each paper is released in \texttt{audit/audit\_batch\_01\_completed.csv}.
+
+Table~\ref{tab:audit_pilot} summarizes the first claim-aligned observations. For initial retrieval, DPR and ColBERT directly report ranking effectiveness and efficiency, including retrieval depth and latency or throughput, but multi-hop bridge metrics are not applicable to their original single-hop ranking claims~\cite{karpukhin2020dpr,khattab2020colbert}. For follow-up retrieval, MDR reports complete support-sequence measures and retriever ablations, whereas IRCoT exposes its alternating reason--retrieve procedure, stopping rule, fixed paragraph cap, retrieval recall, and answer quality~\cite{xiong2021mdr,trivedi2023ircot}. Both make the acquisition process more observable than answer-only evaluation, yet neither provides a complete aggregate account of failed-query recovery and cost.
+
+The two evidence-integration cases illustrate the difference between indirect preservation and controlled intervention. LLMLingua reports compression ratios, downstream task performance, ablations, and end-to-end latency, but does not directly test relation or provenance preservation~\cite{jiang2023llmlingua}. Lost in the Middle instead holds evidence membership fixed and deliberately changes context length and evidence position, providing a direct intervention on context use~\cite{liu2024lostmiddle}. For feedback learning, Reflexion demonstrates improvement over repeated trials with a bounded episodic reflection memory, while ExpeL separates training-task experience collection from single-attempt evaluation on unseen tasks and additionally studies one forward-transfer setting~\cite{shinn2023reflexion,zhao2024expel}. The remaining gap is a stronger evaluation of negative transfer, forgetting, stale memories, and matched memory-context cost.
+
+\begin{table*}[tbp]
+\centering
+\caption{Claim-aligned findings from the eight-paper audit calibration batch. These observations calibrate the codebook and are not prevalence estimates.}
+\label{tab:audit_pilot}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{2.45cm}p{3.15cm}Y Y@{}}
+\toprule
+Category & Audited cases & Directly supported diagnostics & Main unresolved diagnostic \\
+\midrule
+Initial Retrieval & DPR; ColBERT & Top-$k$ retrieval or ranking metrics, fixed-pool comparison, end-to-end retrieval effectiveness, throughput or latency, and component ablations & No bridge or complete-chain measure, which is outside the papers' original single-hop claims \\
+Follow-up Retrieval & MDR; IRCoT & Support-sequence recall, hop-conditioned ablations, explicit reason--retrieve transitions, stopping rule, fixed evidence budget, answer outcome & Aggregate invalid-query, recovery, premature-stopping, and comparable end-to-end cost diagnostics remain incomplete \\
+Evidence Integration & LLMLingua; Lost in the Middle & Compression ratio, task preservation, latency, and ablations; controlled manipulation of evidence position with fixed membership & Direct relation/provenance retention and claim-level evidence-use tests are not jointly covered \\
+Feedback Learning & Reflexion; ExpeL & Repeated-trial learning curves, memory/reflection ablations, unseen-task experience reuse, and one forward-transfer experiment & Negative transfer, forgetting, stale-memory effects, library growth, and matched context overhead require stronger tests \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+This calibration also changes how later counts will be computed. Denominators must be claim aligned: bridge recall is not required of a general single-hop retriever, and cross-task transfer is not required of a within-episode search controller. Conversely, a paper that centrally claims better search control cannot substitute final-answer accuracy for trajectory and budget evidence. The remaining 62 selected records will be coded under the same source-locator requirement before any category-level reporting rate is added to the manuscript.
