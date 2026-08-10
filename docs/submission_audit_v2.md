@@ -18,7 +18,7 @@ Four discovery channels contribute to the frozen screening flow:
 | Final venue sweep | 66 |
 | **Raw source hits** | **452** |
 
-After duplicate and version consolidation, the screening flow is:
+After duplicate and version consolidation, the aggregate screening flow is:
 
 `452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
 
@@ -36,6 +36,8 @@ The 208 reviewed works are divided into:
 | Supporting | 54 |
 | Transfer-relevant | 19 |
 | **Total** | **208** |
+
+The candidate-level records behind the 452 raw hits are not part of the public release. The aggregate screening counts and protocol are reported for transparency; the public row-level artifact begins with the final 208 reviewed canonical works.
 
 ## Search sources and closure
 
@@ -74,7 +76,7 @@ Two manuscript ratios follow directly from this table:
 
 The scope and challenge assignments used for manuscript-level quantitative results are independently reviewed by two reviewers under the same operational codebook. Reviewers inspect the relevant primary technical source before reconciliation. Disagreements are resolved through source-grounded adjudication.
 
-No inter-coder coefficient is reported here unless the unreconciled reviewer labels needed to compute it are preserved in the release.
+No inter-coder coefficient is reported unless the unreconciled reviewer labels needed to compute it are preserved in the release.
 
 ## Interpretation boundary
 
@@ -87,8 +89,10 @@ The current overlap structure supports four manuscript findings:
 3. Direct Path Management and Direct Recovery overlap in only one Core work, indicating that proactive path preservation and reactive repair are rarely unified under the Direct criterion.
 4. Acquisition success and evidence use require separate attribution.
 
-## Artifact completeness
+## Public artifact completeness
 
-The aggregate files in `taxonomy/audit_v2/` reproduce the counts in this document. The remaining release task is to publish the row-level frozen discovery/screening ledger, the 208-work canonical table, the 135-Core challenge-relation table, and reviewer/adjudication provenance needed to regenerate the aggregate snapshot independently.
+The aggregate files in `taxonomy/audit_v2/` reproduce the counts in this document. The submission release should additionally publish the final **208-work canonical evidence map**, the **135-Core challenge-relation table**, and reviewer/adjudication provenance sufficient to regenerate and inspect the manuscript's quantitative challenge analysis.
 
-Until those row-level v2 files are committed and tagged, the legacy v1 audit should not be used to validate the current manuscript counts.
+The candidate-level discovery and screening ledger is outside the public artifact boundary. Readers can inspect the aggregate screening flow and search protocol without requiring publication of the full candidate queue.
+
+The legacy v1 audit should not be used to validate the current manuscript counts.
