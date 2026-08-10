@@ -59,7 +59,13 @@ Composition requires an operation across multiple supplied evidence units. Conte
 
 The scope and challenge assignments used in manuscript-level quantitative analysis are independently reviewed by two reviewers under the same codebook. Reviewers inspect the relevant primary technical source before reconciliation. Disagreements are revisited against those sources and resolved through explicit adjudication.
 
-The adjudicated canonical-work table is the counting source for challenge prevalence and pairwise overlap. Corpus construction counts come from the frozen discovery and screening ledger rather than from the final canonical-work table.
+The adjudicated canonical-work table is the counting source for challenge prevalence and pairwise overlap. Aggregate corpus construction counts come from the internal frozen discovery and screening ledger rather than from the final canonical-work table.
+
+## Public release boundary
+
+The public row-level artifact begins with the final **208 reviewed canonical works**. Candidate-level discovery and screening records are not part of the public release.
+
+The public release should include the 208-work canonical table, the 135-Core challenge-relation table, and reviewer/adjudication provenance sufficient to regenerate the manuscript's challenge counts and overlap statistics. Aggregate screening counts and the search protocol remain public even though the full candidate queue is not.
 
 ## Counting rules
 
