@@ -4,22 +4,25 @@ All notable repository changes are recorded here.
 
 ## Unreleased
 
-- Expanded the broad catalog to 50 methods and the source-reviewed layer to 47
-  methods; added a frozen 40-method comparative audit.
-- Added the 24-field audit codebook with separate claim and evidence columns,
-  explicit uncertainty codes, and a full-text-only rule for `not_reported`.
-- Removed three duplicated intervention mappings and made `joint` secondary
-  only; primary labels now always use the earliest active evidence-chain stage.
-- Added generated audit statistics and validator checks for denominator,
-  schema, status alignment, mapping uniqueness, and the frozen stage
-  distribution.
-- Synchronized the repository title, citation metadata, taxonomy labels, PDF,
-  and Figure 1 assets with the evidence-chain diagnostic manuscript revision.
-- Standardized the catalog target vocabulary around
-  `selection_preservation` and regenerated the static catalog payload.
-- Removed stale imported-library and legacy multi-figure artifacts so the
-  repository exposes only the current manuscript version.
-- Added a frozen quantitative reporting audit for the source-verified method
-  seed used in the manuscript.
-- Added the initial public repository structure, citation metadata, taxonomy schema, contribution policy, and catalog validation workflow.
-- Seeded a small set of canonical methods and benchmarks as examples of the dual-axis taxonomy.
+### Manuscript-aligned v2 layer
+
+- Aligned repository identity with **Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey** and authors Yuqing Luo, Kai Zhang, and Heli Yang.
+- Added `taxonomy/challenge_codebook_v2.md` with the current evidence-dependency scope, Core/Supporting/Transfer-relevant tiers, and Direct/Secondary/No challenge relations.
+- Added `docs/submission_audit_v2.md` and aggregate files under `taxonomy/audit_v2/` for the frozen 2026-08-09 manuscript snapshot.
+- Documented the corpus construction flow: 452 raw hits, 342 unique candidates, 265 records entering primary-source review, 263 resolved sources, and 208 reviewed canonical works.
+- Documented the 208-work scope split: 135 Core, 54 Supporting, and 19 Transfer-relevant.
+- Added current Direct and Direct+Secondary challenge counts and the pairwise Direct overlap matrix used by the manuscript.
+- Updated the coverage protocol to distinguish candidate discovery, scope inclusion, challenge coding, independent review, and source-grounded adjudication.
+- Updated README, ARTIFACT, CITATION metadata, and contribution guidance to distinguish the current v2 manuscript layer from the historical v1 catalog and audit.
+- Preserved the legacy 50-record catalog and 40-record single-coded audit for provenance; they are no longer presented as the source of current manuscript counts.
+
+### Remaining release work
+
+- Publish the row-level frozen discovery/screening ledger.
+- Publish the 208-work canonical table and 135-Core challenge-relation table.
+- Publish reviewer/adjudication provenance needed to independently regenerate the v2 aggregate snapshot.
+- Regenerate and tag the final manuscript-linked figures and quantitative outputs before submission.
+
+## Legacy v1 history
+
+The repository previously used a 50-method broad catalog and a frozen 40-method comparative audit organized around Observability, Selection preservation, Exposure, Fusion reliability, and Causal faithfulness. The v1 audit is single-coded and remains available only as a historical artifact.
