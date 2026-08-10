@@ -1,33 +1,46 @@
-# Artifact readiness
+# Artifact status
 
-This is a survey companion, not a benchmark submission or a claim of independently reproduced experimental results. It nevertheless follows the artifact-oriented practices relevant to an ACM-style public companion: clear scope, permanent-source metadata, the current Figure 1 asset, catalog schemas, and automated catalog checks.
+This repository is the public companion to *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*. It is a survey artifact, not a benchmark submission and not a claim that all cited experimental results are independently reproduced here.
 
-## Included artifacts
+## Current manuscript-aligned artifacts
 
-| Artifact | Location | Verification |
+| Artifact | Location | Status |
 | --- | --- | --- |
-| Figure 1 | [`mh_figures/fig1.pdf`](mh_figures/fig1.pdf) | Open the PDF and compare it with the manuscript figure |
-| Survey catalog | [`taxonomy/`](taxonomy) | Run `python3 scripts/validate_catalog.py` |
-| Frozen audit records | [`taxonomy/audit_records.csv`](taxonomy/audit_records.csv) | Validate against [`taxonomy/audit_codebook_v1.md`](taxonomy/audit_codebook_v1.md) |
-| Generated reporting audit | [`docs/quantitative_audit.md`](docs/quantitative_audit.md) | Run `python3 scripts/build_quantitative_audit.py` and verify a clean diff |
+| Challenge codebook v2 | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) | aligned with current manuscript |
+| Submission audit summary | [`docs/submission_audit_v2.md`](docs/submission_audit_v2.md) | aligned aggregate snapshot |
+| Search-flow counts | [`taxonomy/audit_v2/search_flow.csv`](taxonomy/audit_v2/search_flow.csv) | current aggregate counts |
+| Challenge counts | [`taxonomy/audit_v2/challenge_counts.csv`](taxonomy/audit_v2/challenge_counts.csv) | current Core counts |
+| Direct overlap matrix | [`taxonomy/audit_v2/direct_overlap.csv`](taxonomy/audit_v2/direct_overlap.csv) | current Core overlap |
+| Coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | current discovery and review protocol |
+| Executable discovery queries | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Semantic Scholar candidate discovery |
+
+The current manuscript snapshot contains 208 reviewed canonical works: 135 Core, 54 Supporting, and 19 Transfer-relevant. Quantitative challenge prevalence uses the 135 Core works.
 
 ## Reproducibility boundary
 
-The catalog supports inspection and extension of the survey taxonomy. The
-40-record audit supports claim-to-evidence counts only under its codebook; it
-is not a prevalence estimate or a claim of exhaustive coverage. The repository
-does not redistribute third-party datasets, model weights, or publisher PDFs,
-and it does not claim that every result cited in the manuscript can be rerun
-from this repository.
+The aggregate v2 files reproduce the counts reported by the manuscript, but the public repository does not yet contain the full row-level v2 release.
 
-The v1.0 audit is single-coded. Automated validation checks its structure and
-regenerates aggregate counts; it does not replace independent semantic
-recoding or justify an inter-coder reliability claim.
+Before submission, the tagged artifact should additionally contain:
 
-The manuscript is submitted separately. No convenience manuscript PDF is
-included in the frozen artifact, which prevents a stale draft from being
-mistaken for the version whose counts cite this snapshot.
+1. the frozen discovery and screening ledger that regenerates the 452 -> 342 -> 265 -> 263 -> 208 corpus flow;
+2. the 208-work canonical table with scope tier;
+3. the 135-Core challenge-relation table;
+4. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
+5. scripts or generated outputs that reproduce the manuscript challenge tables and empirical landscape figure.
+
+Until those row-level files are published, the aggregate snapshot is inspectable but not independently regenerable from raw records in this repository.
+
+## Legacy v1 artifact
+
+The following files are preserved for provenance and are not the source of the current manuscript counts:
+
+- `taxonomy/audit_records.csv`
+- `taxonomy/audit_codebook_v1.md`
+- `docs/quantitative_audit.md`
+- the older catalog taxonomy built around Observability, Selection preservation, Exposure, Fusion reliability, and Causal faithfulness.
+
+The v1 audit contains 40 single-coded records. It should not be used to validate the v2 208-work manuscript snapshot or to infer the current review reliability protocol.
 
 ## Release practice
 
-Create a GitHub release and archive it through a DOI-minting service (for example, Zenodo) for each manuscript revision. Add the resulting DOI to `CITATION.cff`; only add the final ACM DOI and venue metadata after they are assigned.
+Create a tagged GitHub release only after all manuscript-level counts regenerate from the files included in that tag. Archive the tag through a DOI-minting service if desired. Add a repository DOI to `CITATION.cff` once available; add ACM DOI, volume, issue, and page metadata only after the publisher assigns them.
