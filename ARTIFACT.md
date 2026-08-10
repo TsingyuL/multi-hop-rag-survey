@@ -8,7 +8,7 @@ This repository is the public companion to *Resolving Evidence Chains in Multi-H
 | --- | --- | --- |
 | Challenge codebook v2 | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) | aligned with current manuscript |
 | Submission audit summary | [`docs/submission_audit_v2.md`](docs/submission_audit_v2.md) | aligned aggregate snapshot |
-| Search-flow counts | [`taxonomy/audit_v2/search_flow.csv`](taxonomy/audit_v2/search_flow.csv) | current aggregate counts |
+| Search-flow counts | [`taxonomy/audit_v2/search_flow.csv`](taxonomy/audit_v2/search_flow.csv) | aggregate screening counts |
 | Challenge counts | [`taxonomy/audit_v2/challenge_counts.csv`](taxonomy/audit_v2/challenge_counts.csv) | current Core counts |
 | Direct overlap matrix | [`taxonomy/audit_v2/direct_overlap.csv`](taxonomy/audit_v2/direct_overlap.csv) | current Core overlap |
 | Coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | current discovery and review protocol |
@@ -16,19 +16,20 @@ This repository is the public companion to *Resolving Evidence Chains in Multi-H
 
 The current manuscript snapshot contains 208 reviewed canonical works: 135 Core, 54 Supporting, and 19 Transfer-relevant. Quantitative challenge prevalence uses the 135 Core works.
 
-## Reproducibility boundary
+## Public reproducibility boundary
 
-The aggregate v2 files reproduce the counts reported by the manuscript, but the public repository does not yet contain the full row-level v2 release.
+The public artifact is designed to regenerate the manuscript's challenge-level quantitative results from the **final reviewed evidence map**. It does not publish the complete candidate-level discovery and screening ledger.
 
-Before submission, the tagged artifact should additionally contain:
+The tagged submission artifact should contain:
 
-1. the frozen discovery and screening ledger that regenerates the 452 -> 342 -> 265 -> 263 -> 208 corpus flow;
-2. the 208-work canonical table with scope tier;
-3. the 135-Core challenge-relation table;
-4. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
-5. scripts or generated outputs that reproduce the manuscript challenge tables and empirical landscape figure.
+1. the final **208-work canonical evidence map** with scope tier;
+2. the **135-Core challenge-relation table** with Direct, Secondary, and No coding;
+3. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
+4. scripts or generated outputs that reproduce the challenge-count table, pairwise Direct-overlap table, and empirical landscape figure.
 
-Until those row-level files are published, the aggregate snapshot is inspectable but not independently regenerable from raw records in this repository.
+The candidate-level records behind the reported 452 raw hits are outside the public artifact boundary. Their aggregate screening counts, search protocol, query families, and venue closure remain documented in the manuscript and repository.
+
+This boundary means that readers can independently inspect and regenerate the manuscript's quantitative challenge analysis without requiring publication of the full candidate discovery queue.
 
 ## Legacy v1 artifact
 
@@ -43,4 +44,4 @@ The v1 audit contains 40 single-coded records. It should not be used to validate
 
 ## Release practice
 
-Create a tagged GitHub release only after all manuscript-level counts regenerate from the files included in that tag. Archive the tag through a DOI-minting service if desired. Add a repository DOI to `CITATION.cff` once available; add ACM DOI, volume, issue, and page metadata only after the publisher assigns them.
+Create a tagged GitHub release after the final 208-work evidence map, the 135-Core challenge coding, reviewer/adjudication provenance, and regeneration outputs are aligned with the manuscript. Archive the tag through a DOI-minting service if desired. Add a repository DOI to `CITATION.cff` once available; add ACM DOI, volume, issue, and page metadata only after the publisher assigns them.
