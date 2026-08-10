@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this survey or its catalog, please cite it as below."
-title: "Multi-Hop Retrieval-Augmented Generation through the Lens of Latent Evidence-Chain Inference: A Diagnostic Survey"
+message: "If you use this survey or its companion artifact, please cite it as below."
+title: "Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey"
 type: article
 authors:
   - family-names: Luo
@@ -9,18 +9,25 @@ authors:
   - family-names: Zhang
     given-names: Kai
     affiliation: University of Science and Technology of China
+  - family-names: Yang
+    given-names: Heli
+    affiliation: University of Science and Technology of China
 year: 2026
 abstract: >-
-  A diagnostic survey of multi-hop retrieval-augmented generation organized
-  around evidence-chain observability, selection preservation, evidence
-  exposure, fusion reliability, and causal faithfulness.
+  A challenge-centered survey of multi-hop retrieval-augmented generation
+  defined by dependency among external evidence units. The survey separates
+  Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery,
+  and Evidence Composition, and analyzes a canonical evidence map of 208
+  reviewed works with 135 Core works used for quantitative challenge analysis.
 keywords:
-  - multi-hop reasoning
+  - multi-hop RAG
   - retrieval-augmented generation
-  - question answering
-  - evidence retrieval
-  - faithfulness
+  - multi-hop question answering
+  - evidence dependency
+  - evidence chains
+  - agentic retrieval
 license: MIT
 notes: >-
-  Author manuscript draft. Add DOI, final venue, volume, issue, and pages only
-  after they are assigned by the publisher.
+  Author manuscript draft targeting ACM Transactions on Information Systems.
+  Review cutoff: 2026-08-09. Add repository DOI and final publisher metadata
+  only after they are assigned.
