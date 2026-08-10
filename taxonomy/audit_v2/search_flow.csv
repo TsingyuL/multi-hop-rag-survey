@@ -1,0 +1,16 @@
+stage,count
+adjacent_survey_hits,171
+keyword_search_hits,123
+citation_tracing_hits,92
+venue_sweep_hits,66
+raw_source_hits,452
+unique_candidates,342
+metadata_excluded,77
+primary_source_review_queue,265
+resolved_sources,263
+unresolved_sources,2
+full_source_excluded,55
+reviewed_canonical_works,208
+core_works,135
+supporting_works,54
+transfer_relevant_works,19
