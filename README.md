@@ -8,7 +8,7 @@
 
 This repository is the public companion to a survey of multi-hop retrieval-augmented generation defined by **dependency among external evidence units**. The current manuscript organizes the literature around five nonexclusive challenges: **Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery, and Evidence Composition**.
 
-The repository now contains documentation and aggregate audit files aligned with the manuscript review cutoff of **August 9, 2026**. The older 40-record v1 audit is retained for provenance but is not the source of the current manuscript counts.
+The repository contains documentation and aggregate audit files aligned with the manuscript review cutoff of **August 9, 2026**. The older 40-record v1 audit is retained for provenance but is not the source of the current manuscript counts.
 
 ## Start here
 
@@ -30,9 +30,11 @@ The frozen evidence map contains **208 canonical works**:
 - **54 Supporting**
 - **19 Transfer-relevant**
 
-The corpus construction flow is:
+The corpus construction flow reported in the manuscript is:
 
 `452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
+
+Candidate-level discovery and screening records are not part of the public release. The public artifact reports the aggregate screening counts and protocol, while the released row-level evidence map begins at the final **208 reviewed canonical works**.
 
 The quantitative challenge analysis uses the **135 Core works** as its prevalence denominator.
 
@@ -66,11 +68,18 @@ The scope and challenge assignments used for manuscript-level quantitative resul
 
 See [`docs/coverage_protocol.md`](docs/coverage_protocol.md) and [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) for the operational rules.
 
-## Artifact status
+## Public artifact boundary
 
-The repository documentation, citation metadata, challenge codebook, and aggregate audit statistics are aligned with the current manuscript. The aggregate files in [`taxonomy/audit_v2/`](taxonomy/audit_v2/) reproduce the manuscript-level counts shown above.
+The public release is intended to support independent regeneration of the manuscript's **challenge-level quantitative results**, not to expose the complete candidate discovery queue.
 
-**One release task remains before submission:** publish the row-level frozen discovery/screening ledger, the 208-work canonical table, the 135-Core challenge-relation table, and reviewer/adjudication provenance needed to regenerate the v2 aggregate snapshot independently. Until those files are committed and tagged, the legacy v1 audit must not be used to validate current manuscript counts.
+The submission release should contain:
+
+1. the final **208-work canonical evidence map** with scope tier;
+2. the **135-Core challenge-relation table** with Direct, Secondary, and No assignments;
+3. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
+4. scripts or generated outputs that reproduce the challenge-count table, pairwise overlap table, and empirical landscape figure.
+
+The candidate-level discovery and screening ledger for the 452 raw hits is not part of the public artifact. Aggregate screening counts, search protocol, query families, and venue closure are documented in the manuscript and repository.
 
 ## Legacy v1 catalog and audit
 
