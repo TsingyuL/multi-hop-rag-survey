@@ -1,75 +1,119 @@
-# Coverage and curation protocol
+# Coverage and review protocol
 
 ## Purpose and claim boundary
 
-This repository is a **living, curated evidence map** for multi-hop retrieval-augmented reasoning. It is not a registered systematic review and does not make a PRISMA-style claim of exhaustive retrieval. In particular, an absent paper should never be interpreted as evidence that the paper is irrelevant or low quality.
+This repository supports the evidence map behind *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*. The review is a structured evidence map rather than a registered systematic review or a statistical meta-analysis. Reported counts describe the corpus produced by the declared protocol; they do not imply that no relevant work exists outside the corpus.
 
-The protocol exists so readers can distinguish three things that are often conflated in survey repositories: scope, metadata verification, and interpretive taxonomy labels.
+The manuscript review cutoff is **2026-08-09**.
 
 ## Scope
 
-An entry is in scope when it makes a material contribution to at least one of these stages in retrieval-grounded multi-hop reasoning:
+The current survey defines multi-hop RAG by **dependency among external evidence units**, not by document count, retrieval-call count, or reasoning length.
 
-1. finding a multi-step support chain in an external corpus, knowledge graph, table, or hybrid source;
-2. selecting, ordering, or compressing that evidence under a budget;
-3. composing evidence to answer or verify a multi-step query; or
-4. testing or improving whether the output causally uses the retrieved evidence.
+A work is in the target problem space when at least one of the following holds:
 
-Foundational single-hop retrieval and general agent papers are included only when they provide a concrete mechanism, benchmark, or evaluation setting that directly informs this scope. Purely parametric chain-of-thought work is out of scope unless it performs external evidence access.
+1. **Acquisition dependency:** evidence obtained earlier changes or specifies a later information need, retrieval target, or search action.
+2. **Reasoning dependency:** answering requires a substantive operation across multiple external evidence units, such as binding, comparison, conjunction, relational join, aggregation, temporal alignment, or transformation.
 
-## Discovery sources and query families
+Purely parametric chain-of-thought work is outside this scope unless external evidence access is part of the mechanism or task. Reader-only multi-hop systems may still be retained as mechanism evidence for Evidence Composition without being relabeled as end-to-end RAG systems.
 
-The seed catalog was assembled from canonical landing pages at ACL Anthology, OpenReview, arXiv, venue proceedings, and official project repositories. Updates should search more than one source where possible.
+## Discovery channels
 
-Suggested query families:
+Candidate discovery uses four complementary channels:
 
-- `"multi-hop" AND (retrieval OR RAG OR "open-domain QA")`
-- `("iterative retrieval" OR "multi-step retrieval" OR "reasoning path") AND question answering`
-- `("evidence chain" OR "supporting facts") AND (retrieval OR reasoning)`
-- benchmark names such as `HotpotQA`, `2WikiMultiHopQA`, `MuSiQue`, `HoVer`, and `QASC` combined with retrieval terms.
+1. consolidation from adjacent surveys;
+2. keyword search;
+3. backward and forward citation tracing from canonical methods and benchmarks; and
+4. a final sweep of recent relevant venues.
 
-The tracked [`discovery_queries.csv`](../taxonomy/discovery_queries.csv) makes these query families executable. Run `python3 scripts/refresh_discovery_queue.py` to create a local `discovery_queue.csv`; it is intentionally not committed or merged into the reviewed catalog automatically. Public scholarly APIs may rate-limit unauthenticated bulk refreshes, so a failed refresh must be retried rather than treated as zero results.
+The frozen aggregate counts are:
 
-Searches should be recorded in the pull request or issue that motivates a substantial coverage update. The current seed collection was last curated on **2026-07-11**.
+| Discovery channel | Records |
+| --- | ---: |
+| Adjacent survey consolidation | 171 |
+| Keyword search | 123 |
+| Citation tracing | 92 |
+| Final venue sweep | 66 |
+| **Raw source hits** | **452** |
 
-## Required record evidence
+The executable keyword families in [`taxonomy/discovery_queries.csv`](../taxonomy/discovery_queries.csv) use Semantic Scholar as the candidate-discovery service. Those machine-executable strings are a maintenance interface; the manuscript reports the broader conceptual query families used in the review.
 
-Every method entry must contain:
+Primary-source identity and technical claims are subsequently checked against authoritative landing pages such as ACL Anthology, OpenReview, arXiv, the ACM Digital Library, publisher pages, and official repositories.
 
-| Field | Curation rule |
-| --- | --- |
-| Canonical title, year, venue | Check against a publisher, proceedings, ACL Anthology, OpenReview, or arXiv landing page. |
-| `source_url` | Use a stable landing page rather than a direct PDF whenever possible. |
-| Task and datasets | Record the paper’s evaluation setting; do not infer a dataset from a citation alone. |
-| Taxonomy labels | Assign using the [taxonomy guide](taxonomy.md), and state a concrete intervention in `pipeline_mapping.csv`. |
-| Code or data URL | Link only author-maintained or official resources. An empty `code_url` means no official link was verified, not that no implementation exists. |
+## Query families
 
-## Review status
+The review uses query families covering at least the following concepts:
 
-- `seeded`: a starter record that meets the schema but may need independent cross-checking or broader contextual review.
-- `reviewed`: metadata, canonical link, primary taxonomy label, and at least one pipeline mapping were checked against the paper or official project page.
-- `needs_review`: useful candidate whose placement or scope needs explicit verification before comparative claims rely on it.
+- multi-hop question answering plus retrieval;
+- explicit multi-hop retrieval-augmented generation;
+- iterative or multi-step retrieval with reasoning;
+- multi-hop knowledge-graph question answering;
+- evidence-chain retrieval and verification.
 
-`reviewed` does not certify experimental reproducibility, correctness of every result, or superiority over other work.
+Substantial updates should preserve the exact executable query strings and execution dates in the frozen discovery/screening ledger. A search failure or API rate limit is not treated as zero results.
 
-Reviewed status also does not automatically confer audit eligibility. The
-frozen comparative audit applies the stricter inclusion and 24-field coding
-rules in [`taxonomy/audit_codebook_v1.md`](../taxonomy/audit_codebook_v1.md).
-The admitted records are listed in
-[`taxonomy/audit_records.csv`](../taxonomy/audit_records.csv); broad catalog
-records excluded from that file must not enter audit-derived counts.
+## Venue closure
 
-## Taxonomy adjudication
+The final venue sweep covers ACL, EMNLP, NAACL, EACL, COLING, SIGIR, WWW, WSDM, CIKM, ICLR, NeurIPS, ICML, AAAI, and IJCAI. Relevant journal and arXiv records may also enter through keyword search or citation tracing.
 
-The catalog labels the **earliest evidence-chain event deliberately targeted by the central mechanism**, not every metric that improves in an experiment. `joint` is secondary only and never replaces that earliest-stage primary label. When a label is genuinely ambiguous, retain the primary label only if the rationale is defensible and use `secondary_estimands` for material downstream effects. Discuss new categories or contested labels in an issue before merging.
+The venue sweep is a closure step, not a separate prevalence stratum.
+
+## Screening and canonicalization
+
+The frozen corpus construction flow is:
+
+`452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
+
+- Duplicate versions and title variants are merged before challenge statistics are computed.
+- 77 unique candidates are excluded at title/metadata screening.
+- 2 records remain unresolved and do not enter the reviewed denominator.
+- 55 resolved records are excluded after full source review.
+
+The final 208 canonical works are divided into **135 Core, 54 Supporting, and 19 Transfer-relevant**.
+
+## Scope tiers
+
+- **Core:** the central contribution materially depends on evidence dependencies across multiple steps or units. Removing those dependencies would substantially change the research problem or the method's central mechanism.
+- **Supporting:** the work remains within retrieval, RAG, or QA system design and provides a mechanism relevant to multi-hop systems, but dependent evidence resolution is not central to its research problem.
+- **Transfer-relevant:** the work originates outside the target retrieval/RAG task population and is retained because its mechanism or boundary case clarifies one of the five challenges.
+
+Only the 135 Core works enter the primary challenge-prevalence analysis.
+
+## Challenge coding
+
+The current manuscript uses the five challenge families in [`taxonomy/challenge_codebook_v2.md`](../taxonomy/challenge_codebook_v2.md):
+
+- Next-Hop Discovery
+- Path Management
+- Evidence Sufficiency
+- Error Recovery
+- Evidence Composition
+
+Each work-to-challenge relation is coded as Direct, Secondary, or No. Direct prevalence and pairwise overlap are computed only among Core works. Direct+Secondary is reported as a sensitivity analysis for relation strength.
+
+## Independent review and adjudication
+
+The scope and challenge assignments used for manuscript-level quantitative results are independently reviewed by two reviewers under the same codebook. Each reviewer checks the relevant primary technical source before reconciliation. Disagreements are revisited against the source and resolved through explicit adjudication.
+
+The frozen discovery/screening ledger is the source of corpus-construction counts. The adjudicated canonical-work table is the source of challenge prevalence and pairwise overlap.
+
+No inter-coder coefficient should be reported unless the unreconciled reviewer labels required to compute it are preserved and released.
+
+## Artifact status
+
+The manuscript-aligned aggregate snapshot is available in [`taxonomy/audit_v2/`](../taxonomy/audit_v2/) and summarized in [`docs/submission_audit_v2.md`](submission_audit_v2.md).
+
+The legacy 40-record v1 audit is retained for provenance only. It is single-coded and does not support the current manuscript's 208-work counts or independent-review statement.
+
+Before submission, the tagged release should add the row-level frozen screening ledger, canonical 208-work table, 135-Core challenge-relation table, and reviewer/adjudication provenance needed to regenerate the aggregate snapshot independently.
 
 ## Update and correction policy
 
-1. Add the catalog row, BibTeX key, and pipeline mapping in the same change.
-2. Run `python3 scripts/validate_catalog.py`,
-   `python3 scripts/build_quantitative_audit.py`, and
-   `python3 scripts/build_catalog_site.py`.
-3. Update the reading paths only when a new work changes the recommended conceptual route; do not turn the guide into a leaderboard.
-4. For factual corrections, open an issue or pull request with the authoritative URL. Corrections are preferred over silent deletion; summarize material changes in the [change log](changelog.md).
+1. Resolve canonical identity before adding a work to the reviewed corpus.
+2. Record discovery provenance separately from inclusion and challenge coding.
+3. Use primary technical sources for scope and challenge decisions.
+4. Preserve exclusion reasons and unresolved-source status rather than silently dropping records.
+5. Run structural validators and regenerate aggregate tables after any change to corpus membership or challenge coding.
+6. Summarize material corrections in the repository change log or pull request.
 
-This protocol deliberately favors auditable coverage over inflated paper counts.
+This protocol favors inspectable decisions and versioned counts over inflated paper totals.
