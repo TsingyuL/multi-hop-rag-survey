@@ -50,7 +50,7 @@ The review uses query families covering at least the following concepts:
 - multi-hop knowledge-graph question answering;
 - evidence-chain retrieval and verification.
 
-Substantial updates should preserve the exact executable query strings and execution dates in the frozen discovery/screening ledger. A search failure or API rate limit is not treated as zero results.
+Substantial updates should preserve the exact executable query strings and execution dates in the internal frozen discovery/screening ledger. A search failure or API rate limit is not treated as zero results.
 
 ## Venue closure
 
@@ -60,14 +60,14 @@ The venue sweep is a closure step, not a separate prevalence stratum.
 
 ## Screening and canonicalization
 
-The frozen corpus construction flow is:
+The aggregate corpus construction flow is:
 
 `452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
 
-- Duplicate versions and title variants are merged before challenge statistics are computed.
 - 77 unique candidates are excluded at title/metadata screening.
 - 2 records remain unresolved and do not enter the reviewed denominator.
 - 55 resolved records are excluded after full source review.
+- Duplicate versions and title variants are merged before challenge statistics are computed.
 
 The final 208 canonical works are divided into **135 Core, 54 Supporting, and 19 Transfer-relevant**.
 
@@ -79,41 +79,25 @@ The final 208 canonical works are divided into **135 Core, 54 Supporting, and 19
 
 Only the 135 Core works enter the primary challenge-prevalence analysis.
 
-## Challenge coding
+## Challenge coding and adjudication
 
-The current manuscript uses the five challenge families in [`taxonomy/challenge_codebook_v2.md`](../taxonomy/challenge_codebook_v2.md):
+Challenge relations are coded as Direct, Secondary, or No under [`taxonomy/challenge_codebook_v2.md`](../taxonomy/challenge_codebook_v2.md). The scope and challenge assignments used in the quantitative analysis are independently reviewed by two reviewers under the same codebook. Reviewers inspect the relevant primary technical source before reconciliation. Disagreements are revisited against those sources and resolved through explicit adjudication.
 
-- Next-Hop Discovery
-- Path Management
-- Evidence Sufficiency
-- Error Recovery
-- Evidence Composition
+The adjudicated canonical-work table generates challenge prevalence and pairwise overlap. Aggregate corpus-construction counts are generated from the internal frozen discovery and screening ledger.
 
-Each work-to-challenge relation is coded as Direct, Secondary, or No. Direct prevalence and pairwise overlap are computed only among Core works. Direct+Secondary is reported as a sensitivity analysis for relation strength.
+## Public release boundary
 
-## Independent review and adjudication
+The public artifact begins at the final reviewed evidence map. Candidate-level records from the discovery and screening stages are not released.
 
-The scope and challenge assignments used for manuscript-level quantitative results are independently reviewed by two reviewers under the same codebook. Each reviewer checks the relevant primary technical source before reconciliation. Disagreements are revisited against the source and resolved through explicit adjudication.
+The public submission release is intended to include:
 
-The frozen discovery/screening ledger is the source of corpus-construction counts. The adjudicated canonical-work table is the source of challenge prevalence and pairwise overlap.
+- the final **208-work canonical evidence map** with scope tier;
+- the **135-Core challenge-relation table**;
+- reviewer and adjudication provenance needed to support the quantitative coding claims; and
+- scripts or generated outputs that reproduce manuscript challenge counts, pairwise overlap, and the empirical landscape figure.
 
-No inter-coder coefficient should be reported unless the unreconciled reviewer labels required to compute it are preserved and released.
-
-## Artifact status
-
-The manuscript-aligned aggregate snapshot is available in [`taxonomy/audit_v2/`](../taxonomy/audit_v2/) and summarized in [`docs/submission_audit_v2.md`](submission_audit_v2.md).
-
-The legacy 40-record v1 audit is retained for provenance only. It is single-coded and does not support the current manuscript's 208-work counts or independent-review statement.
-
-Before submission, the tagged release should add the row-level frozen screening ledger, canonical 208-work table, 135-Core challenge-relation table, and reviewer/adjudication provenance needed to regenerate the aggregate snapshot independently.
+The manuscript and repository report the aggregate screening counts, search protocol, query families, and venue closure so that the construction procedure remains inspectable without publishing the full candidate queue.
 
 ## Update and correction policy
 
-1. Resolve canonical identity before adding a work to the reviewed corpus.
-2. Record discovery provenance separately from inclusion and challenge coding.
-3. Use primary technical sources for scope and challenge decisions.
-4. Preserve exclusion reasons and unresolved-source status rather than silently dropping records.
-5. Run structural validators and regenerate aggregate tables after any change to corpus membership or challenge coding.
-6. Summarize material corrections in the repository change log or pull request.
-
-This protocol favors inspectable decisions and versioned counts over inflated paper totals.
+Corrections to the final evidence map should identify the affected canonical work, cite the primary technical source, and explain the proposed scope or challenge revision. Any change that affects manuscript counts must regenerate the aggregate tables from the revised adjudicated coding before release.
