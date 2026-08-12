@@ -4,9 +4,22 @@ All notable repository changes are recorded here.
 
 ## Unreleased
 
+### 2026-08-12 synchronization
+
+- Synchronized manuscript-facing author metadata with the current TOIS draft:
+  Yuqing Luo, Kai Zhang, and Liyang He.
+- Synchronized all three current manuscript figure assets: the
+  evidence-dependency scope, five-challenge control loop, and
+  challenge-mechanism landscape.
+- Added a seven-survey reference-library layer containing 886 raw citation
+  records and 771 deduplicated papers, with an explicit boundary separating it
+  from the 208-work reviewed evidence map.
+- Reframed the literature navigator around Next-Hop Discovery, Path Management,
+  Evidence Sufficiency, Error Recovery, and Evidence Composition.
+
 ### Manuscript-aligned v2 layer
 
-- Aligned repository identity with **Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey** and authors Yuqing Luo, Kai Zhang, and Heli Yang.
+- Aligned repository identity with **Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey** and the then-current author metadata.
 - Added `taxonomy/challenge_codebook_v2.md` with the current evidence-dependency scope, Core/Supporting/Transfer-relevant tiers, and Direct/Secondary/No challenge relations.
 - Added `docs/submission_audit_v2.md` and aggregate files under `taxonomy/audit_v2/` for the frozen 2026-08-09 manuscript snapshot.
 - Documented the corpus construction flow: 452 raw hits, 342 unique candidates, 265 records entering primary-source review, 263 resolved sources, and 208 reviewed canonical works.
@@ -18,9 +31,9 @@ All notable repository changes are recorded here.
 
 ### Remaining release work
 
-- Publish the row-level frozen discovery/screening ledger.
 - Publish the 208-work canonical table and 135-Core challenge-relation table.
-- Publish reviewer/adjudication provenance needed to independently regenerate the v2 aggregate snapshot.
+- Publish source, coding, reviewer, and adjudication provenance for the final
+  reviewed evidence map, within the documented public boundary.
 - Regenerate and tag the final manuscript-linked figures and quantitative outputs before submission.
 
 ## Legacy v1 history

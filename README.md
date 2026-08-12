@@ -1,9 +1,10 @@
-# Multi-Hop RAG Survey Companion
+# Multi-Hop RAG Research Hub
 
-> Companion repository for **“Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey.”**
+> Research hub and public companion for **“Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey.”**
 
 [![Manuscript](https://img.shields.io/badge/manuscript-TOIS%20draft-2457C5.svg)](#associated-manuscript)
 [![Audit](https://img.shields.io/badge/audit-v2%20aggregate%20snapshot-087E8B.svg)](docs/submission_audit_v2.md)
+[![Reference library](https://img.shields.io/badge/reference%20library-771%20deduplicated%20papers-6F42C1.svg)](literature/README.md)
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 
 This repository is the public companion to a survey of multi-hop retrieval-augmented generation defined by **dependency among external evidence units**. The current manuscript organizes the literature around five nonexclusive challenges: **Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery, and Evidence Composition**.
@@ -17,6 +18,9 @@ The repository contains documentation and aggregate audit files aligned with the
 | Current challenge codebook | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) |
 | Current audit summary | [`docs/submission_audit_v2.md`](docs/submission_audit_v2.md) |
 | Aggregate v2 audit files | [`taxonomy/audit_v2/`](taxonomy/audit_v2/) |
+| Seven-survey reference library | [`literature/README.md`](literature/README.md), [`literature/reference_library.xlsx`](literature/reference_library.xlsx) |
+| Challenge-centered literature navigator | [`docs/literature_navigator.md`](docs/literature_navigator.md) |
+| Current manuscript figures | [`mh_figures/README.md`](mh_figures/README.md) |
 | Discovery and coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) |
 | Executable Semantic Scholar query families | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) |
 | Legacy catalog | [`taxonomy/methods.csv`](taxonomy/methods.csv), [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv) |
@@ -68,6 +72,19 @@ The scope and challenge assignments used for manuscript-level quantitative resul
 
 See [`docs/coverage_protocol.md`](docs/coverage_protocol.md) and [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) for the operational rules.
 
+## Adjacent-survey reference layer
+
+The research hub also includes a broad reference library reconstructed from
+seven adjacent surveys. It contains **886 raw citation records**, **771
+deduplicated papers**, **75 papers cited by at least two surveys**, and **16
+papers cited by at least three surveys**.
+
+This layer supports discovery and cross-survey comparison. It is deliberately
+separate from the frozen **208-work reviewed evidence map**: inclusion in the
+reference library does not imply primary-source review, scope inclusion, or
+challenge coding. See [`literature/README.md`](literature/README.md) for the
+workbook schema and interpretation boundary.
+
 ## Public artifact boundary
 
 The public release is intended to support independent regeneration of the manuscript's **challenge-level quantitative results**, not to expose the complete candidate discovery queue.
@@ -90,12 +107,12 @@ They are not the taxonomy or denominator used by the current challenge-centered 
 ## Associated manuscript
 
 - **Title:** Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey
-- **Authors:** Yuqing Luo, Kai Zhang, and Heli Yang
+- **Authors:** Yuqing Luo, Kai Zhang, and Liyang He
 - **Affiliation:** University of Science and Technology of China
 - **Target venue:** ACM Transactions on Information Systems (TOIS)
 - **Review cutoff:** August 9, 2026
 
-The repository does not contain an ACM Version of Record. Publisher DOI, volume, issue, and page metadata should be added only after assignment.
+The repository does not contain an ACM Version of Record. Publisher DOI, volume, issue, and page metadata should be added only after assignment. The manuscript source is maintained outside this research hub.
 
 ## Citation
 
@@ -103,7 +120,7 @@ Until final publisher metadata exists, cite the manuscript as:
 
 ```bibtex
 @article{luo2026resolving,
-  author = {Yuqing Luo and Kai Zhang and Heli Yang},
+  author = {Yuqing Luo and Kai Zhang and Liyang He},
   title  = {Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey},
   year   = {2026},
   note   = {Manuscript draft. Companion repository: https://github.com/TsingyuL/multi-hop-rag-survey}
