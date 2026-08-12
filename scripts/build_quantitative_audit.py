@@ -83,6 +83,11 @@ def main() -> int:
 
     content = f"""# Quantitative Reporting Audit
 
+> **Legacy v1 artifact:** This generated 40-record audit is retained for
+> provenance. The current manuscript uses the aggregate v2 snapshot in
+> [`submission_audit_v2.md`](submission_audit_v2.md) and
+> [`taxonomy/audit_v2/`](../taxonomy/audit_v2/).
+
 This file is generated from `taxonomy/audit_records.csv` by
 `python3 scripts/build_quantitative_audit.py`. Do not edit its counts by hand.
 

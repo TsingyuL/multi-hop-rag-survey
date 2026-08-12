@@ -10,6 +10,11 @@ All notable repository changes are recorded here.
   claims, and literature resources to their public repository counterparts.
 - Reframed the static site as the paper-aligned Research Hub and moved the v1
   catalog explorer into an explicitly labeled legacy section.
+- Redesigned the Web Hub with an editorial paper hero, challenge cards,
+  manuscript-figure previews, corpus-flow and evidence-map summaries, and a
+  clearer resource library.
+- Added lightweight PNG previews derived from the three current vector figure
+  PDFs while retaining the PDFs as the canonical downloadable assets.
 - Added a repository-root GitHub Pages entry point and README badge for the
   public Web Hub.
 - Corrected public-completeness wording: the current hub publishes aggregate
