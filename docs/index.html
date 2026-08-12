@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Paper-aligned research hub for Resolving Evidence Chains in Multi-Hop RAG.">
     <meta name="theme-color" content="#0d1b36">
+    <link rel="canonical" href="https://tsingyul.github.io/multi-hop-rag-survey/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Resolving Evidence Chains in Multi-Hop RAG">
+    <meta property="og:description" content="Challenge-centered survey research hub with figures, review evidence, protocols, and literature resources.">
+    <meta property="og:url" content="https://tsingyul.github.io/multi-hop-rag-survey/">
+    <meta property="og:image" content="https://tsingyul.github.io/multi-hop-rag-survey/docs/assets/og-research-hub.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Resolving Evidence Chains in Multi-Hop RAG">
+    <meta name="twitter:description" content="Challenge-centered survey research hub with figures, review evidence, protocols, and literature resources.">
+    <meta name="twitter:image" content="https://tsingyul.github.io/multi-hop-rag-survey/docs/assets/og-research-hub.jpg">
     <title>Multi-Hop RAG · Research Hub</title>
     <style>
       :root {
@@ -43,6 +55,10 @@
       a { color: inherit; }
       img { display: block; max-width: 100%; }
       button, input, select { font: inherit; }
+      [id] { scroll-margin-top: 86px; }
+      :focus-visible { outline: 3px solid #f3b16e; outline-offset: 4px; }
+      .skip-link { position: fixed; z-index: 30; top: -80px; left: 18px; border-radius: 0 0 10px 10px; background: #fff; color: var(--navy-900); padding: 10px 14px; font-weight: 800; }
+      .skip-link:focus { top: 0; }
       .wrap { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
       .topbar {
         position: sticky;
@@ -60,6 +76,13 @@
       .nav-links a { color: #dce6fb; font-size: .86rem; font-weight: 700; text-decoration: none; }
       .nav-links a:hover { color: #fff; }
       .nav-cta { border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: 7px 13px; }
+      .mobile-menu { display: none; position: relative; }
+      .mobile-menu summary { cursor: pointer; list-style: none; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: 7px 13px; color: #fff; font-size: .82rem; font-weight: 800; }
+      .mobile-menu summary::-webkit-details-marker { display: none; }
+      .mobile-links { position: absolute; top: calc(100% + 10px); right: 0; display: grid; width: min(280px, calc(100vw - 28px)); overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 20px 50px rgba(3,10,28,.3); }
+      .mobile-links a { border-bottom: 1px solid var(--line); padding: 12px 15px; color: var(--ink); font-size: .84rem; font-weight: 800; text-decoration: none; }
+      .mobile-links a:last-child { border-bottom: 0; color: var(--blue-700); }
+      .reading-progress { position: absolute; inset: auto 0 -1px; width: 0; height: 3px; background: linear-gradient(90deg, var(--orange-400), #fff0c8); transform-origin: left; }
       .hero {
         overflow: hidden;
         color: #fff;
@@ -145,6 +168,24 @@
       .resource h3 { margin: 12px 0 8px; font-size: 1.05rem; }
       .resource p { margin: 0; color: var(--muted); font-size: .82rem; }
       .resource em { margin-top: auto; padding-top: 18px; color: var(--orange-600); font-size: .77rem; font-style: normal; font-weight: 850; }
+      .status-board { display: grid; grid-template-columns: .74fr 1.26fr; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow); }
+      .status-intro { display: grid; align-content: space-between; min-height: 390px; padding: 34px; color: #fff; background: linear-gradient(150deg, var(--navy-950), var(--navy-800)); }
+      .status-intro .kicker { color: #f3b16e; }
+      .status-intro h2 { max-width: 420px; }
+      .status-intro p { color: #cad8ef; }
+      .status-date { align-self: end; color: #9eb5dc; font-size: .76rem; font-weight: 700; }
+      .status-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 34px; }
+      .status-column { display: flex; flex-direction: column; }
+      .status-label { align-self: flex-start; border-radius: 999px; padding: 5px 9px; font-size: .67rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+      .status-label.live { color: var(--green-600); background: var(--green-100); }
+      .status-label.planned { color: var(--orange-600); background: var(--orange-100); }
+      .status-column h3 { margin: 15px 0 8px; font-size: 1.15rem; }
+      .status-column > p { margin: 0; color: var(--muted); font-size: .82rem; }
+      .status-list { display: grid; gap: 11px; margin: 22px 0 0; padding: 0; list-style: none; }
+      .status-list li { position: relative; padding-left: 22px; color: #3e4d69; font-size: .82rem; }
+      .status-list li::before { content: ""; position: absolute; top: .58em; left: 0; width: 9px; height: 9px; border: 2px solid var(--status-tone); border-radius: 50%; background: var(--surface); }
+      .status-column:first-child { --status-tone: var(--green-600); }
+      .status-column:last-child { --status-tone: var(--orange-600); }
       .library-band { display: grid; grid-template-columns: 1.12fr .88fr; gap: 36px; align-items: center; border-radius: var(--radius-lg); color: #fff; background: linear-gradient(125deg, #173a58, #176f73); padding: 42px; box-shadow: var(--shadow); }
       .library-band h2 { max-width: 650px; }
       .library-band p { color: #d9eeee; }
@@ -152,6 +193,13 @@
       .library-stat { border: 1px solid rgba(255,255,255,.18); border-radius: 14px; background: rgba(255,255,255,.08); padding: 16px; }
       .library-stat strong { display: block; font: 650 1.7rem/1 "Iowan Old Style", Georgia, serif; }
       .library-stat span { color: #c9e5e5; font-size: .74rem; }
+      .citation-band { display: grid; grid-template-columns: .7fr 1.3fr; gap: 32px; align-items: center; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; padding: 34px; box-shadow: var(--shadow); }
+      .citation-band h2 { font-size: clamp(1.9rem, 3vw, 2.6rem); }
+      .citation-band p { margin-bottom: 0; color: var(--muted); font-size: .86rem; }
+      .citation-code { position: relative; min-width: 0; }
+      .citation-code pre { overflow-x: auto; margin: 0; border-radius: 15px; background: var(--navy-950); padding: 24px; color: #dce7fb; font: .77rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .copy-button { position: absolute; top: 12px; right: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; background: #1a3563; color: #fff; padding: 7px 11px; font-size: .72rem; font-weight: 850; }
+      .copy-button:hover { background: var(--blue-700); }
       .legacy { margin-top: 92px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #eef1f6; }
       .legacy summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 24px; padding: 24px 28px; font-weight: 850; }
       .legacy summary::-webkit-details-marker { display: none; }
@@ -179,7 +227,7 @@
       .footer-grid { display: flex; justify-content: space-between; gap: 30px; padding-block: 30px; color: var(--muted); font-size: .8rem; }
       .footer-grid a { color: var(--blue-700); font-weight: 750; text-decoration: none; }
       @media (max-width: 980px) {
-        .hero-grid, .section-head, .evidence-panel, .library-band { grid-template-columns: 1fr; }
+        .hero-grid, .section-head, .evidence-panel, .library-band, .status-board, .citation-band { grid-template-columns: 1fr; }
         .hero-grid { padding-block: 58px 76px; }
         .hero-visual { max-width: 680px; }
         .challenge-grid { grid-template-columns: repeat(2, 1fr); }
@@ -191,7 +239,8 @@
       @media (max-width: 720px) {
         .wrap { width: min(100% - 28px, 1180px); }
         .nav { min-height: 58px; }
-        .nav-links a:not(.nav-cta) { display: none; }
+        .nav-links { display: none; }
+        .mobile-menu { display: block; }
         .hero-grid { min-height: auto; gap: 40px; padding-block: 48px 62px; }
         h1 { font-size: clamp(3rem, 15vw, 4.3rem); }
         .lead { font-size: .98rem; }
@@ -203,11 +252,14 @@
         .stat:first-child, .stat:nth-child(2) { border-top: 0; }
         .section { padding-top: 70px; }
         .section-head { gap: 16px; }
-        .challenge-grid, .figure-grid, .resource-grid, .library-stats { grid-template-columns: 1fr; }
+        .challenge-grid, .figure-grid, .resource-grid, .library-stats, .status-columns { grid-template-columns: 1fr; }
         .challenge { min-height: auto; }
         .figure-copy p { min-height: auto; }
         .bar-row { grid-template-columns: 112px 1fr 38px; }
         .library-band { padding: 28px 22px; }
+        .status-intro { min-height: auto; gap: 38px; padding: 28px 22px; }
+        .status-columns, .citation-band { padding: 26px 20px; }
+        .citation-code pre { padding: 54px 18px 18px; font-size: .69rem; }
         .filters { grid-template-columns: 1fr; }
         .legacy summary { display: grid; padding: 20px; }
         .legacy-body { padding: 18px; }
@@ -220,6 +272,7 @@
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="topbar">
       <nav class="nav wrap" aria-label="Primary navigation">
         <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>MH-RAG Hub</a>
@@ -228,9 +281,22 @@
           <a href="#figures">Figures</a>
           <a href="#evidence">Evidence map</a>
           <a href="#resources">Resources</a>
+          <a href="#status">Artifact status</a>
           <a class="nav-cta" href="https://github.com/TsingyuL/multi-hop-rag-survey">View on GitHub</a>
         </div>
+        <details class="mobile-menu">
+          <summary>Menu</summary>
+          <div class="mobile-links">
+            <a href="#framework">Framework</a>
+            <a href="#figures">Figures</a>
+            <a href="#evidence">Evidence map</a>
+            <a href="#resources">Resources</a>
+            <a href="#status">Artifact status</a>
+            <a href="https://github.com/TsingyuL/multi-hop-rag-survey">View on GitHub</a>
+          </div>
+        </details>
       </nav>
+      <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
     </div>
 
     <header class="hero" id="top">
@@ -259,7 +325,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <div class="stats wrap" aria-label="Current manuscript snapshot">
         <div class="stat"><strong>208</strong><span>reviewed canonical works</span></div>
         <div class="stat"><strong>135</strong><span>Core works in prevalence analysis</span></div>
@@ -351,6 +417,40 @@
         </div>
       </section>
 
+      <section class="section wrap" id="status">
+        <div class="status-board">
+          <div class="status-intro">
+            <div><p class="kicker">Artifact transparency</p><h2>Know what the Hub supports today</h2><p>Every resource is positioned by evidentiary role. Aggregate results are public; row-level manuscript evidence remains a clearly identified release milestone.</p></div>
+            <span class="status-date">Snapshot aligned to the August 9, 2026 review cutoff</span>
+          </div>
+          <div class="status-columns">
+            <div class="status-column">
+              <span class="status-label live">Public now</span>
+              <h3>Inspectable materials</h3>
+              <p>Resources that readers can use and verify in the current repository.</p>
+              <ul class="status-list">
+                <li>Five-challenge scope and coding rules</li>
+                <li>Aggregate corpus counts and overlap results</li>
+                <li>Three manuscript figures in vector PDF</li>
+                <li>Discovery, coverage, and reporting protocols</li>
+                <li>Seven-survey reference workbook</li>
+              </ul>
+            </div>
+            <div class="status-column">
+              <span class="status-label planned">Release planned</span>
+              <h3>Submission-ready provenance</h3>
+              <p>Materials still required for independent row-level regeneration.</p>
+              <ul class="status-list">
+                <li>208-work canonical evidence table</li>
+                <li>135-Core challenge-relation table</li>
+                <li>Reviewer and adjudication provenance</li>
+                <li>Reproducible challenge-count and overlap outputs</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section wrap">
         <div class="library-band">
           <div><p class="kicker">Adjacent-survey discovery layer</p><h2>Seven surveys. One broader reference library.</h2><p>The workbook supports discovery and cross-survey comparison. It is deliberately separate from the frozen 208-work reviewed evidence map and does not establish scope or challenge coding.</p><a class="button primary" href="../literature/reference_library.xlsx">Download the workbook</a></div>
@@ -359,6 +459,23 @@
             <div class="library-stat"><strong>771</strong><span>deduplicated papers</span></div>
             <div class="library-stat"><strong>75</strong><span>cited by at least two surveys</span></div>
             <div class="library-stat"><strong>16</strong><span>cited by at least three surveys</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section wrap" id="citation">
+        <div class="citation-band">
+          <div><p class="kicker">Cite the work</p><h2>Reference the survey and its companion Hub</h2><p>Draft metadata is used until publisher identifiers are assigned. The repository URL keeps the public research resources attached to the citation.</p></div>
+          <div class="citation-code">
+            <button class="copy-button" id="copy-citation" type="button">Copy BibTeX</button>
+            <pre id="bibtex" tabindex="0">@article{luo2026resolving,
+  author = {Yuqing Luo and Kai Zhang and Liyang He},
+  title = {Resolving Evidence Chains in Multi-Hop RAG:
+           A Challenge-Centered Survey},
+  year = {2026},
+  note = {Manuscript draft. Companion repository:
+          https://github.com/TsingyuL/multi-hop-rag-survey}
+}</pre>
           </div>
         </div>
       </section>
@@ -387,39 +504,69 @@
     </footer>
 
     <script>
+      const progress = document.querySelector("#reading-progress");
+      const updateProgress = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = `${max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0}%`;
+      };
+      document.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      const mobileMenu = document.querySelector(".mobile-menu");
+      document.querySelectorAll(".mobile-links a").forEach(link => link.addEventListener("click", () => { mobileMenu.open = false; }));
+
+      const copyButton = document.querySelector("#copy-citation");
+      copyButton.addEventListener("click", async () => {
+        const original = copyButton.textContent;
+        try {
+          await navigator.clipboard.writeText(document.querySelector("#bibtex").textContent);
+          copyButton.textContent = "Copied";
+        } catch {
+          copyButton.textContent = "Select text to copy";
+          document.querySelector("#bibtex").focus();
+        }
+        window.setTimeout(() => { copyButton.textContent = original; }, 2200);
+      });
+
       const fields = ["estimand", "family", "year"];
       const labels = { observability: "observability", selection_preservation: "selection preservation", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
       const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[char]);
       const split = value => value.split(";").map(item => item.trim()).filter(Boolean);
       const tag = (text, color = "") => `<span class="tag ${color}">${escapeHTML(text)}</span>`;
-      fetch("data/catalog.json")
-        .then(response => { if (!response.ok) throw new Error("catalog unavailable"); return response.json(); })
-        .then(catalog => {
-          const methods = catalog.methods.sort((a, b) => Number(b.year) - Number(a.year) || a.title.localeCompare(b.title));
-          const options = { estimand: [...new Set(methods.map(row => row.primary_estimand))].sort(), family: [...new Set(methods.map(row => row.architectural_family))].sort(), year: [...new Set(methods.map(row => row.year))].sort((a, b) => b - a) };
-          fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));
-          const render = () => {
-            const query = document.querySelector("#search").value.toLowerCase().trim();
-            const selected = Object.fromEntries(fields.map(id => [id, document.querySelector(`#${id}`).value]));
-            const selectedMethods = methods.filter(row => {
-              const haystack = [row.title, row.tasks, row.datasets, row.notes, row.venue].join(" ").toLowerCase();
-              return (!query || haystack.includes(query)) && (!selected.estimand || row.primary_estimand === selected.estimand) && (!selected.family || row.architectural_family === selected.family) && (!selected.year || row.year === selected.year);
-            });
-            document.querySelector("#result-line").textContent = `${selectedMethods.length} of ${methods.length} legacy methods shown`;
-            document.querySelector("#rows").innerHTML = selectedMethods.length ? selectedMethods.map(row => `
-              <tr>
-                <td><a class="paper" href="${escapeHTML(row.source_url)}" target="_blank" rel="noopener">${escapeHTML(row.title)}</a><span class="venue">${escapeHTML(row.venue)}</span></td>
-                <td>${escapeHTML(row.year)}</td>
-                <td>${tag(row.primary_estimand)}${tag(row.architectural_family, "teal")}</td>
-                <td>${split(row.tasks).map(item => tag(item)).join("")}<br>${split(row.datasets).map(item => tag(item, "teal")).join("")}</td>
-                <td>${row.code_url ? `<a class="code" href="${escapeHTML(row.code_url)}" target="_blank" rel="noopener">Code &nearr;</a>` : "—"}</td>
-              </tr>`).join("") : '<tr><td colspan="5" class="empty">No entries match these filters.</td></tr>';
-          };
-          document.querySelector("#search").addEventListener("input", render);
-          fields.forEach(id => document.querySelector(`#${id}`).addEventListener("change", render));
-          render();
-        })
-        .catch(() => { document.querySelector("#rows").innerHTML = '<tr><td colspan="5" class="empty">The legacy catalog data could not be loaded.</td></tr>'; });
+      const legacyExplorer = document.querySelector(".legacy");
+      const loadCatalog = () => {
+        fetch("data/catalog.json")
+          .then(response => { if (!response.ok) throw new Error("catalog unavailable"); return response.json(); })
+          .then(catalog => {
+            const methods = catalog.methods.sort((a, b) => Number(b.year) - Number(a.year) || a.title.localeCompare(b.title));
+            const options = { estimand: [...new Set(methods.map(row => row.primary_estimand))].sort(), family: [...new Set(methods.map(row => row.architectural_family))].sort(), year: [...new Set(methods.map(row => row.year))].sort((a, b) => b - a) };
+            fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));
+            const render = () => {
+              const query = document.querySelector("#search").value.toLowerCase().trim();
+              const selected = Object.fromEntries(fields.map(id => [id, document.querySelector(`#${id}`).value]));
+              const selectedMethods = methods.filter(row => {
+                const haystack = [row.title, row.tasks, row.datasets, row.notes, row.venue].join(" ").toLowerCase();
+                return (!query || haystack.includes(query)) && (!selected.estimand || row.primary_estimand === selected.estimand) && (!selected.family || row.architectural_family === selected.family) && (!selected.year || row.year === selected.year);
+              });
+              document.querySelector("#result-line").textContent = `${selectedMethods.length} of ${methods.length} legacy methods shown`;
+              document.querySelector("#rows").innerHTML = selectedMethods.length ? selectedMethods.map(row => `
+                <tr>
+                  <td><a class="paper" href="${escapeHTML(row.source_url)}" target="_blank" rel="noopener">${escapeHTML(row.title)}</a><span class="venue">${escapeHTML(row.venue)}</span></td>
+                  <td>${escapeHTML(row.year)}</td>
+                  <td>${tag(row.primary_estimand)}${tag(row.architectural_family, "teal")}</td>
+                  <td>${split(row.tasks).map(item => tag(item)).join("")}<br>${split(row.datasets).map(item => tag(item, "teal")).join("")}</td>
+                  <td>${row.code_url ? `<a class="code" href="${escapeHTML(row.code_url)}" target="_blank" rel="noopener">Code &nearr;</a>` : "—"}</td>
+                </tr>`).join("") : '<tr><td colspan="5" class="empty">No entries match these filters.</td></tr>';
+            };
+            document.querySelector("#search").addEventListener("input", render);
+            fields.forEach(id => document.querySelector(`#${id}`).addEventListener("change", render));
+            render();
+          })
+          .catch(() => { document.querySelector("#rows").innerHTML = '<tr><td colspan="5" class="empty">The legacy catalog data could not be loaded.</td></tr>'; });
+      };
+      legacyExplorer.addEventListener("toggle", () => {
+        if (legacyExplorer.open) loadCatalog();
+      }, { once: true });
     </script>
   </body>
 </html>
