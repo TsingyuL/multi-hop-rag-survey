@@ -1,0 +1,56 @@
+\begin{tikzpicture}[
+  >=Latex,
+  node distance=7mm,
+  stage/.style={rounded corners=2pt, draw=#1!72!black, fill=#1!10, very thick,
+                minimum height=15mm, text width=2.45cm, align=center, inner sep=4pt,
+                font=\small},
+  endpoint/.style={rounded corners=2pt, draw=black!60, fill=black!4, thick,
+                   minimum height=13mm, text width=1.65cm, align=center, inner sep=3pt,
+                   font=\small},
+  feedback/.style={rounded corners=2pt, draw=learnpurple!75!black,
+                   fill=learnpurple!8, very thick, text width=8.0cm,
+                   minimum height=13mm, align=center, inner sep=5pt, font=\small},
+  arrow/.style={->, very thick, draw=black!65},
+  taskloop/.style={->, thick, dashed, draw=followgreen!80!black},
+  learnloop/.style={->, thick, dashed, draw=learnpurple!80!black},
+  note/.style={font=\scriptsize, align=center, text=black!70}
+]
+\definecolor{initialblue}{RGB}{74,112,148}
+\definecolor{followgreen}{RGB}{83,128,116}
+\definecolor{integrateorange}{RGB}{168,119,71}
+\definecolor{learnpurple}{RGB}{119,92,139}
+
+\node[endpoint] (task) {\textbf{Task}\\$q$};
+\node[stage=initialblue, right=of task] (initial) {\textbf{Initial Retrieval}\\Find entry evidence\\$q\rightarrow E_1$};
+\node[stage=followgreen, right=of initial] (follow) {\textbf{Follow-up Retrieval}\\Resolve the next need\\$(q,E_{1:t})\rightarrow E_{t+1}$};
+\node[stage=integrateorange, right=of follow] (integrate) {\textbf{Evidence Integration}\\Select and combine\\$E_{1:T}\rightarrow C$};
+\node[endpoint, right=of integrate] (output) {\textbf{Answer or}\\\textbf{cited report}\\$y$};
+
+\draw[arrow] (task) -- (initial);
+\draw[arrow] (initial) -- (follow);
+\draw[arrow] (follow) -- (integrate);
+\draw[arrow] (integrate) -- (output);
+
+\draw[taskloop] (follow.south east)
+  .. controls +(0,-6mm) and +(0,-6mm) ..
+  node[midway, below=1mm,note]{update state, search again, or stop}
+  (follow.south west);
+
+\node[feedback, below=19mm of follow, xshift=14mm] (learning) {
+\textbf{Feedback Learning}: diagnose completed trajectories and update persistent
+memory, reusable skills, retrievers, or search policies\\[-1mm]
+$(\tau_i,f_i,M_i)\rightarrow (M_{i+1},\pi_{i+1})$};
+
+\draw[learnloop] (output.south) to[out=-90,in=15]
+  node[right,note]{evaluation} (learning.east);
+\draw[learnloop] (learning.west) to[out=170,in=-90]
+  node[below left,note]{improve future tasks} (initial.south);
+
+\begin{scope}[on background layer]
+\node[draw=black!25, rounded corners=3pt, fit=(task)(initial)(follow)(integrate)(output),
+      inner xsep=4mm, inner ysep=6mm,
+      label={[note]above:Current-task information acquisition}] {};
+\node[draw=learnpurple!35, rounded corners=3pt, fit=(learning),
+      inner sep=3mm, label={[note]below:Cross-task adaptation}] {};
+\end{scope}
+\end{tikzpicture}

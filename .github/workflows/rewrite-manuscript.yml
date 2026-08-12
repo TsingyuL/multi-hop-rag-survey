@@ -1,0 +1,69 @@
+name: Build rewritten survey
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'paper_rewrite/**'
+      - '.github/workflows/rewrite-manuscript.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: rewrite-manuscript-pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Static checks
+        run: python paper_rewrite/check_rewrite.py
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: paper_rewrite
+          latexmk_use_xelatex: false
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Package LaTeX source
+        run: |
+          rm -rf latex_source_bundle
+          mkdir -p latex_source_bundle
+          cp -R paper_rewrite/main.tex latex_source_bundle/
+          cp -R paper_rewrite/sections latex_source_bundle/
+          cp -R paper_rewrite/appendix latex_source_bundle/
+          cp -R paper_rewrite/figures latex_source_bundle/
+          cp paper_rewrite/references*.bib latex_source_bundle/
+          cp paper_rewrite/check_rewrite.py latex_source_bundle/
+          cp -R paper_rewrite/audit latex_source_bundle/
+          cat > latex_source_bundle/README.md <<'EOF'
+          # Multi-Hop Retrieval and Reasoning Survey — LaTeX Source
+
+          Compile from this directory with:
+
+          ```bash
+          latexmk -pdf -file-line-error -halt-on-error -interaction=nonstopmode main.tex
+          ```
+
+          The manuscript uses the ACM `acmart` class in TOIS review mode.
+          Figure 1 and Figure 2 are native TikZ source files under `figures/`.
+          EOF
+          zip -r multi-hop-retrieval-reasoning-latex-source.zip latex_source_bundle
+
+      - name: Upload manuscript PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-hop-retrieval-reasoning-draft
+          path: paper_rewrite/main.pdf
+
+      - name: Upload LaTeX source bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-hop-retrieval-reasoning-latex-source
+          path: multi-hop-retrieval-reasoning-latex-source.zip

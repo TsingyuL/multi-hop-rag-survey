@@ -1,0 +1,46 @@
+\section{Future Directions}
+\label{sec:future}
+
+The functional taxonomy exposes several gaps that are difficult to see from architecture-level comparisons alone. The central problem is no longer whether a system can issue several searches, but whether it can maintain a useful information state over long horizons, preserve the dependencies required by later reasoning, and improve without accumulating brittle or stale behavior.
+
+\subsection{Retrieval for Future Utility}
+Most retrievers are trained to estimate immediate query--document relevance. Multi-hop systems additionally need evidence whose value is conditional: a bridge passage may not answer the current question, yet may identify the entity, relation, constraint, or vocabulary required for a later search. Future work should therefore distinguish \emph{answer evidence}, \emph{bridge evidence}, and \emph{search-enabling evidence}, and learn objectives that value their different roles.
+
+A key research question is how to estimate future utility without requiring a fully annotated gold chain. Possible signals include successful downstream queries, complete-chain recovery, counterfactual removal of bridge passages, and process rewards tied to subsequent search progress. Evaluation should report whether the method improves entry evidence, later-hop reachability, or both.
+
+\subsection{State Representation and Error Recovery in Long-Horizon Search}
+A long trajectory cannot be controlled reliably from an unstructured transcript alone. The system must represent what has been established, what remains uncertain, which sources support each claim, which queries have already failed, and which branches remain open. State representations may combine textual notes, entity--relation structures, query histories, uncertainty estimates, and source provenance.
+
+Long-horizon systems also require recovery mechanisms. One incorrect entity resolution can redirect all later searches, while repeated reformulation can amplify a false assumption. Future methods should detect inconsistent intermediate states, revisit earlier decisions, compare alternative branches, and stop when additional search is unlikely to change the result. These capabilities should be evaluated through controlled perturbations of intermediate evidence rather than only through naturally occurring failures.
+
+\subsection{Observable and Bounded Harness Optimization}
+Modern systems increasingly optimize retrieval, reasoning, context construction, tool use, and generation jointly. A harness view makes this optimization surface explicit: prompts, context policies, workflow code, tool interfaces and implementations, persistent memory, skills, sub-agent configurations, verifiers, and permission rules may all affect the same multi-hop trajectory~\cite{weng2026harness}. ADAS and AFlow show that code-represented workflows can be searched automatically~\cite{hu2025adas,zhang2025aflow}; Self-Harness and Agentic Harness Engineering extend this idea to broader system edits grounded in execution traces~\cite{zhang2026selfharness,lin2026ahe}.
+
+The opportunity is substantial, but unrestricted joint optimization undermines attribution. A candidate system may improve by increasing the action budget, weakening a verifier, changing the model, widening data access, or moving answer reasoning into a supposedly auxiliary component. Future work should therefore define an explicit editable surface and an immutable evaluation boundary. Every proposed edit should identify the failure evidence, targeted component, predicted benefit, and at-risk regression. Held-in tests should verify that the diagnosed weakness is repaired, while held-out tests should reject narrow overfitting.
+
+For multi-hop retrieval and reasoning, component observability should expose the candidate pool before and after search control, the evidence representation before and after integration, and the persistent artifact before and after feedback learning. Experience observability should preserve a drill-down path from aggregate failure clusters to original queries, sources, actions, and outputs. Decision observability should pair each accepted change with a falsifiable prediction. These controls make harness optimization a disciplined extension of feedback learning rather than an opaque search over arbitrary agent code.
+
+\subsection{Evidence Preservation with Explicit Provenance}
+Compression and note taking should preserve not only semantic content but also the dependency structure needed by later reasoning. Important details include entity identity, negation, numerical values, temporal qualifiers, uncertainty, and the source from which each statement was derived. A compact note that removes provenance or merges conflicting claims may be efficient but unusable for grounded synthesis.
+
+Future systems should represent compressed evidence as structured claims linked to source spans. Compression evaluation should combine token reduction with relation preservation, answerability under controlled evidence, and citation recovery. This would make it possible to separate harmless wording compression from deletion of a reasoning-critical bridge.
+
+\subsection{Faithful Long-Form Synthesis}
+Deep research shifts the output from a short answer to a report containing many claims with different evidential status. The system must decide which claims are directly stated by sources, which are derived by combining sources, and which remain speculative. It must also reconcile contradictions, avoid citing a source for a stronger claim than it supports, and preserve temporal context.
+
+A promising direction is claim--source graph construction before report generation. Such a representation could support coverage checks, contradiction detection, citation placement, and targeted re-search for unsupported sections. Evaluation should measure claim-level support and completeness in addition to document-level citation counts or holistic report ratings.
+
+\subsection{Reusable Experience, Skills, and Context Policies}
+Feedback learning introduces a second horizon: the system must improve across tasks rather than only within one trajectory. Current experience stores, context playbooks, and skill libraries often lack clear policies for retention, retrieval, revision, and deletion. A successful trajectory may encode a domain-specific shortcut that transfers poorly, while an old skill may remain highly ranked after the environment changes. ACE and MCE suggest that both context artifacts and the procedures used to construct them can become persistent optimization targets~\cite{zhang2026ace,ye2026mce}.
+
+Future work should evaluate experience reuse on genuinely new tasks, report the retrieval and activation accuracy of memories or skills, and measure negative transfer and forgetting. Skill and context-management representations should expose their preconditions, expected effects, evidence requirements, and failure history. Versioning and conflict resolution are necessary if independently learned procedures are to be composed safely. It is also important to distinguish the ability to produce a useful update from the ability of the task-solving model to invoke and follow that update~\cite{lin2026harnessbenefit}.
+
+\subsection{Benchmarks for Open and Repeated Information Seeking}
+Most multi-hop benchmarks evaluate a fixed corpus and a single episode. Open-web research introduces changing documents, heterogeneous source quality, access cost, and incomplete gold evidence. Feedback learning additionally requires repeated tasks and a temporal split between experience acquisition and later evaluation.
+
+New benchmarks should release or reconstruct action traces, source visits, retrieved evidence, stopping decisions, and costs. They should distinguish static knowledge access from live-web search, and current-task adaptation from improvements caused by prior experience. For long-form outputs, benchmark annotations should connect claims to source spans rather than provide only a global score. For self-improving systems, benchmarks should additionally separate held-in repair tasks, held-out regression tasks, and transfer tasks drawn from a changed environment or task family.
+
+\subsection{Safety and Governance of Autonomous Information Seeking}
+Adaptive retrieval expands the attack surface of a language model. Malicious pages can manipulate queries or tool calls; biased source selection can systematically omit perspectives; persistent memory can retain private or poisoned information; and long-running agents can incur unbounded cost. These risks arise during acquisition and learning, not only in the final text.
+
+Safety evaluation should therefore include source trust, prompt-injection resistance, privacy controls, memory deletion, budget enforcement, and auditability of search actions. Persistent feedback and harness-editing mechanisms require particular scrutiny because a single poisoned trajectory can affect many future tasks. Verifiers, permission controls, model configuration, and protected logs should remain outside the editable loop. The same process-level logging proposed for scientific evaluation is also necessary for governance, rollback, and incident analysis.

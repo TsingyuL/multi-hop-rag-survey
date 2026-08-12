@@ -1,0 +1,145 @@
+\section{Overview}
+\label{sec:overview}
+
+This section defines the unit of analysis used throughout the survey. The goal is to describe multi-hop systems at a level that is independent of a particular retriever, language model, graph representation, or agent framework.
+
+\subsection{Basic Concepts}
+\label{subsec:basic_concepts}
+
+\paragraph{Information need.}
+An information need is a statement of what must be resolved to advance the task. It may be expressed as a textual query, a graph traversal condition, a tool call, or an implicit retrieval decision.
+
+\paragraph{Evidence unit.}
+An evidence unit is the smallest retrievable or usable item in a system's environment, such as a passage, sentence, table row, knowledge-graph edge, image region, web page, or previously generated note. The appropriate granularity depends on the retrieval and integration mechanism.
+
+\paragraph{Hop.}
+A hop is a state transition in which acquired information changes the next retrieval or reasoning decision. Multiple retrieved documents do not imply multiple hops if they are obtained independently from the same unchanged query. Conversely, a single document can contain several dependent reasoning steps.
+
+\paragraph{Bridge information.}
+Bridge information resolves an intermediate entity, relation, constraint, or subproblem that makes later evidence identifiable. A bridge may be explicitly annotated in a benchmark or inferred from the system trajectory.
+
+\paragraph{Trajectory.}
+A trajectory records the sequence of states, queries, retrieval actions, observations, reasoning outputs, tool calls, stopping decisions, and final outputs produced for one task. Trajectories are central for evaluating follow-up retrieval and feedback learning.
+
+\paragraph{Evidence integration.}
+Evidence integration transforms the acquired evidence set into a reader- or generator-facing representation. It includes evidence selection, compression, ordering, structured context construction, cross-evidence reasoning, and long-form synthesis.
+
+\paragraph{Feedback.}
+Within-task feedback modifies a later action in the current trajectory, for example when low confidence triggers another retrieval. Cross-task feedback is retained after the current task and changes future behavior through reflection, memory, skill extraction, retriever updates, or policy learning.
+
+\subsection{What Is Multi-Hop Retrieval and Reasoning?}
+\label{subsec:definition}
+
+We define \emph{multi-hop retrieval and reasoning} as a process in which a system acquires and uses information over multiple dependent state transitions, such that at least one later retrieval or reasoning decision is conditioned on information obtained in an earlier step. The definition has three consequences.
+
+First, multi-document processing is not necessarily multi-hop. Retrieving ten passages independently from the original query is still single-stage retrieval. Second, chain-of-thought generation is not necessarily multi-hop retrieval; a model may generate several reasoning sentences without acquiring new information. Third, repeated tool use is not sufficient. The actions must participate in a dependency chain that advances an unresolved information need.
+
+A task may exhibit one or more forms of dependence:
+\begin{itemize}[leftmargin=1.35em]
+\item \textbf{Entity dependence}: an intermediate entity is required to formulate the next query.
+\item \textbf{Relational dependence}: a relation discovered at one step determines the next traversal or source.
+\item \textbf{Constraint dependence}: earlier evidence introduces temporal, geographic, numerical, or type constraints for later retrieval.
+\item \textbf{Aggregation dependence}: multiple independently found items must be compared, counted, reconciled, or synthesized.
+\item \textbf{Verification dependence}: an intermediate claim determines which corroborating or contradictory evidence must be sought.
+\end{itemize}
+
+\subsection{Running Examples}
+\label{subsec:running_examples}
+
+\paragraph{Bridge question answering.}
+The \emph{Kiss and Tell} example in Section~\ref{sec:introduction} requires resolving Shirley Temple before searching for her government position. It illustrates entity dependence and a short, identifiable evidence chain.
+
+\paragraph{Comparative or aggregative questions.}
+A question asking which of two organizations reached a milestone first requires locating the relevant date for each organization and then comparing the results. The retrieval branches may be independent initially, but the final decision depends on cross-evidence normalization and comparison.
+
+\paragraph{Open-web research.}
+A request to explain why a recent technical product underperformed may require discovering the product version, locating release notes, finding benchmark results, checking issue reports, and reconciling sources with different dates or incentives. The trajectory is longer, evidence quality is heterogeneous, and the output may be a cited report rather than a short answer. Nevertheless, the same functional stages apply.
+
+\subsection{Task Formulation}
+\label{subsec:task_formulation}
+
+Let $q$ denote the task, $\mathcal{K}$ the searchable information environment, and $M_i$ the persistent memory or learned state available before task $i$. A within-task trajectory is
+\[
+\tau_i = (s_0,a_0,o_1,s_1,a_1,o_2,\ldots,s_T,y_i),
+\]
+where $s_t$ contains the original task, acquired evidence, intermediate reasoning, and execution history; $a_t$ is a search, traversal, reading, verification, or stopping action; $o_{t+1}$ is the resulting observation; and $y_i$ is the final answer or report.
+
+The four functional stages can be written as follows. Initial retrieval obtains entry evidence:
+\[
+E_1 = \mathcal{R}_0(q,\mathcal{K};M_i).
+\]
+Follow-up retrieval selects later information needs and obtains additional evidence:
+\[
+u_t = \pi_{\mathrm{search}}(q,E_{1:t},h_t;M_i), \qquad
+E_{t+1}=\mathcal{R}(u_t,\mathcal{K}),
+\]
+where $h_t$ denotes the trajectory history. Evidence integration constructs a usable representation and output:
+\[
+C_i = \mathcal{I}(q,E_{1:T},h_T), \qquad
+ y_i = \mathcal{G}(q,C_i).
+\]
+After evaluation signal $f_i$ is observed, feedback learning may update persistent state or policy for future tasks:
+\[
+M_{i+1}=\mathcal{U}(M_i,\tau_i,f_i),
+\qquad
+\pi_{i+1}=\mathcal{A}(\pi_i,M_{i+1}).
+\]
+The formulation separates two timescales. The sequence $E_1,\ldots,E_T$ concerns adaptation within the current task. The update from $M_i$ to $M_{i+1}$ concerns learning across tasks.
+
+A system is multi-hop under this formulation when there exists a step $t>1$ for which the action or evidence relevance depends materially on $E_{1:t-1}$ or $h_{t-1}$, rather than only on the original query $q$. This operational definition can be tested through trajectory inspection, controlled ablations, or counterfactual replacement of intermediate evidence.
+
+\subsection{Taxonomy}
+\label{subsec:taxonomy}
+
+The taxonomy follows information flow rather than a specific architecture. Figure~\ref{fig:taxonomy_tree} shows the hierarchy used in Sections~\ref{sec:initial_retrieval}--\ref{sec:feedback_learning}; Table~\ref{tab:taxonomy_overview} summarizes the transformation associated with each category.
+
+\begin{figure*}[tbp]
+\centering
+\resizebox{0.99\textwidth}{!}{\input{figures/fig2_taxonomy_tree}}
+\caption{Functional taxonomy of multi-hop retrieval and reasoning. The first three categories describe how a system solves the current task: obtaining entry evidence, acquiring later evidence, and integrating the collected information. Feedback learning operates across tasks by retaining evaluations, trajectories, experiences, skills, or policy updates. The rightmost column lists 60 representative works selected to anchor the taxonomy; the complete \CorpusSize-record corpus and record-level coding are provided in the companion artifact.}
+\Description{A taxonomy tree with four branches: Initial Retrieval, Follow-up Retrieval, Evidence Integration, and Feedback Learning. Each branch contains its survey subsections and a rightmost column of representative cited methods.}
+\label{fig:taxonomy_tree}
+\end{figure*}
+
+\begin{table*}[tbp]
+\centering
+\caption{Functional taxonomy of multi-hop retrieval and reasoning.}
+\label{tab:taxonomy_overview}
+\small
+\begin{tabularx}{\textwidth}{@{}p{3.0cm}p{3.4cm}Y Y@{}}
+\toprule
+Category & Transformation & Core question & Main mechanisms \\
+\midrule
+Initial Retrieval & $q \rightarrow E_1$ & How is a useful entry point obtained from the original task? & Sparse, dense, hybrid, graph, hierarchical, reranking, and reasoning-aware retrieval. \\
+Follow-up Retrieval & $(q,E_{1:t}) \rightarrow u_t \rightarrow E_{t+1}$ & What information should be sought next, and when should search stop? & Query decomposition, iterative retrieval, graph/path search, adaptive retrieval, tool use, deep search, and within-task feedback. \\
+Evidence Integration & $E_{1:T} \rightarrow C \rightarrow y$ & How are acquired sources selected, preserved, organized, combined, and synthesized? & Evidence selection, compression, context construction, cross-evidence reasoning, grounding, and long-form synthesis. \\
+Feedback Learning & $(\tau_i,f_i,M_i) \rightarrow M_{i+1},\pi_{i+1}$ & How does experience from previous tasks improve future behavior? & Feedback collection, trajectory diagnosis, experience memory, skill extraction, retriever learning, and policy optimization. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\paragraph{Architectural crosswalk.}
+The functional categories cut across common system labels. Table~\ref{tab:architectural_crosswalk} shows how typical architectures instantiate the four stages. The entries describe dominant implementations rather than hard membership rules: the same graph, retriever, memory, or language model can serve different functions depending on when it is used and what state it consumes.
+
+\begin{table*}[tbp]
+\centering
+\caption{Crosswalk from common system families to the four functional categories.}
+\label{tab:architectural_crosswalk}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{2.65cm}Y Y Y Y@{}}
+\toprule
+System family & Initial retrieval & Follow-up retrieval & Evidence integration & Feedback learning \\
+\midrule
+Single-shot RAG & One query retrieves a fixed candidate set & Usually absent & Top-$k$ context is passed to a generator & Usually absent \\
+Static multi-hop QA & Entry passages or a fixed evidence pool & Fixed or benchmark-defined hops may be executed & Short-answer reader, supporting-fact predictor, or fusion module & Usually absent \\
+Iterative or graph retriever & Entry passage, node, neighborhood, or hierarchy & Learned hop expansion, path search, or graph traversal & Reader or graph reasoning over the acquired path/subgraph & Usually absent unless trajectories are retained \\
+Adaptive RAG or search agent & Initial query, tool choice, or source selection & Dynamic retrieve/read/verify/stop actions & Context construction and answer synthesis from the current trajectory & Within-task feedback by default; persistent learning is optional \\
+Deep search or deep research & Broad source discovery and task planning & Long-horizon open-web search with variable branching and stopping & Multi-source report generation, citation, and contradiction handling & Optional experience, memory, or policy updates across research tasks \\
+Experience- or skill-enhanced system & Entry behavior may be conditioned on retrieved memories or skills & Later actions reuse lessons, procedures, or a learned policy & Skills may prescribe evidence processing and synthesis & Defining persistent update through reflection, memory, skills, retriever training, or policy learning \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The taxonomy assigns each paper a primary category according to the function most directly targeted by its main contribution, while secondary tags record cross-category effects. For example, Self-RAG performs adaptive retrieval and critique within a task and is therefore primarily discussed under follow-up retrieval, even though its critique mechanism also affects generation. A skill library extracted from completed search trajectories is primarily feedback learning because its defining contribution is reuse across future tasks. This primary-label rule prevents the corpus from double-counting methods while preserving architectural crosswalks.
+
+The categories also define chapter boundaries. Pure query--document reranking belongs to initial retrieval. A later query generated from retrieved evidence belongs to follow-up retrieval. Selection or ordering of an already acquired evidence set belongs to evidence integration. Memory or reflection belongs to feedback learning only when it changes future task behavior; transient scratchpads and current-task observations remain part of the within-task trajectory.

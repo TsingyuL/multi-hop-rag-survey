@@ -1,0 +1,20 @@
+\paragraph{Functional taxonomy versus the harness layer.}
+A recent harness-engineering perspective uses \emph{harness} to denote the executable system surrounding a base model: prompts, context construction, tools and their implementations, workflow and control flow, persistent state, skills, sub-agents, permissions, and evaluators~\cite{weng2026harness}. This vocabulary is useful for the present survey, but it describes a different axis from the four functional categories. The taxonomy asks \emph{what information-processing function is being improved}; the harness view asks \emph{which system surface implements or constrains that function}.
+
+Let $\theta$ denote the base-model parameters and let
+\[
+H_i=(P_i,C_i,T_i,W_i,M_i,S_i,A_i,V_i,G_i)
+\]
+denote the harness available before task $i$, comprising prompts, context policy, tools, workflow, memory, skills, sub-agent configuration, verifiers, and permission or budget guards. A task action can then be written schematically as
+\[
+a_t\sim \pi_{\theta}(\,\cdot\mid s_t;H_i),
+\]
+while persistent system improvement may update part of the harness,
+\[
+H_{i+1}=\mathcal{U}_H(H_i,\tau_i,f_i).
+\]
+The same harness component can therefore support different functions. A context manager can construct evidence for the current answer, a workflow can control follow-up retrieval, and a skill can encode a reusable search or verification procedure. Conversely, the same functional stage can be implemented by different harness components.
+
+This distinction prevents a category error. Harness is not introduced as a fifth stage alongside initial retrieval, follow-up retrieval, evidence integration, and feedback learning. Context evolution such as ACE and MCE changes persistent context-management artifacts or skills~\cite{zhang2026ace,ye2026mce}; ADAS and AFlow search over code-represented agent workflows~\cite{hu2025adas,zhang2025aflow}; and Self-Harness and Agentic Harness Engineering edit broader executable surfaces from trajectory evidence~\cite{zhang2026selfharness,lin2026ahe}. In this survey, such work is assigned to Feedback Learning only when the resulting edit persists across tasks and directly changes retrieval-grounded multi-hop behavior. General coding-agent harness optimization remains an architectural analogy or future direction rather than evidence about multi-hop retrieval itself.
+
+The harness view also sharpens the scope of a claimed improvement. Updating a harness and benefiting from the update are distinct capabilities~\cite{lin2026harnessbenefit}. A study should therefore identify the edited surface, show that the task-solving system invokes and follows the new artifact, and isolate the gain from changes to the base model, evaluator, data access, tool budget, or stopping limit. These attribution requirements are developed further in Sections~\ref{sec:feedback_learning} and~\ref{sec:evaluation}.
