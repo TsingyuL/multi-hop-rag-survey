@@ -20,6 +20,9 @@ All notable repository changes are recorded here.
 - Added repository-specific Open Graph and social-card metadata so shared Hub
   links retain the paper's title and visual identity.
 - Deferred loading of the legacy catalog data until readers open the explorer.
+- Replaced the two hero-button Markdown destinations with styled Paper Map and
+  Literature Navigator pages that share the Hub navigation, visual system,
+  responsive behavior, and artifact-status language.
 - Added a repository-root GitHub Pages entry point and README badge for the
   public Web Hub.
 - Corrected public-completeness wording: the current hub publishes aggregate
