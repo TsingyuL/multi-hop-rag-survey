@@ -13,8 +13,15 @@ This repository is the public companion to *Resolving Evidence Chains in Multi-H
 | Direct overlap matrix | [`taxonomy/audit_v2/direct_overlap.csv`](taxonomy/audit_v2/direct_overlap.csv) | current Core overlap |
 | Coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | current discovery and review protocol |
 | Executable discovery queries | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Semantic Scholar candidate discovery |
+| Seven-survey reference library | [`literature/reference_library.xlsx`](literature/reference_library.xlsx) | broad discovery layer; not an audit denominator |
+| Canonical Figure 1 | [`mh_figures/fig1.pdf`](mh_figures/fig1.pdf) | aligned with current manuscript |
 
 The current manuscript snapshot contains 208 reviewed canonical works: 135 Core, 54 Supporting, and 19 Transfer-relevant. Quantitative challenge prevalence uses the 135 Core works.
+
+The separate reference library contains 886 citation records reconstructed from
+seven adjacent surveys and 771 deduplicated papers. It supports candidate
+discovery and cross-survey comparison; it does not establish scope eligibility,
+primary-source review, or challenge coding.
 
 ## Public reproducibility boundary
 
