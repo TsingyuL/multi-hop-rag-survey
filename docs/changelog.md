@@ -8,8 +8,9 @@ All notable repository changes are recorded here.
 
 - Synchronized manuscript-facing author metadata with the current TOIS draft:
   Yuqing Luo, Kai Zhang, and Liyang He.
-- Replaced the canonical Figure 1 asset with the current evidence-dependency
-  figure used by the manuscript.
+- Synchronized all three current manuscript figure assets: the
+  evidence-dependency scope, five-challenge control loop, and
+  challenge-mechanism landscape.
 - Added a seven-survey reference-library layer containing 886 raw citation
   records and 771 deduplicated papers, with an explicit boundary separating it
   from the 208-work reviewed evidence map.

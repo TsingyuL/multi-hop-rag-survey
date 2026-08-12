@@ -14,7 +14,9 @@ This repository is the public companion to *Resolving Evidence Chains in Multi-H
 | Coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | current discovery and review protocol |
 | Executable discovery queries | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Semantic Scholar candidate discovery |
 | Seven-survey reference library | [`literature/reference_library.xlsx`](literature/reference_library.xlsx) | broad discovery layer; not an audit denominator |
-| Canonical Figure 1 | [`mh_figures/fig1.pdf`](mh_figures/fig1.pdf) | aligned with current manuscript |
+| Canonical Figure 1 | [`mh_figures/fig1.pdf`](mh_figures/fig1.pdf) | evidence-dependency scope |
+| Canonical Figure 2 | [`mh_figures/fig2.pdf`](mh_figures/fig2.pdf) | five-challenge control loop |
+| Canonical Figure 3 | [`mh_figures/fig3.pdf`](mh_figures/fig3.pdf) | challenge-mechanism landscape |
 
 The current manuscript snapshot contains 208 reviewed canonical works: 135 Core, 54 Supporting, and 19 Transfer-relevant. Quantitative challenge prevalence uses the 135 Core works.
 

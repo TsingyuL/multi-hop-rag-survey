@@ -20,6 +20,7 @@ The repository contains documentation and aggregate audit files aligned with the
 | Aggregate v2 audit files | [`taxonomy/audit_v2/`](taxonomy/audit_v2/) |
 | Seven-survey reference library | [`literature/README.md`](literature/README.md), [`literature/reference_library.xlsx`](literature/reference_library.xlsx) |
 | Challenge-centered literature navigator | [`docs/literature_navigator.md`](docs/literature_navigator.md) |
+| Current manuscript figures | [`mh_figures/README.md`](mh_figures/README.md) |
 | Discovery and coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) |
 | Executable Semantic Scholar query families | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) |
 | Legacy catalog | [`taxonomy/methods.csv`](taxonomy/methods.csv), [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv) |
