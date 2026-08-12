@@ -1,16 +1,21 @@
 # Multi-Hop RAG reporting checklist
 
-Use this checklist alongside aggregate answer metrics. It translates the survey's evidence-chain framework into reviewable evidence.
+Use this checklist alongside final-answer metrics. It follows the five
+challenge functions in the current manuscript and asks authors to expose the
+decision object changed by a method, not only its architecture name.
 
-| Report | Why it matters |
-| --- | --- |
-| Task, corpus, retriever, reader, and context-budget details | Defines the observation process |
-| Chain/passage recall before selection | Diagnoses observability |
-| Complete-chain preservation at the reported passage or token budget | Diagnoses budget-induced loss |
-| Context ordering and placement policy | Makes exposure claims testable |
-| Multi-hop composition metric or error analysis | Separates fusion from retrieval failure |
-| Ablations that remove, swap, or corrupt evidence | Tests causal evidence use |
-| Cost, latency, stopping rule, and number of retrieval calls | Enables comparison of adaptive systems |
-| Dataset-specific caveats and supervision type | Prevents invalid cross-benchmark claims |
+| Challenge or control | Report | Why it matters |
+| --- | --- | --- |
+| Task and evidence protocol | Corpus, evidence access, retriever, reader, context budget, supervision, and allowed retrieval calls | Defines which evidence dependencies are observable and which comparisons are valid |
+| Next-Hop Discovery | The next-information-need representation, acquisition action, hop-wise retrieval diagnostics, and state used to generate the action | Distinguishes a better acquisition decision from simply allocating more retrieval opportunity |
+| Path Management | Candidate trajectory representation, pruning or retention rule, beam/frontier size, survival of valid partial chains, and matched search budget | Separates future trajectory value from local document relevance |
+| Evidence Sufficiency | Adequacy or answerability signal, stopping threshold, calibration, premature-stop errors, excessive-search errors, and cost-quality trade-off | Tests whether the system knows when the current evidence is enough |
+| Error Recovery | Failure or integrity signal, diagnosed state, corrective transition, rollback or replanning behavior, and recovery success conditional on a detected failure | Distinguishes actual repair from undiagnosed additional retrieval |
+| Evidence Composition | Required operator across evidence units, evidence accessibility, operation-specific accuracy or error analysis, and controlled evidence-use ablations | Separates obtaining the right evidence from correctly binding, comparing, aggregating, or transforming it |
+| Cross-challenge controller | Interfaces among acquisition, trajectory allocation, stopping, repair, and composition; matched compute and retrieval opportunity | Makes gains attributable when several challenge functions share one controller |
+| Final outcome | Answer quality, grounding, cost, latency, and dataset-specific caveats | Keeps end-task performance necessary but not sufficient for mechanism claims |
 
-An answer-only metric cannot distinguish absent evidence, dropped evidence, inaccessible evidence, failed composition, and post-hoc reasoning. Report the earliest available diagnostic for each claimed evidence-chain target.
+An answer-only metric cannot distinguish a wrong acquisition action, loss of a
+valid path, premature stopping, failed repair, or incorrect composition. Report
+the earliest challenge-specific diagnostic available for each claimed
+mechanism, together with final-answer quality and matched resource controls.

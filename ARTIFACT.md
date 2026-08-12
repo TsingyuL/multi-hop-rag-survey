@@ -1,6 +1,6 @@
 # Artifact status
 
-This repository is the public companion to *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*. It is a survey artifact, not a benchmark submission and not a claim that all cited experimental results are independently reproduced here.
+This repository is the paper-aligned research hub for *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*. It is a survey artifact, not a manuscript-source repository, benchmark submission, or claim that all cited experimental results are independently reproduced here. The [paper-to-hub map](docs/paper_hub.md) records how manuscript sections connect to public resources.
 
 ## Current manuscript-aligned artifacts
 
@@ -27,7 +27,7 @@ primary-source review, or challenge coding.
 
 ## Public reproducibility boundary
 
-The public artifact is designed to regenerate the manuscript's challenge-level quantitative results from the **final reviewed evidence map**. It does not publish the complete candidate-level discovery and screening ledger.
+The current public artifact exposes the protocol and aggregate manuscript snapshot. It does **not yet** permit independent regeneration of the challenge-level quantitative results from the final reviewed evidence map because the row-level evidence tables and reviewer provenance are not yet public. It does not publish the complete candidate-level discovery and screening ledger.
 
 The tagged submission artifact should contain:
 
@@ -38,7 +38,7 @@ The tagged submission artifact should contain:
 
 The candidate-level records behind the reported 452 raw hits are outside the public artifact boundary. Their aggregate screening counts, search protocol, query families, and venue closure remain documented in the manuscript and repository.
 
-This boundary means that readers can independently inspect and regenerate the manuscript's quantitative challenge analysis without requiring publication of the full candidate discovery queue.
+This boundary currently lets readers inspect the reported screening flow, challenge counts, overlaps, and coding rules. Independent row-level regeneration will become possible only after the listed submission artifacts and regeneration outputs are published.
 
 ## Legacy v1 artifact
 

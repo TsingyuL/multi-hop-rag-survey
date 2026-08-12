@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A filterable research catalog for multi-hop retrieval-augmented reasoning.">
-    <title>Multi-Hop RAG Survey · Research Catalog</title>
+    <meta name="description" content="Paper-aligned research hub for Resolving Evidence Chains in Multi-Hop RAG.">
+    <title>Multi-Hop RAG · Research Hub</title>
     <style>
       :root {
         --ink: #14213d;
@@ -35,7 +35,7 @@
       .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 22px; }
       .hub-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-bottom: 18px; }
       .route-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-      .route { border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--ink); cursor: pointer; padding: 12px; text-align: left; transition: border-color .15s, transform .15s; }
+      .route { border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--ink); cursor: pointer; padding: 12px; text-align: left; text-decoration: none; transition: border-color .15s, transform .15s; }
       .route:hover { border-color: var(--accent); transform: translateY(-1px); }
       .route strong { display: block; font-size: .91rem; }
       .route span { color: var(--muted); display: block; font-size: .78rem; line-height: 1.35; margin-top: 3px; }
@@ -71,30 +71,43 @@
   <body>
     <header class="hero">
       <div class="wrap">
-        <p class="eyebrow">Living research resource</p>
-        <h1>Multi-Hop RAG<br>Research Catalog</h1>
-        <p class="lead">A curated, evidence-aware map of retrieval, reasoning, fusion, and verification methods for multi-hop retrieval-augmented systems.</p>
-        <nav class="links" aria-label="Catalog navigation">
+        <p class="eyebrow">Paper-aligned companion</p>
+        <h1>Multi-Hop RAG<br>Research Hub</h1>
+        <p class="lead">The public navigation layer for “Resolving Evidence Chains in Multi-Hop RAG”: five challenge functions, three manuscript figures, review protocol, aggregate evidence map, and literature resources.</p>
+        <nav class="links" aria-label="Hub navigation">
           <a href="https://github.com/TsingyuL/multi-hop-rag-survey">Repository</a>
-          <a href="taxonomy.md">Taxonomy guide</a>
+          <a href="paper_hub.md">Paper-to-hub map</a>
+          <a href="https://github.com/TsingyuL/multi-hop-rag-survey/tree/main/mh_figures">Manuscript figures</a>
           <a href="coverage_protocol.md">Coverage protocol</a>
           <a href="literature_navigator.md">Reading paths</a>
         </nav>
       </div>
     </header>
     <main class="wrap">
-      <section class="metrics" aria-label="Catalog statistics">
-        <div class="metric"><strong id="method-count">—</strong><span>curated methods</span></div>
-        <div class="metric"><strong id="benchmark-count">—</strong><span>benchmarks & datasets</span></div>
-        <div class="metric"><strong id="code-count">—</strong><span>verified code links</span></div>
+      <section class="metrics" aria-label="Manuscript snapshot">
+        <div class="metric"><strong>208</strong><span>reviewed canonical works</span></div>
+        <div class="metric"><strong>5</strong><span>nonexclusive challenge functions</span></div>
+        <div class="metric"><strong>3</strong><span>current manuscript figures</span></div>
+      </section>
+      <section class="panel" style="margin-bottom:18px" aria-label="Paper-aligned hub">
+        <h2>Navigate the paper through the hub</h2>
+        <p class="subtle">Start from the paper's scope, framework, evidence, or literature layer. The manuscript source remains outside this repository.</p>
+        <div class="route-grid">
+          <a class="route" href="paper_hub.md"><strong>Paper-to-hub map</strong><span>Section-by-section correspondence, public status, figure mapping, and versioning rule.</span><em>Open map →</em></a>
+          <a class="route" href="https://github.com/TsingyuL/multi-hop-rag-survey/blob/main/taxonomy/challenge_codebook_v2.md"><strong>Scope and five challenges</strong><span>Evidence dependency, scope tiers, and Direct / Secondary / No relations.</span><em>Open v2 codebook →</em></a>
+          <a class="route" href="submission_audit_v2.md"><strong>Review and evidence map</strong><span>Screening flow, 208-work snapshot, challenge counts, overlaps, and reliability boundary.</span><em>Open audit →</em></a>
+          <a class="route" href="literature_navigator.md"><strong>Challenge-centered reading</strong><span>Primary-source paths for Discovery, Path Management, Sufficiency, Recovery, and Composition.</span><em>Open navigator →</em></a>
+          <a class="route" href="https://github.com/TsingyuL/multi-hop-rag-survey/tree/main/mh_figures"><strong>Three manuscript figures</strong><span>Evidence-dependency scope, five-challenge control loop, and challenge-mechanism landscape.</span><em>Open figures →</em></a>
+          <a class="route" href="https://github.com/TsingyuL/multi-hop-rag-survey/tree/main/literature"><strong>Seven-survey reference layer</strong><span>771 deduplicated papers for discovery and cross-survey comparison, separate from the reviewed denominator.</span><em>Open library →</em></a>
+        </div>
       </section>
       <section class="hub-grid" aria-label="Research map">
-        <article class="panel"><h2>Research routes</h2><p class="subtle">Start from the evidence-chain bottleneck you want to study. Each route filters the reviewed catalog.</p><div id="routes" class="route-grid"></div></article>
-        <article class="panel"><h2>Benchmark map</h2><p class="subtle">Evaluation targets in the reviewed catalog, with their intended diagnostic scope.</p><div id="benchmarks" class="benchmark-list"></div></article>
+        <article class="panel"><h2>Legacy v1 routes</h2><p class="subtle">Historical bottleneck labels retained for provenance. They are not the current paper taxonomy.</p><div id="routes" class="route-grid"></div></article>
+        <article class="panel"><h2>Legacy benchmark map</h2><p class="subtle">Benchmarks recorded in the historical curated catalog.</p><div id="benchmarks" class="benchmark-list"></div></article>
       </section>
       <section class="panel">
-        <h2>Find papers by the decision they change</h2>
-        <p class="subtle">Filter by evidence-chain target, architectural route, or publication year. The catalog does not use leaderboard rank as a category.</p>
+        <h2>Legacy v1 catalog explorer</h2>
+        <p class="subtle">Filter the historical catalog by its earlier bottleneck schema. Use the paper-aligned resources above for current manuscript claims.</p>
         <div class="filters">
           <label>Search title, task, or dataset<input id="search" type="search" placeholder="e.g., HotpotQA, graph, iterative"></label>
           <label>Primary target<select id="estimand"><option value="">All targets</option></select></label>
@@ -106,10 +119,10 @@
           <thead><tr><th>Paper</th><th>Year</th><th>Decision / route</th><th>Tasks & datasets</th><th>Resources</th></tr></thead>
           <tbody id="rows"><tr><td colspan="5" class="empty">Loading catalog…</td></tr></tbody>
         </table></div>
-        <p class="notice">This is a curated research map, not a claim of exhaustive systematic coverage. Read the <a href="coverage_protocol.md">coverage protocol</a> before treating absence as evidence.</p>
+        <p class="notice">This explorer is a legacy v1 resource, not the 208-work reviewed evidence map. Read the <a href="paper_hub.md">paper-to-hub map</a> and <a href="coverage_protocol.md">coverage protocol</a> before interpreting coverage.</p>
       </section>
     </main>
-    <footer class="wrap">Catalog data: <a href="data/methods.csv">methods.csv</a> · <a href="data/benchmarks.csv">benchmarks.csv</a> · Maintained with the repository’s validation workflow.</footer>
+    <footer class="wrap">Paper-aligned hub · Legacy explorer data: <a href="data/methods.csv">methods.csv</a> · <a href="data/benchmarks.csv">benchmarks.csv</a></footer>
     <script>
       const fields = ["estimand", "family", "year"];
       const labels = { observability: "observability", selection_preservation: "selection preservation", exposure: "exposure", fusion: "fusion", faithfulness: "faithfulness", joint: "joint" };
@@ -120,9 +133,6 @@
         .then(response => { if (!response.ok) throw new Error("catalog unavailable"); return response.json(); })
         .then(catalog => {
           const methods = catalog.methods.sort((a, b) => Number(b.year) - Number(a.year) || a.title.localeCompare(b.title));
-          document.querySelector("#method-count").textContent = methods.length;
-          document.querySelector("#benchmark-count").textContent = catalog.benchmarks.length;
-          document.querySelector("#code-count").textContent = methods.filter(row => row.code_url).length;
           const options = { estimand: [...new Set(methods.map(row => row.primary_estimand))].sort(), family: [...new Set(methods.map(row => row.architectural_family))].sort(), year: [...new Set(methods.map(row => row.year))].sort((a, b) => b - a) };
           fields.forEach(id => options[id].forEach(value => document.querySelector(`#${id}`).insertAdjacentHTML("beforeend", `<option value="${escapeHTML(value)}">${escapeHTML(labels[value] || value)}</option>`)));
           const routeMeta = {

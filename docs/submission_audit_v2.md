@@ -37,7 +37,7 @@ The 208 reviewed works are divided into:
 | Transfer-relevant | 19 |
 | **Total** | **208** |
 
-The candidate-level records behind the 452 raw hits are not part of the public release. The aggregate screening counts and protocol are reported for transparency; the public row-level artifact begins with the final 208 reviewed canonical works.
+The candidate-level records behind the 452 raw hits are not part of the public release. The aggregate screening counts and protocol are reported for transparency. The planned public row-level artifact begins with the final 208 reviewed canonical works, but it is not yet included in the repository.
 
 ## Search sources and closure
 
