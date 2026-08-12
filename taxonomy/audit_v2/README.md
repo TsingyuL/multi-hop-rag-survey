@@ -2,6 +2,9 @@
 
 This directory contains the aggregate statistics used by the current manuscript *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*.
 
+See the [paper-to-hub map](../../docs/paper_hub.md) for the relationship between
+these aggregates, the manuscript sections, and the planned row-level release.
+
 ## Files
 
 - `search_flow.csv`: discovery, screening, source-resolution, and scope-tier counts.

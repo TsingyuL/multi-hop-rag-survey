@@ -3,11 +3,14 @@
 > Research hub and public companion for **“Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey.”**
 
 [![Manuscript](https://img.shields.io/badge/manuscript-TOIS%20draft-2457C5.svg)](#associated-manuscript)
+[![Research hub](https://img.shields.io/badge/research%20hub-open-2457C5.svg)](https://tsingyul.github.io/multi-hop-rag-survey/)
 [![Audit](https://img.shields.io/badge/audit-v2%20aggregate%20snapshot-087E8B.svg)](docs/submission_audit_v2.md)
 [![Reference library](https://img.shields.io/badge/reference%20library-771%20deduplicated%20papers-6F42C1.svg)](literature/README.md)
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 
-This repository is the public companion to a survey of multi-hop retrieval-augmented generation defined by **dependency among external evidence units**. The current manuscript organizes the literature around five nonexclusive challenges: **Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery, and Evidence Composition**.
+This repository is the **paper-aligned research hub** for a survey of multi-hop retrieval-augmented generation defined by **dependency among external evidence units**. It mirrors the paper's conceptual framework, figures, review protocol, aggregate evidence map, and reading paths while keeping the manuscript source outside the repository. See the [paper-to-hub map](docs/paper_hub.md) for the section-by-section correspondence.
+
+The current manuscript organizes the literature around five nonexclusive challenges: **Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery, and Evidence Composition**.
 
 The repository contains documentation and aggregate audit files aligned with the manuscript review cutoff of **August 9, 2026**. The older 40-record v1 audit is retained for provenance but is not the source of the current manuscript counts.
 
@@ -15,6 +18,8 @@ The repository contains documentation and aggregate audit files aligned with the
 
 | Need | Open |
 | --- | --- |
+| Web research hub | [GitHub Pages](https://tsingyul.github.io/multi-hop-rag-survey/) |
+| Paper section-to-resource map | [`docs/paper_hub.md`](docs/paper_hub.md) |
 | Current challenge codebook | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) |
 | Current audit summary | [`docs/submission_audit_v2.md`](docs/submission_audit_v2.md) |
 | Aggregate v2 audit files | [`taxonomy/audit_v2/`](taxonomy/audit_v2/) |
@@ -38,7 +43,7 @@ The corpus construction flow reported in the manuscript is:
 
 `452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
 
-Candidate-level discovery and screening records are not part of the public release. The public artifact reports the aggregate screening counts and protocol, while the released row-level evidence map begins at the final **208 reviewed canonical works**.
+Candidate-level discovery and screening records are not part of the public release. The current hub reports the aggregate screening counts and protocol. The planned row-level release will begin with the final **208 reviewed canonical works**, but that table and the 135-Core challenge-relation table are not yet public.
 
 The quantitative challenge analysis uses the **135 Core works** as its prevalence denominator.
 
@@ -87,16 +92,16 @@ workbook schema and interpretation boundary.
 
 ## Public artifact boundary
 
-The public release is intended to support independent regeneration of the manuscript's **challenge-level quantitative results**, not to expose the complete candidate discovery queue.
+The current public hub supports inspection of the manuscript's protocol and aggregate **challenge-level quantitative results**. It does not yet support independent regeneration from row-level evidence, and it is not intended to expose the complete candidate discovery queue.
 
-The submission release should contain:
+The submission-ready release should additionally contain:
 
 1. the final **208-work canonical evidence map** with scope tier;
 2. the **135-Core challenge-relation table** with Direct, Secondary, and No assignments;
 3. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
 4. scripts or generated outputs that reproduce the challenge-count table, pairwise overlap table, and empirical landscape figure.
 
-The candidate-level discovery and screening ledger for the 452 raw hits is not part of the public artifact. Aggregate screening counts, search protocol, query families, and venue closure are documented in the manuscript and repository.
+The candidate-level discovery and screening ledger for the 452 raw hits is not part of the public artifact. Aggregate screening counts, search protocol, query families, and venue closure are documented in the manuscript and repository. See [`ARTIFACT.md`](ARTIFACT.md) for the current completeness statement.
 
 ## Legacy v1 catalog and audit
 

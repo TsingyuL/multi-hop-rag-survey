@@ -87,9 +87,9 @@ The adjudicated canonical-work table generates challenge prevalence and pairwise
 
 ## Public release boundary
 
-The public artifact begins at the final reviewed evidence map. Candidate-level records from the discovery and screening stages are not released.
+The planned public row-level artifact begins at the final reviewed evidence map. Candidate-level records from the discovery and screening stages are not released. The current repository publishes the aggregate v2 snapshot but not the final row-level evidence map.
 
-The public submission release is intended to include:
+The submission-ready release is intended to include:
 
 - the final **208-work canonical evidence map** with scope tier;
 - the **135-Core challenge-relation table**;

@@ -1,4 +1,9 @@
-# Taxonomy guide
+# Legacy v1 taxonomy guide
+
+> **Status:** This page documents the historical v1 catalog schema. The current
+> manuscript uses the five challenge functions and the
+> [v2 challenge codebook](../taxonomy/challenge_codebook_v2.md). Do not use this
+> page to interpret the 208-work manuscript snapshot.
 
 The survey uses two complementary labels. The **evidence-chain target axis** captures the protocol-bound event a work tries to improve; the **architectural axis** captures how it does so. Neither label is a quality judgment.
 

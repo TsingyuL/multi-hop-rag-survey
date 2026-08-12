@@ -6,6 +6,27 @@ All notable repository changes are recorded here.
 
 ### 2026-08-12 synchronization
 
+- Added a paper-to-hub map that connects manuscript sections, figures, review
+  claims, and literature resources to their public repository counterparts.
+- Reframed the static site as the paper-aligned Research Hub and moved the v1
+  catalog explorer into an explicitly labeled legacy section.
+- Redesigned the Web Hub with an editorial paper hero, challenge cards,
+  manuscript-figure previews, corpus-flow and evidence-map summaries, and a
+  clearer resource library.
+- Added lightweight PNG previews derived from the three current vector figure
+  PDFs while retaining the PDFs as the canonical downloadable assets.
+- Added a responsive mobile menu, reading-progress cue, keyboard skip link,
+  public-versus-planned artifact board, and one-click BibTeX citation block.
+- Added repository-specific Open Graph and social-card metadata so shared Hub
+  links retain the paper's title and visual identity.
+- Deferred loading of the legacy catalog data until readers open the explorer.
+- Added a repository-root GitHub Pages entry point and README badge for the
+  public Web Hub.
+- Corrected public-completeness wording: the current hub publishes aggregate
+  audit outputs, while the 208-work canonical table, 135-Core relation table,
+  and reviewer provenance remain submission-release work.
+- Migrated the reporting checklist to the five current challenge functions and
+  rewrote the roadmap around manuscript-aligned release priorities.
 - Synchronized manuscript-facing author metadata with the current TOIS draft:
   Yuqing Luo, Kai Zhang, and Liyang He.
 - Synchronized all three current manuscript figure assets: the
