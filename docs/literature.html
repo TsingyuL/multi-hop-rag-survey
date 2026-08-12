@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Challenge-centered guided reading paths through the multi-hop RAG literature.">
+    <meta name="theme-color" content="#164860">
+    <link rel="canonical" href="https://tsingyul.github.io/multi-hop-rag-survey/docs/literature.html">
+    <link rel="stylesheet" href="assets/hub-pages.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Literature Navigator · Multi-Hop RAG Research Hub">
+    <meta property="og:description" content="Guided reading paths for discovery, path management, sufficiency, recovery, and evidence composition.">
+    <meta property="og:image" content="https://tsingyul.github.io/multi-hop-rag-survey/docs/assets/og-research-hub.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Literature Navigator · Multi-Hop RAG Research Hub</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="topbar">
+      <nav class="nav wrap" aria-label="Primary navigation">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>MH-RAG Hub</a>
+        <div class="nav-links">
+          <a href="./">Home</a>
+          <a href="paper-map.html">Paper map</a>
+          <a href="literature.html" aria-current="page">Literature</a>
+          <a class="nav-cta" href="https://github.com/TsingyuL/multi-hop-rag-survey">View on GitHub</a>
+        </div>
+        <details class="mobile-menu">
+          <summary>Menu</summary>
+          <div class="mobile-links">
+            <a href="./">Home</a>
+            <a href="paper-map.html">Paper map</a>
+            <a href="literature.html">Literature</a>
+            <a href="https://github.com/TsingyuL/multi-hop-rag-survey">View on GitHub</a>
+          </div>
+        </details>
+      </nav>
+    </div>
+
+    <header class="page-hero teal">
+      <div class="hero-grid wrap">
+        <div>
+          <a class="crumb" href="./"><span aria-hidden="true">&larr;</span> Research Hub</a>
+          <h1>Navigate by the <em>decision problem</em></h1>
+          <p class="hero-lead">A guided entry into multi-hop RAG through five nonexclusive challenge functions—not fixed architecture categories.</p>
+          <div class="hero-meta"><span class="hero-pill">Five challenge routes</span><span class="hero-pill">Primary-source links</span><span class="hero-pill">Benchmark cautions</span></div>
+        </div>
+        <aside class="hero-panel" aria-label="How to use the navigator">
+          <span class="hero-panel-label">Reading method</span>
+          <h2>Begin with the failure or decision you need to understand</h2>
+          <ol class="mini-list">
+            <li><span>1</span>Choose a challenge from the question cards</li>
+            <li><span>2</span>Compare mechanism families and anchor papers</li>
+            <li><span>3</span>Inspect the decision interface, not only scores</li>
+            <li><span>4</span>Use the codebook before making coding claims</li>
+          </ol>
+        </aside>
+      </div>
+    </header>
+
+    <main class="page-shell wrap" id="main-content">
+      <aside class="toc" aria-label="Challenge navigation">
+        <strong>Reading routes</strong>
+        <a href="#questions">Start with a question</a>
+        <a href="#discovery">1 · Next-Hop Discovery</a>
+        <a href="#management">2 · Path Management</a>
+        <a href="#sufficiency">3 · Evidence Sufficiency</a>
+        <a href="#recovery">4 · Error Recovery</a>
+        <a href="#composition">5 · Evidence Composition</a>
+        <a href="#benchmarks">Benchmark paths</a>
+        <a href="#workflow">Research workflow</a>
+        <a class="toc-source" href="literature_navigator.md">View source notes</a>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="questions">
+          <p class="section-kicker">Choose your route</p>
+          <h2>Start with your research question</h2>
+          <p class="section-lead">A work may appear in more than one branch. The categories describe decisions over dependent evidence, not mutually exclusive systems.</p>
+          <div class="question-grid">
+            <a class="question-card tone-blue" href="#discovery"><span class="question-number">01</span><h3>What should be retrieved next?</h3><p>Subgoals, missing information, and search actions.</p><em>Discovery &rarr;</em></a>
+            <a class="question-card tone-green" href="#management"><span class="question-number">02</span><h3>Which path should survive?</h3><p>Retention, pruning, joint sets, and lookahead.</p><em>Management &rarr;</em></a>
+            <a class="question-card tone-orange" href="#sufficiency"><span class="question-number">03</span><h3>Is the evidence enough?</h3><p>Answerability, stopping, gaps, and cost.</p><em>Sufficiency &rarr;</em></a>
+            <a class="question-card tone-rose" href="#recovery"><span class="question-number">04</span><h3>How should failure be repaired?</h3><p>Correction, rollback, and verifier-guided replanning.</p><em>Recovery &rarr;</em></a>
+            <a class="question-card tone-violet" href="#composition"><span class="question-number">05</span><h3>How should evidence be combined?</h3><p>Binding, joins, aggregation, and alignment.</p><em>Composition &rarr;</em></a>
+          </div>
+        </section>
+
+        <section class="content-section challenge-section tone-blue" id="discovery">
+          <div class="challenge-head"><span class="challenge-index">01</span><div><h2>Next-Hop Discovery</h2><p>Map the current evidence state to a concrete acquisition target. Inspect the interface between what is known and what should be sought next.</p></div></div>
+          <div class="family-list">
+            <div class="family-row"><span class="family-name">Evidence-conditioned retrieval</span><span class="paper-links"><a href="https://aclanthology.org/D19-1261/">GoldEn Retriever</a> · <a href="https://openreview.net/forum?id=EMHoBG0avc1">MDR</a> · <a href="https://proceedings.neurips.cc/paper/2021/hash/e8b1cbd05f6e6a358a81dee52493dd06-Abstract.html">Baleen</a></span><span class="inspect">Does accumulated context preserve the bridge needed for the next retrieval?</span></div>
+            <div class="family-row"><span class="family-name">Explicit decomposition or reasoning</span><span class="paper-links"><a href="https://aclanthology.org/P19-1613/">DecompRC</a> · <a href="https://aclanthology.org/2023.findings-emnlp.378/">Self-Ask</a> · <a href="https://aclanthology.org/2023.acl-long.557/">IRCoT</a></span><span class="inspect">Does the subquestion or reasoning state express a valid next information need?</span></div>
+            <div class="family-row"><span class="family-name">Missing-information modeling</span><span class="paper-links"><a href="https://aclanthology.org/2025.coling-main.163/">MIGRES</a> · <a href="https://aclanthology.org/2026.acl-long.1185/">S2G-RAG</a></span><span class="inspect">Can the controller distinguish insufficient evidence from what is specifically missing?</span></div>
+            <div class="family-row"><span class="family-name">Structured or agentic search</span><span class="paper-links"><a href="https://openreview.net/forum?id=nnVO1PvbTv">ToG</a> · <a href="https://arxiv.org/abs/2503.09516">Search-R1</a> · <a href="https://arxiv.org/abs/2502.13957">RAG-Gym</a></span><span class="inspect">How do frontier actions, search rewards, and retrieval budgets shape the next hop?</span></div>
+          </div>
+        </section>
+
+        <section class="content-section challenge-section tone-green" id="management">
+          <div class="challenge-head"><span class="challenge-index">02</span><div><h2>Path Management</h2><p>Estimate the future value of partial evidence trajectories. A locally weak item may still be necessary for a valid future chain.</p></div></div>
+          <div class="family-list">
+            <div class="family-row"><span class="family-name">Partial-chain retention</span><span class="paper-links"><a href="https://openreview.net/forum?id=SJgVHkrYDH">PathRetriever</a> · <a href="https://aclanthology.org/2021.naacl-main.368/">BeamDR</a> · <a href="https://aclanthology.org/2024.lrec-main.947/">M3</a></span><span class="inspect">Do valid chains survive pruning under a fixed search budget?</span></div>
+            <div class="family-row"><span class="family-name">Set or subgraph management</span><span class="paper-links"><a href="https://aclanthology.org/2022.findings-emnlp.392/">CORE</a> · <a href="https://aclanthology.org/2026.acl-long.1203/">CIRAG</a> · <a href="https://aclanthology.org/2026.findings-acl.290/">CatRAG</a></span><span class="inspect">Is compatibility among evidence units scored jointly?</span></div>
+            <div class="family-row"><span class="family-name">Lookahead or tree search</span><span class="paper-links"><a href="https://aclanthology.org/2026.findings-acl.1147/">PPRR</a> · <a href="https://aclanthology.org/2026.acl-long.329/">STEM</a></span><span class="inspect">Does the controller estimate future reachability instead of current relevance alone?</span></div>
+          </div>
+        </section>
+
+        <section class="content-section challenge-section tone-orange" id="sufficiency">
+          <div class="challenge-head"><span class="challenge-index">03</span><div><h2>Evidence Sufficiency</h2><p>Decide whether the current external evidence state is adequate for the remaining task—separately from deciding what to retrieve next.</p></div></div>
+          <div class="family-list">
+            <div class="family-row"><span class="family-name">Answerability judgment</span><span class="paper-links"><a href="https://doi.org/10.1145/3404835.3462853">IDRQA</a> · <a href="https://aclanthology.org/2021.emnlp-main.293/">AISO</a></span><span class="inspect">Can adequacy be diagnosed before final answer generation?</span></div>
+            <div class="family-row"><span class="family-name">Adaptive stopping</span><span class="paper-links"><a href="https://arxiv.org/abs/2510.14337">Stop-RAG</a> · <a href="https://openreview.net/forum?id=uQKtwdJN0o">FrugalRAG</a></span><span class="inspect">Measure premature stopping, excessive search, and cost calibration.</span></div>
+            <div class="family-row"><span class="family-name">Gap-aware diagnosis</span><span class="paper-links"><a href="https://aclanthology.org/2025.coling-main.163/">MIGRES</a> · <a href="https://aclanthology.org/2026.acl-long.1185/">S2G-RAG</a></span><span class="inspect">Does the controller expose missing evidence instead of only a binary label?</span></div>
+            <div class="family-row"><span class="family-name">Evidence-aware control</span><span class="paper-links"><a href="https://aclanthology.org/2026.findings-acl.917/">SEMA-RAG</a> · <a href="https://aclanthology.org/2026.acl-long.1559/">IterCOMP</a></span><span class="inspect">How do state, compression, and continuation decisions interact?</span></div>
+          </div>
+        </section>
+
+        <section class="content-section challenge-section tone-rose" id="recovery">
+          <div class="challenge-head"><span class="challenge-index">04</span><div><h2>Error Recovery</h2><p>Require an observable failure signal followed by a corrective state transition. Requesting more evidence alone is not recovery.</p></div></div>
+          <div class="family-list">
+            <div class="family-row"><span class="family-name">Local correction</span><span class="paper-links"><a href="https://aclanthology.org/2024.lrec-main.476/">Dr3</a> · <a href="https://aclanthology.org/2026.acl-long.1479/">ARI-KBQA</a></span><span class="inspect">Is a specific off-topic or invalid intermediate state identified and corrected?</span></div>
+            <div class="family-row"><span class="family-name">Rollback or reversible state</span><span class="paper-links"><a href="https://aclanthology.org/2025.emnlp-main.202/">ReAgent</a> · <a href="https://arxiv.org/abs/2501.05475">RetroRAG</a></span><span class="inspect">Do prior evidence and reasoning states remain editable or restorable?</span></div>
+            <div class="family-row"><span class="family-name">Verifier-guided replanning</span><span class="paper-links"><a href="https://aclanthology.org/2026.findings-acl.1922/">SR-RAG</a> · <a href="https://aclanthology.org/2026.acl-long.216/">D2Plan</a></span><span class="inspect">Does a verifier localize the failure and constrain the next plan?</span></div>
+          </div>
+        </section>
+
+        <section class="content-section challenge-section tone-violet" id="composition">
+          <div class="challenge-head"><span class="challenge-index">05</span><div><h2>Evidence Composition</h2><p>Once required evidence units are available, ask whether the system can bind, compare, aggregate, or transform them correctly.</p></div></div>
+          <div class="family-list">
+            <div class="family-row"><span class="family-name">Graph binding or propagation</span><span class="paper-links"><a href="https://aclanthology.org/P19-1617/">DFGN</a> · <a href="https://aclanthology.org/2020.emnlp-main.710/">HGN</a> · <a href="https://aclanthology.org/2022.dlg4nlp-1.8/">KIFGraph</a></span><span class="inspect">Do relations and message passing bind the correct evidence units?</span></div>
+            <div class="family-row"><span class="family-name">Explicit intermediate variables</span><span class="paper-links"><a href="https://aclanthology.org/P19-1613/">DecompRC</a> · <a href="https://aclanthology.org/2022.acl-long.69/">PathFiD</a> · <a href="https://aclanthology.org/2024.naacl-long.475/">SSCOT</a></span><span class="inspect">Do intermediate answers or slots expose the join variable?</span></div>
+            <div class="family-row"><span class="family-name">Join, comparison, or aggregation</span><span class="paper-links"><a href="https://aclanthology.org/2023.acl-short.147/">S3HQA</a></span><span class="inspect">Is the required operator explicit and can its failure be localized?</span></div>
+            <div class="family-row"><span class="family-name">Heterogeneous alignment</span><span class="paper-links"><a href="https://aclanthology.org/2022.findings-naacl.12/">DEHG</a> · <a href="https://aclanthology.org/2020.findings-emnlp.91/">HybridQA</a> · <a href="https://openreview.net/forum?id=ee6W5UgQLa">MultiModalQA</a></span><span class="inspect">Are table, text, graph, and image evidence aligned before composition?</span></div>
+          </div>
+        </section>
+
+        <section class="content-section" id="benchmarks">
+          <p class="section-kicker">Evaluation routes</p>
+          <h2>Benchmark reading paths</h2>
+          <p class="section-lead">Choose benchmarks by the evidence dependency and operation they expose, then compare retrieval settings before comparing headline scores.</p>
+          <div class="benchmark-grid">
+            <article class="benchmark"><strong><a href="https://aclanthology.org/D18-1259/">HotpotQA</a> · two-hop supporting facts</strong><p>Supporting-fact labels are an imperfect proxy for the complete latent evidence chain.</p></article>
+            <article class="benchmark"><strong><a href="https://aclanthology.org/2020.coling-main.580/">2WikiMultiHopQA</a> + <a href="https://aclanthology.org/2022.tacl-1.31/">MuSiQue</a></strong><p>Match retrieval settings and distractor construction before comparing scores.</p></article>
+            <article class="benchmark"><strong><a href="https://aclanthology.org/2020.findings-emnlp.309/">HoVer</a> · multi-hop verification</strong><p>Fact verification is not directly interchangeable with answer extraction.</p></article>
+            <article class="benchmark"><strong><a href="https://ojs.aaai.org/index.php/AAAI/article/view/6319">QASC</a> · scientific composition</strong><p>The composed fact can introduce a bridge concept absent from the question.</p></article>
+            <article class="benchmark"><strong><a href="https://aclanthology.org/2020.findings-emnlp.91/">HybridQA</a> + <a href="https://openreview.net/forum?id=ee6W5UgQLa">MultiModalQA</a></strong><p>Separate evidence accessibility from the downstream composition operator.</p></article>
+          </div>
+        </section>
+
+        <section class="content-section" id="workflow">
+          <div class="callout"><strong>Keep discovery and evidence coding separate</strong><p>The 771-paper reference library expands discovery, but citation frequency does not establish primary-source review, scope eligibility, or challenge assignment. Use the frozen reviewed evidence map for manuscript-level prevalence and overlap counts.</p></div>
+          <div class="action-row"><a class="button primary" href="../literature/reference_library.xlsx">Download the reference workbook</a><a class="button secondary" href="../taxonomy/challenge_codebook_v2.md">Open the v2 codebook</a><a class="button secondary" href="paper-map.html">Return to the paper map</a></div>
+        </section>
+      </div>
+    </main>
+
+    <footer><div class="footer-grid wrap"><span>Multi-Hop RAG Research Hub · challenge-centered reading paths</span><span><a href="./">Home</a> · <a href="paper-map.html">Paper map</a> · <a href="../CITATION.cff">Citation</a></span></div></footer>
+    <script>const menu=document.querySelector('.mobile-menu');document.querySelectorAll('.mobile-links a').forEach(link=>link.addEventListener('click',()=>{menu.open=false;}));</script>
+  </body>
+</html>
