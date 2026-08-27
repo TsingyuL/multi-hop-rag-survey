@@ -1,0 +1,109 @@
+\documentclass[acmsmall,review,anonymous]{acmart}
+\citestyle{acmnumeric}
+\acmJournal{TOIS}
+\acmDOI{}
+\setcopyright{none}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+
+% acmart/newtxmath defines \Bbbk before amssymb in recent TeX Live.
+\let\Bbbk\relax
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{graphicx,xcolor,xspace}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{placeins}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds}
+\graphicspath{{figures/}}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\RAG}{\textsc{RAG}\xspace}
+\newcommand{\LLM}{\textsc{LLM}\xspace}
+\newcommand{\QA}{\textsc{QA}\xspace}
+\newcommand{\MH}{\textsc{MH}\xspace}
+\newcommand{\CorpusSize}{232}
+\newcommand{\AuditSize}{70}
+\newcommand{\paperfigure}[4]{%
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=#1\linewidth]{#2}
+  \caption{#3}
+  \Description{#3}
+  \label{#4}
+\end{figure}}
+
+\begin{document}
+
+\title{Multi-Hop Retrieval and Reasoning: A Survey}
+
+\author{Anonymous Author(s)}
+\affiliation{%
+  \institution{Anonymous Institution}
+  \country{Anonymous}
+}
+
+\begin{abstract}
+Multi-hop retrieval and reasoning addresses information needs whose solution requires a sequence of dependent acquisitions: evidence found at one step determines what can be searched, verified, or combined next. Unlike single-shot retrieval-augmented generation, a multi-hop system must maintain an evolving state, formulate later information needs, control search depth, and integrate evidence collected across steps. These requirements now arise in multi-hop question answering, graph retrieval, adaptive retrieval-augmented generation, agentic search, deep research, and systems with persistent memory or reusable skills.
+
+We present a functional survey organized around four stages: \emph{initial retrieval}, which obtains entry evidence from the original task; \emph{follow-up retrieval}, which acquires later evidence conditioned on intermediate results; \emph{evidence integration}, which selects, preserves, organizes, reasons over, and synthesizes the acquired sources; and \emph{feedback learning}, which uses completed trajectories to improve future retrieval and reasoning. Deep search and deep research are treated as system-level compositions of these functions rather than separate top-level categories. The review connects early multi-hop question answering and path retrieval with modern graph-based, long-context, browser-based, reinforcement-learning, memory, and skill-learning systems. Its companion artifact contains a \CorpusSize-record literature corpus and a stratified \AuditSize-paper full-text audit selection, while exposing record-level verification status.
+
+We further develop a claim-aligned evaluation framework covering entry recall, hop completion, search trajectories, stopping, evidence preservation and use, grounding, efficiency, and cross-task improvement. The survey therefore frames multi-hop reasoning not as longer generation, but as adaptive information seeking: identifying what is known, determining what is missing, deciding what to search next, integrating the resulting evidence, and learning from prior attempts.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10002951.10003317.10003347</concept_id>
+<concept_desc>Information systems~Question answering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003317.10003338</concept_id>
+<concept_desc>Information systems~Retrieval models and ranking</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010178.10010179</concept_id>
+<concept_desc>Computing methodologies~Natural language processing</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Question answering}
+\ccsdesc[500]{Information systems~Retrieval models and ranking}
+\ccsdesc[500]{Computing methodologies~Natural language processing}
+
+\keywords{multi-hop retrieval, multi-hop reasoning, retrieval-augmented generation, agentic search, deep research, evidence integration, experience learning, skill learning}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_background_and_evolution}
+\input{sections/03_overview}
+\input{sections/03a_harness_layer}
+\FloatBarrier
+\input{sections/04_initial_retrieval}
+\input{sections/05_follow_up_retrieval}
+\input{sections/06_evidence_integration}
+\input{sections/07_feedback_learning}
+\input{sections/07a_harness_feedback}
+\input{sections/08_evaluation}
+\input{sections/09_future_directions}
+\input{sections/10_conclusion}
+
+\appendix
+\input{appendix/a_literature_review_protocol}
+\input{appendix/b_dataset_details}
+\input{appendix/c_full_taxonomy}
+\clearpage
+\input{appendix/d_diagnostic_audit}
+\clearpage
+\input{appendix/e_extended_literature_map}
+
+\clearpage
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references,references_methods,references_figure,references_harness,references_expansion_initial,references_expansion_followup,references_expansion_integration,references_expansion_feedback}
+
+\end{document}

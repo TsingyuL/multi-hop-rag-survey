@@ -1,0 +1,84 @@
+\section{Full Taxonomy Table}
+\label{app:full_taxonomy}
+
+The complete record-level taxonomy is released in the companion artifact. Tables~\ref{tab:taxonomy_initial}--\ref{tab:taxonomy_feedback} give the coding scheme used to assign a primary category and secondary mechanism tags. Primary categories are mutually exclusive for corpus statistics; secondary tags are multi-label.
+
+\clearpage
+\begin{table}[tbp]
+\centering
+\caption{Taxonomy codebook for Initial Retrieval.}
+\label{tab:taxonomy_initial}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}Y Y@{}}
+\toprule
+Subcategory & Primary assignment criterion & Typical secondary tags \\
+\midrule
+Sparse Retrieval & Improves entry evidence from the original task using lexical or learned sparse signals. & BM25, expansion, SPLADE, hybrid retrieval, query expansion. \\
+Dense and Hybrid Retrieval & Learns or combines vector-space retrieval, late interaction, or first-stage reranking before intermediate evidence is available. & DPR, ANCE, Contriever, ColBERT, embeddings, reranking. \\
+Graph Retrieval & Maps the original task to a graph, hierarchy, subgraph, or structured entry neighborhood. & Graph construction, hierarchical retrieval, community summaries, subgraph retrieval. \\
+Reasoning-Aware Retrieval & Uses reasoning signals, hypothetical documents, reader utility, or process rewards to improve original-query retrieval. & Synthetic supervision, bridge utility, reader-aware ranking, process reward. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{Taxonomy codebook for Follow-up Retrieval.}
+\label{tab:taxonomy_followup}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}Y Y@{}}
+\toprule
+Subcategory & Primary assignment criterion & Typical secondary tags \\
+\midrule
+Query Decomposition & Generates, selects, or validates subquestions or subgoals that determine later information needs. & Decomposition supervision, modular prompting, subquestion routing. \\
+Iterative Retrieval & Conditions later retrieval on earlier passages, entities, generated reasoning, or accumulated state. & Hop-conditioned retrieval, retrieve--generate loops, condensed retrieval. \\
+Graph and Path Search & Expands or searches a path, subgraph, or beam from the current intermediate state. & Beam search, KG traversal, graph expansion, path scoring. \\
+Adaptive Retrieval & Decides whether, when, how deeply, or with which tool to retrieve during the current task. & Uncertainty trigger, retrieve/read/stop, correction, complexity routing. \\
+Deep Search & Targets long-horizon browser or open-web acquisition with variable sources and stopping. & Web navigation, research planning, source discovery, open-world search. \\
+\shortstack[l]{Feedback-Assisted\\Retrieval} & Uses process, verifier, or reward signals to alter later current-task actions or train search from trajectories. & Process reward, verifier-guided search, reinforcement learning, recovery. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage
+\begin{table}[tbp]
+\centering
+\caption{Taxonomy codebook for Evidence Integration.}
+\label{tab:taxonomy_integration}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}Y Y@{}}
+\toprule
+Subcategory & Primary assignment criterion & Typical secondary tags \\
+\midrule
+Evidence Selection & Chooses a jointly sufficient subset from an already acquired evidence collection. & Set selection, complementarity, filtering, reader-aware selection. \\
+\shortstack[l]{Preservation and\\Compression} & Reduces context while attempting to retain reasoning-critical content or provenance. & Extractive compression, abstractive compression, notes, latent compression. \\
+Context Construction & Orders, packs, structures, or hierarchically presents acquired evidence to the reader or generator. & Ordering, position effects, context packing, memory-backed context. \\
+Cross-Evidence Reasoning & Explicitly composes information across passages, graphs, tables, images, or tools. & Fusion-in-Decoder, GNN reasoning, text--KG fusion, heterogeneous QA. \\
+Long-Form Synthesis & Produces a multi-claim answer or report requiring source coverage, citation, and contradiction handling. & Outline planning, claim--source alignment, citation, report generation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{Taxonomy codebook for Feedback Learning.}
+\label{tab:taxonomy_feedback}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}Y Y@{}}
+\toprule
+Subcategory & Primary assignment criterion & Typical secondary tags \\
+\midrule
+Feedback Collection & Obtains outcome, process, tool, human, or verifier feedback intended for persistent improvement. & Reward, critique, preference, environment signal. \\
+Trajectory Diagnosis & Analyzes completed trajectories to attribute failure or derive reusable lessons. & Reflection, credit assignment, successful--failed comparison. \\
+Experience Memory & Stores and retrieves prior episodes, distilled lessons, or task traces for future tasks. & Episodic memory, consolidation, memory retrieval, staleness. \\
+Skill Extraction & Creates, routes, revises, or composes reusable textual or executable procedures across tasks. & Skill library, routing, revision, composition, lifecycle management. \\
+Retrieval and Policy Improvement & Uses previous trajectories for persistent retriever, parameter, or policy updates. & Retriever training, process supervision, reinforcement learning, continual adaptation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Boundary Decisions}
+Reranking is coded as initial retrieval when it refines the query--candidate ranking. It is coded as evidence integration only when the central problem is joint selection or reader-facing organization of an already acquired set. Adaptive retrieval and self-critique remain follow-up retrieval when they alter the current episode; they become feedback learning only when the result is retained across tasks. General memory and skill systems are included only when the stored object changes retrieval-grounded multi-hop behavior.
+
+\subsection{Record-Level Fields}
+For each paper, the artifact records title, year, venue, authors, record type, primary category, secondary category, method tags, task setting, evidence environment, task and dataset description, main contribution, evaluation signals, audit-selection status, verification status, canonical source URL, and coding notes. The record-level table is distributed electronically rather than rendered in full because \CorpusSize{} rows would be unreadable in the article appendix.
