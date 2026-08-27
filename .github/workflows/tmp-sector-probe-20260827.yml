@@ -1,0 +1,33 @@
+name: tmp-sector-probe-20260827
+on:
+  push:
+    paths:
+      - '.github/workflows/tmp-sector-probe-20260827.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install akshare pandas lxml beautifulsoup4
+      - name: Probe THS sector
+        shell: bash
+        run: |
+          python - <<'PY'
+          import akshare as ak
+          print('has concept name', hasattr(ak,'stock_board_concept_name_ths'))
+          print('has concept cons', hasattr(ak,'stock_board_concept_cons_ths'))
+          print('has industry name', hasattr(ak,'stock_board_industry_name_ths'))
+          print('has industry cons', hasattr(ak,'stock_board_industry_cons_ths'))
+          if hasattr(ak,'stock_board_concept_name_ths'):
+              x=ak.stock_board_concept_name_ths(); print('concepts',x.shape); print(x.head(3).to_string(index=False))
+          if hasattr(ak,'stock_board_industry_name_ths'):
+              y=ak.stock_board_industry_name_ths(); print('industries',y.shape); print(y.head(3).to_string(index=False))
+          if hasattr(ak,'stock_board_industry_cons_ths'):
+              z=ak.stock_board_industry_cons_ths('半导体及元件'); print('industry cons',z.shape); print(z.head(3).to_string(index=False))
+          if hasattr(ak,'stock_board_concept_cons_ths'):
+              w=ak.stock_board_concept_cons_ths('人工智能'); print('concept cons',w.shape); print(w.head(3).to_string(index=False))
+          PY
