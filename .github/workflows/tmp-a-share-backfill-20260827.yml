@@ -1,0 +1,47 @@
+name: tmp-a-share-backfill-20260827
+on:
+  push:
+    paths:
+      - 'tmp_a_share_backfill_20260827.py'
+      - '.github/workflows/tmp-a-share-backfill-20260827.yml'
+permissions:
+  contents: write
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Collect
+        run: python tmp_a_share_backfill_20260827.py
+      - name: Split oversized files
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root=Path('tmp_a_share_delivery_20260827')
+          lim=70*1024*1024
+          for p in list(root.iterdir()) if root.exists() else []:
+              if p.is_file() and p.stat().st_size>lim:
+                  data=p.read_bytes();
+                  for i in range(0,len(data),lim):
+                      (root/f'{p.name}.part{i//lim+1:03d}').write_bytes(data[i:i+lim])
+                  p.unlink()
+          PY
+      - name: Commit delivery
+        if: always()
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tmp_a_share_delivery_20260827
+          if git diff --cached --quiet; then
+            echo 'no delivery files'; exit 1
+          fi
+          git commit -m 'temp: A-share backfill delivery 20260827 [skip ci]'
+          git push
