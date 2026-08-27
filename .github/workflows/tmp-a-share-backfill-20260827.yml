@@ -20,6 +20,15 @@ jobs:
         shell: bash
         run: |
           sed -i 's/or1/or 1/g' tmp_a_share_backfill_20260827.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('tmp_a_share_backfill_20260827.py')
+          s=p.read_text(encoding='utf-8')
+          a=s.index('def universe():')
+          b=s.index('def heat_one', a)
+          new='''def universe():\n    url='https://push2.eastmoney.com/api/qt/clist/get';codes=[];raw=[];total=None\n    for pn in range(1,80):\n        q={'pn':str(pn),'pz':'100','po':'1','np':'1','ut':'bd1d9ddb04089700cf9c27f6f7426281','fltt':'2','invt':'2','fid':'f3','fs':'m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23','fields':'f12,f14'}\n        j,u=rq('GET',url,params=q,headers={'Referer':'https://quote.eastmoney.com/center/gridlist.html'},timeout=40)\n        data=j.get('data')or{};diff=data.get('diff')or[];raw.append({'page':pn,'request_url':u,'count':len(diff)})\n        if total is None:\n            try: total=int(data.get('total')or 0)\n            except: total=0\n        for x in diff:\n            c=str(x.get('f12')or'')\n            if len(c)==6 and mainboard(c): codes.append(c+('.SH' if c.startswith('6') else '.SZ'))\n        if not diff or (total and pn*100>=total): break\n    return sorted(set(codes)),{'total':total,'pages':raw}\n'''
+          p.write_text(s[:a]+new+s[b:],encoding='utf-8')
+          PY
           python -m py_compile tmp_a_share_backfill_20260827.py
           python tmp_a_share_backfill_20260827.py
       - name: Split oversized files
