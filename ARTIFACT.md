@@ -1,56 +1,61 @@
 # Artifact status
 
-This repository is the paper-aligned research hub for *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*. It is a survey artifact, not a manuscript-source repository, benchmark submission, or claim that all cited experimental results are independently reproduced here. The [paper-to-hub map](docs/paper_hub.md) records how manuscript sections connect to public resources.
+This repository is the public companion for *Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment*.
 
-## Current manuscript-aligned artifacts
+## Current manuscript snapshot
 
-| Artifact | Location | Status |
-| --- | --- | --- |
-| Challenge codebook v2 | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) | aligned with current manuscript |
-| Submission audit summary | [`docs/submission_audit_v2.md`](docs/submission_audit_v2.md) | aligned aggregate snapshot |
-| Search-flow counts | [`taxonomy/audit_v2/search_flow.csv`](taxonomy/audit_v2/search_flow.csv) | aggregate screening counts |
-| Challenge counts | [`taxonomy/audit_v2/challenge_counts.csv`](taxonomy/audit_v2/challenge_counts.csv) | current Core counts |
-| Direct overlap matrix | [`taxonomy/audit_v2/direct_overlap.csv`](taxonomy/audit_v2/direct_overlap.csv) | current Core overlap |
-| Coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) | current discovery and review protocol |
-| Executable discovery queries | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) | Semantic Scholar candidate discovery |
-| Seven-survey reference library | [`literature/reference_library.xlsx`](literature/reference_library.xlsx) | broad discovery layer; not an audit denominator |
-| Canonical Figure 1 | [`mh_figures/fig1.pdf`](mh_figures/fig1.pdf) | evidence-dependency scope |
-| Canonical Figure 2 | [`mh_figures/fig2.pdf`](mh_figures/fig2.pdf) | five-challenge control loop |
-| Canonical Figure 3 | [`mh_figures/fig3.pdf`](mh_figures/fig3.pdf) | challenge-mechanism landscape |
+The manuscript uses a frozen canonical frame of **274 papers** with review cutoff **2026-08-05**:
 
-The current manuscript snapshot contains 208 reviewed canonical works: 135 Core, 54 Supporting, and 19 Transfer-relevant. Quantitative challenge prevalence uses the 135 Core works.
+- 149 CORE;
+- 57 SUPPORTING;
+- 68 TRANSFER.
 
-The separate reference library contains 886 citation records reconstructed from
-seven adjacent surveys and 771 deduplicated papers. It supports candidate
-discovery and cross-survey comparison; it does not establish scope eligibility,
-primary-source review, or challenge coding.
+The revised empirical synthesis uses coarse knowledge-access descriptors and a targeted recheck of the state-dependent routing subset. Historical challenge-centered files based on the earlier 208-work snapshot are retained for provenance but are not current manuscript-aligned quantitative artifacts.
+
+## Submission-aligned artifacts
+
+| Artifact | Status |
+| --- | --- |
+| Frozen 274-paper canonical frame | required for tagged submission release |
+| Knowledge-access mapping (representation / interface / regime / cross-hop relation) | current analytical basis; row-level release required before submission freeze |
+| Nine-case routing-evaluation recheck | current targeted synthesis; release required before submission freeze |
+| Discovery query strings | available in `taxonomy/discovery_queries.csv` |
+| Coverage protocol | updated in `docs/coverage_protocol.md` |
+| Adjacent-survey reference library | discovery layer only; not a corpus denominator |
+| Historical five-challenge audit | legacy/provenance only |
 
 ## Public reproducibility boundary
 
-The current public artifact exposes the protocol and aggregate manuscript snapshot. It does **not yet** permit independent regeneration of the challenge-level quantitative results from the final reviewed evidence map because the row-level evidence tables and reviewer provenance are not yet public. It does not publish the complete candidate-level discovery and screening ledger.
+The review is a **structured evidence map**, not a registered systematic review or statistical meta-analysis. The exact 274-paper frame is the auditable denominator for current manuscript counts. However, the final expansion does **not** have a complete per-database raw-hit ledger with execution dates and deduplication counts sufficient to reconstruct a PRISMA-style flow from initial search results to the 274-paper frame. The repository therefore must not reuse the historical `452 → 342 → 265 → 263 → 208` flow as if it generated the current corpus.
 
-The tagged submission artifact should contain:
+The broader fine-grained coding schema underwent blinded reliability attempts, but the confirmatory reliability gate did **not** meet the pre-specified threshold. The submission artifact must therefore preserve the manuscript's interpretation boundary:
 
-1. the final **208-work canonical evidence map** with scope tier;
-2. the **135-Core challenge-relation table** with Direct, Secondary, and No coding;
-3. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
-4. scripts or generated outputs that reproduce the challenge-count table, pairwise Direct-overlap table, and empirical landscape figure.
+- corpus percentages are descriptive, evidence-backed mappings rather than reliability-validated prevalence estimates;
+- the revised access synthesis uses coarse, explicitly defined descriptors;
+- high-leverage routing/evaluation claims use targeted primary-source rechecks.
 
-The candidate-level records behind the reported 452 raw hits are outside the public artifact boundary. Their aggregate screening counts, search protocol, query families, and venue closure remain documented in the manuscript and repository.
+## Required tagged submission release
 
-This boundary currently lets readers inspect the reported screening flow, challenge counts, overlaps, and coding rules. Independent row-level regeneration will become possible only after the listed submission artifacts and regeneration outputs are published.
+Before submission, the tagged artifact should include:
 
-## Legacy v1 artifact
+1. the exact **274-paper canonical frame** and scope tier;
+2. the row-level coarse knowledge-access mapping used for RQ3;
+3. the **nine-case routing-evaluation recheck** and directness criterion used for RQ4;
+4. executable discovery queries and the final **2026-08-05** cutoff statement;
+5. scripts or generated outputs that reproduce manuscript tables and empirical figures from the frozen release;
+6. a checksum, tag, or immutable commit identifying the exact artifact version cited by the paper.
 
-The following files are preserved for provenance and are not the source of the current manuscript counts:
+No artifact should claim fully adjudicated independent double coding for the current 274-paper quantitative map unless a new valid reliability process is completed and released.
 
-- `taxonomy/audit_records.csv`
-- `taxonomy/audit_codebook_v1.md`
-- `docs/quantitative_audit.md`
-- the older catalog taxonomy built around Observability, Selection preservation, Exposure, Fusion reliability, and Causal faithfulness.
+## Historical artifacts
 
-The v1 audit contains 40 single-coded records. It should not be used to validate the v2 208-work manuscript snapshot or to infer the current review reliability protocol.
+The following materials describe earlier project snapshots and remain available only for provenance:
+
+- `taxonomy/audit_v2/` and the five-challenge codebook (208-work challenge-centered manuscript snapshot);
+- `taxonomy/audit_records.csv`, `taxonomy/audit_codebook_v1.md`, and `docs/quantitative_audit.md` (older v1 catalog/audit).
+
+Historical counts and challenge prevalence should not be cited as current manuscript results.
 
 ## Release practice
 
-Create a tagged GitHub release after the final 208-work evidence map, the 135-Core challenge coding, reviewer/adjudication provenance, and regeneration outputs are aligned with the manuscript. Archive the tag through a DOI-minting service if desired. Add a repository DOI to `CITATION.cff` once available; add ACM DOI, volume, issue, and page metadata only after the publisher assigns them.
+Create a tagged GitHub release only after the paper, canonical frame, access mapping, routing recheck, figures, and documentation agree on the same denominator, cutoff, definitions, and caveats. Archive the tag through a DOI-minting service if desired. Add publisher metadata only after assignment.
