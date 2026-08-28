@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this survey or its companion artifact, please cite it as below."
-title: "Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey"
+title: "Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment"
 type: article
 authors:
   - family-names: Luo
@@ -14,20 +14,27 @@ authors:
     affiliation: University of Science and Technology of China
 year: 2026
 abstract: >-
-  A challenge-centered survey of multi-hop retrieval-augmented generation
-  defined by dependency among external evidence units. The survey separates
-  Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery,
-  and Evidence Composition, and analyzes a canonical evidence map of 208
-  reviewed works with 135 Core works used for quantitative challenge analysis.
+  A survey of multi-hop retrieval-augmented generation organized around four
+  connected layers: evidence dependency, established retrieval-reasoning
+  process organization, external knowledge-access conditions, and evaluation
+  alignment. The current structured evidence map contains 274 canonical papers.
+  Corpus-level percentages are interpreted as descriptive evidence-backed
+  mappings; targeted primary-source rechecking supports the evaluation analysis
+  of state-dependent access decisions.
 keywords:
   - multi-hop RAG
   - retrieval-augmented generation
   - multi-hop question answering
   - evidence dependency
-  - evidence chains
+  - retrieval reasoning
+  - knowledge access
+  - evaluation alignment
   - agentic retrieval
 license: MIT
 notes: >-
   Author manuscript draft targeting ACM Transactions on Information Systems.
-  Review cutoff: 2026-08-09. Add repository DOI and final publisher metadata
-  only after they are assigned.
+  Review cutoff: 2026-08-05. The broader fine-grained coding scheme did not pass
+  the pre-specified confirmatory reliability gate; current corpus percentages
+  are descriptive mappings rather than reliability-validated prevalence
+  estimates. Add repository DOI and final publisher metadata only after they
+  are assigned.
