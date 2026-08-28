@@ -1,53 +1,31 @@
-# Submission audit snapshot v2
+# Historical submission audit snapshot v2
 
-**Manuscript:** *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*  
-**Review cutoff:** 2026-08-09  
-**Status:** aggregate snapshot aligned with the current manuscript.
+> **Status:** historical project snapshot only. This file does **not** describe the current manuscript denominator, title, reliability claim, or empirical conclusions.
 
-This document replaces the legacy 40-record v1 audit as the summary used by the current manuscript. The v1 files remain in the repository for provenance but are not the source of the current 208-work counts.
+This document records the earlier challenge-centered manuscript snapshot *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*, with review cutoff 2026-08-09 and a 208-work evidence map. It is retained solely for provenance.
 
-## Corpus construction
+The current manuscript instead uses:
 
-Four discovery channels contribute to the frozen screening flow:
+- title: *Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment*;
+- review cutoff: **2026-08-05**;
+- frozen canonical frame: **274 papers = 149 CORE + 57 SUPPORTING + 68 TRANSFER**;
+- a layered synthesis of evidence dependency, established process organization, knowledge-access conditions, and evaluation alignment;
+- descriptive evidence-backed full-corpus mappings with an explicit reliability caveat;
+- a targeted primary-source recheck of nine state-dependent routing cases.
 
-| Discovery channel | Records |
-| --- | ---: |
-| Adjacent survey consolidation | 171 |
-| Keyword search | 123 |
-| Backward and forward citation tracing | 92 |
-| Final venue sweep | 66 |
-| **Raw source hits** | **452** |
+Do **not** use the historical `452 → 342 → 265 → 263 → 208` flow as the construction flow for the current 274-paper frame. Do **not** use the five-challenge prevalence counts below as current manuscript results. Do **not** use the earlier independent-review/adjudication wording as evidence that the current 274-paper map passed a confirmatory reliability gate.
 
-After duplicate and version consolidation, the aggregate screening flow is:
+## Historical corpus construction
+
+The earlier snapshot reported:
 
 `452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
 
-Additional bookkeeping:
+with 135 Core, 54 Supporting, and 19 Transfer-relevant works.
 
-- 77 unique candidates are excluded at title/metadata screening.
-- 2 records remain unresolved and do not enter the denominator.
-- 55 resolved records are excluded after full source review.
+## Historical challenge representation
 
-The 208 reviewed works are divided into:
-
-| Scope tier | Count |
-| --- | ---: |
-| Core | 135 |
-| Supporting | 54 |
-| Transfer-relevant | 19 |
-| **Total** | **208** |
-
-The candidate-level records behind the 452 raw hits are not part of the public release. The aggregate screening counts and protocol are reported for transparency. The planned public row-level artifact begins with the final 208 reviewed canonical works, but it is not yet included in the repository.
-
-## Search sources and closure
-
-Executable keyword-query families are maintained in `taxonomy/discovery_queries.csv` and currently use Semantic Scholar. Primary-source identity and technical claims are resolved against authoritative landing pages such as ACL Anthology, OpenReview, arXiv, the ACM Digital Library, publisher pages, and official repositories.
-
-The final venue sweep covers ACL, EMNLP, NAACL, EACL, COLING, SIGIR, WWW, WSDM, CIKM, ICLR, NeurIPS, ICML, AAAI, and IJCAI. The venue sweep is a closure step rather than a separate prevalence stratum.
-
-## Challenge representation in the Core corpus
-
-Relations are nonexclusive. Direct is the primary prevalence criterion; Direct+Secondary is a sensitivity view.
+The earlier challenge-centered analysis used five nonexclusive challenge families and 135 Core works as its denominator:
 
 | Challenge | Direct | Direct+Secondary |
 | --- | ---: | ---: |
@@ -57,42 +35,17 @@ Relations are nonexclusive. Direct is the primary prevalence criterion; Direct+S
 | Error Recovery | 11 | 15 |
 | Evidence Composition | 43 | 98 |
 
-## Pairwise Direct overlap
+These counts and the associated overlap matrix are retained as historical project results only.
 
-|  | NHD | Path | Suff. | Rec. | Comp. |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| NHD | 84 | 24 | 22 | 8 | 12 |
-| Path | 24 | 41 | 4 | 1 | 6 |
-| Suff. | 22 | 4 | 24 | 5 | 3 |
-| Rec. | 8 | 1 | 5 | 11 | 2 |
-| Comp. | 12 | 6 | 3 | 2 | 43 |
+## Why this file remains
 
-Two manuscript ratios follow directly from this table:
+The project evolved substantially after this snapshot. Retaining the file provides a transparent provenance trail and makes it clear which claims were superseded rather than silently overwritten. Current submission-facing readers should use:
 
-- 22 of 24 Direct Sufficiency works also instantiate Direct Discovery: **91.7%**.
-- 5 of 24 Direct Sufficiency works also instantiate Direct Recovery: **20.8%**.
+- [`submission_alignment_v10.md`](submission_alignment_v10.md);
+- [`coverage_protocol.md`](coverage_protocol.md);
+- [`../README.md`](../README.md);
+- [`../ARTIFACT.md`](../ARTIFACT.md).
 
-## Review reliability
+## Reliability note
 
-The scope and challenge assignments used for manuscript-level quantitative results are independently reviewed by two reviewers under the same operational codebook. Reviewers inspect the relevant primary technical source before reconciliation. Disagreements are resolved through source-grounded adjudication.
-
-No inter-coder coefficient is reported unless the unreconciled reviewer labels needed to compute it are preserved in the release.
-
-## Interpretation boundary
-
-These counts describe literature representation under the declared protocol. They do not measure intrinsic challenge importance or absolute system competence.
-
-The current overlap structure supports four manuscript findings:
-
-1. Evidence adequacy and state integrity are distinct control decisions.
-2. Insufficiency is coupled far more often with forward Discovery than with Recovery.
-3. Direct Path Management and Direct Recovery overlap in only one Core work, indicating that proactive path preservation and reactive repair are rarely unified under the Direct criterion.
-4. Acquisition success and evidence use require separate attribution.
-
-## Public artifact completeness
-
-The aggregate files in `taxonomy/audit_v2/` reproduce the counts in this document. The submission release should additionally publish the final **208-work canonical evidence map**, the **135-Core challenge-relation table**, and reviewer/adjudication provenance sufficient to regenerate and inspect the manuscript's quantitative challenge analysis.
-
-The candidate-level discovery and screening ledger is outside the public artifact boundary. Readers can inspect the aggregate screening flow and search protocol without requiring publication of the full candidate queue.
-
-The legacy v1 audit should not be used to validate the current manuscript counts.
+The current broader fine-grained coding scheme later underwent blinded confirmatory reliability attempts that did **not** meet the pre-specified threshold. Accordingly, the current manuscript explicitly avoids presenting its corpus-level percentages as reliability-validated prevalence estimates. This supersedes the earlier wording that implied fully adjudicated independent double review for manuscript-level quantitative claims.
