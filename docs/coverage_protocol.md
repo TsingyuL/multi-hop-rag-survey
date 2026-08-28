@@ -2,102 +2,108 @@
 
 ## Purpose and claim boundary
 
-This repository supports the evidence map behind *Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey*. The review is a structured evidence map rather than a registered systematic review or a statistical meta-analysis. Reported counts describe the corpus produced by the declared protocol; they do not imply that no relevant work exists outside the corpus.
+This repository supports the structured evidence map behind *Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment*.
 
-The manuscript review cutoff is **2026-08-09**.
+The review is a **structured evidence map**, not a registered systematic review or a statistical meta-analysis. Reported counts describe the frozen corpus produced by the declared protocol and do not imply exhaustive recall.
+
+The auditable manuscript review cutoff is **2026-08-05**.
 
 ## Scope
 
-The current survey defines multi-hop RAG by **dependency among external evidence units**, not by document count, retrieval-call count, or reasoning length.
+The survey defines multi-hop RAG through **evidence dependency**, not document count, retrieval-call count, or reasoning length.
 
-A work is in the target problem space when at least one of the following holds:
+A work may satisfy one or both of the following:
 
-1. **Acquisition dependency:** evidence obtained earlier changes or specifies a later information need, retrieval target, or search action.
-2. **Reasoning dependency:** answering requires a substantive operation across multiple external evidence units, such as binding, comparison, conjunction, relational join, aggregation, temporal alignment, or transformation.
+1. **Acquisition dependency:** evidence obtained earlier materially changes or specifies a later external information need, retrieval target, source choice, or acquisition action.
+2. **Reasoning dependency:** answering requires a substantive operation across multiple external evidence units, such as binding, relation composition, comparison, conjunction, aggregation, arithmetic, temporal/schema alignment, cross-source composition, or cross-modal composition.
 
-Purely parametric chain-of-thought work is outside this scope unless external evidence access is part of the mechanism or task. Reader-only multi-hop systems may still be retained as mechanism evidence for Evidence Composition without being relabeled as end-to-end RAG systems.
+Repeated retrieval is not sufficient if later acquisition is predetermined or depends only on the original question. Multiple documents do not by themselves establish reasoning dependency. Search or selection performed only inside evidence already supplied to the evaluated model is not treated as external acquisition.
 
 ## Discovery channels
 
-Candidate discovery uses four complementary channels:
+Candidate discovery combined complementary channels:
 
 1. consolidation from adjacent surveys;
 2. keyword search;
 3. backward and forward citation tracing from canonical methods and benchmarks; and
-4. a final sweep of recent relevant venues.
+4. venue and recency closure over relevant IR, NLP, ML, and AI venues.
 
-The frozen aggregate counts are:
+Primary-source identity and technical claims were checked against authoritative sources such as ACL Anthology, OpenReview, arXiv, the ACM Digital Library, publisher/venue proceedings pages, and official repositories. DBLP and Semantic Scholar were additionally useful for discovery, identity resolution, and deduplication.
 
-| Discovery channel | Records |
-| --- | ---: |
-| Adjacent survey consolidation | 171 |
-| Keyword search | 123 |
-| Citation tracing | 92 |
-| Final venue sweep | 66 |
-| **Raw source hits** | **452** |
+The repository exposes five executable Semantic Scholar maintenance-query families in [`taxonomy/discovery_queries.csv`](../taxonomy/discovery_queries.csv):
 
-The executable keyword families in [`taxonomy/discovery_queries.csv`](../taxonomy/discovery_queries.csv) use Semantic Scholar as the candidate-discovery service. Those machine-executable strings are a maintenance interface; the manuscript reports the broader conceptual query families used in the review.
+- `multi hop question answering retrieval`;
+- `multi hop retrieval augmented generation`;
+- `iterative retrieval reasoning question answering`;
+- `multi hop knowledge graph question answering`;
+- `multi hop evidence chain retrieval`.
 
-Primary-source identity and technical claims are subsequently checked against authoritative landing pages such as ACL Anthology, OpenReview, arXiv, the ACM Digital Library, publisher pages, and official repositories.
+These strings are reproducible maintenance queries, not a complete reconstruction of every historical search action. Broader conceptual terms and citation/venue closure were also used because terminology changed substantially across the 2017–2026 literature.
 
-## Query families
+## Temporal window and venue closure
 
-The review uses query families covering at least the following concepts:
+The eligibility/search window begins in **January 2017** and closes on **August 5, 2026**. The final venue sweep includes major venues such as ACL, EMNLP, NAACL, EACL, COLING, SIGIR, WWW, WSDM, CIKM, ICLR, NeurIPS, ICML, AAAI, and IJCAI, with relevant journal and arXiv records entering through search or citation tracing.
 
-- multi-hop question answering plus retrieval;
-- explicit multi-hop retrieval-augmented generation;
-- iterative or multi-step retrieval with reasoning;
-- multi-hop knowledge-graph question answering;
-- evidence-chain retrieval and verification.
+The venue sweep is a closure step rather than a prevalence stratum.
 
-Substantial updates should preserve the exact executable query strings and execution dates in the internal frozen discovery/screening ledger. A search failure or API rate limit is not treated as zero results.
+## Canonicalization and frozen frame
 
-## Venue closure
+The counting unit for corpus-level analysis is a **canonical paper identity**. Preprint and archival versions, title variants, and duplicate discovery records are merged when they refer to the same work. A paper is not split merely because it reports multiple datasets, model sizes, hyperparameters, or ordinary ablations.
 
-The final venue sweep covers ACL, EMNLP, NAACL, EACL, COLING, SIGIR, WWW, WSDM, CIKM, ICLR, NeurIPS, ICML, AAAI, and IJCAI. Relevant journal and arXiv records may also enter through keyword search or citation tracing.
+The current frozen frame contains **274 papers**:
 
-The venue sweep is a closure step, not a separate prevalence stratum.
+- **149 CORE**;
+- **57 SUPPORTING**;
+- **68 TRANSFER**.
 
-## Screening and canonicalization
+The exact 274-paper frame is the denominator for manuscript corpus-level counts. The historical challenge-centered flow `452 raw hits → 342 unique candidates → 265 primary-source review queue → 263 resolved sources → 208 reviewed canonical works` belongs to an earlier project snapshot and must not be represented as the construction flow for the current 274-paper corpus.
 
-The aggregate corpus construction flow is:
-
-`452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
-
-- 77 unique candidates are excluded at title/metadata screening.
-- 2 records remain unresolved and do not enter the reviewed denominator.
-- 55 resolved records are excluded after full source review.
-- Duplicate versions and title variants are merged before challenge statistics are computed.
-
-The final 208 canonical works are divided into **135 Core, 54 Supporting, and 19 Transfer-relevant**.
+The final 274-paper expansion does **not** have a complete per-database raw-hit ledger with query execution dates and deduplication counts sufficient to reconstruct a PRISMA-style flow. We therefore report the frozen canonical denominator and protocol rather than retrofitting historical screening counts.
 
 ## Scope tiers
 
-- **Core:** the central contribution materially depends on evidence dependencies across multiple steps or units. Removing those dependencies would substantially change the research problem or the method's central mechanism.
-- **Supporting:** the work remains within retrieval, RAG, or QA system design and provides a mechanism relevant to multi-hop systems, but dependent evidence resolution is not central to its research problem.
-- **Transfer-relevant:** the work originates outside the target retrieval/RAG task population and is retained because its mechanism or boundary case clarifies one of the five challenges.
+- **CORE:** the principal evaluated pipeline is retrieval-bearing and acquisition dependency and/or reasoning dependency is central to the problem or mechanism.
+- **SUPPORTING:** the work provides directly relevant evidence on multi-evidence reasoning, integration, evaluation, or scope boundaries without satisfying the full retrieval-bearing CORE gate.
+- **TRANSFER:** the work provides adjacent methodological or diagnostic evidence but is not treated as a primary multi-hop RAG study.
 
-Only the 135 Core works enter the primary challenge-prevalence analysis.
+## Primary-source coding and evidence provenance
 
-## Challenge coding and adjudication
+Analytical coding is based on the exact primary technical source rather than titles, secondary surveys, or repository descriptions. The project evidence stores record source URLs, evidence notes, coder/provenance information, and confidence for analytical fields.
 
-Challenge relations are coded as Direct, Secondary, or No under [`taxonomy/challenge_codebook_v2.md`](../taxonomy/challenge_codebook_v2.md). The scope and challenge assignments used in the quantitative analysis are independently reviewed by two reviewers under the same codebook. Reviewers inspect the relevant primary technical source before reconciliation. Disagreements are revisited against those sources and resolved through explicit adjudication.
+The revised manuscript does not elevate the complete legacy fine-grained schema into a new taxonomy. For RQ3 it uses three coarse external-access descriptors:
 
-The adjudicated canonical-work table generates challenge prevalence and pairwise overlap. Aggregate corpus-construction counts are generated from the internal frozen discovery and screening ledger.
+1. **Knowledge representation** — the form in which externally acquired evidence is exposed;
+2. **Acquisition interface** — the external mechanism used to obtain evidence;
+3. **Source regime** — fixed/closed versus open/dynamic.
+
+For acquisition-dependent systems, a derived **cross-hop access relation** distinguishes stable access, heterogeneous access without an established state-dependent transition, and adaptive routing/transition-capable access.
+
+Internal graphs, trees, summaries, or triples built solely to organize an otherwise textual evidence source are treated as process/index structures unless the evaluated acquisition action directly exposes graph/structured evidence.
+
+## Reliability and interpretation boundary
+
+The broader fine-grained coding scheme underwent blinded reliability attempts under a frozen manual. The confirmatory reliability gate did **not** meet its pre-specified threshold. Accordingly, the current manuscript does not describe the 274-paper map as a reliability-validated prevalence census and does not claim fully adjudicated independent double coding.
+
+Instead:
+
+- full-corpus percentages are reported as **descriptive, evidence-backed mappings**;
+- the revised synthesis relies on coarse access descriptors with explicit boundaries;
+- high-leverage claims about the nine state-dependent routing cases are supported by targeted paper-by-paper primary-source rechecking.
+
+The routing recheck also retires the earlier `0/9 direct routing evaluation` claim: direct intermediate diagnostics are uncommon, not absent.
 
 ## Public release boundary
 
-The planned public row-level artifact begins at the final reviewed evidence map. Candidate-level records from the discovery and screening stages are not released. The current repository publishes the aggregate v2 snapshot but not the final row-level evidence map.
+The submission-ready tagged artifact should include:
 
-The submission-ready release is intended to include:
+- the exact **274-paper canonical frame** and scope tier;
+- the row-level coarse knowledge-access mapping used for RQ3;
+- the nine-case routing-evaluation recheck and directness criterion used for RQ4;
+- executable discovery queries and the final cutoff statement;
+- scripts or generated outputs that reproduce manuscript tables and empirical figures from the same frozen release.
 
-- the final **208-work canonical evidence map** with scope tier;
-- the **135-Core challenge-relation table**;
-- reviewer and adjudication provenance needed to support the quantitative coding claims; and
-- scripts or generated outputs that reproduce manuscript challenge counts, pairwise overlap, and the empirical landscape figure.
-
-The manuscript and repository report the aggregate screening counts, search protocol, query families, and venue closure so that the construction procedure remains inspectable without publishing the full candidate queue.
+Candidate-level raw-hit reconstruction is not claimed for the final frame because the complete final search ledger is unavailable.
 
 ## Update and correction policy
 
-Corrections to the final evidence map should identify the affected canonical work, cite the primary technical source, and explain the proposed scope or challenge revision. Any change that affects manuscript counts must regenerate the aggregate tables from the revised adjudicated coding before release.
+Corrections should identify the affected canonical work, cite the primary technical source, state the proposed revision, and regenerate every manuscript result affected by the change. Any release tag used in the paper should be immutable and internally consistent with the paper's cutoff, corpus size, field definitions, and caveats.
