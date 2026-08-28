@@ -1,81 +1,67 @@
 # Paper-to-hub map
 
-This repository is the research hub for *Resolving Evidence Chains in
-Multi-Hop RAG: A Challenge-Centered Survey*. It mirrors the paper's conceptual
-structure and review snapshot without serving as the manuscript-source
-repository.
+This repository is the research hub for *Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment*. The working manuscript source remains outside the repository.
 
 ## Hub contract
 
-The current hub is aligned to the manuscript review cutoff of **August 9,
-2026**. A resource is described as manuscript-aligned only when its scope,
-terminology, counts, and figure role match that snapshot.
+The current manuscript uses review cutoff **August 5, 2026** and a frozen **274-paper** canonical frame. A resource is manuscript-aligned only when its scope, terminology, counts, and caveats agree with that snapshot.
 
-The hub has four deliberately separate layers:
+The hub separates four layers:
 
-1. **Conceptual layer:** the evidence-dependency definition, five challenge
-   functions, figures, and literature navigation.
-2. **Review layer:** the search protocol, challenge codebook, and aggregate
-   evidence-map statistics.
-3. **Discovery layer:** the broad seven-survey reference workbook, which is not
-   a reviewed-corpus denominator.
-4. **Legacy layer:** the older v1 catalog and 40-record audit, retained only for
-   provenance.
-
-The LaTeX source and working manuscript remain outside this repository.
+1. **Conceptual layer:** evidence dependency, process organization, knowledge-access conditions, and evaluation alignment;
+2. **Review layer:** coverage protocol, canonical frame, coarse access mapping, and targeted routing-evaluation recheck;
+3. **Discovery layer:** adjacent-survey reference resources and executable maintenance queries, which are not corpus denominators;
+4. **Historical layer:** earlier challenge-centered and v1 audit artifacts retained for provenance.
 
 ## Paper structure and hub entry points
 
-| Paper section or claim | Hub resource | Public status |
+| Paper section or claim | Hub resource | Status |
 | --- | --- | --- |
-| Positioning and research questions | [README](../README.md), [challenge-centered literature navigator](literature_navigator.md), and [seven-survey library](../literature/README.md) | Published |
-| Evidence dependency as the scope | [Figure 1](../mh_figures/fig1.pdf) and [v2 challenge codebook](../taxonomy/challenge_codebook_v2.md) | Published |
-| Five challenges created by evidence dependency | [Figure 2](../mh_figures/fig2.pdf), [v2 challenge codebook](../taxonomy/challenge_codebook_v2.md), and [literature navigator](literature_navigator.md) | Published |
-| Review protocol and screening flow | [Coverage protocol](coverage_protocol.md), [submission audit](submission_audit_v2.md), and [aggregate search flow](../taxonomy/audit_v2/search_flow.csv) | Aggregate snapshot published |
-| Next-Hop Discovery | [Literature navigator: Next-Hop Discovery](literature_navigator.md#1-next-hop-discovery) | Published |
-| Path Management | [Literature navigator: Path Management](literature_navigator.md#2-path-management) | Published |
-| Evidence Sufficiency | [Literature navigator: Evidence Sufficiency](literature_navigator.md#3-evidence-sufficiency) | Published |
-| Error Recovery | [Literature navigator: Error Recovery](literature_navigator.md#4-error-recovery) | Published |
-| Evidence Composition | [Literature navigator: Evidence Composition](literature_navigator.md#5-evidence-composition) | Published |
-| From iterative retrieval to evidence-state control | [Figure 3](../mh_figures/fig3.pdf) and the cross-challenge reading paths in the [literature navigator](literature_navigator.md) | Published |
-| Benchmarks and evaluation | [Benchmark reading paths](literature_navigator.md#benchmark-reading-paths) and the [five-challenge reporting checklist](reporting_checklist.md) | Published |
-| Corpus-level evidence and research agenda | [Challenge counts](../taxonomy/audit_v2/challenge_counts.csv), [Direct overlap matrix](../taxonomy/audit_v2/direct_overlap.csv), [submission audit](submission_audit_v2.md), and [roadmap](roadmap.md) | Aggregate snapshot published |
-| Detailed coding and sensitivity rules | [V2 codebook](../taxonomy/challenge_codebook_v2.md) and [audit-v2 README](../taxonomy/audit_v2/README.md) | Published |
+| Positioning and research questions | [`README.md`](../README.md) | current |
+| RQ1: evidence-dependency scope | [`docs/coverage_protocol.md`](coverage_protocol.md) | current |
+| RQ2: established process organization | manuscript + adjacent-survey reference layer | current conceptual synthesis |
+| RQ3: knowledge-access mapping | submission artifact release required | current analysis, row-level public freeze pending |
+| RQ4: evaluation alignment / routing recheck | submission artifact release required | targeted primary-source recheck complete; public freeze pending |
+| Discovery queries | [`taxonomy/discovery_queries.csv`](../taxonomy/discovery_queries.csv) | current maintenance interface |
+| Adjacent-survey reference layer | [`literature/README.md`](../literature/README.md) | discovery only |
+| Artifact limitations | [`ARTIFACT.md`](../ARTIFACT.md) | current |
+| Current alignment summary | [`submission_alignment_v10.md`](submission_alignment_v10.md) | current |
+| Five-challenge codebook and audit-v2 materials | `taxonomy/challenge_codebook_v2.md`, `taxonomy/audit_v2/` | **historical snapshot; not current manuscript claims** |
+
+## Current evidence snapshot
+
+The manuscript's canonical frame contains **274 papers**:
+
+- 149 CORE;
+- 57 SUPPORTING;
+- 68 TRANSFER.
+
+The revised access synthesis uses 170 retrieval-bearing CORE/SUPPORTING papers and 111 acquisition-dependent papers. The state-dependent routing / transition-capable subset contains nine cases and is subjected to a separate primary-source evaluation recheck.
+
+The current paper does not reuse the historical 208-work challenge prevalence analysis, and it does not report the historical `452 → … → 208` screening flow as the construction flow for the 274-paper frame.
 
 ## Figure mapping
 
-Repository filenames follow the figures' order in the paper, even though the
-working manuscript uses different source filenames:
+The final manuscript figures are being redesigned around the layered story. Existing PDFs in `mh_figures/` reflect earlier manuscript snapshots and should be treated as historical until replaced by the submission figures.
 
-| Paper figure | Repository asset | Manuscript source asset | Role |
-| --- | --- | --- | --- |
-| Figure 1 | [`mh_figures/fig1.pdf`](../mh_figures/fig1.pdf) | `figs/2.pdf` | Evidence-dependency scope |
-| Figure 2 | [`mh_figures/fig2.pdf`](../mh_figures/fig2.pdf) | `figs/1.pdf` | Five-challenge control loop |
-| Figure 3 | [`mh_figures/fig3.pdf`](../mh_figures/fig3.pdf) | `figs/4.pdf` | Challenge-mechanism landscape |
+Planned main-text roles are:
 
-## Evidence and release boundary
+1. **Figure 1:** layered view of evidence dependency → process organization → knowledge access → evaluation alignment;
+2. **Figure 2:** evidence-dependency scope boundary;
+3. **Figure 3:** established process backbone plus orthogonal access view;
+4. **Figure 4:** descriptive knowledge-access landscape;
+5. **Figure 5:** evaluation coverage for adaptive access decisions.
 
-The repository currently publishes the aggregate values used by the paper:
+## Reliability and release boundary
 
-- 452 raw hits, 342 unique candidates, 265 works entering primary-source
-  review, 263 resolved sources, and 208 reviewed canonical works;
-- 135 Core, 54 Supporting, and 19 Transfer-relevant works;
-- challenge counts and pairwise Direct overlaps for the 135 Core works.
+The broader fine-grained coding schema did not pass the pre-specified confirmatory reliability gate. Full-corpus percentages are therefore described as **descriptive evidence-backed mappings**, not reliability-validated prevalence estimates. High-leverage RQ4 claims rely on targeted primary-source rechecking of the nine routing cases.
 
-The final 208-work canonical table, the 135-Core challenge-relation table, and
-reviewer/adjudication provenance are **not yet public**. Until those row-level
-artifacts and regeneration scripts are released, the hub supports inspection of
-the protocol and aggregate manuscript snapshot, but not independent
-regeneration of the aggregate results from row-level evidence.
+A submission-ready release should provide the exact 274-paper frame, row-level coarse access mapping, nine-case routing recheck, executable queries, figure/table regeneration outputs, and an immutable release identifier.
 
-The 771-paper reference workbook is a separate discovery resource. Inclusion
-there does not establish primary-source review, scope eligibility, or a
-challenge assignment.
+## Historical materials
+
+The earlier challenge-centered manuscript snapshot used 208 works and five challenge families. Those files remain useful as project provenance but are not the taxonomy, denominator, title, figures, or quantitative conclusions of the current manuscript.
 
 ## Versioning rule
 
-Each manuscript revision that changes the review cutoff, corpus counts,
-challenge coding, figures, or author metadata should update this map, the main
-README, `ARTIFACT.md`, and `CITATION.cff` together. A submission-ready snapshot
-should be tagged only after the row-level evidence release and regeneration
-outputs are synchronized with the paper.
+Any change to the manuscript cutoff, corpus counts, analytical definitions, routing recheck, figures, or author metadata should update `README.md`, `ARTIFACT.md`, this map, `docs/coverage_protocol.md`, `docs/submission_alignment_v10.md`, and `CITATION.cff` together before a release is tagged.
