@@ -1,142 +1,105 @@
 # Multi-Hop RAG Research Hub
 
-> Research hub and public companion for **“Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey.”**
+> Public companion for **“Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment.”**
 
 [![Manuscript](https://img.shields.io/badge/manuscript-TOIS%20draft-2457C5.svg)](#associated-manuscript)
 [![Research hub](https://img.shields.io/badge/research%20hub-open-2457C5.svg)](https://tsingyul.github.io/multi-hop-rag-survey/)
-[![Audit](https://img.shields.io/badge/audit-v2%20aggregate%20snapshot-087E8B.svg)](docs/submission_audit_v2.md)
-[![Reference library](https://img.shields.io/badge/reference%20library-771%20deduplicated%20papers-6F42C1.svg)](literature/README.md)
+[![Corpus](https://img.shields.io/badge/frozen%20corpus-274%20papers-087E8B.svg)](#current-manuscript-snapshot)
 [![License: MIT](https://img.shields.io/badge/code%20%26%20catalog-MIT-green.svg)](LICENSE)
 
-This repository is the **paper-aligned research hub** for a survey of multi-hop retrieval-augmented generation defined by **dependency among external evidence units**. It mirrors the paper's conceptual framework, figures, review protocol, aggregate evidence map, and reading paths while keeping the manuscript source outside the repository. See the [paper-to-hub map](docs/paper_hub.md) for the section-by-section correspondence.
+This repository is the paper-aligned research hub for a survey of multi-hop retrieval-augmented generation defined by **evidence dependency**. The manuscript uses a layered organization:
 
-The current manuscript organizes the literature around five nonexclusive challenges: **Next-Hop Discovery, Path Management, Evidence Sufficiency, Error Recovery, and Evidence Composition**.
+1. **Evidence dependency** defines what makes an evidence process genuinely multi-hop.
+2. **Process organization** retains established retrieval–reasoning method families.
+3. **Knowledge-access conditions** describe the external representation, acquisition interface, and source regime used along dependent hops.
+4. **Evaluation alignment** asks whether the resulting intermediate decisions are directly measured.
 
-The repository contains documentation and aggregate audit files aligned with the manuscript review cutoff of **August 9, 2026**. The older 40-record v1 audit is retained for provenance but is not the source of the current manuscript counts.
+The current manuscript does **not** claim that prior process taxonomies are obsolete, that heterogeneous/tool-mediated access is dominant, or that the full-corpus percentages are reliability-validated population estimates.
 
 ## Start here
 
 | Need | Open |
 | --- | --- |
-| Web research hub | [GitHub Pages](https://tsingyul.github.io/multi-hop-rag-survey/) |
-| Paper section-to-resource map | [`docs/paper_hub.md`](docs/paper_hub.md) |
-| Current challenge codebook | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) |
-| Current audit summary | [`docs/submission_audit_v2.md`](docs/submission_audit_v2.md) |
-| Aggregate v2 audit files | [`taxonomy/audit_v2/`](taxonomy/audit_v2/) |
-| Seven-survey reference library | [`literature/README.md`](literature/README.md), [`literature/reference_library.xlsx`](literature/reference_library.xlsx) |
-| Challenge-centered literature navigator | [`docs/literature_navigator.md`](docs/literature_navigator.md) |
-| Current manuscript figures | [`mh_figures/README.md`](mh_figures/README.md) |
+| Paper-to-hub map | [`docs/paper_hub.md`](docs/paper_hub.md) |
+| Current submission alignment | [`docs/submission_alignment_v10.md`](docs/submission_alignment_v10.md) |
 | Discovery and coverage protocol | [`docs/coverage_protocol.md`](docs/coverage_protocol.md) |
-| Executable Semantic Scholar query families | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) |
-| Legacy catalog | [`taxonomy/methods.csv`](taxonomy/methods.csv), [`taxonomy/benchmarks.csv`](taxonomy/benchmarks.csv) |
-| Legacy 40-record audit | [`taxonomy/audit_records.csv`](taxonomy/audit_records.csv), [`taxonomy/audit_codebook_v1.md`](taxonomy/audit_codebook_v1.md) |
+| Executable discovery queries | [`taxonomy/discovery_queries.csv`](taxonomy/discovery_queries.csv) |
+| Adjacent-survey reference library | [`literature/README.md`](literature/README.md) |
+| Artifact status and limitations | [`ARTIFACT.md`](ARTIFACT.md) |
+| Historical challenge-centered materials | [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md), [`taxonomy/audit_v2/`](taxonomy/audit_v2/) |
 
 ## Current manuscript snapshot
 
-The frozen evidence map contains **208 canonical works**:
+The frozen canonical frame contains **274 papers** with review cutoff **August 5, 2026**:
 
-- **135 Core**
-- **54 Supporting**
-- **19 Transfer-relevant**
+- **149 CORE**
+- **57 SUPPORTING**
+- **68 TRANSFER**
 
-The corpus construction flow reported in the manuscript is:
+The current corpus-level analysis is a **structured evidence map**, not a registered systematic review or statistical meta-analysis. The final 274-paper expansion does not have a complete per-database raw-hit ledger that supports a PRISMA-style flow; historical `452 → … → 208` screening counts belong to an earlier challenge-centered snapshot and are retained only as project provenance.
 
-`452 raw hits -> 342 unique candidates -> 265 primary-source review queue -> 263 resolved sources -> 208 reviewed canonical works`
+For the revised knowledge-access analysis:
 
-Candidate-level discovery and screening records are not part of the public release. The current hub reports the aggregate screening counts and protocol. The planned row-level release will begin with the final **208 reviewed canonical works**, but that table and the 135-Core challenge-relation table are not yet public.
+- 170 CORE or SUPPORTING papers are retrieval-bearing;
+- 111 have acquisition dependency;
+- 139/170 (81.8%) use text-only external evidence;
+- 160/170 (94.1%) use fixed/closed sources;
+- 99/111 (89.2%) remain access-stable across dependent hops;
+- nine papers form the state-dependent routing / transition-capable subset.
 
-The quantitative challenge analysis uses the **135 Core works** as its prevalence denominator.
+A targeted primary-source recheck of those nine routing cases finds that direct intermediate access-decision diagnostics are **uncommon, not absent**: one paper directly evaluates route/program correctness, and two directly evaluate either the route/program or an upstream selector/gating state controlling subsequent access.
 
-| Challenge | Direct | Direct+Secondary |
-| --- | ---: | ---: |
-| Next-Hop Discovery | 84 | 100 |
-| Path Management | 41 | 64 |
-| Evidence Sufficiency | 24 | 31 |
-| Error Recovery | 11 | 15 |
-| Evidence Composition | 43 | 98 |
+## Scope
 
-Two overlap results anchor the manuscript findings: 22 of 24 Direct Sufficiency works also instantiate Direct Discovery (**91.7%**), while 5 of 24 instantiate Direct Recovery (**20.8%**). Direct Path Management and Direct Recovery overlap in only **one** Core work.
+The survey distinguishes two dependency types:
 
-## Five challenge families
+- **Acquisition dependency:** evidence obtained earlier materially changes a later external acquisition target or action.
+- **Reasoning dependency:** answering requires a substantive operation across multiple external evidence units.
 
-| Challenge | Core question |
-| --- | --- |
-| **Next-Hop Discovery** | What concrete information should be sought next from the current evidence state? |
-| **Path Management** | Which candidate trajectories should be retained, prioritized, merged, or pruned? |
-| **Evidence Sufficiency** | Is the current evidence adequate for the remaining task? |
-| **Error Recovery** | After a state is diagnosed as invalid or unproductive, how should it be revised or replaced? |
-| **Evidence Composition** | Once the required evidence is available, can the system perform the required operation across evidence units? |
+Repeated retrieval, multiple documents, or internal search over already supplied context does not by itself establish multi-hop RAG.
 
-The first four challenges control the evolution of the evidence state. Evidence Composition concerns how an assembled support structure is used.
+## Evidence and reliability boundary
 
-## Review protocol
+Primary-source coding records source URLs and evidence notes for analytical claims. The broader fine-grained coding schema underwent blinded reliability attempts, but the confirmatory reliability gate did **not** meet the pre-specified threshold. Accordingly:
 
-Candidate discovery combines adjacent-survey consolidation, Semantic Scholar keyword queries, backward and forward citation tracing, and a final venue sweep. Primary-source identity and technical claims are checked against authoritative landing pages such as ACL Anthology, OpenReview, arXiv, the ACM Digital Library, publisher pages, and official repositories.
+- full-corpus percentages are reported as **descriptive, evidence-backed mappings** rather than reliability-validated prevalence estimates;
+- coarse knowledge-access descriptors are used for the revised synthesis;
+- high-leverage routing/evaluation claims are supported by targeted paper-by-paper primary-source rechecking.
 
-The scope and challenge assignments used for manuscript-level quantitative results are independently reviewed by two reviewers under the same operational codebook. Disagreements are revisited against the primary technical source and resolved through explicit adjudication.
+This limitation is reported explicitly in the manuscript and should not be replaced by claims of fully adjudicated independent double coding.
 
-See [`docs/coverage_protocol.md`](docs/coverage_protocol.md) and [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md) for the operational rules.
+## Historical challenge-centered snapshot
 
-## Adjacent-survey reference layer
-
-The research hub also includes a broad reference library reconstructed from
-seven adjacent surveys. It contains **886 raw citation records**, **771
-deduplicated papers**, **75 papers cited by at least two surveys**, and **16
-papers cited by at least three surveys**.
-
-This layer supports discovery and cross-survey comparison. It is deliberately
-separate from the frozen **208-work reviewed evidence map**: inclusion in the
-reference library does not imply primary-source review, scope inclusion, or
-challenge coding. See [`literature/README.md`](literature/README.md) for the
-workbook schema and interpretation boundary.
+Files under `taxonomy/audit_v2/`, the five-challenge codebook, and related challenge-centered documentation describe an **earlier manuscript snapshot** based on 208 works. They remain in the repository for provenance and may support historical comparison, but they are **not** the denominator, taxonomy, or empirical claim set used by the current layered manuscript.
 
 ## Public artifact boundary
 
-The current public hub supports inspection of the manuscript's protocol and aggregate **challenge-level quantitative results**. It does not yet support independent regeneration from row-level evidence, and it is not intended to expose the complete candidate discovery queue.
-
-The submission-ready release should additionally contain:
-
-1. the final **208-work canonical evidence map** with scope tier;
-2. the **135-Core challenge-relation table** with Direct, Secondary, and No assignments;
-3. reviewer and adjudication provenance sufficient to support the manuscript's independent-review wording; and
-4. scripts or generated outputs that reproduce the challenge-count table, pairwise overlap table, and empirical landscape figure.
-
-The candidate-level discovery and screening ledger for the 452 raw hits is not part of the public artifact. Aggregate screening counts, search protocol, query families, and venue closure are documented in the manuscript and repository. See [`ARTIFACT.md`](ARTIFACT.md) for the current completeness statement.
-
-## Legacy v1 catalog and audit
-
-The repository previously organized a 50-record catalog and a 40-record single-coded diagnostic audit around Observability, Selection preservation, Exposure, Fusion reliability, and Causal faithfulness. Those files remain available to preserve the project history and should be treated as **legacy v1 artifacts**.
-
-They are not the taxonomy or denominator used by the current challenge-centered manuscript.
+The submission-ready artifact should freeze the exact 274-paper canonical frame, the coarse knowledge-access mapping, the nine-case routing-evaluation recheck, executable query strings, and scripts or generated outputs used for manuscript tables and figures. See [`ARTIFACT.md`](ARTIFACT.md) for the current completeness statement.
 
 ## Associated manuscript
 
-- **Title:** Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey
+- **Title:** Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment
 - **Authors:** Yuqing Luo, Kai Zhang, and Liyang He
 - **Affiliation:** University of Science and Technology of China
 - **Target venue:** ACM Transactions on Information Systems (TOIS)
-- **Review cutoff:** August 9, 2026
+- **Review cutoff:** August 5, 2026
 
-The repository does not contain an ACM Version of Record. Publisher DOI, volume, issue, and page metadata should be added only after assignment. The manuscript source is maintained outside this research hub.
+The manuscript source is maintained outside this repository. Publisher DOI, volume, issue, and page metadata should be added only after assignment.
 
 ## Citation
 
 Until final publisher metadata exists, cite the manuscript as:
 
 ```bibtex
-@article{luo2026resolving,
+@article{luo2026multihoprag,
   author = {Yuqing Luo and Kai Zhang and Liyang He},
-  title  = {Resolving Evidence Chains in Multi-Hop RAG: A Challenge-Centered Survey},
+  title  = {Multi-Hop Retrieval-Augmented Generation: A Survey of Evidence Dependency, Process Organization, Knowledge Access, and Evaluation Alignment},
   year   = {2026},
   note   = {Manuscript draft. Companion repository: https://github.com/TsingyuL/multi-hop-rag-survey}
 }
 ```
 
 See [`CITATION.cff`](CITATION.cff) for GitHub citation metadata.
-
-## Contributing
-
-Corrections and additions are welcome. New challenge-level coding should follow [`taxonomy/challenge_codebook_v2.md`](taxonomy/challenge_codebook_v2.md). The older catalog schema is preserved for backward compatibility; see [`CONTRIBUTING.md`](CONTRIBUTING.md) before changing legacy CSV headers.
 
 ## License and attribution
 
